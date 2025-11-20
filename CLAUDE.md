@@ -91,16 +91,28 @@ Infra: Vercel + Vercel Edge CDN
 - 직접 결제 엔진 구현 X → 스케줄러만 구현
 - 매일 자정 TossPayments API 호출
 
-## Development Roadmap (4주)
+## Implementation Checklist
 
-> 📌 **상세 로드맵**: Notion 🔧 기술 스택 > 섹션 5
+> 📌 **상세 내용**: Notion 성인용품 페이지 > ✅ 실행 체크리스트
 
-```
-Week 1: 집 짓기        (Setup & Design)
-Week 2: 옷장 채우기    (Product & DB)
-Week 3: 마법 거울      (Size Tech - 암호화 + 추천)
-Week 4: 계산대         (Payment & Subscription)
-```
+시간 기반 로드맵 대신 실행 가능한 체크리스트로 관리합니다.
+
+### 주요 카테고리
+1. **🏗️ 사업 준비**: 법률/행정, 도메인/브랜딩
+2. **🛍️ 상품 & 소싱**: 공급처 확보, 상품 큐레이션
+3. **💻 기술 개발**: 인프라 구축, 핵심 기능, 차별화 기능
+4. **🎨 디자인 & UX**: 디자인 시스템, 프라이버시 강화
+5. **📦 물류 & 운영**: 택배, 포장, 배송 정책
+6. **📣 마케팅 & 런칭**: 페르소나, 경쟁사 분석, 콘텐츠 제작
+7. **💰 재무 & 분석**: 예산 관리, KPI 대시보드
+8. **🤝 고객 서비스**: CS 채널, FAQ, 응대 매뉴얼
+
+### 우선순위 Phase
+- **Phase 0**: 법률/도메인/사업자등록 (개발 전)
+- **Phase 1**: 기술 인프라 + 핵심 기능 (1~2개월)
+- **Phase 2**: 상품 소싱 + 디자인 완성 (2~3개월)
+- **Phase 3**: 물류 + CS 구축 (3~4개월)
+- **Phase 4**: 마케팅 + 런칭 (4개월+)
 
 ## Business Context
 
@@ -189,4 +201,7 @@ Week 4: 계산대         (Payment & Subscription)
 ---
 
 **Last Updated**: 2025-11-20
-**Status**: Project Setup Phase (Git 초기화 대기, Week 1 준비 중)
+**Status**: Project Setup Phase (체크리스트 기반 실행 관리, Git 초기화 대기)
+**Recent Changes**:
+- 시간 기반 로드맵 제거
+- 실행 체크리스트 방식으로 전환 (Notion 동기화 완료)
