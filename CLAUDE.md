@@ -14,31 +14,23 @@
 
 ```
 TeddyBear'sRoom/
-├── .claude/             # Claude Code 설정 디렉토리
-├── .env.example         # 환경 변수 템플릿
-├── .gitignore          # Git ignore 규칙
-├── CLAUDE.md           # 본 파일 (Claude Code 가이드)
-├── GEMINI.md           # Gemini AI 가이드 (2025-11-20 추가)
-├── claudedocs/         # Claude 생성 문서 (리서치, 보고서, 16개 파일)
-│   ├── claude_md_update_report_2025-11-19.md
-│   ├── current_subscription_content.md
-│   ├── migration_completion_report.md
-│   ├── notion_automation_solution.md
-│   ├── notion_brainstorm_summary.md
-│   ├── notion_content_architecture_2025-11-19.md
-│   ├── notion_migration_guide.md
-│   ├── notion_sync_summary_2025-11-19.md
-│   ├── subscription_standard.md
-│   ├── tech_research_2025-11-19.md
-│   ├── tech_stack_research_completion_report.md
-│   ├── tech_stack_summary_2025-11-19.md
-│   ├── tech_stack_update_report_2025-11-19.md
-│   ├── update_report.md
-│   └── workflow_notion_tech_update_2025-11-19.md
-└── scripts/            # 유틸리티 스크립트 디렉토리
+├── .claude/                    # Claude Code 설정 디렉토리
+├── .env.example                # 환경 변수 템플릿
+├── .gitignore                  # Git ignore 규칙
+├── CLAUDE.md                   # 본 파일 (Claude Code 가이드)
+└── claudedocs/                 # Claude 생성 문서 (전략, 리서치, 가이드)
+    ├── README.md                                            # 문서 디렉토리 설명
+    ├── brand_marketing_guidelines_2025-11-22.md             # 브랜드 마케팅 가이드라인
+    ├── customer_interview_guide_2025-11-20.md               # 고객 인터뷰 가이드
+    ├── figma_design_guide_2025-11-21.md                     # Figma 디자인 가이드
+    ├── interview_recruiting_action_plan_2025-11-20.md       # 인터뷰 모집 액션 플랜
+    ├── market_research_strategy_2025-11-20.md               # 시장 조사 전략
+    ├── project_briefing_2025-11-21.md                       # 프로젝트 브리핑
+    ├── subscription_standard.md                             # 구독 멤버십 표준
+    └── tech_stack_summary_2025-11-19.md                     # 기술 스택 요약
 ```
 
-> ⚠️ **Note**: Git repository는 아직 초기화되지 않았습니다. 개발 시작 전 `git init` 필요.
+> ✅ **Note**: Git repository 초기화 완료. 개발 코드는 모두 제거되었으며, 전략/리서치 문서만 보관 중입니다.
 
 ## Notion Integration
 
@@ -148,14 +140,12 @@ Infra: Vercel + Vercel Edge CDN
 4. /sc:document
 ```
 
-> ⚠️ **Git 미초기화**: `/sc:git` 명령어는 Git repository 초기화 후 사용 가능
-
 ### Best Practices
 - TypeScript strict mode 사용
 - 복잡한 로직은 주석 필수
 - 보안 고려사항 항상 체크
 - 상세 문서는 `claudedocs/` 저장
-- 개발 시작 전 Git 초기화 및 feature branch 생성
+- Feature branch workflow 사용 (main branch 직접 수정 지양)
 
 ## File Management
 
@@ -168,9 +158,9 @@ Infra: Vercel + Vercel Edge CDN
 ### Version Control
 - 각 파일에 timestamp 포함
 - 중복 파일 생성 지양 (기존 파일 업데이트 선호)
-- **Git 초기화 필요**: 현재 Git repository 미설정 상태
-  - 개발 시작 시: `git init` → `.gitignore` 확인 → initial commit
-  - Feature branch workflow 준비
+- **Feature Branch Workflow**: main branch 직접 수정 지양
+  - 새 기능 개발 시: `git checkout -b feature/[feature-name]`
+  - 커밋 후 merge 또는 PR 생성
 
 ## References
 
@@ -181,27 +171,28 @@ Infra: Vercel + Vercel Edge CDN
 - 📊 운영 & 분석: `2af77770-ad42-81ff-b7b8-cc6f89767d4e`
 
 ### Documentation (주요 문서)
-- **기술 스택**
-  - `tech_research_2025-11-19.md` - 기술 스택 상세 리서치
+- **전략 & 기획**
+  - `brand_marketing_guidelines_2025-11-22.md` - 브랜드 마케팅 가이드라인
+  - `project_briefing_2025-11-21.md` - 프로젝트 브리핑
+  - `market_research_strategy_2025-11-20.md` - 시장 조사 전략
+- **디자인**
+  - `figma_design_guide_2025-11-21.md` - Figma 디자인 가이드
+- **리서치**
+  - `customer_interview_guide_2025-11-20.md` - 고객 인터뷰 가이드
+  - `interview_recruiting_action_plan_2025-11-20.md` - 인터뷰 모집 액션 플랜
+- **기술 & 표준**
   - `tech_stack_summary_2025-11-19.md` - 기술 스택 요약
-  - `tech_stack_update_report_2025-11-19.md` - 최종 업데이트 보고서
-- **Notion 관리**
-  - `notion_content_architecture_2025-11-19.md` - 콘텐츠 아키텍처
-  - `notion_sync_summary_2025-11-19.md` - 동기화 요약
-  - `notion_automation_solution.md` - 자동화 솔루션
-- **프로젝트 표준**
   - `subscription_standard.md` - 구독 멤버십 표준
-  - `current_subscription_content.md` - 현재 구독 콘텐츠
-- **보고서**
-  - `claude_md_update_report_2025-11-19.md` - CLAUDE.md 업데이트 내역
-  - `migration_completion_report.md` - 마이그레이션 완료 보고서
 
-> 📁 **전체 문서**: `claudedocs/` 디렉토리에 16개 문서 보관 중
+> 📁 **전체 문서**: `claudedocs/` 디렉토리에 9개 문서 보관 중 (전략/리서치/가이드)
 
 ---
 
-**Last Updated**: 2025-11-20
-**Status**: Project Setup Phase (체크리스트 기반 실행 관리, Git 초기화 대기)
+**Last Updated**: 2025-11-22
+**Status**: Clean Slate - Ready for Development
 **Recent Changes**:
-- 시간 기반 로드맵 제거
-- 실행 체크리스트 방식으로 전환 (Notion 동기화 완료)
+- 모든 개발 코드 제거 (website/, scripts/ 디렉토리)
+- outdated 문서 정리 (기술/Notion 관련 보고서 삭제)
+- 전략/리서치/가이드 문서만 보존 (9개 파일)
+- Git repository 정리 완료
+- 새로운 개발 시작 준비 완료
