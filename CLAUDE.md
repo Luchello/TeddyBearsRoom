@@ -15,10 +15,9 @@
 ```
 TeddyBear'sRoom/
 ├── .claude/                    # Claude Code 설정 디렉토리
-├── .env.example                # 환경 변수 템플릿
 ├── .gitignore                  # Git ignore 규칙
 ├── CLAUDE.md                   # 본 파일 (Claude Code 가이드)
-├── claudedocs/                 # Claude 생성 문서 (전략, 리서치, 가이드)
+├── claudedocs/                 # Claude 생성 문서 (전략, 리서치, 가이드, 구독설계)
 │   ├── README.md
 │   ├── brand_marketing_guidelines_2025-11-22.md
 │   ├── customer_interview_guide_2025-11-20.md
@@ -26,8 +25,11 @@ TeddyBear'sRoom/
 │   ├── interview_recruiting_action_plan_2025-11-20.md
 │   ├── market_research_strategy_2025-11-20.md
 │   ├── project_briefing_2025-11-21.md
+│   ├── subscription_briefing_2025-11-22.md
 │   ├── subscription_standard.md
-│   └── tech_stack_summary_2025-11-19.md
+│   ├── tech_stack_summary_2025-11-19.md
+│   ├── 구독_시스템_개선_방안.txt
+│   └── 구독_시스템_최종_설계안.txt
 └── frontend/                   # Next.js 14 프론트엔드 애플리케이션
     ├── src/
     │   ├── app/                # App Router 페이지
@@ -219,6 +221,10 @@ npm run lint         # ESLint 검사
 - **기술 & 표준**
   - `tech_stack_summary_2025-11-19.md` - 기술 스택 요약
   - `subscription_standard.md` - 구독 멤버십 표준
+- **구독 설계**
+  - `subscription_briefing_2025-11-22.md` - 구독 시스템 브리핑
+  - `구독_시스템_개선_방안.txt` - 구독 시스템 개선안
+  - `구독_시스템_최종_설계안.txt` - 구독 시스템 최종 설계
 
 > 📁 **전체 문서**: `claudedocs/` 디렉토리에 12개 문서 보관 중 (전략/리서치/가이드/구독설계)
 
