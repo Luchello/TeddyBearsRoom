@@ -1,0 +1,165 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ====================================
+   TeddyBear's Room Design System
+   Brand Colors (Notion SSOT):
+   - Primary: #D4A574 (파스텔 브라운)
+   - Secondary: #B4D7E8 (파스텔 스카이블루)
+   - Accent: #F4E4A3 (파스텔 옐로우)
+   ==================================== */
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* TeddyBear's Room Custom Colors */
+  --color-tbr-primary: #D4A574;
+  --color-tbr-secondary: #B4D7E8;
+  --color-tbr-accent: #F4E4A3;
+  --color-tbr-brown-light: #E8D4BC;
+  --color-tbr-brown-dark: #A67B5B;
+}
+
+:root {
+  --radius: 1rem; /* TBR: 둥근 UI */
+  --background: #FDF8F3; /* Warm cream background */
+  --foreground: #4A3728; /* Dark brown text */
+  --card: #FFFFFF;
+  --card-foreground: #4A3728;
+  --popover: #FFFFFF;
+  --popover-foreground: #4A3728;
+  --primary: #D4A574; /* TBR Primary: 파스텔 브라운 */
+  --primary-foreground: #FFFFFF;
+  --secondary: #B4D7E8; /* TBR Secondary: 파스텔 스카이블루 */
+  --secondary-foreground: #2C3E50;
+  --muted: #F5EDE5;
+  --muted-foreground: #7D6B5D;
+  --accent: #F4E4A3; /* TBR Accent: 파스텔 옐로우 */
+  --accent-foreground: #5D4E37;
+  --destructive: #E57373;
+  --border: #E8D4BC;
+  --input: #E8D4BC;
+  --ring: #D4A574;
+  --chart-1: #D4A574;
+  --chart-2: #B4D7E8;
+  --chart-3: #F4E4A3;
+  --chart-4: #E8D4BC;
+  --chart-5: #A67B5B;
+  --sidebar: #FDF8F3;
+  --sidebar-foreground: #4A3728;
+  --sidebar-primary: #D4A574;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F4E4A3;
+  --sidebar-accent-foreground: #5D4E37;
+  --sidebar-border: #E8D4BC;
+  --sidebar-ring: #D4A574;
+}
+
+.dark {
+  --background: #2C2419;
+  --foreground: #F5EDE5;
+  --card: #3D3225;
+  --card-foreground: #F5EDE5;
+  --popover: #3D3225;
+  --popover-foreground: #F5EDE5;
+  --primary: #D4A574;
+  --primary-foreground: #2C2419;
+  --secondary: #5A8FA8;
+  --secondary-foreground: #F5EDE5;
+  --muted: #4A3D32;
+  --muted-foreground: #B8A99A;
+  --accent: #C4B463;
+  --accent-foreground: #2C2419;
+  --destructive: #CF6679;
+  --border: #4A3D32;
+  --input: #4A3D32;
+  --ring: #D4A574;
+  --chart-1: #D4A574;
+  --chart-2: #5A8FA8;
+  --chart-3: #C4B463;
+  --chart-4: #8B7355;
+  --chart-5: #A67B5B;
+  --sidebar: #2C2419;
+  --sidebar-foreground: #F5EDE5;
+  --sidebar-primary: #D4A574;
+  --sidebar-primary-foreground: #2C2419;
+  --sidebar-accent: #4A3D32;
+  --sidebar-accent-foreground: #F5EDE5;
+  --sidebar-border: #4A3D32;
+  --sidebar-ring: #D4A574;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+}
+
+/* TeddyBear's Room Custom Utilities */
+@layer utilities {
+  .tbr-gradient {
+    background: linear-gradient(135deg, var(--color-tbr-primary) 0%, var(--color-tbr-accent) 100%);
+  }
+
+  .tbr-card {
+    @apply rounded-2xl shadow-lg bg-card border border-border;
+  }
+
+  .tbr-button {
+    @apply rounded-xl px-6 py-3 font-medium transition-all duration-200;
+  }
+
+  .tbr-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+  }
+}

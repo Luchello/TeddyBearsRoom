@@ -18,19 +18,37 @@ TeddyBear'sRoom/
 ├── .env.example                # 환경 변수 템플릿
 ├── .gitignore                  # Git ignore 규칙
 ├── CLAUDE.md                   # 본 파일 (Claude Code 가이드)
-└── claudedocs/                 # Claude 생성 문서 (전략, 리서치, 가이드)
-    ├── README.md                                            # 문서 디렉토리 설명
-    ├── brand_marketing_guidelines_2025-11-22.md             # 브랜드 마케팅 가이드라인
-    ├── customer_interview_guide_2025-11-20.md               # 고객 인터뷰 가이드
-    ├── figma_design_guide_2025-11-21.md                     # Figma 디자인 가이드
-    ├── interview_recruiting_action_plan_2025-11-20.md       # 인터뷰 모집 액션 플랜
-    ├── market_research_strategy_2025-11-20.md               # 시장 조사 전략
-    ├── project_briefing_2025-11-21.md                       # 프로젝트 브리핑
-    ├── subscription_standard.md                             # 구독 멤버십 표준
-    └── tech_stack_summary_2025-11-19.md                     # 기술 스택 요약
+├── claudedocs/                 # Claude 생성 문서 (전략, 리서치, 가이드)
+│   ├── README.md
+│   ├── brand_marketing_guidelines_2025-11-22.md
+│   ├── customer_interview_guide_2025-11-20.md
+│   ├── figma_design_guide_2025-11-21.md
+│   ├── interview_recruiting_action_plan_2025-11-20.md
+│   ├── market_research_strategy_2025-11-20.md
+│   ├── project_briefing_2025-11-21.md
+│   ├── subscription_standard.md
+│   └── tech_stack_summary_2025-11-19.md
+└── frontend/                   # Next.js 14 프론트엔드 애플리케이션
+    ├── src/
+    │   ├── app/                # App Router 페이지
+    │   │   ├── layout.tsx      # 루트 레이아웃 (Header/Footer)
+    │   │   ├── page.tsx        # 홈페이지
+    │   │   ├── globals.css     # TBR 디자인 시스템 (색상, 유틸리티)
+    │   │   ├── about/          # 소개 페이지
+    │   │   ├── products/       # 상품 목록 페이지
+    │   │   └── subscribe/      # 구독 멤버십 페이지
+    │   ├── components/         # 재사용 컴포넌트
+    │   │   ├── ui/             # shadcn/ui 컴포넌트
+    │   │   ├── Header.tsx      # 반응형 헤더 (모바일 메뉴)
+    │   │   ├── Footer.tsx      # 푸터
+    │   │   └── ProductCard.tsx # 상품 카드
+    │   └── lib/                # 유틸리티 함수
+    ├── package.json            # 의존성 관리
+    ├── tailwind.config.ts      # Tailwind 설정
+    └── tsconfig.json           # TypeScript 설정
 ```
 
-> ✅ **Note**: Git repository 초기화 완료. 개발 코드는 모두 제거되었으며, 전략/리서치 문서만 보관 중입니다.
+> ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + TypeScript + Tailwind CSS + shadcn/ui 기반 프론트엔드 구축 완료
 
 ## Notion Integration
 
@@ -65,7 +83,11 @@ Infra: Vercel + Vercel Edge CDN
 ```
 
 ### Design System
-- **Color**: 라떼 베이지 `#F5E6D3`, 코코아 브라운 `#8D6E63`
+- **Color Palette** (Notion SSOT 기준):
+  - Primary: `#D4A574` (파스텔 브라운)
+  - Secondary: `#B4D7E8` (파스텔 스카이블루)
+  - Accent: `#F4E4A3` (파스텔 옐로우)
+- **Concept**: 파스텔 + 귀여움 + 페티시 전문화
 - **Shape**: `border-radius: 1rem+` (둥근 UI)
 - **Font**: Pretendard Rounded
 
@@ -132,6 +154,20 @@ Infra: Vercel + Vercel Edge CDN
 
 ## Development Guidelines
 
+### Frontend Development Commands
+```bash
+cd frontend
+
+# 개발 서버 실행
+npm run dev          # http://localhost:3000
+
+# 프로덕션 빌드
+npm run build        # 정적 페이지 생성
+
+# 코드 품질 검사
+npm run lint         # ESLint 검사
+```
+
 ### Claude Code Workflow
 ```
 1. Feature Request → /sc:research (best practices)
@@ -188,11 +224,14 @@ Infra: Vercel + Vercel Edge CDN
 
 ---
 
-**Last Updated**: 2025-11-22
-**Status**: Clean Slate - Ready for Development
+**Last Updated**: 2025-11-26
+**Status**: Frontend MVP Complete
 **Recent Changes**:
-- 모든 개발 코드 제거 (website/, scripts/ 디렉토리)
-- outdated 문서 정리 (기술/Notion 관련 보고서 삭제)
-- 전략/리서치/가이드 문서만 보존 (9개 파일)
-- Git repository 정리 완료
-- 새로운 개발 시작 준비 완료
+- ✅ **Frontend MVP 완료** (2025-11-26)
+  - Next.js 16 + TypeScript + Tailwind CSS + shadcn/ui
+  - 4개 페이지: 홈, 상품, 구독, 소개
+  - 3개 컴포넌트: Header (반응형), Footer, ProductCard
+  - TBR 디자인 시스템 적용 (Notion SSOT 색상)
+  - 빌드 및 lint 검사 통과
+- ✅ Design System 색상 Notion SSOT에 맞게 동기화 (2025-11-26)
+  - Primary `#D4A574`, Secondary `#B4D7E8`, Accent `#F4E4A3`
