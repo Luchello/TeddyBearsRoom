@@ -220,18 +220,15 @@ npm run lint         # ESLint 검사
   - `tech_stack_summary_2025-11-19.md` - 기술 스택 요약
   - `subscription_standard.md` - 구독 멤버십 표준
 
-> 📁 **전체 문서**: `claudedocs/` 디렉토리에 9개 문서 보관 중 (전략/리서치/가이드)
+> 📁 **전체 문서**: `claudedocs/` 디렉토리에 12개 문서 보관 중 (전략/리서치/가이드/구독설계)
 
 ---
 
 **Last Updated**: 2025-11-26
-**Status**: Frontend MVP Complete
+**Status**: Frontend MVP Complete + Cleaned
 **Recent Changes**:
-- ✅ **Frontend MVP 완료** (2025-11-26)
-  - Next.js 16 + TypeScript + Tailwind CSS + shadcn/ui
-  - 4개 페이지: 홈, 상품, 구독, 소개
-  - 3개 컴포넌트: Header (반응형), Footer, ProductCard
-  - TBR 디자인 시스템 적용 (Notion SSOT 색상)
-  - 빌드 및 lint 검사 통과
-- ✅ Design System 색상 Notion SSOT에 맞게 동기화 (2025-11-26)
-  - Primary `#D4A574`, Secondary `#B4D7E8`, Accent `#F4E4A3`
+- ✅ **Cleanup 완료** (2025-11-26): 미사용 SVG 5개 삭제, 구독 설계 문서 3개 추가
+- ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + shadcn/ui, 4 pages, 3 components
+- ✅ Design System 동기화: Primary `#D4A574`, Secondary `#B4D7E8`, Accent `#F4E4A3`
+
+**Micro-Lesson**: Next.js 템플릿 public/ 파일은 사용 여부 확인 후 즉시 삭제
