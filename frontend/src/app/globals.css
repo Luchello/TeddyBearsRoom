@@ -10,9 +10,9 @@
    Dark Mode: 매트릭스 클럽씬 네온
 
    Brand Colors (Notion SSOT):
-   - Primary: #D4A574 (파스텔 브라운)
-   - Secondary: #B4D7E8 (파스텔 스카이블루)
-   - Accent: #F4E4A3 (파스텔 옐로우)
+   - Primary: #FCB9AA (파스텔 코랄)
+   - Secondary: #FFDBCC (파스텔 피치)
+   - Accent: #A2E1DB (파스텔 민트)
    ==================================== */
 
 @font-face {
@@ -62,9 +62,9 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   /* TeddyBear's Room Custom Colors */
-  --color-tbr-primary: #D4A574;
-  --color-tbr-secondary: #B4D7E8;
-  --color-tbr-accent: #F4E4A3;
+  --color-tbr-primary: #FCB9AA;
+  --color-tbr-secondary: #FFDBCC;
+  --color-tbr-accent: #A2E1DB;
   --color-tbr-brown-light: #E8D4BC;
   --color-tbr-brown-dark: #A67B5B;
 
@@ -87,31 +87,31 @@
   --card-foreground: #4A3728;
   --popover: #FFFFFF;
   --popover-foreground: #4A3728;
-  --primary: #D4A574; /* TBR Primary: 파스텔 브라운 */
+  --primary: #FCB9AA; /* TBR Primary: 파스텔 코랄 */
   --primary-foreground: #FFFFFF;
-  --secondary: #B4D7E8; /* TBR Secondary: 파스텔 스카이블루 */
-  --secondary-foreground: #2C3E50;
-  --muted: #F5EDE5;
+  --secondary: #FFDBCC; /* TBR Secondary: 파스텔 피치 */
+  --secondary-foreground: #4A3728;
+  --muted: #FFF5F0;
   --muted-foreground: #7D6B5D;
-  --accent: #F4E4A3; /* TBR Accent: 파스텔 옐로우 */
-  --accent-foreground: #5D4E37;
+  --accent: #A2E1DB; /* TBR Accent: 파스텔 민트 */
+  --accent-foreground: #2C5F5A;
   --destructive: #E57373;
-  --border: #E8D4BC;
-  --input: #E8D4BC;
-  --ring: #D4A574;
-  --chart-1: #D4A574;
-  --chart-2: #B4D7E8;
-  --chart-3: #F4E4A3;
-  --chart-4: #E8D4BC;
-  --chart-5: #A67B5B;
+  --border: #FFE4D6;
+  --input: #FFE4D6;
+  --ring: #FCB9AA;
+  --chart-1: #FCB9AA;
+  --chart-2: #FFDBCC;
+  --chart-3: #A2E1DB;
+  --chart-4: #FFE4D6;
+  --chart-5: #8FCEC7;
   --sidebar: #FDF8F3;
   --sidebar-foreground: #4A3728;
-  --sidebar-primary: #D4A574;
+  --sidebar-primary: #FCB9AA;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F4E4A3;
-  --sidebar-accent-foreground: #5D4E37;
-  --sidebar-border: #E8D4BC;
-  --sidebar-ring: #D4A574;
+  --sidebar-accent: #A2E1DB;
+  --sidebar-accent-foreground: #2C5F5A;
+  --sidebar-border: #FFE4D6;
+  --sidebar-ring: #FCB9AA;
 }
 
 /* ====================================

@@ -235,11 +235,11 @@ npm run lint         # ESLint 검사
 **Last Updated**: 2025-11-27
 **Status**: Frontend MVP + Neon Dark Mode Complete
 **Recent Changes**:
+- ✅ **Light Mode 색상 변경** (2025-11-27): 코랄/피치/민트 파스텔 팔레트
+  - Primary: `#FCB9AA` (코랄), Secondary: `#FFDBCC` (피치), Accent: `#A2E1DB` (민트)
 - ✅ **Neon Dark Mode 완료** (2025-11-27): Matrix 클럽씬 스타일 다크모드 구현
   - next-themes 기반 ThemeProvider, ThemeToggle 컴포넌트 추가
   - 네온 컬러: Magenta `#FF00FF`, Cyan `#00FFFF`, Hot Pink `#FF6B9D`
-  - 커스텀 애니메이션: neon-pulse, neon-flicker, wiggle, float, sparkle
-  - 네온 유틸리티: .neon-glow, .neon-text, .neon-card, .matrix-bg
 - ✅ **Cleanup 완료** (2025-11-26): 미사용 SVG 5개 삭제, 구독 설계 문서 3개 추가
 - ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + shadcn/ui, 4 pages, 3 components
 
