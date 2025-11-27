@@ -1,38 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-
-const values = [
-  {
-    icon: "🧸",
-    title: "파스텔 감성",
-    description:
-      "부드럽고 아늑한 분위기로 특별한 경험을 선사합니다. 귀여움과 고급스러움을 동시에 담았어요.",
-  },
-  {
-    icon: "🔒",
-    title: "프라이버시 우선",
-    description:
-      "무지 박스 배송, 안전한 결제, 철저한 개인정보 보호. 고객의 프라이버시를 최우선으로 생각합니다.",
-  },
-  {
-    icon: "💝",
-    title: "함께하는 가치",
-    description:
-      "매출의 일부를 사회에 환원합니다. 구독자가 직접 기부처를 선택하는 참여형 기부 시스템을 운영해요.",
-  },
-  {
-    icon: "✨",
-    title: "큐레이션",
-    description:
-      "엄격한 기준으로 선별된 고품질 상품만을 제공합니다. 안전하고 신뢰할 수 있는 제품만 만나보세요.",
-  },
-];
-
-const timeline = [
-  { year: "2024", event: "TeddyBear's Room 브랜드 기획 시작" },
-  { year: "2025", event: "온라인 쇼핑몰 런칭 예정" },
-  { year: "2025", event: "엔트리 & 프리미엄 멤버십 오픈" },
-  { year: "미래", event: "오프라인 경험 공간 오픈 예정" },
-];
+import { brandValues, brandTimeline } from "@/lib/data";
 
 export default function AboutPage() {
   return (
@@ -75,7 +42,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((value, idx) => (
+            {brandValues.map((value, idx) => (
               <Card key={idx} className="rounded-2xl border-border">
                 <CardContent className="p-6">
                   <span className="text-4xl mb-4 block">{value.icon}</span>
@@ -127,7 +94,7 @@ export default function AboutPage() {
           <div className="relative">
             <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border"></div>
             <div className="space-y-8">
-              {timeline.map((item, idx) => (
+              {brandTimeline.map((item, idx) => (
                 <div key={idx} className="relative flex items-center gap-6">
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary font-bold z-10">
                     {item.year}

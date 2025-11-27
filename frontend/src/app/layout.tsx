@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
+import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+
+// Optimized font loading with next/font
+const notoSansKR = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+  variable: "--font-noto-sans-kr",
+  preload: true,
+});
 
 export const metadata: Metadata = {
   title: "TeddyBear's Room | 파스텔 감성 프라이빗 셀프케어",
@@ -23,15 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <head>
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
-        />
-      </head>
+    <html lang="ko" suppressHydrationWarning className={notoSansKR.variable}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col">

@@ -2,51 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProductCard } from "@/components/ProductCard";
-
-// Mock data for featured products
-const featuredProducts = [
-  {
-    id: "1",
-    name: "파스텔 드림 컬렉션 - 소프트 터치",
-    price: 39000,
-    originalPrice: 49000,
-    imageUrl: "/placeholder.jpg",
-    category: "토이",
-    isNew: true,
-    isBest: true,
-  },
-  {
-    id: "2",
-    name: "코지 나이트 아로마 캔들 세트",
-    price: 28000,
-    imageUrl: "/placeholder.jpg",
-    category: "무드",
-    isNew: true,
-  },
-  {
-    id: "3",
-    name: "실크 터치 마사지 오일",
-    price: 32000,
-    originalPrice: 38000,
-    imageUrl: "/placeholder.jpg",
-    category: "케어",
-    isBest: true,
-  },
-  {
-    id: "4",
-    name: "베어 허그 쿠션 세트",
-    price: 45000,
-    imageUrl: "/placeholder.jpg",
-    category: "라이프",
-  },
-];
-
-const subscriptionBenefits = [
-  { icon: "🎁", title: "포인트 2배 적립", desc: "모든 구매에 포인트 2배" },
-  { icon: "💝", title: "기부 참여", desc: "매출의 5% 기부 투표 참여" },
-  { icon: "🚚", title: "무료 배송", desc: "5만원 이상 무료 배송" },
-  { icon: "🎀", title: "회원 전용 할인", desc: "매월 특별 할인 쿠폰" },
-];
+import { featuredProducts, subscriptionBenefits } from "@/lib/data";
 
 export default function HomePage() {
   return (

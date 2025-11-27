@@ -2,15 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-
-const navigation = [
-  { name: "홈", href: "/" },
-  { name: "상품", href: "/products" },
-  { name: "구독", href: "/subscribe" },
-  { name: "소개", href: "/about" },
-];
+import { navigation } from "@/lib/data";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,19 +28,24 @@ export function Header() {
           <ThemeToggle />
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-xl p-2.5 text-foreground"
+            className="-m-2.5 inline-flex items-center justify-center rounded-xl p-2.5 text-foreground hover:bg-muted transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
           >
-            <span className="sr-only">메뉴 열기</span>
-            {mobileMenuOpen ? (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-            )}
+            <span className="sr-only">{mobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}</span>
+            <span
+              className={`transition-transform duration-300 ${
+                mobileMenuOpen ? "rotate-90" : "rotate-0"
+              }`}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </span>
           </button>
         </div>
 
@@ -71,26 +71,47 @@ export function Header() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden dark:bg-card/95 dark:backdrop-blur">
-          <div className="space-y-1 px-4 pb-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block rounded-xl px-3 py-2 text-base font-medium text-foreground hover:bg-muted dark:hover:bg-primary/10"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <Button className="mt-4 w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle">
-              로그인
-            </Button>
-          </div>
+      {/* Mobile menu with animation */}
+      <div
+        id="mobile-menu"
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          mobileMenuOpen
+            ? "max-h-96 opacity-100"
+            : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="space-y-1 px-4 pb-4 dark:bg-card/95 dark:backdrop-blur">
+          {navigation.map((item, index) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`block rounded-xl px-3 py-2 text-base font-medium text-foreground hover:bg-muted dark:hover:bg-primary/10 transition-all duration-200 ${
+                mobileMenuOpen
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-4 opacity-0"
+              }`}
+              style={{
+                transitionDelay: mobileMenuOpen ? `${index * 50}ms` : "0ms",
+              }}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <Button
+            className={`mt-4 w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle transition-all duration-200 ${
+              mobileMenuOpen
+                ? "translate-y-0 opacity-100"
+                : "translate-y-4 opacity-0"
+            }`}
+            style={{
+              transitionDelay: mobileMenuOpen ? `${navigation.length * 50}ms` : "0ms",
+            }}
+          >
+            로그인
+          </Button>
         </div>
-      )}
+      </div>
     </header>
   );
 }

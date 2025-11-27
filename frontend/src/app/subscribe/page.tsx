@@ -1,61 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-
-const plans = [
-  {
-    name: "엔트리",
-    icon: "🐻",
-    price: 19900,
-    period: "월",
-    description: "TeddyBear's Room을 시작하는 분들을 위한 플랜",
-    features: [
-      { text: "포인트 2배 적립", included: true },
-      { text: "기부 투표 참여 (5%)", included: true },
-      { text: "5만원 이상 무료 배송", included: true },
-      { text: "매월 5% 할인 쿠폰", included: true },
-      { text: "신상품 얼리 액세스", included: false },
-      { text: "전용 고객 상담", included: false },
-    ],
-    popular: false,
-    cta: "엔트리 시작하기",
-  },
-  {
-    name: "프리미엄",
-    icon: "👑",
-    price: 29900,
-    period: "월",
-    description: "혜택은 2배! 가격은 혜택의 절반만!",
-    features: [
-      { text: "포인트 4배 적립", included: true },
-      { text: "기부 투표 참여 (10%)", included: true },
-      { text: "전 상품 무료 배송", included: true },
-      { text: "매월 10% 할인 쿠폰", included: true },
-      { text: "신상품 얼리 액세스", included: true },
-      { text: "전용 고객 상담", included: true },
-    ],
-    popular: true,
-    cta: "프리미엄 시작하기",
-  },
-];
-
-const faqs = [
-  {
-    q: "구독은 언제든지 취소할 수 있나요?",
-    a: "네, 언제든지 취소 가능합니다. 취소 시 다음 결제일부터 자동 해지되며, 이미 결제된 기간의 혜택은 유지됩니다.",
-  },
-  {
-    q: "기부 투표는 어떻게 진행되나요?",
-    a: "매월 초 3개의 기부 단체가 선정되며, 구독자들의 투표로 최종 기부처가 결정됩니다. 투표 결과는 매월 말 공개됩니다.",
-  },
-  {
-    q: "포인트는 어떻게 사용하나요?",
-    a: "적립된 포인트는 1포인트 = 1원으로 모든 상품 구매 시 사용 가능합니다. 유효기간은 적립일로부터 1년입니다.",
-  },
-  {
-    q: "배송은 어떻게 되나요?",
-    a: "모든 배송은 무지 박스로 진행되어 프라이버시를 보장합니다. 주문 후 1-2일 내 출고됩니다.",
-  },
-];
+import { subscriptionPlans, subscriptionFAQs } from "@/lib/data";
 
 export default function SubscribePage() {
   return (
@@ -80,7 +25,7 @@ export default function SubscribePage() {
       <section className="py-12 lg:py-16">
         <div className="mx-auto max-w-5xl px-4 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
-            {plans.map((plan) => (
+            {subscriptionPlans.map((plan) => (
               <Card
                 key={plan.name}
                 className={`relative rounded-3xl ${
@@ -184,7 +129,7 @@ export default function SubscribePage() {
             자주 묻는 질문
           </h2>
           <div className="space-y-4">
-            {faqs.map((faq, idx) => (
+            {subscriptionFAQs.map((faq, idx) => (
               <Card key={idx} className="rounded-2xl border-border">
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-foreground">{faq.q}</h3>

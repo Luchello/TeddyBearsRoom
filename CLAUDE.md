@@ -233,14 +233,18 @@ npm run lint         # ESLint 검사
 ---
 
 **Last Updated**: 2025-11-27
-**Status**: Frontend MVP + Neon Dark Mode Complete
+**Status**: Frontend Optimized (next/font, lucide-react, centralized data)
 **Recent Changes**:
+- ✅ **코드 최적화** (2025-11-27): 4개 모듈 병렬 개선
+  - 폰트: next/font/google (Noto Sans KR) 적용, @font-face 오류 수정
+  - 아이콘: Footer 인라인 SVG → lucide-react (Instagram, Twitter)
+  - 데이터: lib/types.ts + lib/data.ts 중앙화 (타입 안전성 ↑)
+  - UX: 모바일 메뉴 애니메이션 + aria-expanded 접근성 추가
 - ✅ **Light Mode 색상 변경** (2025-11-27): 코랄/피치/민트 파스텔 팔레트
-  - Primary: `#FCB9AA` (코랄), Secondary: `#FFDBCC` (피치), Accent: `#A2E1DB` (민트)
 - ✅ **Neon Dark Mode 완료** (2025-11-27): Matrix 클럽씬 스타일 다크모드 구현
-  - next-themes 기반 ThemeProvider, ThemeToggle 컴포넌트 추가
-  - 네온 컬러: Magenta `#FF00FF`, Cyan `#00FFFF`, Hot Pink `#FF6B9D`
-- ✅ **Cleanup 완료** (2025-11-26): 미사용 SVG 5개 삭제, 구독 설계 문서 3개 추가
 - ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + shadcn/ui, 4 pages, 3 components
 
-**Micro-Lesson**: next-themes hydration mismatch 방지는 mounted 상태 패턴 사용 (공식 권장)
+**Micro-Lessons**:
+- next/font preload=true로 폰트 로딩 최적화 (CLS 방지)
+- lucide-react 아이콘은 tree-shaking으로 번들 사이즈 최소화
+- 중앙화된 타입/데이터는 lib/ 디렉토리에 배치 (재사용성 ↑)
