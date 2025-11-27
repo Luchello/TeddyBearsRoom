@@ -234,8 +234,14 @@ npm run lint         # ESLint 검사
 ---
 
 **Last Updated**: 2025-11-27
-**Status**: E-commerce Features (Cart, Toast, Product Detail, Skeleton)
+**Status**: Full E-commerce Features (Wishlist, Filter, Auth, Checkout Skeletons)
 **Recent Changes**:
+- ✅ **Hyper-Parallel Swarm 5개 모듈** (2025-11-27): WAVE 1+2 병렬 구현
+  - Module A: Wishlist Store + WishlistButton + WishlistDrawer + ProductCard 통합
+  - Module B: Product Filter/Sort (URL-based, useProductFilter hook)
+  - Module C: Subscribe Page Enhancement (FAQAccordion + PlanComparisonTable)
+  - Module D: Auth Skeleton (authStore + AuthModal, Supabase 연동 준비)
+  - Module E: Payment Skeleton (checkoutStore + checkout page, TossPayments 준비)
 - ✅ **E-commerce 핵심 기능** (2025-11-27): 4개 모듈 병렬 구현
   - 상품 상세 페이지: /products/[id] Dynamic Route
   - 장바구니: Zustand persist + CartButton + CartDrawer
@@ -249,3 +255,6 @@ npm run lint         # ESLint 검사
 - Zustand persist로 localStorage 장바구니 자동 저장
 - React Context + setTimeout으로 Toast auto-dismiss 구현
 - Next.js 15+ params는 Promise로 use() 훅 필요
+- useSearchParams + useRouter로 URL 기반 필터 상태 관리
+- Skeleton 패턴: 외부 서비스(Supabase, TossPayments) 연동 전 UI 먼저 구현
+- useEffect 내 setState는 setTimeout으로 비동기화하여 lint 에러 방지

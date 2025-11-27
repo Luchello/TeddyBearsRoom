@@ -90,3 +90,59 @@ export interface Toast {
   message: string;
   type: ToastType;
 }
+
+// Wishlist
+export interface WishlistItem {
+  product: Product;
+  addedAt: number; // timestamp
+}
+
+// Auth (Skeleton)
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+  subscriptionTier: "none" | "standard" | "premium";
+  points: number;
+  createdAt: string;
+}
+
+export interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+}
+
+// Checkout (Skeleton)
+export type OrderStatus = "pending" | "paid" | "shipped" | "delivered" | "cancelled";
+
+export interface OrderItem {
+  product: Product;
+  quantity: number;
+  price: number;
+}
+
+export interface Order {
+  id: string;
+  items: OrderItem[];
+  totalPrice: number;
+  status: OrderStatus;
+  shippingAddress?: string;
+  createdAt: string;
+}
+
+export interface CheckoutState {
+  currentOrder: Order | null;
+  isProcessing: boolean;
+}
+
+// Filter
+export type SortOption = "latest" | "popular" | "price-low" | "price-high";
+
+export interface FilterState {
+  category: string;
+  sort: SortOption;
+  showNew: boolean;
+  showBest: boolean;
+}

@@ -6,6 +6,8 @@ import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { CartDrawer } from "@/components/CartDrawer";
+import { WishlistDrawer } from "@/components/WishlistDrawer";
+import { AuthModal } from "@/components/AuthModal";
 
 // Optimized font loading with next/font
 const notoSansKR = Noto_Sans_KR({
@@ -45,6 +47,8 @@ export default function RootLayout({
               <Footer />
             </div>
             <CartDrawer />
+            <WishlistDrawer />
+            <AuthModal />
           </ToastProvider>
         </ThemeProvider>
       </body>

@@ -1,16 +1,27 @@
+"use client";
+
+// ====================================
+// TeddyBear's Room - Subscribe Page
+// Enhanced subscription membership page
+// ====================================
+
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { FAQAccordion } from "@/components/FAQAccordion";
+import { PlanComparisonTable } from "@/components/PlanComparisonTable";
 import { subscriptionPlans, subscriptionFAQs } from "@/lib/data";
 
 export default function SubscribePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="bg-gradient-to-b from-accent/10 via-primary/5 to-background py-16 lg:py-24">
+      <section className="bg-gradient-to-b from-accent/10 via-primary/5 to-background py-16 lg:py-24 dark:from-primary/20 dark:via-secondary/10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 text-center">
-          <span className="text-6xl mb-4 block">🧸✨</span>
-          <h1 className="text-3xl font-bold text-foreground lg:text-5xl">
-            TeddyBear&apos;s Room<br />
+          <span className="text-6xl mb-4 block animate-float">🧸✨</span>
+          <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:neon-text">
+            TeddyBear&apos;s Room
+            <br />
             <span className="text-primary">멤버십</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
@@ -28,16 +39,16 @@ export default function SubscribePage() {
             {subscriptionPlans.map((plan) => (
               <Card
                 key={plan.name}
-                className={`relative rounded-3xl ${
+                className={`relative rounded-3xl transition-all duration-300 hover:-translate-y-1 ${
                   plan.popular
-                    ? "border-2 border-primary shadow-lg shadow-primary/20"
-                    : "border-border"
+                    ? "border-2 border-primary shadow-lg shadow-primary/20 dark:neon-card dark:neon-glow"
+                    : "border-border hover:shadow-lg dark:neon-card"
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="rounded-full bg-primary px-4 py-1 text-sm font-medium text-primary-foreground">
-                      인기 플랜
+                    <span className="rounded-full bg-primary px-4 py-1 text-sm font-medium text-primary-foreground dark:neon-glow-subtle">
+                      🔥 인기 플랜
                     </span>
                   </div>
                 )}
@@ -46,7 +57,7 @@ export default function SubscribePage() {
                   <h2 className="text-2xl font-bold text-foreground">{plan.name}</h2>
                   <p className="text-sm text-muted-foreground">{plan.description}</p>
                   <div className="mt-4">
-                    <span className="text-4xl font-bold text-primary">
+                    <span className="text-4xl font-bold text-primary dark:neon-text">
                       {plan.price.toLocaleString()}
                     </span>
                     <span className="text-muted-foreground">원/{plan.period}</span>
@@ -57,7 +68,7 @@ export default function SubscribePage() {
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-3">
                         {feature.included ? (
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-primary">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-primary dark:bg-primary/30">
                             ✓
                           </span>
                         ) : (
@@ -78,9 +89,9 @@ export default function SubscribePage() {
                 </CardContent>
                 <CardFooter className="p-8 pt-0">
                   <Button
-                    className={`w-full rounded-xl py-6 text-lg ${
+                    className={`w-full rounded-xl py-6 text-lg transition-all ${
                       plan.popular
-                        ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                        ? "bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
                         : "bg-muted hover:bg-muted/80 text-foreground"
                     }`}
                   >
@@ -90,13 +101,32 @@ export default function SubscribePage() {
               </Card>
             ))}
           </div>
+
+          {/* Value Message */}
+          <div className="mt-8 text-center">
+            <p className="text-sm text-muted-foreground">
+              💡 <span className="font-medium text-primary">프리미엄 팁:</span> 혜택은 스탠다드의 2배, 가격은 혜택의 절반만!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Table */}
+      <section className="py-12 lg:py-16 bg-muted/30 dark:bg-card/30">
+        <div className="mx-auto max-w-5xl px-4 lg:px-8">
+          <h2 className="text-2xl font-bold text-foreground text-center mb-8">
+            🔍 플랜 비교
+          </h2>
+          <div className="rounded-2xl bg-card border border-border overflow-hidden dark:neon-card">
+            <PlanComparisonTable />
+          </div>
         </div>
       </section>
 
       {/* Donation Section */}
-      <section className="bg-gradient-to-r from-secondary/10 to-primary/10 py-16">
+      <section className="bg-gradient-to-r from-secondary/10 to-primary/10 py-16 dark:from-secondary/20 dark:to-primary/20">
         <div className="mx-auto max-w-4xl px-4 lg:px-8 text-center">
-          <span className="text-5xl mb-4 block">💝</span>
+          <span className="text-5xl mb-4 block animate-float">💝</span>
           <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
             함께하는 기부
           </h2>
@@ -106,19 +136,25 @@ export default function SubscribePage() {
             구독자 여러분이 기부처를 직접 선택할 수 있어요.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl bg-card p-6">
+            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
               <span className="text-3xl">🌱</span>
               <p className="mt-2 font-medium text-foreground">환경 단체</p>
+              <p className="text-xs text-muted-foreground mt-1">지구 환경 보호</p>
             </div>
-            <div className="rounded-2xl bg-card p-6">
+            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
               <span className="text-3xl">🐾</span>
               <p className="mt-2 font-medium text-foreground">동물 복지</p>
+              <p className="text-xs text-muted-foreground mt-1">유기동물 보호</p>
             </div>
-            <div className="rounded-2xl bg-card p-6">
+            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
               <span className="text-3xl">👶</span>
               <p className="mt-2 font-medium text-foreground">아동 보호</p>
+              <p className="text-xs text-muted-foreground mt-1">취약 아동 지원</p>
             </div>
           </div>
+          <p className="mt-6 text-sm text-muted-foreground">
+            매월 초, 구독자 투표로 이달의 기부처가 결정됩니다 🗳️
+          </p>
         </div>
       </section>
 
@@ -126,17 +162,36 @@ export default function SubscribePage() {
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-3xl px-4 lg:px-8">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">
-            자주 묻는 질문
+            ❓ 자주 묻는 질문
           </h2>
-          <div className="space-y-4">
-            {subscriptionFAQs.map((faq, idx) => (
-              <Card key={idx} className="rounded-2xl border-border">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-foreground">{faq.q}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{faq.a}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <FAQAccordion faqs={subscriptionFAQs} />
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 bg-gradient-to-b from-background to-primary/5 dark:to-primary/10">
+        <div className="mx-auto max-w-2xl px-4 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
+            지금 시작해보세요! 🎉
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            첫 달 구독료 50% 할인 혜택을 놓치지 마세요.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
+            >
+              프리미엄 시작하기 👑
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-xl"
+              asChild
+            >
+              <Link href="/products">상품 먼저 둘러보기</Link>
+            </Button>
           </div>
         </div>
       </section>

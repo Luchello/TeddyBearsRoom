@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Heart } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
+import { useWishlistStore } from "@/store/wishlistStore";
 import { useToast } from "@/contexts/ToastContext";
 import type { Product } from "@/lib/types";
 
@@ -29,7 +31,9 @@ export function ProductCard({
   isBest,
 }: ProductCardProps) {
   const { addItem, openCart } = useCartStore();
+  const { toggleItem, isWishlisted } = useWishlistStore();
   const { addToast } = useToast();
+  const wishlisted = isWishlisted(id);
 
   const discountPercent = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
@@ -42,6 +46,17 @@ export function ProductCard({
     addItem(product);
     addToast(`${name}을(를) 장바구니에 담았어요!`, "success");
     openCart();
+  };
+
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const product: Product = { id, name, price, originalPrice, imageUrl, category, isNew, isBest };
+    toggleItem(product);
+    addToast(
+      wishlisted ? `${name}을(를) 찜 목록에서 제거했어요` : `${name}을(를) 찜했어요!`,
+      wishlisted ? "info" : "success"
+    );
   };
 
   return (
@@ -71,6 +86,19 @@ export function ProductCard({
               </span>
             )}
           </div>
+
+          {/* Wishlist Button */}
+          <button
+            onClick={handleToggleWishlist}
+            className={`absolute top-3 right-3 p-2 rounded-full transition-all z-10 ${
+              wishlisted
+                ? "bg-red-500 text-white"
+                : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 dark:bg-card/80"
+            }`}
+            aria-label={wishlisted ? "찜 해제" : "찜하기"}
+          >
+            <Heart className={`h-4 w-4 ${wishlisted ? "fill-current" : ""}`} />
+          </button>
 
           {/* Quick view button */}
           <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100 dark:group-hover:bg-black/40">

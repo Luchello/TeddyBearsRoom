@@ -6,10 +6,13 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CartButton } from "@/components/CartButton";
+import { WishlistButton } from "@/components/WishlistButton";
 import { navigation } from "@/lib/data";
+import { useAuthStore } from "@/store/authStore";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated, user, openLoginModal, logout } = useAuthStore();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-background/80 dark:border-primary/20">
@@ -26,6 +29,7 @@ export function Header() {
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 lg:hidden">
+          <WishlistButton />
           <CartButton />
           <ThemeToggle />
           <button
@@ -66,11 +70,30 @@ export function Header() {
 
         {/* CTA Button & Theme Toggle */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-3 lg:items-center">
+          <WishlistButton />
           <CartButton />
           <ThemeToggle />
-          <Button className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow">
-            로그인
-          </Button>
+          {isAuthenticated ? (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">
+                {user?.name || "회원"}님
+              </span>
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                onClick={logout}
+              >
+                로그아웃
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
+              onClick={openLoginModal}
+            >
+              로그인
+            </Button>
+          )}
         </div>
       </nav>
 
@@ -101,18 +124,49 @@ export function Header() {
               {item.name}
             </Link>
           ))}
-          <Button
-            className={`mt-4 w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle transition-all duration-200 ${
-              mobileMenuOpen
-                ? "translate-y-0 opacity-100"
-                : "translate-y-4 opacity-0"
-            }`}
-            style={{
-              transitionDelay: mobileMenuOpen ? `${navigation.length * 50}ms` : "0ms",
-            }}
-          >
-            로그인
-          </Button>
+          {isAuthenticated ? (
+            <div
+              className={`mt-4 flex items-center justify-between transition-all duration-200 ${
+                mobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-4 opacity-0"
+              }`}
+              style={{
+                transitionDelay: mobileMenuOpen ? `${navigation.length * 50}ms` : "0ms",
+              }}
+            >
+              <span className="text-sm text-muted-foreground">
+                {user?.name || "회원"}님 환영합니다
+              </span>
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                onClick={() => {
+                  logout();
+                  setMobileMenuOpen(false);
+                }}
+              >
+                로그아웃
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className={`mt-4 w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle transition-all duration-200 ${
+                mobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-4 opacity-0"
+              }`}
+              style={{
+                transitionDelay: mobileMenuOpen ? `${navigation.length * 50}ms` : "0ms",
+              }}
+              onClick={() => {
+                openLoginModal();
+                setMobileMenuOpen(false);
+              }}
+            >
+              로그인
+            </Button>
+          )}
         </div>
       </div>
     </header>
