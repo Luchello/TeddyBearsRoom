@@ -5,6 +5,10 @@
 
 /* ====================================
    TeddyBear's Room Design System
+
+   Light Mode: 파스텔 감성 귀여움
+   Dark Mode: 매트릭스 클럽씬 네온
+
    Brand Colors (Notion SSOT):
    - Primary: #D4A574 (파스텔 브라운)
    - Secondary: #B4D7E8 (파스텔 스카이블루)
@@ -63,8 +67,18 @@
   --color-tbr-accent: #F4E4A3;
   --color-tbr-brown-light: #E8D4BC;
   --color-tbr-brown-dark: #A67B5B;
+
+  /* Neon Colors for Dark Mode */
+  --color-neon-magenta: #FF00FF;
+  --color-neon-cyan: #00FFFF;
+  --color-neon-pink: #FF6B9D;
+  --color-neon-purple: #A855F7;
+  --color-neon-blue: #3B82F6;
 }
 
+/* ====================================
+   LIGHT MODE: 파스텔 감성 귀여움
+   ==================================== */
 :root {
   --radius: 1rem; /* TBR: 둥근 UI */
   --background: #FDF8F3; /* Warm cream background */
@@ -100,38 +114,41 @@
   --sidebar-ring: #D4A574;
 }
 
+/* ====================================
+   DARK MODE: 매트릭스 클럽씬 네온
+   ==================================== */
 .dark {
-  --background: #2C2419;
-  --foreground: #F5EDE5;
-  --card: #3D3225;
-  --card-foreground: #F5EDE5;
-  --popover: #3D3225;
-  --popover-foreground: #F5EDE5;
-  --primary: #D4A574;
-  --primary-foreground: #2C2419;
-  --secondary: #5A8FA8;
-  --secondary-foreground: #F5EDE5;
-  --muted: #4A3D32;
-  --muted-foreground: #B8A99A;
-  --accent: #C4B463;
-  --accent-foreground: #2C2419;
-  --destructive: #CF6679;
-  --border: #4A3D32;
-  --input: #4A3D32;
-  --ring: #D4A574;
-  --chart-1: #D4A574;
-  --chart-2: #5A8FA8;
-  --chart-3: #C4B463;
-  --chart-4: #8B7355;
-  --chart-5: #A67B5B;
-  --sidebar: #2C2419;
-  --sidebar-foreground: #F5EDE5;
-  --sidebar-primary: #D4A574;
-  --sidebar-primary-foreground: #2C2419;
-  --sidebar-accent: #4A3D32;
-  --sidebar-accent-foreground: #F5EDE5;
-  --sidebar-border: #4A3D32;
-  --sidebar-ring: #D4A574;
+  --background: #0A0A0F; /* Deep black with slight blue */
+  --foreground: #F0F0F5; /* Soft white */
+  --card: #12121A; /* Slightly lighter black */
+  --card-foreground: #F0F0F5;
+  --popover: #12121A;
+  --popover-foreground: #F0F0F5;
+  --primary: #FF00FF; /* Neon Magenta */
+  --primary-foreground: #0A0A0F;
+  --secondary: #00FFFF; /* Neon Cyan */
+  --secondary-foreground: #0A0A0F;
+  --muted: #1A1A25;
+  --muted-foreground: #A0A0B0;
+  --accent: #FF6B9D; /* Hot Pink */
+  --accent-foreground: #0A0A0F;
+  --destructive: #FF4757;
+  --border: #2A2A3A;
+  --input: #2A2A3A;
+  --ring: #FF00FF;
+  --chart-1: #FF00FF;
+  --chart-2: #00FFFF;
+  --chart-3: #FF6B9D;
+  --chart-4: #A855F7;
+  --chart-5: #3B82F6;
+  --sidebar: #0A0A0F;
+  --sidebar-foreground: #F0F0F5;
+  --sidebar-primary: #FF00FF;
+  --sidebar-primary-foreground: #0A0A0F;
+  --sidebar-accent: #1A1A25;
+  --sidebar-accent-foreground: #F0F0F5;
+  --sidebar-border: #2A2A3A;
+  --sidebar-ring: #FF00FF;
 }
 
 @layer base {
@@ -144,8 +161,136 @@
   }
 }
 
-/* TeddyBear's Room Custom Utilities */
+/* ====================================
+   CUTE ANIMATIONS (Light Mode Focus)
+   ==================================== */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* ====================================
+   NEON ANIMATIONS (Dark Mode Focus)
+   ==================================== */
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 5px var(--primary),
+      0 0 10px var(--primary),
+      0 0 20px var(--primary);
+  }
+  50% {
+    box-shadow:
+      0 0 10px var(--primary),
+      0 0 20px var(--primary),
+      0 0 40px var(--primary);
+  }
+}
+
+@keyframes neon-flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.8;
+  }
+  94% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.9;
+  }
+  97% {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ====================================
+   UTILITY CLASSES
+   ==================================== */
 @layer utilities {
+  /* Cute Animations */
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 1s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  /* TBR Base Styles */
   .tbr-gradient {
     background: linear-gradient(135deg, var(--color-tbr-primary) 0%, var(--color-tbr-accent) 100%);
   }
@@ -161,5 +306,80 @@
   .tbr-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+  }
+
+  /* Neon Effects (Dark Mode Only) */
+  .neon-glow {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  .neon-glow-subtle {
+    box-shadow:
+      0 0 5px var(--primary),
+      0 0 10px rgba(255, 0, 255, 0.3);
+  }
+
+  .neon-text {
+    text-shadow:
+      0 0 5px var(--primary),
+      0 0 10px var(--primary),
+      0 0 20px var(--primary);
+  }
+
+  .neon-border {
+    border: 1px solid var(--primary);
+    box-shadow:
+      0 0 5px var(--primary),
+      inset 0 0 5px rgba(255, 0, 255, 0.1);
+  }
+
+  .neon-gradient {
+    background: linear-gradient(135deg, #FF00FF 0%, #00FFFF 50%, #FF6B9D 100%);
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .neon-flicker {
+    animation: neon-flicker 4s infinite;
+  }
+
+  /* Dark mode specific neon card */
+  .dark .neon-card {
+    @apply rounded-2xl bg-card border;
+    border-color: rgba(255, 0, 255, 0.3);
+    box-shadow:
+      0 0 10px rgba(255, 0, 255, 0.1),
+      0 0 20px rgba(0, 255, 255, 0.05),
+      inset 0 0 30px rgba(255, 0, 255, 0.02);
+  }
+
+  .dark .neon-card:hover {
+    border-color: rgba(255, 0, 255, 0.5);
+    box-shadow:
+      0 0 15px rgba(255, 0, 255, 0.2),
+      0 0 30px rgba(0, 255, 255, 0.1),
+      inset 0 0 30px rgba(255, 0, 255, 0.05);
+  }
+
+  /* Dark mode button glow */
+  .dark .tbr-button:hover {
+    box-shadow:
+      0 0 10px var(--primary),
+      0 0 20px rgba(255, 0, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Matrix-style background pattern */
+  .dark .matrix-bg {
+    background-image:
+      radial-gradient(ellipse at top, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  }
+
+  /* Glassmorphism for dark mode */
+  .dark .glass {
+    background: rgba(18, 18, 26, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 0, 255, 0.1);
   }
 }

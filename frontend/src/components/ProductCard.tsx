@@ -29,23 +29,23 @@ export function ProductCard({
     : 0;
 
   return (
-    <Card className="group overflow-hidden rounded-2xl border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+    <Card className="group overflow-hidden rounded-2xl border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
       <Link href={`/products/${id}`}>
-        <div className="relative aspect-square overflow-hidden bg-muted">
+        <div className="relative aspect-square overflow-hidden bg-muted dark:bg-muted/50">
           {/* Placeholder for product image */}
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-            <span className="text-6xl">🧸</span>
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5">
+            <span className="text-6xl group-hover:animate-wiggle transition-transform">🧸</span>
           </div>
 
           {/* Badges */}
           <div className="absolute left-3 top-3 flex flex-col gap-1">
             {isNew && (
-              <span className="rounded-lg bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground">
+              <span className="rounded-lg bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground dark:neon-glow-subtle dark:shadow-[0_0_10px_var(--secondary)]">
                 NEW
               </span>
             )}
             {isBest && (
-              <span className="rounded-lg bg-accent px-2 py-1 text-xs font-medium text-accent-foreground">
+              <span className="rounded-lg bg-accent px-2 py-1 text-xs font-medium text-accent-foreground dark:bg-accent/80">
                 BEST
               </span>
             )}
@@ -57,10 +57,10 @@ export function ProductCard({
           </div>
 
           {/* Quick view button */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100 dark:group-hover:bg-black/40">
             <Button
               variant="secondary"
-              className="rounded-xl bg-white/90 text-foreground hover:bg-white"
+              className="rounded-xl bg-white/90 text-foreground hover:bg-white dark:bg-card/90 dark:text-foreground dark:hover:bg-card dark:neon-glow-subtle"
             >
               자세히 보기
             </Button>
@@ -69,9 +69,9 @@ export function ProductCard({
       </Link>
 
       <CardContent className="p-4">
-        <p className="text-xs text-muted-foreground">{category}</p>
+        <p className="text-xs text-muted-foreground dark:text-secondary/70">{category}</p>
         <Link href={`/products/${id}`}>
-          <h3 className="mt-1 font-medium text-foreground line-clamp-2 hover:text-primary transition-colors">
+          <h3 className="mt-1 font-medium text-foreground line-clamp-2 hover:text-primary transition-colors dark:hover:neon-text">
             {name}
           </h3>
         </Link>
@@ -79,7 +79,7 @@ export function ProductCard({
 
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <div className="flex items-baseline gap-2">
-          <span className="text-lg font-bold text-primary">
+          <span className="text-lg font-bold text-primary dark:neon-text">
             {price.toLocaleString()}원
           </span>
           {originalPrice && (
@@ -90,7 +90,7 @@ export function ProductCard({
         </div>
         <Button
           size="sm"
-          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground"
+          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
         >
           담기
         </Button>
