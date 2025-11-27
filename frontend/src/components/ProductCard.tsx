@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/cartStore";
+import { useToast } from "@/contexts/ToastContext";
+import type { Product } from "@/lib/types";
 
 interface ProductCardProps {
   id: string;
@@ -18,15 +23,26 @@ export function ProductCard({
   name,
   price,
   originalPrice,
-  imageUrl: _imageUrl,
+  imageUrl,
   category,
   isNew,
   isBest,
 }: ProductCardProps) {
-  void _imageUrl; // Reserved for future use with actual product images
+  const { addItem, openCart } = useCartStore();
+  const { addToast } = useToast();
+
   const discountPercent = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const product: Product = { id, name, price, originalPrice, imageUrl, category, isNew, isBest };
+    addItem(product);
+    addToast(`${name}을(를) 장바구니에 담았어요!`, "success");
+    openCart();
+  };
 
   return (
     <Card className="group overflow-hidden rounded-2xl border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
@@ -91,6 +107,7 @@ export function ProductCard({
         <Button
           size="sm"
           className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
+          onClick={handleAddToCart}
         >
           담기
         </Button>

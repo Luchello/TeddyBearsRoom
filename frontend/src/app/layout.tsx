@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ToastProvider } from "@/contexts/ToastContext";
+import { CartDrawer } from "@/components/CartDrawer";
 
 // Optimized font loading with next/font
 const notoSansKR = Noto_Sans_KR({
@@ -36,11 +38,14 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning className={notoSansKR.variable}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <ToastProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <CartDrawer />
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

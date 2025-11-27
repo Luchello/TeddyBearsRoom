@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CartButton } from "@/components/CartButton";
 import { navigation } from "@/lib/data";
 
 export function Header() {
@@ -25,6 +26,7 @@ export function Header() {
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 lg:hidden">
+          <CartButton />
           <ThemeToggle />
           <button
             type="button"
@@ -64,6 +66,7 @@ export function Header() {
 
         {/* CTA Button & Theme Toggle */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-3 lg:items-center">
+          <CartButton />
           <ThemeToggle />
           <Button className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow">
             로그인

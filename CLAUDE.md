@@ -135,9 +135,10 @@ Infra: Vercel + Vercel Edge CDN
 ## Business Context
 
 ### Subscription Model
-- 🐻 **엔트리**: 19,900원/월 (기부 5%, 포인트 2배)
-- 👑 **프리미엄**: 29,900원/월 (기부 10%, 포인트 4배)
-- 💡 **메시지**: "혜택은 엔트리의 두 배! 가격은 혜택의 절반만!"
+- 👤 **비회원**: 포인트 적립 0%
+- 🐻 **스탠다드**: 19,900원/월 (기부 5%, 포인트 5% 적립)
+- 👑 **프리미엄**: 29,900원/월 (기부 10%, 포인트 10% 적립)
+- 💡 **메시지**: "혜택은 스탠다드의 두 배! 가격은 혜택의 절반만!"
 
 ### 차별화 기능
 1. **구독 멤버십**: TossPayments 빌링키 기반 정기결제
@@ -233,18 +234,18 @@ npm run lint         # ESLint 검사
 ---
 
 **Last Updated**: 2025-11-27
-**Status**: Frontend Optimized (next/font, lucide-react, centralized data)
+**Status**: E-commerce Features (Cart, Toast, Product Detail, Skeleton)
 **Recent Changes**:
-- ✅ **코드 최적화** (2025-11-27): 4개 모듈 병렬 개선
-  - 폰트: next/font/google (Noto Sans KR) 적용, @font-face 오류 수정
-  - 아이콘: Footer 인라인 SVG → lucide-react (Instagram, Twitter)
-  - 데이터: lib/types.ts + lib/data.ts 중앙화 (타입 안전성 ↑)
-  - UX: 모바일 메뉴 애니메이션 + aria-expanded 접근성 추가
-- ✅ **Light Mode 색상 변경** (2025-11-27): 코랄/피치/민트 파스텔 팔레트
-- ✅ **Neon Dark Mode 완료** (2025-11-27): Matrix 클럽씬 스타일 다크모드 구현
-- ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + shadcn/ui, 4 pages, 3 components
+- ✅ **E-commerce 핵심 기능** (2025-11-27): 4개 모듈 병렬 구현
+  - 상품 상세 페이지: /products/[id] Dynamic Route
+  - 장바구니: Zustand persist + CartButton + CartDrawer
+  - Toast 알림: React Context + auto-dismiss
+  - 스켈레톤: ProductCardSkeleton 로딩 UI
+- ✅ **코드 최적화** (2025-11-27): 폰트, 아이콘, 데이터 중앙화
+- ✅ **Neon Dark Mode 완료** (2025-11-27): Matrix 클럽씬 스타일
+- ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + shadcn/ui
 
 **Micro-Lessons**:
-- next/font preload=true로 폰트 로딩 최적화 (CLS 방지)
-- lucide-react 아이콘은 tree-shaking으로 번들 사이즈 최소화
-- 중앙화된 타입/데이터는 lib/ 디렉토리에 배치 (재사용성 ↑)
+- Zustand persist로 localStorage 장바구니 자동 저장
+- React Context + setTimeout으로 Toast auto-dismiss 구현
+- Next.js 15+ params는 Promise로 use() 훅 필요

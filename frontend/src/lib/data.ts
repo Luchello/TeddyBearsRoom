@@ -120,22 +120,23 @@ export const productCategories = ["전체", "토이", "케어", "무드", "라�
 
 // Subscription Benefits (Home)
 export const subscriptionBenefits: Benefit[] = [
-  { icon: "🎁", title: "포인트 2배 적립", desc: "모든 구매에 포인트 2배" },
+  { icon: "🎁", title: "포인트 5% 적립", desc: "모든 구매에 포인트 5% 적립" },
   { icon: "💝", title: "기부 참여", desc: "매출의 5% 기부 투표 참여" },
   { icon: "🚚", title: "무료 배송", desc: "5만원 이상 무료 배송" },
   { icon: "🎀", title: "회원 전용 할인", desc: "매월 특별 할인 쿠폰" },
 ];
 
 // Subscription Plans
+// 포인트 적립률: 비회원 0%, 스탠다드 5%, 프리미엄 10%
 export const subscriptionPlans: SubscriptionPlan[] = [
   {
-    name: "엔트리",
+    name: "스탠다드",
     icon: "🐻",
     price: 19900,
     period: "월",
     description: "TeddyBear's Room을 시작하는 분들을 위한 플랜",
     features: [
-      { text: "포인트 2배 적립", included: true },
+      { text: "포인트 5% 적립", included: true },
       { text: "기부 투표 참여 (5%)", included: true },
       { text: "5만원 이상 무료 배송", included: true },
       { text: "매월 5% 할인 쿠폰", included: true },
@@ -143,7 +144,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       { text: "전용 고객 상담", included: false },
     ],
     popular: false,
-    cta: "엔트리 시작하기",
+    cta: "스탠다드 시작하기",
   },
   {
     name: "프리미엄",
@@ -152,7 +153,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
     period: "월",
     description: "혜택은 2배! 가격은 혜택의 절반만!",
     features: [
-      { text: "포인트 4배 적립", included: true },
+      { text: "포인트 10% 적립", included: true },
       { text: "기부 투표 참여 (10%)", included: true },
       { text: "전 상품 무료 배송", included: true },
       { text: "매월 10% 할인 쿠폰", included: true },
@@ -216,6 +217,6 @@ export const brandValues: BrandValue[] = [
 export const brandTimeline: TimelineItem[] = [
   { year: "2024", event: "TeddyBear's Room 브랜드 기획 시작" },
   { year: "2025", event: "온라인 쇼핑몰 런칭 예정" },
-  { year: "2025", event: "엔트리 & 프리미엄 멤버십 오픈" },
+  { year: "2025", event: "스탠다드 & 프리미엄 멤버십 오픈" },
   { year: "미래", event: "오프라인 경험 공간 오픈 예정" },
 ];

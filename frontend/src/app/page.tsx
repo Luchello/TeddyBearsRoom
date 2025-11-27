@@ -87,7 +87,7 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <span className="text-5xl mb-4 block animate-float">🐻</span>
             <h2 className="text-3xl font-bold text-foreground dark:neon-text dark:neon-flicker">
-              엔트리 멤버십
+              스탠다드 멤버십
             </h2>
             <p className="mt-2 text-muted-foreground">
               월 19,900원으로 특별한 혜택을 누리세요
