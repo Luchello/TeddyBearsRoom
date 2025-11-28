@@ -68,7 +68,7 @@ TeddyBear'sRoom/
 ## Notion Integration
 
 ### 주요 페이지
-- **🔧 기술 스택**: `2ac77770-ad42-8193-bd55-df8586d12aa7`
+- **🔧 기술 스택 & 아키텍처**: `2b877770-ad42-81c5-9a86-f1bd40c74f38`
 - **🐻 구독 멤버십**: Notion > 브랜딩 > 구독 멤버십 시스템
 - **업무 허브**: 12개 통합 페이지 (브랜드&디자인, 마케팅&콘텐츠 등)
 
@@ -97,7 +97,7 @@ UI: lucide-react 0.555.0 + next-themes 0.4.6
 Backend: Supabase (PostgreSQL) + Prisma 7 + Supabase Auth (✅ 완료)
 Database: Supabase Project (bwbqtknwfslviwqophtc) + Migration 완료
 Payments: TossPayments SDK (빌링키) (⏳ 미착수)
-Infra: Vercel (✅ 완료) + Vercel 환경변수 (⏳ 설정 대기)
+Infra: Vercel (✅ 완료) + Vercel 환경변수 (✅ 완료)
 ```
 
 ### Design System
@@ -225,7 +225,7 @@ npm run lint         # ESLint 검사
 ## References
 
 ### Notion Pages
-- [🔧 기술 스택](https://www.notion.so/2ac77770ad428193bd55df8586d12aa7) - 최신 업데이트: 2025-11-28
+- [🔧 기술 스택 & 아키텍처](https://www.notion.so/2b877770ad4281c59a86f1bd40c74f38) - 최신 업데이트: 2025-11-28
 - 🎨 브랜드 & 디자인: `2af77770-ad42-8162-bcd3-dd1ffd8e96a5`
 - 📣 마케팅 & 콘텐츠: `2af77770-ad42-816c-b6d0-c089f0139da3`
 - 📊 운영 & 분석: `2af77770-ad42-81ff-b7b8-cc6f89767d4e`
@@ -256,11 +256,14 @@ npm run lint         # ESLint 검사
 **Last Updated**: 2025-11-28
 **Status**: 🚀 **PRODUCTION LIVE** at https://teddybearsroom.com + Backend Active
 **Recent Changes**:
+- ✅ **상품 데이터 Seed 완료** (2025-11-28): 8개 상품 DB 등록
+  - 카테고리: 토이(1), 무드(2), 케어(3), 라이프(2)
+  - Local + Production API 테스트 통과
 - ✅ **Database Migration 완료** (2025-11-28): Supabase + Prisma 7 연동
   - Supabase Project: `bwbqtknwfslviwqophtc` (ap-southeast-2)
   - Migration: `20251128085948_init` (9개 테이블 생성)
   - API 테스트 통과: products ✅, users/me ✅, orders ✅
-  - 다음 단계: Vercel 환경변수 설정 필요
+  - ✅ Vercel 환경변수 설정 완료 (Production API 동작 확인)
 - ✅ **Backend Integration** (2025-11-28): Supabase + Prisma + API Routes
   - Supabase Auth: authStore.ts 연동 완료
   - Prisma 7: PostgreSQL ORM 설정 완료 (prisma.config.ts)
@@ -301,3 +304,4 @@ npm run lint         # ESLint 검사
 - Supabase SSR: createBrowserClient (client) vs createServerClient (server) 구분 사용
 - API Routes 인증: supabase.auth.getUser()로 서버사이드 인증 확인
 - Supabase Connection: DATABASE_URL(port 6543, pgbouncer) vs DIRECT_URL(port 5432) 구분
+- Prisma 7 Seed: seed.ts도 adapter 방식 필수, prisma.config.ts의 migrations.seed에 명령 설정

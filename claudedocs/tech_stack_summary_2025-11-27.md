@@ -22,7 +22,7 @@
 ║  ✅ Supabase Project      │  완료 (bwbqtknwfslviwqophtc)       ║
 ║  ✅ Database Migration    │  완료 (Prisma 7)                   ║
 ║  ⏳ Payment Integration   │  Skeleton Only                    ║
-║  ⏳ Vercel 환경변수       │  설정 대기                         ║
+║  ✅ Vercel 환경변수       │  설정 완료 (11-28)                 ║
 ╚═══════════════════════════════════════════════════════════════╝
 ```
 
@@ -172,7 +172,7 @@ Subscription, DonationOrg, DonationVote
 - [x] `npx prisma migrate dev --name init` 실행 완료
 - [x] Prisma Client 생성 완료 (v7.0.1)
 - [x] API 테스트 통과 (products, users/me, orders)
-- [ ] Vercel Dashboard 환경변수 추가 (Production 배포용)
+- [x] Vercel Dashboard 환경변수 추가 (Production 배포용) ✅ 완료
 
 ### Payment
 - [ ] TossPayments SDK 설치
@@ -189,7 +189,7 @@ Subscription, DonationOrg, DonationVote
 - [x] 도메인 연결: teddybearsroom.com / www.teddybearsroom.com
 - [x] SSL 인증서: Let's Encrypt (자동 발급)
 - [x] GitHub 연동: Luchello/TeddyBearsRoom (auto-deploy)
-- [ ] 환경변수 설정 (Supabase, TossPayments - 연동 시 추가 예정)
+- [x] 환경변수 설정 (Supabase 4개 변수 완료) ✅
 
 ---
 
@@ -261,7 +261,7 @@ Infrastructure:
 2. ✅ Prisma Schema 정의 (9개 모델)
 3. ✅ API Routes 구현 (products, orders, users/me)
 4. ✅ Auth 연동 (Supabase + authStore)
-5. ⏳ 환경변수 설정 (Vercel Dashboard - 대기)
+5. ✅ 환경변수 설정 (Vercel Dashboard - 완료)
 
 ### Phase 2: Payment 연동 ⏳
 1. TossPayments SDK 설치
