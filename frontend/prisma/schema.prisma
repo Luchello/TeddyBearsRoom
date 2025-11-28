@@ -1,0 +1,203 @@
+// ====================================
+// TeddyBear's Room - Prisma Schema
+// Database schema for E-commerce
+// ====================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ====================================
+// Auth (Supabase Auth handles this, but we reference the user)
+// ====================================
+
+model Profile {
+  id               String           @id @default(uuid())
+  email            String           @unique
+  name             String?
+  avatar           String?
+  subscriptionTier SubscriptionTier @default(NONE)
+  points           Int              @default(0)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  // Relations
+  orders    Order[]
+  cartItems CartItem[]
+  wishlist  WishlistItem[]
+
+  @@map("profiles")
+}
+
+enum SubscriptionTier {
+  NONE
+  STANDARD
+  PREMIUM
+}
+
+// ====================================
+// Products
+// ====================================
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  description   String?
+  price         Int // Price in KRW (원)
+  originalPrice Int? // Sale price comparison
+  imageUrl      String   @default("/placeholder.jpg")
+  category      String
+  isNew         Boolean  @default(false)
+  isBest        Boolean  @default(false)
+  stock         Int      @default(100)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  orderItems    OrderItem[]
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+
+  @@map("products")
+}
+
+// ====================================
+// Cart
+// ====================================
+
+model CartItem {
+  id        String   @id @default(uuid())
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, productId])
+  @@map("cart_items")
+}
+
+// ====================================
+// Wishlist
+// ====================================
+
+model WishlistItem {
+  id        String   @id @default(uuid())
+  addedAt   DateTime @default(now())
+
+  // Relations
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, productId])
+  @@map("wishlist_items")
+}
+
+// ====================================
+// Orders
+// ====================================
+
+model Order {
+  id              String      @id @default(uuid())
+  totalPrice      Int
+  status          OrderStatus @default(PENDING)
+  shippingAddress String?
+  shippingMemo    String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  profileId  String
+  profile    Profile     @relation(fields: [profileId], references: [id])
+  orderItems OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+  price    Int // Price at time of purchase
+
+  // Relations
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ====================================
+// Subscription (for future TossPayments integration)
+// ====================================
+
+model Subscription {
+  id           String             @id @default(uuid())
+  profileId    String             @unique
+  tier         SubscriptionTier
+  billingKey   String? // TossPayments billing key
+  startDate    DateTime           @default(now())
+  nextBilling  DateTime?
+  status       SubscriptionStatus @default(ACTIVE)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+
+// ====================================
+// Donation Voting (Future Feature)
+// ====================================
+
+model DonationOrg {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  votes DonationVote[]
+
+  @@map("donation_orgs")
+}
+
+model DonationVote {
+  id        String   @id @default(uuid())
+  profileId String
+  orgId     String
+  month     String // Format: "2025-01"
+  weight    Int      @default(1) // Standard: 1, Premium: 2
+  createdAt DateTime @default(now())
+
+  org DonationOrg @relation(fields: [orgId], references: [id])
+
+  @@unique([profileId, month])
+  @@map("donation_votes")
+}

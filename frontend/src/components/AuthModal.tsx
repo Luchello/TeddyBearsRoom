@@ -65,18 +65,22 @@ export function AuthModal() {
     e.preventDefault();
 
     if (modalMode === "login") {
-      const success = await login(email, password);
-      if (success) {
+      const result = await login(email, password);
+      if (result.success) {
         addToast("로그인되었어요! 환영합니다 🧸", "success");
       } else {
-        addToast("로그인에 실패했어요. 다시 시도해주세요.", "error");
+        addToast(result.error || "로그인에 실패했어요. 다시 시도해주세요.", "error");
       }
     } else {
-      const success = await register(email, password, name);
-      if (success) {
+      const result = await register(email, password, name);
+      if (result.success && !result.error) {
         addToast("회원가입이 완료되었어요! 환영합니다 🎉", "success");
+      } else if (result.success && result.error) {
+        // Email confirmation required
+        addToast(result.error, "info");
+        closeModal();
       } else {
-        addToast("회원가입에 실패했어요. 다시 시도해주세요.", "error");
+        addToast(result.error || "회원가입에 실패했어요. 다시 시도해주세요.", "error");
       }
     }
   };

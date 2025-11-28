@@ -6,6 +6,7 @@
 
 **TeddyBear'sRoom** - Next.js 기반 E-commerce & Notion 문서 관리 통합 프로젝트
 
+- **🌐 Live**: https://teddybearsroom.com
 - **목적**: 테디베어즈룸 쇼핑몰 + Notion 기반 문서 SSOT 관리
 - **전략**: Next.js Full Stack 직접 개발 (WordPress 전략 폐기)
 - **차별화**: 구독 멤버십, 스마트 사이즈 추천, 기부 투표 시스템
@@ -28,11 +29,17 @@ TeddyBear'sRoom/
 │   ├── subscription_briefing_2025-11-22.md
 │   ├── subscription_standard.md
 │   ├── tech_stack_summary_2025-11-19.md
+│   ├── tech_stack_summary_2025-11-27.md  # 최신 버전
 │   ├── 구독_시스템_개선_방안.txt
 │   └── 구독_시스템_최종_설계안.txt
-└── frontend/                   # Next.js 14 프론트엔드 애플리케이션
+└── frontend/                   # Next.js 16 프론트엔드 애플리케이션
+    ├── prisma.config.ts        # Prisma 7 설정 (defineConfig, dotenv)
+    ├── prisma/
+    │   ├── schema.prisma       # 데이터베이스 스키마 (9개 모델)
+    │   └── migrations/         # Migration 히스토리
     ├── src/
     │   ├── app/                # App Router 페이지
+    │   │   ├── api/            # API Routes (products, orders, users)
     │   │   ├── layout.tsx      # 루트 레이아웃 (Header/Footer)
     │   │   ├── page.tsx        # 홈페이지
     │   │   ├── globals.css     # TBR 디자인 시스템 (색상, 유틸리티)
@@ -46,7 +53,11 @@ TeddyBear'sRoom/
     │   │   ├── ProductCard.tsx # 상품 카드
     │   │   ├── ThemeProvider.tsx # next-themes Provider
     │   │   └── ThemeToggle.tsx # Light/Dark 모드 토글
-    │   └── lib/                # 유틸리티 함수
+    │   └── lib/
+    │       ├── supabase/       # Supabase 클라이언트 (client, server, middleware)
+    │       ├── prisma.ts       # Prisma 싱글톤
+    │       └── utils.ts        # 유틸리티 함수
+    ├── .env.local              # 환경변수 (gitignore)
     ├── package.json            # 의존성 관리
     ├── tailwind.config.ts      # Tailwind 설정
     └── tsconfig.json           # TypeScript 설정
@@ -70,30 +81,38 @@ TeddyBear'sRoom/
 4. mcp__notion__API-patch-page → 업데이트 (필요시)
 ```
 
-## Technology Stack (Latest: 2025-11-19)
+## Technology Stack (Latest: 2025-11-27)
 
-> 📌 **상세 내용**: [Notion 기술 스택 페이지](https://www.notion.so/2ac77770ad428193bd55df8586d12aa7)
+> 📌 **상세 내용**: [Notion 기술 스택 페이지](https://www.notion.so/2ac77770ad428193bd55df8586d12aa7) | [claudedocs/tech_stack_summary_2025-11-27.md](./claudedocs/tech_stack_summary_2025-11-27.md)
 
 ### ⚠️ 주요 변경사항
-- **TanStack Query 제거** (이유: Next.js 14 Server Components 완벽 호환)
-- Zustand는 장바구니 등 클라이언트 상태만 조건부 사용
+- **TanStack Query 제거** (이유: Next.js 16 Server Components 완벽 호환)
+- Zustand 5.0.8로 Cart, Wishlist, Auth, Checkout 상태 관리
 
 ### Core Stack
 ```yaml
-Frontend: Next.js 14 (App Router) + TypeScript + Tailwind CSS + shadcn/ui
-Backend: Supabase (PostgreSQL) + Prisma + Supabase Auth
-Payments: TossPayments SDK (빌링키)
-Infra: Vercel + Vercel Edge CDN
+Frontend: Next.js 16.0.4 (App Router) + React 19.2.0 + TypeScript 5 + Tailwind 4 + shadcn/ui
+State: Zustand 5.0.8 (localStorage persist)
+UI: lucide-react 0.555.0 + next-themes 0.4.6
+Backend: Supabase (PostgreSQL) + Prisma 7 + Supabase Auth (✅ 완료)
+Database: Supabase Project (bwbqtknwfslviwqophtc) + Migration 완료
+Payments: TossPayments SDK (빌링키) (⏳ 미착수)
+Infra: Vercel (✅ 완료) + Vercel 환경변수 (⏳ 설정 대기)
 ```
 
 ### Design System
-- **Color Palette** (Notion SSOT 기준):
-  - Primary: `#D4A574` (파스텔 브라운)
-  - Secondary: `#B4D7E8` (파스텔 스카이블루)
-  - Accent: `#F4E4A3` (파스텔 옐로우)
+- **Light Mode** (Coral/Peach/Mint):
+  - Background: `#FFF8F5` (크림)
+  - Primary: `#D4856B` (코랄)
+  - Secondary: `#F5D4C0` (피치)
+  - Accent: `#A8E0D0` (민트)
+- **Dark Mode** (Matrix Neon):
+  - Background: `#0a0a10` (매트릭스 블랙)
+  - Primary: `#00FF88` (네온 그린)
+  - Accent: `#00FFFF` (시안), `#FF3399` (핫핑크)
 - **Concept**: 파스텔 + 귀여움 + 페티시 전문화
 - **Shape**: `border-radius: 1rem+` (둥근 UI)
-- **Font**: Pretendard Rounded
+- **Font**: Noto Sans KR (next/font 최적화)
 
 ## Key Architecture Decisions
 
@@ -206,7 +225,7 @@ npm run lint         # ESLint 검사
 ## References
 
 ### Notion Pages
-- [🔧 기술 스택](https://www.notion.so/2ac77770ad428193bd55df8586d12aa7) - 최신 업데이트: 2025-11-19
+- [🔧 기술 스택](https://www.notion.so/2ac77770ad428193bd55df8586d12aa7) - 최신 업데이트: 2025-11-28
 - 🎨 브랜드 & 디자인: `2af77770-ad42-8162-bcd3-dd1ffd8e96a5`
 - 📣 마케팅 & 콘텐츠: `2af77770-ad42-816c-b6d0-c089f0139da3`
 - 📊 운영 & 분석: `2af77770-ad42-81ff-b7b8-cc6f89767d4e`
@@ -222,20 +241,36 @@ npm run lint         # ESLint 검사
   - `customer_interview_guide_2025-11-20.md` - 고객 인터뷰 가이드
   - `interview_recruiting_action_plan_2025-11-20.md` - 인터뷰 모집 액션 플랜
 - **기술 & 표준**
-  - `tech_stack_summary_2025-11-19.md` - 기술 스택 요약
+  - `tech_stack_summary_2025-11-27.md` - 기술 스택 요약 (최신)
+  - `tech_stack_summary_2025-11-19.md` - 기술 스택 초기 버전
   - `subscription_standard.md` - 구독 멤버십 표준
 - **구독 설계**
   - `subscription_briefing_2025-11-22.md` - 구독 시스템 브리핑
   - `구독_시스템_개선_방안.txt` - 구독 시스템 개선안
   - `구독_시스템_최종_설계안.txt` - 구독 시스템 최종 설계
 
-> 📁 **전체 문서**: `claudedocs/` 디렉토리에 12개 문서 보관 중 (전략/리서치/가이드/구독설계)
+> 📁 **전체 문서**: `claudedocs/` 디렉토리에 13개 문서 보관 중 (전략/리서치/가이드/구독설계/기술스택)
 
 ---
 
-**Last Updated**: 2025-11-27
-**Status**: Full E-commerce Features (Wishlist, Filter, Auth, Checkout Skeletons)
+**Last Updated**: 2025-11-28
+**Status**: 🚀 **PRODUCTION LIVE** at https://teddybearsroom.com + Backend Active
 **Recent Changes**:
+- ✅ **Database Migration 완료** (2025-11-28): Supabase + Prisma 7 연동
+  - Supabase Project: `bwbqtknwfslviwqophtc` (ap-southeast-2)
+  - Migration: `20251128085948_init` (9개 테이블 생성)
+  - API 테스트 통과: products ✅, users/me ✅, orders ✅
+  - 다음 단계: Vercel 환경변수 설정 필요
+- ✅ **Backend Integration** (2025-11-28): Supabase + Prisma + API Routes
+  - Supabase Auth: authStore.ts 연동 완료
+  - Prisma 7: PostgreSQL ORM 설정 완료 (prisma.config.ts)
+  - API Routes: /api/products, /api/orders, /api/users/me
+  - Middleware: Session 자동 갱신 + Protected Routes
+- ✅ **Production Deployment** (2025-11-28): Vercel + Custom Domain
+  - Live URL: https://teddybearsroom.com / https://www.teddybearsroom.com
+  - Vercel URL: https://teddy-bears-room.vercel.app
+  - SSL: Let's Encrypt (자동 발급)
+  - GitHub Auto-Deploy: Luchello/TeddyBearsRoom (master branch)
 - ✅ **Hyper-Parallel Swarm 5개 모듈** (2025-11-27): WAVE 1+2 병렬 구현
   - Module A: Wishlist Store + WishlistButton + WishlistDrawer + ProductCard 통합
   - Module B: Product Filter/Sort (URL-based, useProductFilter hook)
@@ -258,3 +293,11 @@ npm run lint         # ESLint 검사
 - useSearchParams + useRouter로 URL 기반 필터 상태 관리
 - Skeleton 패턴: 외부 서비스(Supabase, TossPayments) 연동 전 UI 먼저 구현
 - useEffect 내 setState는 setTimeout으로 비동기화하여 lint 에러 방지
+- Vercel monorepo 배포: Root Directory를 "frontend"로 설정, Framework Preset 확인 필수
+- Cloudflare DNS: Vercel 연결 시 A record (76.76.21.21) + CNAME (cname.vercel-dns.com)
+- Prisma 7: @prisma/adapter-pg 필수, tsconfig에서 prisma 폴더 exclude 필요
+- Prisma 7 Config: prisma.config.ts는 프로젝트 루트에 위치, defineConfig 사용
+- Prisma 7 dotenv: .env.local 로드를 위해 dotenv.config({ path: '.env.local' }) 명시 필요
+- Supabase SSR: createBrowserClient (client) vs createServerClient (server) 구분 사용
+- API Routes 인증: supabase.auth.getUser()로 서버사이드 인증 확인
+- Supabase Connection: DATABASE_URL(port 6543, pgbouncer) vs DIRECT_URL(port 5432) 구분
