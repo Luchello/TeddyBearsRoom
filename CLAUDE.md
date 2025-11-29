@@ -81,12 +81,13 @@ TeddyBear'sRoom/
 4. mcp__notion__API-patch-page → 업데이트 (필요시)
 ```
 
-## Technology Stack (Latest: 2025-11-27)
+## Technology Stack (Latest: 2025-11-29)
 
-> 📌 **상세 내용**: [Notion 기술 스택 페이지](https://www.notion.so/2ac77770ad428193bd55df8586d12aa7) | [claudedocs/tech_stack_summary_2025-11-27.md](./claudedocs/tech_stack_summary_2025-11-27.md)
+> 📌 **상세 내용**: [Notion 기술 스택 페이지](https://www.notion.so/2b877770ad4281c59a86f1bd40c74f38) | [claudedocs/tech_stack_summary_2025-11-27.md](./claudedocs/tech_stack_summary_2025-11-27.md)
 
-### ⚠️ 주요 변경사항
-- **TanStack Query 제거** (이유: Next.js 16 Server Components 완벽 호환)
+### ✅ 최근 완료
+- **Supabase 프로젝트 마이그레이션 완료** (2025-11-29)
+- TanStack Query 제거 (Next.js 16 Server Components 완벽 호환)
 - Zustand 5.0.8로 Cart, Wishlist, Auth, Checkout 상태 관리
 
 ### Core Stack
@@ -94,10 +95,11 @@ TeddyBear'sRoom/
 Frontend: Next.js 16.0.4 (App Router) + React 19.2.0 + TypeScript 5 + Tailwind 4 + shadcn/ui
 State: Zustand 5.0.8 (localStorage persist)
 UI: lucide-react 0.555.0 + next-themes 0.4.6
-Backend: Supabase (PostgreSQL) + Prisma 7 + Supabase Auth (✅ 완료)
-Database: Supabase Project (bwbqtknwfslviwqophtc) + Migration 완료
-Payments: TossPayments SDK (빌링키) (⏳ 미착수)
-Infra: Vercel (✅ 완료) + Vercel 환경변수 (✅ 완료)
+Backend: Supabase (PostgreSQL) + Prisma 7 + Supabase Auth ✅
+Database: Supabase Project bjnjbbdcwkooswvexiuh (Mumbai) ✅
+MCP: Supabase MCP 연결 완료 (.mcp.json) ✅
+Payments: TossPayments SDK (빌링키) ⏳
+Infra: Vercel + Custom Domain + 환경변수 ✅
 ```
 
 ### Design System
@@ -165,6 +167,11 @@ Infra: Vercel (✅ 완료) + Vercel 환경변수 (✅ 완료)
 3. **기부 투표**: Supabase Realtime 기반 실시간 투표
 
 ## MCP Server Usage
+
+### Supabase MCP (프로젝트 연결됨)
+- Project Ref: `bjnjbbdcwkooswvexiuh`
+- Config: `.mcp.json` (프로젝트 루트)
+- 기능: SQL 실행, Auth 관리, Storage, Edge Functions
 
 ### Notion MCP (필수)
 - `API-post-search`: 페이지 검색
@@ -253,41 +260,39 @@ npm run lint         # ESLint 검사
 
 ---
 
-**Last Updated**: 2025-11-28
-**Status**: 🚀 **PRODUCTION LIVE** at https://teddybearsroom.com + Backend Active
-**Recent Changes**:
-- ✅ **상품 데이터 Seed 완료** (2025-11-28): 8개 상품 DB 등록
-  - 카테고리: 토이(1), 무드(2), 케어(3), 라이프(2)
-  - Local + Production API 테스트 통과
-- ✅ **Database Migration 완료** (2025-11-28): Supabase + Prisma 7 연동
-  - Supabase Project: `bwbqtknwfslviwqophtc` (ap-southeast-2)
-  - Migration: `20251128085948_init` (9개 테이블 생성)
-  - API 테스트 통과: products ✅, users/me ✅, orders ✅
-  - ✅ Vercel 환경변수 설정 완료 (Production API 동작 확인)
-- ✅ **Backend Integration** (2025-11-28): Supabase + Prisma + API Routes
-  - Supabase Auth: authStore.ts 연동 완료
-  - Prisma 7: PostgreSQL ORM 설정 완료 (prisma.config.ts)
-  - API Routes: /api/products, /api/orders, /api/users/me
-  - Middleware: Session 자동 갱신 + Protected Routes
-- ✅ **Production Deployment** (2025-11-28): Vercel + Custom Domain
-  - Live URL: https://teddybearsroom.com / https://www.teddybearsroom.com
-  - Vercel URL: https://teddy-bears-room.vercel.app
-  - SSL: Let's Encrypt (자동 발급)
-  - GitHub Auto-Deploy: Luchello/TeddyBearsRoom (master branch)
-- ✅ **Hyper-Parallel Swarm 5개 모듈** (2025-11-27): WAVE 1+2 병렬 구현
-  - Module A: Wishlist Store + WishlistButton + WishlistDrawer + ProductCard 통합
-  - Module B: Product Filter/Sort (URL-based, useProductFilter hook)
-  - Module C: Subscribe Page Enhancement (FAQAccordion + PlanComparisonTable)
-  - Module D: Auth Skeleton (authStore + AuthModal, Supabase 연동 준비)
-  - Module E: Payment Skeleton (checkoutStore + checkout page, TossPayments 준비)
-- ✅ **E-commerce 핵심 기능** (2025-11-27): 4개 모듈 병렬 구현
-  - 상품 상세 페이지: /products/[id] Dynamic Route
-  - 장바구니: Zustand persist + CartButton + CartDrawer
-  - Toast 알림: React Context + auto-dismiss
-  - 스켈레톤: ProductCardSkeleton 로딩 UI
-- ✅ **코드 최적화** (2025-11-27): 폰트, 아이콘, 데이터 중앙화
-- ✅ **Neon Dark Mode 완료** (2025-11-27): Matrix 클럽씬 스타일
-- ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + shadcn/ui
+**Last Updated**: 2025-11-29
+**Status**: ✅ **Production Ready** - https://teddybearsroom.com
+
+---
+
+## 📈 Recent Changes
+
+### 2025-11-29: Supabase 프로젝트 마이그레이션 완료 ✅
+```
+OLD → NEW Project Migration (100% Complete)
+├── ✅ .env.local 환경변수 업데이트
+├── ✅ Database Schema 재생성 (9개 테이블)
+├── ✅ 상품 데이터 Seed (8개 상품)
+├── ✅ Vercel 환경변수 업데이트
+├── ✅ Production Redeploy 완료
+└── ✅ Live Site 검증 통과
+
+NEW Project: bjnjbbdcwkooswvexiuh (Mumbai)
+OLD Project: bwbqtknwfslviwqophtc (DEPRECATED)
+```
+
+### 2025-11-28: Backend Integration + Production Deployment
+- ✅ Supabase Auth + Prisma 7 + API Routes
+- ✅ Vercel 배포 + Custom Domain (teddybearsroom.com)
+- ✅ SSL 인증서 (Let's Encrypt)
+
+### 2025-11-27: E-commerce 핵심 기능
+- ✅ 장바구니/위시리스트 (Zustand persist)
+- ✅ 상품 상세/필터/정렬
+- ✅ Matrix Neon Dark Mode
+
+### 2025-11-26: Frontend MVP
+- ✅ Next.js 16 + shadcn/ui 기반 구축
 
 **Micro-Lessons**:
 - Zustand persist로 localStorage 장바구니 자동 저장

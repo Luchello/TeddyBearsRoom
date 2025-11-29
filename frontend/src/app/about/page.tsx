@@ -1,5 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { brandValues, brandTimeline } from "@/lib/data";
+import { Heart, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -109,8 +112,55 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Donation Summary */}
+      <section className="bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 py-16 lg:py-20">
+        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-6">
+              <Heart className="w-8 h-8 text-primary" />
+            </div>
+            <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+              함께하는 나눔
+            </h2>
+            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+              테디베어즈룸 멤버십 회원의 구매금액 일부는 좋은 곳에 기부됩니다.
+              <br />
+              여러분의 구매가 따뜻한 나눔으로 이어집니다.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 max-w-lg mx-auto">
+            <Card className="rounded-2xl bg-primary/10">
+              <CardContent className="p-6 text-center">
+                <span className="text-2xl">🐻</span>
+                <p className="font-semibold text-foreground mt-2">스탠다드</p>
+                <p className="text-2xl font-bold text-primary">5%</p>
+                <p className="text-sm text-muted-foreground">기부</p>
+              </CardContent>
+            </Card>
+            <Card className="rounded-2xl bg-accent/10">
+              <CardContent className="p-6 text-center">
+                <span className="text-2xl">👑</span>
+                <p className="font-semibold text-foreground mt-2">프리미엄</p>
+                <p className="text-2xl font-bold text-primary">10%</p>
+                <p className="text-sm text-muted-foreground">기부</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Button variant="outline" asChild>
+              <Link href="/donation">
+                기부 현황 자세히 보기
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Contact */}
-      <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-16">
+      <section className="bg-muted/30 py-16">
         <div className="mx-auto max-w-4xl px-4 lg:px-8 text-center">
           <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
             궁금한 점이 있으신가요?

@@ -19,6 +19,7 @@ export const navigation: NavItem[] = [
   { name: "홈", href: "/" },
   { name: "상품", href: "/products" },
   { name: "구독", href: "/subscribe" },
+  { name: "기부", href: "/donation" },
   { name: "소개", href: "/about" },
 ];
 
@@ -36,6 +37,7 @@ export const footerLinks: FooterLinks = {
   ],
   company: [
     { name: "회사 소개", href: "/about" },
+    { name: "기부 현황", href: "/donation" },
     { name: "이용약관", href: "/terms" },
     { name: "개인정보처리방침", href: "/privacy" },
   ],
@@ -121,13 +123,14 @@ export const productCategories = ["전체", "토이", "케어", "무드", "라�
 // Subscription Benefits (Home)
 export const subscriptionBenefits: Benefit[] = [
   { icon: "🎁", title: "포인트 5% 적립", desc: "모든 구매에 포인트 5% 적립" },
-  { icon: "💝", title: "기부 참여", desc: "매출의 5% 기부 투표 참여" },
+  { icon: "💝", title: "기부 참여", desc: "구매금액 일부가 기부됩니다" },
   { icon: "🚚", title: "무료 배송", desc: "5만원 이상 무료 배송" },
   { icon: "🎀", title: "회원 전용 할인", desc: "매월 특별 할인 쿠폰" },
 ];
 
 // Subscription Plans
 // 포인트 적립률: 비회원 0%, 스탠다드 5%, 프리미엄 10%
+// 기부 비율: 스탠다드 5%, 프리미엄 10%
 export const subscriptionPlans: SubscriptionPlan[] = [
   {
     name: "스탠다드",
@@ -137,7 +140,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
     description: "TeddyBear's Room을 시작하는 분들을 위한 플랜",
     features: [
       { text: "포인트 5% 적립", included: true },
-      { text: "기부 투표 참여 (5%)", included: true },
+      { text: "구매금액 5% 기부", included: true },
       { text: "5만원 이상 무료 배송", included: true },
       { text: "매월 5% 할인 쿠폰", included: true },
       { text: "신상품 얼리 액세스", included: false },
@@ -154,7 +157,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
     description: "혜택은 2배! 가격은 혜택의 절반만!",
     features: [
       { text: "포인트 10% 적립", included: true },
-      { text: "기부 투표 참여 (10%)", included: true },
+      { text: "구매금액 10% 기부", included: true },
       { text: "전 상품 무료 배송", included: true },
       { text: "매월 10% 할인 쿠폰", included: true },
       { text: "신상품 얼리 액세스", included: true },
@@ -172,8 +175,8 @@ export const subscriptionFAQs: FAQ[] = [
     a: "네, 언제든지 취소 가능합니다. 취소 시 다음 결제일부터 자동 해지되며, 이미 결제된 기간의 혜택은 유지됩니다.",
   },
   {
-    q: "기부 투표는 어떻게 진행되나요?",
-    a: "매월 초 3개의 기부 단체가 선정되며, 구독자들의 투표로 최종 기부처가 결정됩니다. 투표 결과는 매월 말 공개됩니다.",
+    q: "기부는 어떻게 진행되나요?",
+    a: "구독 회원의 구매금액 일부(스탠다드 5%, 프리미엄 10%)가 분기별로 선정된 기부 단체에 전달됩니다. 기부 내역은 '기부' 페이지에서 투명하게 공개됩니다.",
   },
   {
     q: "포인트는 어떻게 사용하나요?",
@@ -203,7 +206,7 @@ export const brandValues: BrandValue[] = [
     icon: "💝",
     title: "함께하는 가치",
     description:
-      "매출의 일부를 사회에 환원합니다. 구독자가 직접 기부처를 선택하는 참여형 기부 시스템을 운영해요.",
+      "매출의 일부를 사회에 환원합니다. 구독 회원의 구매금액 일부가 기부로 이어지며, 모든 내역을 투명하게 공개해요.",
   },
   {
     icon: "✨",
