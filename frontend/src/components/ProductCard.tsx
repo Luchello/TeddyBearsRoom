@@ -121,7 +121,12 @@ export function ProductCard({
               <img
                 src="/tbr_logo.png"
                 alt={name}
-                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0"
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 dark:hidden"
+              />
+              <img
+                src="/tbr_logo_dark.png"
+                alt={name}
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 hidden dark:block"
               />
             </div>
 

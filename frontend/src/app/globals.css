@@ -75,10 +75,13 @@
    Vibe: Soft, Fluffy, Unexpectedly Cute
    ==================================== */
 :root {
-  --radius: 1.5rem; /* Extra rounded for cuteness */
-  
-  --background: #FFF0F5; /* Lavender Blush - Soft Creamy Pink */
-  --foreground: #4A4A4A; /* Soft Charcoal */
+  --radius: 1.5rem;
+  /* Extra rounded for cuteness */
+
+  --background: #FFF0F5;
+  /* Lavender Blush - Soft Creamy Pink */
+  --foreground: #4A4A4A;
+  /* Soft Charcoal */
 
   --card: #FFFFFF;
   --card-foreground: #4A4A4A;
@@ -86,22 +89,28 @@
   --popover: #FFFFFF;
   --popover-foreground: #4A4A4A;
 
-  --primary: #FFB7B2; /* Melon - Soft Coral Pink */
+  --primary: #FFB7B2;
+  /* Melon - Soft Coral Pink */
   --primary-foreground: #FFFFFF;
 
-  --secondary: #B5EAD7; /* Magic Mint */
+  --secondary: #B5EAD7;
+  /* Magic Mint */
   --secondary-foreground: #4A4A4A;
 
-  --muted: #E2F0CB; /* Dirty White/Greenish */
+  --muted: #E2F0CB;
+  /* Dirty White/Greenish */
   --muted-foreground: #888888;
 
-  --accent: #C7CEEA; /* Periwinkle */
+  --accent: #C7CEEA;
+  /* Periwinkle */
   --accent-foreground: #4A4A4A;
 
-  --destructive: #FF9AA2; /* Salmon Pink */
+  --destructive: #FF9AA2;
+  /* Salmon Pink */
   --destructive-foreground: #FFFFFF;
 
-  --border: #FFDAC1; /* Peach */
+  --border: #FFDAC1;
+  /* Peach */
   --input: #FFFFFF;
   --ring: #FFB7B2;
 
@@ -122,52 +131,48 @@
 }
 
 /* ====================================
-   DARK MODE: Latex Matrix Club
-   Vibe: Shiny, Wet, Neon, Fetish
+   DARK MODE: 네온 매트릭스 (Neon Matrix)
+   Deep Black & Neon Green 💚
    ==================================== */
 .dark {
-  --background: #050505; /* Deepest Black */
-  --foreground: #E0E0E0; /* Off-white */
-
-  --card: #121212; /* Dark Grey */
-  --card-foreground: #E0E0E0;
-
-  --popover: #121212;
-  --popover-foreground: #E0E0E0;
-
-  --primary: #FF00FF; /* Neon Magenta */
+  --background: #050505;
+  /* 딥 블랙 */
+  --foreground: #F0FFF4;
+  /* 소프트 그린 화이트 */
+  --card: #0A0A0A;
+  /* 다크 카드 */
+  --card-foreground: #F0FFF4;
+  --popover: #0A0A0A;
+  --popover-foreground: #F0FFF4;
+  --primary: #00FF41;
+  /* 네온 그린 💚 */
   --primary-foreground: #000000;
-
-  --secondary: #00FF41; /* Matrix Green */
-  --secondary-foreground: #000000;
-
-  --muted: #1A1A1A;
-  --muted-foreground: #A0A0A0;
-
-  --accent: #9D00FF; /* Electric Purple */
-  --accent-foreground: #FFFFFF;
-
-  --destructive: #FF0000; /* Pure Red */
-  --destructive-foreground: #FFFFFF;
-
-  --border: #333333; /* Dark Grey Shine */
-  --input: #0A0A0A;
-  --ring: #FF00FF;
-
-  --chart-1: #FF00FF;
-  --chart-2: #00FF41;
-  --chart-3: #9D00FF;
-  --chart-4: #FFFF00;
-  --chart-5: #00FFFF;
-
+  --secondary: #008F11;
+  /* 매트릭스 그린 */
+  --secondary-foreground: #F0FFF4;
+  --muted: #111111;
+  --muted-foreground: #4A6A4A;
+  --accent: #39FF14;
+  /* 브라이트 네온 */
+  --accent-foreground: #000000;
+  --destructive: #FF3333;
+  --border: #1A2A1A;
+  /* 그린 틴트 보더 */
+  --input: #111111;
+  --ring: #00FF41;
+  --chart-1: #00FF41;
+  --chart-2: #008F11;
+  --chart-3: #39FF14;
+  --chart-4: #003B00;
+  --chart-5: #CCFFCC;
   --sidebar: #050505;
-  --sidebar-foreground: #E0E0E0;
-  --sidebar-primary: #FF00FF;
+  --sidebar-foreground: #F0FFF4;
+  --sidebar-primary: #00FF41;
   --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #E0E0E0;
-  --sidebar-border: #333333;
-  --sidebar-ring: #FF00FF;
+  --sidebar-accent: #111111;
+  --sidebar-accent-foreground: #F0FFF4;
+  --sidebar-border: #1A2A1A;
+  --sidebar-ring: #00FF41;
 }
 
 @layer base {
@@ -175,6 +180,7 @@
     border-color: var(--border);
     outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
   }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
@@ -190,11 +196,12 @@
    ==================================== */
 
 @layer utilities {
+
   /* 🐾 Furry Interactions */
   .hover-ear-twitch:hover {
     animation: ear-twitch 0.5s ease-in-out;
   }
-  
+
   .hover-tail-wag:hover {
     animation: tail-wag 0.8s ease-in-out infinite;
   }
@@ -206,7 +213,7 @@
   /* 💧 Latex/Wet Effects */
   .latex-shine {
     background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-    box-shadow: 
+    box-shadow:
       inset 2px 2px 5px rgba(255, 255, 255, 0.1),
       inset -2px -2px 5px rgba(0, 0, 0, 0.8);
     position: relative;
@@ -220,35 +227,67 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
     transform: rotate(45deg);
     pointer-events: none;
   }
 
-  .text-neon-glow {
-    text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 20px var(--primary);
+  .neon-text {
+    text-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, 0 0 20px #00FF41;
   }
 
-  .border-neon-glow {
-    box-shadow: 0 0 5px var(--primary), inset 0 0 5px var(--primary);
+  .neon-border {
+    box-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, inset 0 0 5px #00FF41;
+    border-color: #00FF41;
   }
 }
 
 /* Keyframes */
 @keyframes ear-twitch {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
 }
 
 @keyframes tail-wag {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  75% { transform: rotate(-5deg); }
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(5deg);
+  }
+
+  75% {
+    transform: rotate(-5deg);
+  }
 }
 
 @keyframes drip {
-  0% { transform: translateY(0) scale(1); opacity: 0.8; }
-  80% { transform: translateY(20px) scale(1.1); opacity: 1; }
-  100% { transform: translateY(40px) scale(0); opacity: 0; }
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+
+  80% {
+    transform: translateY(20px) scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(40px) scale(0);
+    opacity: 0;
+  }
 }

@@ -155,7 +155,13 @@ export function Footer() {
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
-                    className="object-contain drop-shadow-md"
+                    className="object-contain drop-shadow-md dark:hidden"
+                  />
+                  <Image
+                    src="/tbr_logo_dark.png"
+                    alt="TeddyBear's Room Logo"
+                    fill
+                    className="object-contain drop-shadow-md hidden dark:block"
                   />
                 </div>
                 <div className="flex flex-col">

@@ -263,12 +263,28 @@ npm run lint         # ESLint 검사
 
 ---
 
-**Last Updated**: 2025-11-29
+**Last Updated**: 2025-11-30
 **Status**: ✅ **Production Ready** - https://teddybearsroom.com
 
 ---
 
 ## 📈 Recent Changes
+
+### 2025-11-30: Dark Mode Logo Variant & CSS Enhancement ✅
+```
+Dark Mode Logo System + CSS Architecture Improvements
+├── ✅ 다크모드 로고 추가
+│   └── public/tbr_logo_dark.png (Matrix Neon 스타일)
+├── ✅ 컴포넌트별 로고 분기 적용
+│   ├── Header.tsx: dark:hidden / hidden dark:block 패턴
+│   ├── Footer.tsx: 동일 패턴 적용
+│   ├── ProductCard.tsx: 상품 카드 내 로고 분기
+│   └── page.tsx: Hero 섹션 로고 분기
+├── ✅ globals.css 대규모 리팩토링
+│   ├── +135 lines / -76 lines
+│   └── 다크모드 CSS 변수 최적화
+└── ✅ 빌드 테스트 통과
+```
 
 ### 2025-11-29: CSS Architecture Fix + Design System Enhancement ✅
 ```
@@ -373,3 +389,4 @@ OLD Project: bwbqtknwfslviwqophtc (DEPRECATED)
 - SVG Path: d 속성에 잘못된 문자열 포함 시 silent fail → 렌더링 자체가 안됨
 - Age Verification: localStorage + useEffect로 페이지 진입 시 성인 인증 상태 확인
 - CSS Dark Mode Only: `opacity-0 dark:opacity-100`으로 다크모드 전용 요소 구현
+- Dark Mode Logo Pattern: `dark:hidden` + `hidden dark:block` 조합으로 라이트/다크 로고 분기 구현

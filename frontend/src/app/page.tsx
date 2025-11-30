@@ -74,11 +74,13 @@ export default function HomePage() {
               {/* Abstract Shape representing "Soft vs Hard" */}
               <div className="relative w-[300px] h-[400px] sm:w-[400px] sm:h-[500px]">
                 {/* Back Card (Dark Mode / Latex) */}
-                <div className="absolute inset-0 rounded-[3rem] bg-neutral-900 border border-primary/50 shadow-[0_0_50px_rgba(255,0,255,0.3)] rotate-6 scale-95 dark:rotate-0 dark:scale-100 transition-all duration-700 ease-out overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent)]" />
-                  <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-primary/20 to-transparent" />
-                  <div className="flex items-center justify-center h-full">
-                    <span className="text-9xl filter blur-sm animate-pulse opacity-50">⛓️</span>
+                <div className="absolute inset-0 rounded-[3rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
+                  <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(0,255,65,0.5)] filter group-hover:brightness-125 transition-all duration-300">
+                    <img src="/tbr_logo_dark.png" alt="TBR Logo Dark" className="w-full h-full object-contain" />
+                  </div>
+                  <div className="absolute bottom-10 px-6 py-2 bg-black/80 border border-primary/50 rounded-full shadow-[0_0_20px_rgba(0,255,65,0.3)] text-sm font-bold tracking-wider uppercase text-primary animate-pulse">
+                    Enter The Void
                   </div>
                 </div>
 

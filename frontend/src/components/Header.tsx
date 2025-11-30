@@ -65,7 +65,14 @@ export function Header() {
               src="/tbr_logo.png"
               alt="TeddyBear's Room Logo"
               fill
-              className="object-contain drop-shadow-md"
+              className="object-contain drop-shadow-md dark:hidden"
+              priority
+            />
+            <Image
+              src="/tbr_logo_dark.png"
+              alt="TeddyBear's Room Logo"
+              fill
+              className="object-contain drop-shadow-md hidden dark:block"
               priority
             />
           </div>
