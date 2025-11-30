@@ -19,15 +19,20 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "TeddyBear's Room | 파스텔 감성 프라이빗 셀프케어",
-  description: "귀엽고 아늑한 분위기의 프라이빗 셀프케어 브랜드. 엄선된 고품질 상품과 따뜻한 경험을 제공합니다.",
-  keywords: ["성인용품", "셀프케어", "프라이빗", "테디베어즈룸", "TeddyBear's Room"],
+  title: "TeddyBear's Room | 지뢰계 감성 프라이빗 셀프케어",
+  description: "지뢰계 감성의 프라이빗 셀프케어 브랜드. 엄선된 고품질 상품과 따뜻한 경험을 제공합니다. ♡",
+  keywords: ["성인용품", "셀프케어", "프라이빗", "테디베어즈룸", "TeddyBear's Room", "지뢰계"],
   authors: [{ name: "TeddyBear's Room" }],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/logo.png",
+  },
   openGraph: {
-    title: "TeddyBear's Room",
-    description: "파스텔 감성의 프라이빗 셀프케어",
+    title: "TeddyBear's Room ♡",
+    description: "지뢰계 감성의 프라이빗 셀프케어",
     type: "website",
     locale: "ko_KR",
+    images: ["/logo.png"],
   },
 };
 

@@ -5,14 +5,16 @@
 
 /* ====================================
    TeddyBear's Room Design System
+   🎀 지뢰계 (Jirai-kei) Edition 🎀
 
-   Light Mode: 파스텔 감성 귀여움
-   Dark Mode: 매트릭스 클럽씬 네온
+   Light Mode: 파스텔 핑크 & 라벤더
+   Dark Mode: 다크 & 핫핑크 네온
 
-   Brand Colors (Notion SSOT):
-   - Primary: #FCB9AA (파스텔 코랄)
-   - Secondary: #FFDBCC (파스텔 피치)
-   - Accent: #A2E1DB (파스텔 민트)
+   Brand Colors (Updated 2025-11-29):
+   - Background: #FFF5F8 (핑크 틴트)
+   - Primary: #FFB6C1 (파스텔 핑크)
+   - Secondary: #F5D0E0 (라이트 핑크)
+   - Accent: #C5A3FF (라벤더)
    ==================================== */
 
 @theme inline {
@@ -54,325 +56,922 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* TeddyBear's Room Custom Colors */
-  --color-tbr-primary: #FCB9AA;
-  --color-tbr-secondary: #FFDBCC;
-  --color-tbr-accent: #A2E1DB;
-  --color-tbr-brown-light: #E8D4BC;
-  --color-tbr-brown-dark: #A67B5B;
+  /* 🎀 지뢰계 Custom Colors - 파스텔 핑크 & 라벤더 */
+  --color-jirai-pink: #FFB6C1;
+  --color-jirai-pink-light: #FFD4DB;
+  --color-jirai-pink-dark: #FF8FAA;
+  --color-jirai-lavender: #C5A3FF;
+  --color-jirai-lavender-light: #E0D0FF;
+  --color-jirai-cream: #FFF5F8;
+  --color-jirai-rose: #FF69B4;
+  --color-jirai-purple: #9D4EDD;
+  --color-jirai-deep-pink: #FF1493;
+  --color-jirai-black: #0D0D0D;
 
-  /* Neon Colors for Dark Mode */
-  --color-neon-magenta: #FF00FF;
-  --color-neon-cyan: #00FFFF;
-  --color-neon-pink: #FF6B9D;
-  --color-neon-purple: #A855F7;
-  --color-neon-blue: #3B82F6;
+  /* Heart & Ribbon accent colors */
+  --color-heart-red: #FF6B6B;
+  --color-ribbon-pink: #FF85A2;
+  --color-star-gold: #FFD700;
+  --color-sparkle: #FFE4EC;
 }
 
 /* ====================================
-   LIGHT MODE: 파스텔 감성 귀여움
+   LIGHT MODE: 지뢰계 파스텔
+   Soft Pink & Lavender Dream ♡
    ==================================== */
 :root {
-  --radius: 1rem; /* TBR: 둥근 UI */
-  --background: #FDF8F3; /* Warm cream background */
-  --foreground: #4A3728; /* Dark brown text */
-  --card: #FFFFFF;
-  --card-foreground: #4A3728;
-  --popover: #FFFFFF;
-  --popover-foreground: #4A3728;
-  --primary: #FCB9AA; /* TBR Primary: 파스텔 코랄 */
-  --primary-foreground: #FFFFFF;
-  --secondary: #FFDBCC; /* TBR Secondary: 파스텔 피치 */
-  --secondary-foreground: #4A3728;
-  --muted: #FFF5F0;
-  --muted-foreground: #7D6B5D;
-  --accent: #A2E1DB; /* TBR Accent: 파스텔 민트 */
-  --accent-foreground: #2C5F5A;
-  --destructive: #E57373;
-  --border: #FFE4D6;
-  --input: #FFE4D6;
-  --ring: #FCB9AA;
-  --chart-1: #FCB9AA;
-  --chart-2: #FFDBCC;
-  --chart-3: #A2E1DB;
-  --chart-4: #FFE4D6;
-  --chart-5: #8FCEC7;
-  --sidebar: #FDF8F3;
-  --sidebar-foreground: #4A3728;
-  --sidebar-primary: #FCB9AA;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #A2E1DB;
-  --sidebar-accent-foreground: #2C5F5A;
-  --sidebar-border: #FFE4D6;
-  --sidebar-ring: #FCB9AA;
+  --radius: 1.25rem; /* 더 둥글게! */
+  --background: #FFF5F8; /* 핑크 틴트 화이트 */
+  --foreground: #4A4A4A; /* 부드러운 다크 그레이 */
+  --card: #FFFBFC; /* 거의 화이트 핑크 */
+  --card-foreground: #4A4A4A;
+  --popover: #FFFBFC;
+  --popover-foreground: #4A4A4A;
+  --primary: #FFB6C1; /* 파스텔 핑크 ♡ */
+  --primary-foreground: #4A4A4A;
+  --secondary: #F5D0E0; /* 라이트 핑크 */
+  --secondary-foreground: #4A4A4A;
+  --muted: #F8E8F0; /* 핑크 틴트 머티드 */
+  --muted-foreground: #8A7A7A;
+  --accent: #C5A3FF; /* 라벤더 ✧ */
+  --accent-foreground: #4A4A4A;
+  --destructive: #FF6B6B; /* 하트 레드 */
+  --border: #FFD4DB; /* 핑크 보더 */
+  --input: #FFF0F3;
+  --ring: #FFB6C1;
+  --chart-1: #FFB6C1;
+  --chart-2: #C5A3FF;
+  --chart-3: #F5D0E0;
+  --chart-4: #FFD4DB;
+  --chart-5: #E0D0FF;
+  --sidebar: #FFF0F3;
+  --sidebar-foreground: #4A4A4A;
+  --sidebar-primary: #FFB6C1;
+  --sidebar-primary-foreground: #4A4A4A;
+  --sidebar-accent: #C5A3FF;
+  --sidebar-accent-foreground: #4A4A4A;
+  --sidebar-border: #FFD4DB;
+  --sidebar-ring: #FFB6C1;
 }
 
 /* ====================================
-   DARK MODE: 매트릭스 클럽씬 네온
+   DARK MODE: 지뢰계 다크
+   Dark & Hot Pink Neon ♥
    ==================================== */
 .dark {
-  --background: #0A0A0F; /* Deep black with slight blue */
-  --foreground: #F0F0F5; /* Soft white */
-  --card: #12121A; /* Slightly lighter black */
-  --card-foreground: #F0F0F5;
-  --popover: #12121A;
-  --popover-foreground: #F0F0F5;
-  --primary: #FF00FF; /* Neon Magenta */
-  --primary-foreground: #0A0A0F;
-  --secondary: #00FFFF; /* Neon Cyan */
-  --secondary-foreground: #0A0A0F;
-  --muted: #1A1A25;
-  --muted-foreground: #A0A0B0;
-  --accent: #FF6B9D; /* Hot Pink */
-  --accent-foreground: #0A0A0F;
+  --background: #0D0D0D; /* 딥 블랙 */
+  --foreground: #F5F5F5; /* 소프트 화이트 */
+  --card: #1A1A1A; /* 다크 카드 */
+  --card-foreground: #F5F5F5;
+  --popover: #1A1A1A;
+  --popover-foreground: #F5F5F5;
+  --primary: #FF69B4; /* 핫 핑크 ♥ */
+  --primary-foreground: #0D0D0D;
+  --secondary: #9D4EDD; /* 퍼플 */
+  --secondary-foreground: #F5F5F5;
+  --muted: #2A2A2A;
+  --muted-foreground: #A0A0A0;
+  --accent: #FF1493; /* 딥 핑크 */
+  --accent-foreground: #F5F5F5;
   --destructive: #FF4757;
-  --border: #2A2A3A;
-  --input: #2A2A3A;
-  --ring: #FF00FF;
-  --chart-1: #FF00FF;
-  --chart-2: #00FFFF;
-  --chart-3: #FF6B9D;
-  --chart-4: #A855F7;
-  --chart-5: #3B82F6;
-  --sidebar: #0A0A0F;
-  --sidebar-foreground: #F0F0F5;
-  --sidebar-primary: #FF00FF;
-  --sidebar-primary-foreground: #0A0A0F;
-  --sidebar-accent: #1A1A25;
-  --sidebar-accent-foreground: #F0F0F5;
-  --sidebar-border: #2A2A3A;
-  --sidebar-ring: #FF00FF;
+  --border: #3A2A3A; /* 퍼플 틴트 보더 */
+  --input: #2A2A2A;
+  --ring: #FF69B4;
+  --chart-1: #FF69B4;
+  --chart-2: #9D4EDD;
+  --chart-3: #FF1493;
+  --chart-4: #C5A3FF;
+  --chart-5: #FF85A2;
+  --sidebar: #0D0D0D;
+  --sidebar-foreground: #F5F5F5;
+  --sidebar-primary: #FF69B4;
+  --sidebar-primary-foreground: #0D0D0D;
+  --sidebar-accent: #2A2A2A;
+  --sidebar-accent-foreground: #F5F5F5;
+  --sidebar-border: #3A2A3A;
+  --sidebar-ring: #FF69B4;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-noto-sans-kr), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 }
 
 /* ====================================
-   CUTE ANIMATIONS (Light Mode Focus)
+   🎀 JIRAI-KEI ANIMATIONS 🎀
    ==================================== */
-@keyframes bounce-slow {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+
+/* Heart beat - 두근두근 */
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  10%, 30% { transform: scale(0.92); }
+  20%, 40%, 60%, 80% { transform: scale(1.08); }
+  50%, 70% { transform: scale(1.04); }
 }
 
-@keyframes pulse-slow {
+/* Sparkle twinkle - 반짝반짝 */
+@keyframes sparkle-twinkle {
   0%, 100% {
     opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes wiggle {
-  0%, 100% {
-    transform: rotate(0deg);
+    transform: scale(1) rotate(0deg);
   }
   25% {
-    transform: rotate(-3deg);
+    opacity: 0.6;
+    transform: scale(0.9) rotate(5deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(-5deg);
   }
   75% {
-    transform: rotate(3deg);
+    opacity: 0.8;
+    transform: scale(0.95) rotate(3deg);
   }
 }
 
-@keyframes float {
+/* Ribbon flutter - 리본 펄럭 */
+@keyframes ribbon-flutter {
+  0%, 100% { transform: rotate(-3deg) scaleX(1); }
+  50% { transform: rotate(3deg) scaleX(1.02); }
+}
+
+/* Soft float - 부드러운 떠다님 */
+@keyframes soft-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(1deg); }
+  50% { transform: translateY(-8px) rotate(-1deg); }
+  75% { transform: translateY(-3px) rotate(0.5deg); }
+}
+
+/* Pink glow pulse - 핑크 글로우 */
+@keyframes pink-glow-pulse {
   0%, 100% {
-    transform: translateY(0) rotate(0deg);
+    box-shadow:
+      0 0 5px rgba(255, 182, 193, 0.4),
+      0 0 15px rgba(255, 182, 193, 0.2);
   }
   50% {
-    transform: translateY(-10px) rotate(2deg);
+    box-shadow:
+      0 0 10px rgba(255, 182, 193, 0.6),
+      0 0 25px rgba(255, 182, 193, 0.3),
+      0 0 40px rgba(197, 163, 255, 0.2);
   }
 }
 
-@keyframes sparkle {
-  0%, 100% {
+/* Star spin - 별 회전 */
+@keyframes star-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1); }
+  75% { transform: rotate(270deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Bounce cute - 귀여운 바운스 */
+@keyframes bounce-cute {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-12px); }
+  50% { transform: translateY(-8px); }
+  70% { transform: translateY(-4px); }
+}
+
+/* Wiggle kawaii - 귀여운 흔들림 */
+@keyframes wiggle-kawaii {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-5deg); }
+  40% { transform: rotate(5deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(3deg); }
+}
+
+/* Fade in up cute */
+@keyframes fade-in-up-cute {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.1);
+}
+
+/* Pop in kawaii */
+@keyframes pop-in-kawaii {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-5deg);
+  }
+  60% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
   }
 }
 
 /* ====================================
-   NEON ANIMATIONS (Dark Mode Focus)
+   DARK MODE NEON ANIMATIONS
    ==================================== */
-@keyframes neon-pulse {
+@keyframes neon-pink-pulse {
   0%, 100% {
     box-shadow:
       0 0 5px var(--primary),
-      0 0 10px var(--primary),
-      0 0 20px var(--primary);
+      0 0 15px var(--primary),
+      0 0 30px rgba(255, 105, 180, 0.5);
   }
   50% {
     box-shadow:
       0 0 10px var(--primary),
-      0 0 20px var(--primary),
-      0 0 40px var(--primary);
-  }
-}
-
-@keyframes neon-flicker {
-  0%, 100% {
-    opacity: 1;
-  }
-  92% {
-    opacity: 1;
-  }
-  93% {
-    opacity: 0.8;
-  }
-  94% {
-    opacity: 1;
-  }
-  96% {
-    opacity: 0.9;
-  }
-  97% {
-    opacity: 1;
+      0 0 25px var(--primary),
+      0 0 50px rgba(255, 105, 180, 0.7),
+      0 0 80px rgba(157, 78, 221, 0.3);
   }
 }
 
 @keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes neon-flicker-pink {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.85; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
 }
 
 /* ====================================
-   UTILITY CLASSES
+   🎀 UTILITY CLASSES - 지뢰계 스타일 🎀
    ==================================== */
 @layer utilities {
-  /* Cute Animations */
-  .animate-bounce-slow {
-    animation: bounce-slow 2s ease-in-out infinite;
+  /* ♡ Animation Classes ♡ */
+  .animate-heart-beat {
+    animation: heart-beat 1.2s ease-in-out infinite;
   }
 
-  .animate-pulse-slow {
-    animation: pulse-slow 3s ease-in-out infinite;
+  .animate-sparkle-twinkle {
+    animation: sparkle-twinkle 2s ease-in-out infinite;
   }
 
-  .animate-wiggle {
-    animation: wiggle 1s ease-in-out infinite;
+  .animate-ribbon-flutter {
+    animation: ribbon-flutter 2s ease-in-out infinite;
   }
 
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
+  .animate-soft-float {
+    animation: soft-float 4s ease-in-out infinite;
   }
 
-  .animate-sparkle {
-    animation: sparkle 2s ease-in-out infinite;
+  .animate-pink-glow {
+    animation: pink-glow-pulse 2s ease-in-out infinite;
   }
 
-  /* TBR Base Styles */
-  .tbr-gradient {
-    background: linear-gradient(135deg, var(--color-tbr-primary) 0%, var(--color-tbr-accent) 100%);
+  .animate-star-spin {
+    animation: star-spin 4s linear infinite;
   }
 
-  .tbr-card {
-    @apply rounded-2xl shadow-lg bg-card border border-border;
+  .animate-bounce-cute {
+    animation: bounce-cute 2s ease-in-out infinite;
   }
 
-  .tbr-button {
-    @apply rounded-xl px-6 py-3 font-medium transition-all duration-200;
+  .animate-wiggle-kawaii {
+    animation: wiggle-kawaii 1.5s ease-in-out infinite;
   }
 
-  .tbr-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+  .animate-fade-in-cute {
+    animation: fade-in-up-cute 0.5s ease-out forwards;
   }
 
-  /* Neon Effects (Dark Mode Only) */
-  .neon-glow {
-    animation: neon-pulse 2s ease-in-out infinite;
+  .animate-pop-kawaii {
+    animation: pop-in-kawaii 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
   }
 
-  .neon-glow-subtle {
+  /* 🎀 Jirai-kei Card Styles 🎀 */
+  .jirai-card {
+    border-radius: 1.5rem;
+    background-color: var(--card);
+    border: 2px solid color-mix(in srgb, var(--primary) 30%, transparent);
     box-shadow:
-      0 0 5px var(--primary),
-      0 0 10px rgba(255, 0, 255, 0.3);
+      0 4px 20px rgba(255, 182, 193, 0.2),
+      0 2px 8px rgba(197, 163, 255, 0.1);
+    transition: all 0.3s ease;
   }
 
-  .neon-text {
+  .jirai-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 50%, transparent);
+    box-shadow:
+      0 8px 30px rgba(255, 182, 193, 0.3),
+      0 4px 15px rgba(197, 163, 255, 0.2);
+    transform: translateY(-4px);
+  }
+
+  /* ♡ Jirai-kei Button Styles ♡ */
+  .jirai-button {
+    border-radius: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--primary) 0%, color-mix(in srgb, var(--primary) 80%, var(--accent)) 100%);
+    box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+    border: 2px solid transparent;
+  }
+
+  .jirai-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 6px 25px rgba(255, 182, 193, 0.5),
+      0 0 20px rgba(197, 163, 255, 0.3);
+  }
+
+  .jirai-button:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  /* ✧ Jirai-kei Input Styles ✧ */
+  .jirai-input {
+    border-radius: 1.25rem;
+    border: 2px solid color-mix(in srgb, var(--primary) 30%, transparent);
+    background-color: var(--card);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .jirai-input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow:
+      0 0 0 4px rgba(255, 182, 193, 0.2),
+      0 0 20px rgba(255, 182, 193, 0.15);
+  }
+
+  /* 🎀 Jirai-kei Badge 🎀 */
+  .jirai-badge {
+    border-radius: 9999px;
+    padding: 0.25rem 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--primary-foreground);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* ♡ Jirai-kei Gradient Backgrounds ♡ */
+  .jirai-gradient {
+    background: linear-gradient(135deg,
+      var(--color-jirai-pink) 0%,
+      var(--color-jirai-lavender) 50%,
+      var(--color-jirai-pink-light) 100%
+    );
+  }
+
+  .jirai-gradient-soft {
+    background: linear-gradient(180deg,
+      rgba(255, 182, 193, 0.15) 0%,
+      rgba(197, 163, 255, 0.1) 50%,
+      rgba(255, 212, 219, 0.1) 100%
+    );
+  }
+
+  .jirai-gradient-radial {
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 182, 193, 0.2) 0%,
+      rgba(197, 163, 255, 0.1) 50%,
+      transparent 70%
+    );
+  }
+
+  /* ✧ Jirai-kei Shadow Variants ✧ */
+  .jirai-shadow-sm {
+    box-shadow: 0 2px 10px rgba(255, 182, 193, 0.2);
+  }
+
+  .jirai-shadow {
+    box-shadow:
+      0 4px 20px rgba(255, 182, 193, 0.25),
+      0 2px 10px rgba(197, 163, 255, 0.15);
+  }
+
+  .jirai-shadow-lg {
+    box-shadow:
+      0 8px 30px rgba(255, 182, 193, 0.3),
+      0 4px 15px rgba(197, 163, 255, 0.2);
+  }
+
+  .jirai-shadow-glow {
+    box-shadow:
+      0 0 20px rgba(255, 182, 193, 0.4),
+      0 0 40px rgba(197, 163, 255, 0.2),
+      0 4px 20px rgba(255, 182, 193, 0.2);
+  }
+
+  /* 🎀 Jirai-kei Border Styles 🎀 */
+  .jirai-border {
+    border: 2px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+
+  .jirai-border-dashed {
+    border: 2px dashed color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+
+  .jirai-border-ribbon {
+    border: 3px solid var(--primary);
+    border-radius: 1.5rem;
+    position: relative;
+  }
+
+  /* ♡ Jirai-kei Hover Effects ♡ */
+  .jirai-hover {
+    transition: all 0.3s ease;
+  }
+
+  .jirai-hover:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--primary) 50%, transparent);
+    box-shadow: 0 6px 20px rgba(255, 182, 193, 0.25);
+  }
+
+  .jirai-hover-glow:hover {
+    box-shadow:
+      0 0 15px rgba(255, 182, 193, 0.4),
+      0 0 30px rgba(197, 163, 255, 0.2);
+  }
+
+  .jirai-hover-bounce:hover {
+    animation: bounce-cute 0.6s ease;
+  }
+
+  .jirai-hover-wiggle:hover {
+    animation: wiggle-kawaii 0.5s ease;
+  }
+
+  /* ✧ Jirai-kei Text Styles ✧ */
+  .jirai-text-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .jirai-text-pink {
+    color: var(--color-jirai-pink);
+  }
+
+  .jirai-text-lavender {
+    color: var(--color-jirai-lavender);
+  }
+
+  /* 🎀 DARK MODE Jirai-kei Neon Styles 🎀 */
+  .dark .jirai-neon-glow {
+    animation: neon-pink-pulse 2s ease-in-out infinite;
+  }
+
+  .dark .jirai-neon-text {
     text-shadow:
       0 0 5px var(--primary),
-      0 0 10px var(--primary),
-      0 0 20px var(--primary);
+      0 0 15px var(--primary),
+      0 0 30px rgba(255, 105, 180, 0.5);
   }
 
-  .neon-border {
+  .dark .jirai-neon-border {
     border: 1px solid var(--primary);
     box-shadow:
       0 0 5px var(--primary),
-      inset 0 0 5px rgba(255, 0, 255, 0.1);
+      inset 0 0 5px rgba(255, 105, 180, 0.1);
   }
 
-  .neon-gradient {
-    background: linear-gradient(135deg, #FF00FF 0%, #00FFFF 50%, #FF6B9D 100%);
+  .dark .jirai-neon-card {
+    border-radius: 1.25rem;
+    background-color: var(--card);
+    border: 1px solid rgba(255, 105, 180, 0.4);
+    box-shadow:
+      0 0 15px rgba(255, 105, 180, 0.15),
+      0 0 30px rgba(157, 78, 221, 0.1),
+      inset 0 0 30px rgba(255, 105, 180, 0.02);
+  }
+
+  .dark .jirai-neon-card:hover {
+    border-color: rgba(255, 105, 180, 0.6);
+    box-shadow:
+      0 0 20px rgba(255, 105, 180, 0.25),
+      0 0 40px rgba(157, 78, 221, 0.15),
+      inset 0 0 30px rgba(255, 105, 180, 0.05);
+  }
+
+  .dark .jirai-neon-gradient {
+    background: linear-gradient(135deg, #FF69B4 0%, #9D4EDD 50%, #FF1493 100%);
     background-size: 200% 200%;
     animation: gradient-shift 3s ease infinite;
   }
 
-  .neon-flicker {
-    animation: neon-flicker 4s infinite;
-  }
-
-  /* Dark mode specific neon card */
-  .dark .neon-card {
-    @apply rounded-2xl bg-card border;
-    border-color: rgba(255, 0, 255, 0.3);
-    box-shadow:
-      0 0 10px rgba(255, 0, 255, 0.1),
-      0 0 20px rgba(0, 255, 255, 0.05),
-      inset 0 0 30px rgba(255, 0, 255, 0.02);
-  }
-
-  .dark .neon-card:hover {
-    border-color: rgba(255, 0, 255, 0.5);
-    box-shadow:
-      0 0 15px rgba(255, 0, 255, 0.2),
-      0 0 30px rgba(0, 255, 255, 0.1),
-      inset 0 0 30px rgba(255, 0, 255, 0.05);
+  .dark .jirai-neon-flicker {
+    animation: neon-flicker-pink 4s infinite;
   }
 
   /* Dark mode button glow */
-  .dark .tbr-button:hover {
+  .dark .jirai-button:hover {
     box-shadow:
-      0 0 10px var(--primary),
-      0 0 20px rgba(255, 0, 255, 0.3);
+      0 0 15px var(--primary),
+      0 0 30px rgba(255, 105, 180, 0.4);
     transform: translateY(-2px);
   }
 
-  /* Matrix-style background pattern */
-  .dark .matrix-bg {
+  /* Matrix-style background for dark mode */
+  .dark .jirai-matrix-bg {
     background-image:
-      radial-gradient(ellipse at top, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at bottom, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+      radial-gradient(ellipse at top, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(157, 78, 221, 0.15) 0%, transparent 50%);
   }
 
   /* Glassmorphism for dark mode */
-  .dark .glass {
-    background: rgba(18, 18, 26, 0.8);
+  .dark .jirai-glass {
+    background: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 0, 255, 0.1);
+    border: 1px solid rgba(255, 105, 180, 0.15);
+  }
+
+  /* ====================================
+     🎀 DECORATIVE ELEMENTS 🎀
+     ==================================== */
+
+  /* Heart decoration */
+  .jirai-heart::before {
+    content: '♡';
+    color: var(--primary);
+    margin-right: 0.5rem;
+  }
+
+  .jirai-heart::after {
+    content: '♡';
+    color: var(--primary);
+    margin-left: 0.5rem;
+  }
+
+  /* Sparkle decoration */
+  .jirai-sparkle::before {
+    content: '✧';
+    color: var(--accent);
+    margin-right: 0.5rem;
+    animation: sparkle-twinkle 2s ease-in-out infinite;
+  }
+
+  .jirai-sparkle::after {
+    content: '✧';
+    color: var(--accent);
+    margin-left: 0.5rem;
+    animation: sparkle-twinkle 2s ease-in-out infinite 0.5s;
+  }
+
+  /* Star decoration */
+  .jirai-star::before {
+    content: '☆';
+    color: var(--color-star-gold);
+    margin-right: 0.5rem;
+  }
+
+  /* ====================================
+     MICRO-INTERACTIONS
+     ==================================== */
+
+  /* Magnetic hover effect */
+  .magnetic-hover {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .magnetic-hover:hover {
+    transform: scale(1.05) rotate(1deg);
+  }
+
+  /* Rubber band click effect */
+  .rubber-band:active {
+    animation: rubber-band 0.4s ease;
+  }
+
+  /* Shine sweep effect on hover */
+  .shine-hover {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shine-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  .shine-hover:hover::before {
+    left: 100%;
+  }
+
+  /* Kawaii jello effect */
+  .jello-hover:hover {
+    animation: jello 0.9s both;
+  }
+
+  /* Pop-in effect for elements appearing */
+  .pop-in {
+    animation: pop-in-kawaii 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Stagger animation delays */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+
+  /* Soft glow on focus */
+  .focus-glow:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 182, 193, 0.4);
+  }
+
+  /* Cute ripple effect */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 182, 193, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .ripple:active::after {
+    width: 200%;
+    height: 200%;
+  }
+
+  /* Smooth scroll snap for carousels */
+  .scroll-snap-x {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-snap-center {
+    scroll-snap-align: center;
+  }
+
+  /* Hide scrollbar but keep scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hover lift effect */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(255, 182, 193, 0.2);
+  }
+
+  /* Gradient border animation */
+  .gradient-border {
+    position: relative;
+    background: var(--background);
+    border-radius: 1.5rem;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 1.625rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+    z-index: -1;
+    animation: gradient-shift 3s ease infinite;
+    background-size: 200% 200%;
   }
 }
+
+/* ====================================
+   MICRO-INTERACTION KEYFRAMES
+   ==================================== */
+
+@keyframes rubber-band {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25, 0.75); }
+  40% { transform: scale(0.75, 1.25); }
+  50% { transform: scale(1.15, 0.85); }
+  65% { transform: scale(0.95, 1.05); }
+  75% { transform: scale(1.05, 0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes jello {
+  0%, 100% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+}
+
+/* ====================================
+   🎀 BACKGROUND DECORATIONS 🎀
+   ==================================== */
+
+/* Floating hearts pattern */
+.hearts-bg {
+  position: relative;
+}
+
+.hearts-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(255, 182, 193, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(197, 163, 255, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255, 212, 219, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Sparkle dot pattern */
+.sparkle-pattern {
+  background-image: radial-gradient(circle, rgba(255, 182, 193, 0.2) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Soft grid pattern */
+.soft-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 182, 193, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 182, 193, 0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Gradient blob backgrounds */
+.blob-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.blob-bg::before,
+.blob-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.blob-bg::before {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  animation: soft-float 8s ease-in-out infinite;
+}
+
+.blob-bg::after {
+  width: 250px;
+  height: 250px;
+  bottom: -80px;
+  right: -80px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  animation: soft-float 6s ease-in-out infinite reverse;
+}
+
+/* Dark mode decorations */
+.dark .hearts-bg::before {
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(255, 105, 180, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(157, 78, 221, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.06) 0%, transparent 50%);
+}
+
+.dark .sparkle-pattern {
+  background-image: radial-gradient(circle, rgba(255, 105, 180, 0.15) 1px, transparent 1px);
+}
+
+.dark .soft-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 105, 180, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 78, 221, 0.06) 1px, transparent 1px);
+}
+
+.dark .blob-bg::before {
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.4), rgba(255, 20, 147, 0.3));
+}
+
+.dark .blob-bg::after {
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.3), rgba(255, 105, 180, 0.4));
+}
+
+/* ====================================
+   LEGACY COMPATIBILITY CLASSES
+   (kept for backwards compatibility)
+   ==================================== */
+
+/* TBR legacy styles - now use jirai- prefix */
+.tbr-gradient {
+  background: linear-gradient(135deg, var(--color-jirai-pink) 0%, var(--color-jirai-lavender) 100%);
+}
+
+.tbr-card {
+  border-radius: 1.5rem;
+  background-color: var(--card);
+  border: 2px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  box-shadow:
+    0 4px 20px rgba(255, 182, 193, 0.2),
+    0 2px 8px rgba(197, 163, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tbr-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 50%, transparent);
+  box-shadow:
+    0 8px 30px rgba(255, 182, 193, 0.3),
+    0 4px 15px rgba(197, 163, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.tbr-button {
+  border-radius: 1.25rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+}
+
+.tbr-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.5);
+}
+
+/* Cute style aliases */
+.cute-gradient { background: linear-gradient(135deg, var(--color-jirai-pink) 0%, var(--color-jirai-lavender) 50%, var(--color-jirai-pink-light) 100%); }
+.cute-card { border-radius: 1.5rem; background-color: var(--card); border: 2px solid color-mix(in srgb, var(--primary) 30%, transparent); box-shadow: 0 4px 20px rgba(255, 182, 193, 0.2); transition: all 0.3s ease; }
+.cute-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(255, 182, 193, 0.3); }
+.cute-button { border-radius: 1.25rem; box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4); }
+.cute-shadow { box-shadow: 0 4px 20px rgba(255, 182, 193, 0.25); }
+.cute-shadow-lg { box-shadow: 0 8px 30px rgba(255, 182, 193, 0.3); }
+.cute-text-gradient { background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* Animation aliases */
+.animate-bounce-slow { animation: bounce-cute 2s ease-in-out infinite; }
+.animate-pulse-slow { animation: pink-glow-pulse 3s ease-in-out infinite; }
+.animate-wiggle { animation: wiggle-kawaii 1.5s ease-in-out infinite; }
+.animate-float { animation: soft-float 4s ease-in-out infinite; }
+.animate-sparkle { animation: sparkle-twinkle 2s ease-in-out infinite; }
+.animate-fade-in { animation: fade-in-up-cute 0.5s ease-out forwards; }
+.animate-slide-up { animation: fade-in-up-cute 0.4s ease-out forwards; }
+.animate-scale-in { animation: pop-in-kawaii 0.3s ease-out forwards; }
+
+/* Neon effects for dark mode */
+.neon-glow { animation: neon-pink-pulse 2s ease-in-out infinite; }
+.neon-text { text-shadow: 0 0 5px var(--primary), 0 0 15px var(--primary), 0 0 30px var(--primary); }
+.neon-card { border-radius: 1.25rem; border: 1px solid rgba(255, 105, 180, 0.4); box-shadow: 0 0 15px rgba(255, 105, 180, 0.15); }
+.neon-flicker { animation: neon-flicker-pink 4s infinite; }
+.neon-gradient { background: linear-gradient(135deg, #FF69B4 0%, #9D4EDD 50%, #FF1493 100%); background-size: 200% 200%; animation: gradient-shift 3s ease infinite; }
+.matrix-bg { background-image: radial-gradient(ellipse at top, rgba(255, 105, 180, 0.15) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(157, 78, 221, 0.15) 0%, transparent 50%); }
+
+/* Background patterns */
+.particles-bg { position: relative; }
+.particles-bg::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 15% 25%, rgba(255, 182, 193, 0.15) 0%, transparent 40%), radial-gradient(circle at 85% 75%, rgba(197, 163, 255, 0.12) 0%, transparent 40%); pointer-events: none; }
+.dots-pattern { background-image: radial-gradient(circle, rgba(255, 182, 193, 0.2) 1px, transparent 1px); background-size: 24px 24px; }
+.grid-pattern { background-image: linear-gradient(rgba(255, 182, 193, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 182, 193, 0.08) 1px, transparent 1px); background-size: 30px 30px; }
+.dark .particles-bg::before { background-image: radial-gradient(circle at 15% 25%, rgba(255, 105, 180, 0.12) 0%, transparent 40%), radial-gradient(circle at 85% 75%, rgba(157, 78, 221, 0.1) 0%, transparent 40%); }
+.dark .dots-pattern { background-image: radial-gradient(circle, rgba(255, 105, 180, 0.15) 1px, transparent 1px); }
+.dark .grid-pattern { background-image: linear-gradient(rgba(255, 105, 180, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(157, 78, 221, 0.06) 1px, transparent 1px); }

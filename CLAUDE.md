@@ -49,7 +49,8 @@ TeddyBear'sRoom/
     │   ├── components/         # 재사용 컴포넌트
     │   │   ├── ui/             # shadcn/ui 컴포넌트
     │   │   ├── Header.tsx      # 반응형 헤더 (모바일 메뉴 + ThemeToggle)
-    │   │   ├── Footer.tsx      # 푸터
+    │   │   ├── Footer.tsx      # 푸터 (Wave Divider + Newsletter + SNS)
+    │   │   ├── Testimonials.tsx # 고객 후기 캐러셀
     │   │   ├── ProductCard.tsx # 상품 카드
     │   │   ├── ThemeProvider.tsx # next-themes Provider
     │   │   └── ThemeToggle.tsx # Light/Dark 모드 토글
@@ -267,6 +268,41 @@ npm run lint         # ESLint 검사
 
 ## 📈 Recent Changes
 
+### 2025-11-29: CSS Architecture Fix + Design System Enhancement ✅
+```
+Frontend Design System Update
+├── ✅ Tailwind 4 @apply 호환성 수정
+│   ├── @layer utilities 내 @apply → 직접 CSS 변환
+│   └── @layer base 내 @apply → 직접 CSS 변환 (추가 수정)
+├── ✅ color-mix() 함수로 투명도 구현
+│   └── color-mix(in srgb, var(--primary) 20%, transparent)
+├── ✅ 새 컴포넌트 추가
+│   ├── Testimonials.tsx (고객 후기 캐러셀)
+│   └── Footer.tsx (Wave divider + 뉴스레터 + SNS)
+├── ✅ Micro-interactions 추가
+│   └── rubber-band, heart-beat, jello, pop-in animations
+└── ✅ Background patterns
+    └── particles-bg, dots-pattern, grid-pattern, blob-bg
+```
+
+### 2025-11-30: Official Logo Implementation ✅
+```
+TBR Official Logo (Teddy Bear with Heart)
+├── ✅ 로고 이미지 저장
+│   ├── public/logo.png (메인 로고)
+│   ├── public/favicon.png (파비콘)
+│   └── src/app/icon.png (앱 아이콘)
+├── ✅ Header.tsx 로고 적용
+│   └── Next.js Image 컴포넌트 + hover scale effect
+├── ✅ Footer.tsx 로고 적용
+│   └── 브랜드 섹션 + 하단 copyright
+├── ✅ 메타데이터 업데이트 (layout.tsx)
+│   ├── title: "지뢰계 감성 프라이빗 셀프케어"
+│   ├── icons: favicon.png, logo.png
+│   └── openGraph: images 추가
+└── ✅ 빌드 테스트 통과 (15 routes)
+```
+
 ### 2025-11-29: Supabase 프로젝트 마이그레이션 완료 ✅
 ```
 OLD → NEW Project Migration (100% Complete)
@@ -310,3 +346,8 @@ OLD Project: bwbqtknwfslviwqophtc (DEPRECATED)
 - API Routes 인증: supabase.auth.getUser()로 서버사이드 인증 확인
 - Supabase Connection: DATABASE_URL(port 6543, pgbouncer) vs DIRECT_URL(port 5432) 구분
 - Prisma 7 Seed: seed.ts도 adapter 방식 필수, prisma.config.ts의 migrations.seed에 명령 설정
+- Tailwind 4: `@layer utilities` 내 `@apply` 제한 → 직접 CSS로 변환 필요
+- Tailwind 4: `@layer base` 내 `@apply`도 동일하게 제한됨 → border-border, bg-background 등 직접 CSS로 변환
+- CSS color-mix(): `color-mix(in srgb, var(--primary) 20%, transparent)` 로 CSS 변수 투명도 구현
+- CSS antialiased: `-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;` 직접 사용
+- SVG Path: d 속성에 잘못된 문자열 포함 시 silent fail → 렌더링 자체가 안됨

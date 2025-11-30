@@ -15,19 +15,31 @@ import { subscriptionPlans, subscriptionFAQs } from "@/lib/data";
 export default function SubscribePage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-accent/10 via-primary/5 to-background py-16 lg:py-24 dark:from-primary/20 dark:via-secondary/10">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8 text-center">
-          <span className="text-6xl mb-4 block animate-float">🧸✨</span>
-          <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:neon-text">
+      {/* Hero - 지뢰계 스타일 ♡ */}
+      <section className="bg-gradient-to-b from-primary/15 via-accent/10 to-background py-16 lg:py-24 dark:from-primary/20 dark:via-secondary/10 relative overflow-hidden">
+        {/* 지뢰계 floating decorations ♡✧🎀 */}
+        <div className="absolute top-12 left-10 text-4xl opacity-20 animate-heart-beat pointer-events-none">♡</div>
+        <div className="absolute top-20 right-16 text-3xl opacity-15 animate-sparkle-twinkle pointer-events-none">✧</div>
+        <div className="absolute bottom-16 left-1/4 text-2xl opacity-15 animate-ribbon-flutter pointer-events-none">🎀</div>
+        <div className="absolute top-1/3 right-10 text-xl opacity-10 animate-float pointer-events-none" style={{ animationDelay: '0.5s' }}>☆</div>
+        <div className="absolute bottom-20 right-1/3 text-3xl opacity-15 animate-heart-beat pointer-events-none" style={{ animationDelay: '1s' }}>💗</div>
+
+        <div className="mx-auto max-w-7xl px-4 lg:px-8 text-center relative">
+          <div className="inline-flex items-center justify-center gap-3 mb-4">
+            <span className="text-4xl animate-sparkle-twinkle">✧</span>
+            <span className="text-6xl animate-soft-float">🧸</span>
+            <span className="text-4xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
+          </div>
+          <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">
             TeddyBear&apos;s Room
             <br />
             <span className="text-primary">멤버십</span>
+            <span className="text-2xl ml-2 animate-heart-beat">♡</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            특별한 혜택과 함께 더 특별한 경험을 만들어보세요.
+            특별한 혜택과 함께 더 특별한 경험을 만들어보세요 ✧
             <br />
-            구독하고, 기부하고, 함께 성장해요.
+            구독하고, 기부하고, 함께 성장해요 ♡
           </p>
         </div>
       </section>
@@ -168,14 +180,22 @@ export default function SubscribePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-16 bg-gradient-to-b from-background to-primary/5 dark:to-primary/10">
-        <div className="mx-auto max-w-2xl px-4 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-foreground mb-4">
-            지금 시작해보세요! 🎉
-          </h2>
+      {/* Final CTA - 지뢰계 스타일 ♡ */}
+      <section className="py-16 bg-gradient-to-b from-background to-primary/10 dark:to-primary/15 relative overflow-hidden">
+        {/* 지뢰계 decorations */}
+        <div className="absolute top-8 left-16 text-3xl opacity-15 animate-sparkle-twinkle pointer-events-none">✧</div>
+        <div className="absolute bottom-12 right-16 text-2xl opacity-15 animate-heart-beat pointer-events-none">♡</div>
+
+        <div className="mx-auto max-w-2xl px-4 lg:px-8 text-center relative">
+          <div className="inline-flex items-center justify-center gap-2 mb-4">
+            <span className="text-3xl animate-heart-beat">♡</span>
+            <h2 className="text-2xl font-bold text-foreground">
+              지금 시작해보세요!
+            </h2>
+            <span className="text-3xl animate-sparkle-twinkle">✧</span>
+          </div>
           <p className="text-muted-foreground mb-6">
-            첫 달 구독료 50% 할인 혜택을 놓치지 마세요.
+            첫 달 구독료 50% 할인 혜택을 놓치지 마세요 ♡
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button

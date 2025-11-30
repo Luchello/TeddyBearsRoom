@@ -146,3 +146,20 @@ export interface FilterState {
   showNew: boolean;
   showBest: boolean;
 }
+
+// Size Measurements
+export type Gender = "MALE" | "FEMALE" | "OTHER";
+
+export interface SizeMeasurements {
+  height?: number;     // cm
+  weight?: number;     // kg
+  gender?: Gender;
+  topSize?: string;    // S/M/L/XL or 90/95/100/105
+  bottomSize?: string; // inches (28/30/32...) or S/M/L/XL
+  shoeSize?: number;   // mm (250/260/270...)
+}
+
+export interface UserProfile extends User {
+  measurements?: SizeMeasurements;
+  encryptedMeasurements?: string; // AES encrypted sensitive data
+}

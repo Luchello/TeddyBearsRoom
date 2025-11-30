@@ -3,7 +3,7 @@
 **작성일**: 2025-11-27
 **최종 업데이트**: 2025-11-29
 **상태**: ✅ Production Ready
-**버전**: v3.0 (Migration Complete)
+**버전**: v3.2 (CSS @layer base Fix)
 
 ---
 
@@ -17,7 +17,7 @@
 ║  ✅ Frontend MVP           │  완료 (11-26)                                ║
 ║  ✅ E-commerce Core        │  완료 (11-27)                                ║
 ║  ✅ State Management       │  완료 (Zustand 5.0.8)                        ║
-║  ✅ UI Components          │  완료 (17개)                                 ║
+║  ✅ UI Components          │  완료 (18개)                                 ║
 ║  ✅ Backend Integration    │  완료 (11-28)                                ║
 ║  ✅ Vercel Deployment      │  완료 (teddybearsroom.com)                   ║
 ║  ✅ Domain + SSL           │  완료 (Let's Encrypt)                        ║
@@ -106,10 +106,11 @@ frontend/src/
 │   ├── subscribe/page.tsx       # 구독 멤버십
 │   └── checkout/page.tsx        # 결제 페이지 (Skeleton)
 │
-├── components/                   # 컴포넌트 (17개)
+├── components/                   # 컴포넌트 (18개)
 │   ├── ui/                      # shadcn/ui
 │   ├── Header.tsx               # 반응형 헤더 + 모바일 메뉴
-│   ├── Footer.tsx               # 푸터
+│   ├── Footer.tsx               # 푸터 (Wave Divider + Newsletter)
+│   ├── Testimonials.tsx         # 고객 후기 캐러셀
 │   ├── ThemeProvider.tsx        # Dark Mode Provider
 │   ├── ThemeToggle.tsx          # Light/Dark 토글
 │   ├── ProductCard.tsx          # 상품 카드
@@ -202,6 +203,66 @@ DonationVote    │ 기부 투표
 - 파스텔 + 네온 대비
 - 애니메이션 효과 (hover, transition)
 
+### CSS Architecture (Tailwind 4)
+
+**⚠️ 주요 변경사항 (2025-11-29)**
+
+Tailwind 4에서 `@layer utilities` 및 `@layer base` 내 `@apply` 사용 제한으로 인해 직접 CSS로 변환:
+
+```css
+/* Before (에러 발생) - @layer utilities */
+.cute-card {
+  @apply rounded-3xl bg-card border-2 border-primary/20;
+}
+
+/* After (수정됨) */
+.cute-card {
+  border-radius: 1.5rem;
+  background-color: var(--card);
+  border: 2px solid color-mix(in srgb, var(--primary) 20%, transparent);
+}
+```
+
+```css
+/* Before (에러 발생) - @layer base */
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground antialiased; }
+}
+
+/* After (수정됨) */
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+```
+
+**영향받은 영역**:
+- `@layer utilities`: `.cute-card`, `.cute-button`, `.cute-input`, `.cute-badge`, `.tbr-card`, `.tbr-button`, `.dark .neon-card`
+- `@layer base`: `*` 선택자 (border, outline), `body` (background, color, antialiased)
+
+**Micro-interactions 추가**:
+```css
+@keyframes rubber-band { ... }   /* 탄성 효과 */
+@keyframes heart-beat { ... }    /* 심장박동 */
+@keyframes jello { ... }         /* 젤리 흔들림 */
+@keyframes pop-in { ... }        /* 팝업 등장 */
+```
+
+**Background Patterns**:
+- `.particles-bg`: 파티클 애니메이션
+- `.dots-pattern`: 도트 패턴
+- `.grid-pattern`: 그리드 패턴
+- `.blob-bg`: 유동적 블롭
+
 ---
 
 ## 🚀 다음 단계
@@ -235,4 +296,4 @@ d34e9d2 feat: Add Matrix neon dark mode with theme toggle
 
 **작성자**: Claude Code
 **마지막 업데이트**: 2025-11-29
-**문서 버전**: v3.0 (Migration Complete)
+**문서 버전**: v3.2 (CSS @layer base Fix)

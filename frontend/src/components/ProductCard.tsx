@@ -60,29 +60,32 @@ export function ProductCard({
   };
 
   return (
-    <Card className="group overflow-hidden rounded-2xl border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
+    <Card className="group overflow-hidden rounded-3xl border-2 border-primary/20 bg-card transition-all duration-300 hover:shadow-[0_12px_40px_rgba(255,182,193,0.25)] hover:-translate-y-2 hover:border-primary/40 dark:neon-card dark:hover:border-primary/50 dark:hover:shadow-[0_0_40px_rgba(0,255,136,0.15)]">
       <Link href={`/products/${id}`}>
-        <div className="relative aspect-square overflow-hidden bg-muted dark:bg-muted/50">
+        <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 dark:from-primary/10 dark:via-secondary/10 dark:to-accent/10">
           {/* Placeholder for product image */}
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5">
-            <span className="text-6xl group-hover:animate-wiggle transition-transform">🧸</span>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-7xl group-hover:animate-wiggle transition-transform drop-shadow-lg">🧸</span>
           </div>
 
+          {/* Cute decorative elements */}
+          <div className="absolute bottom-2 right-2 text-2xl opacity-30 group-hover:opacity-60 transition-opacity">✨</div>
+
           {/* Badges */}
-          <div className="absolute left-3 top-3 flex flex-col gap-1">
+          <div className="absolute left-3 top-3 flex flex-col gap-2">
             {isNew && (
-              <span className="rounded-lg bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground dark:neon-glow-subtle dark:shadow-[0_0_10px_var(--secondary)]">
-                NEW
+              <span className="rounded-full bg-gradient-to-r from-secondary to-primary px-3 py-1 text-xs font-bold text-white shadow-lg animate-pulse dark:shadow-[0_0_15px_var(--secondary)]">
+                ✨ NEW
               </span>
             )}
             {isBest && (
-              <span className="rounded-lg bg-accent px-2 py-1 text-xs font-medium text-accent-foreground dark:bg-accent/80">
-                BEST
+              <span className="rounded-full bg-gradient-to-r from-accent to-primary px-3 py-1 text-xs font-bold text-white shadow-lg dark:bg-accent/80">
+                🏆 BEST
               </span>
             )}
             {discountPercent > 0 && (
-              <span className="rounded-lg bg-destructive px-2 py-1 text-xs font-medium text-white">
-                {discountPercent}%
+              <span className="rounded-full bg-gradient-to-r from-destructive to-red-400 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                💕 {discountPercent}% OFF
               </span>
             )}
           </div>
@@ -90,54 +93,56 @@ export function ProductCard({
           {/* Wishlist Button */}
           <button
             onClick={handleToggleWishlist}
-            className={`absolute top-3 right-3 p-2 rounded-full transition-all z-10 ${
+            className={`absolute top-3 right-3 p-2.5 rounded-full transition-all duration-300 z-10 shadow-lg hover:scale-110 ${
               wishlisted
-                ? "bg-red-500 text-white"
-                : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 dark:bg-card/80"
+                ? "bg-gradient-to-r from-red-400 to-pink-500 text-white shadow-[0_4px_15px_rgba(239,68,68,0.4)]"
+                : "bg-white/90 text-muted-foreground hover:bg-white hover:text-red-500 dark:bg-card/90 dark:hover:shadow-[0_0_15px_rgba(239,68,68,0.5)]"
             }`}
             aria-label={wishlisted ? "찜 해제" : "찜하기"}
           >
-            <Heart className={`h-4 w-4 ${wishlisted ? "fill-current" : ""}`} />
+            <Heart className={`h-4 w-4 transition-transform ${wishlisted ? "fill-current scale-110" : "group-hover:scale-110"}`} />
           </button>
 
-          {/* Quick view button */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100 dark:group-hover:bg-black/40">
+          {/* Quick view overlay */}
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-all duration-300 group-hover:opacity-100">
             <Button
               variant="secondary"
-              className="rounded-xl bg-white/90 text-foreground hover:bg-white dark:bg-card/90 dark:text-foreground dark:hover:bg-card dark:neon-glow-subtle"
+              className="rounded-2xl bg-white/95 text-foreground hover:bg-white shadow-xl dark:bg-card/95 dark:text-foreground dark:hover:bg-card"
             >
-              자세히 보기
+              👀 자세히 보기
             </Button>
           </div>
         </div>
       </Link>
 
       <CardContent className="p-4">
-        <p className="text-xs text-muted-foreground dark:text-secondary/70">{category}</p>
+        <p className="text-xs text-muted-foreground dark:text-secondary/70 flex items-center gap-1">
+          <span>📁</span> {category}
+        </p>
         <Link href={`/products/${id}`}>
-          <h3 className="mt-1 font-medium text-foreground line-clamp-2 hover:text-primary transition-colors dark:hover:neon-text">
+          <h3 className="mt-1 font-bold text-foreground line-clamp-2 hover:text-primary transition-colors dark:hover:neon-text">
             {name}
           </h3>
         </Link>
       </CardContent>
 
       <CardFooter className="flex items-center justify-between p-4 pt-0">
-        <div className="flex items-baseline gap-2">
+        <div className="flex flex-col">
           <span className="text-lg font-bold text-primary dark:neon-text">
-            {price.toLocaleString()}원
+            💰 {price.toLocaleString()}원
           </span>
           {originalPrice && (
-            <span className="text-sm text-muted-foreground line-through">
+            <span className="text-xs text-muted-foreground line-through">
               {originalPrice.toLocaleString()}원
             </span>
           )}
         </div>
         <Button
           size="sm"
-          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
+          className="rounded-2xl shadow-lg"
           onClick={handleAddToCart}
         >
-          담기
+          🛒 담기
         </Button>
       </CardFooter>
     </Card>
