@@ -152,7 +152,7 @@ export function Footer() {
               <Link href="/" className="flex items-center gap-3 group w-fit">
                 <div className="relative w-16 h-16 transition-transform duration-500 group-hover:rotate-12">
                   <Image
-                    src="/logo.png"
+                    src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
                     className="object-contain drop-shadow-md"

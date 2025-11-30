@@ -62,16 +62,67 @@ export function ProductCard({
   return (
     <Card className="group relative overflow-visible rounded-[2rem] border-0 bg-transparent transition-all duration-500 hover:-translate-y-2">
       {/* Furry Ears (Hidden by default, pop up on hover) */}
-      <div className="absolute -top-3 left-8 w-10 h-10 bg-primary/20 dark:bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-4 group-hover:rotate-[-15deg] z-0" />
-      <div className="absolute -top-3 right-8 w-10 h-10 bg-primary/20 dark:bg-primary/40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-4 group-hover:rotate-[15deg] z-0" />
+      {/* Left Ear */}
+      <div className="absolute -top-6 left-6 w-16 h-16 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-2 group-hover:rotate-[-10deg] z-0">
+        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+          {/* Outer Ear Outline (White Neon) */}
+          <path
+            d="M10,90 Q10,10 50,5 Q90,10 90,90"
+            fill="none"
+            stroke="white"
+            strokeWidth="8"
+            strokeLinecap="round"
+            className="dark:stroke-primary"
+          />
+          {/* Inner Zigzag (Pink Neon) */}
+          <path
+            d="M30,70 L40,50 L50,65 L60,45 L70,60"
+            fill="none"
+            stroke="#FF69B4"
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="animate-pulse"
+          />
+        </svg>
+      </div>
+
+      {/* Right Ear */}
+      <div className="absolute -top-6 right-6 w-16 h-16 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-2 group-hover:rotate-[10deg] z-0">
+        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+          {/* Outer Ear Outline (White Neon) */}
+          <path
+            d="M10,90 Q10,10 50,5 Q90,10 90,90"
+            fill="none"
+            stroke="white"
+            strokeWidth="8"
+            strokeLinecap="round"
+            className="dark:stroke-primary"
+          />
+          {/* Inner Zigzag (Pink Neon) */}
+          <path
+            d="M30,70 L40,50 L50,65 L60,45 L70,60"
+            fill="none"
+            stroke="#FF69B4"
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="animate-pulse"
+          />
+        </svg>
+      </div>
 
       {/* Main Card Content */}
       <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-500 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)] dark:bg-card/80 dark:border-primary/30 dark:group-hover:shadow-[0_0_30px_rgba(255,105,180,0.2)]">
         <Link href={`/products/${id}`}>
           <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-white via-primary/5 to-accent/5 dark:from-neutral-900 dark:via-primary/10 dark:to-neutral-800">
             {/* Placeholder for product image */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-7xl group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0">🧸</span>
+            <div className="absolute inset-0 flex items-center justify-center p-8">
+              <img
+                src="/tbr_logo.png"
+                alt={name}
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0"
+              />
             </div>
 
             {/* Tail (Wags on hover) */}
@@ -102,8 +153,8 @@ export function ProductCard({
             <button
               onClick={handleToggleWishlist}
               className={`absolute top-4 right-4 p-3 rounded-full transition-all duration-300 z-10 hover:scale-110 ${wishlisted
-                  ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
-                  : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 shadow-sm backdrop-blur-sm dark:bg-black/50 dark:text-white/70"
+                ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
+                : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 shadow-sm backdrop-blur-sm dark:bg-black/50 dark:text-white/70"
                 }`}
               aria-label={wishlisted ? "찜 해제" : "찜하기"}
             >

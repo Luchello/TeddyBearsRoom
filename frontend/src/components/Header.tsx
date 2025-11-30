@@ -62,7 +62,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-12 h-12 sm:w-14 sm:h-14 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
             <Image
-              src="/logo.png"
+              src="/tbr_logo.png"
               alt="TeddyBear's Room Logo"
               fill
               className="object-contain drop-shadow-md"

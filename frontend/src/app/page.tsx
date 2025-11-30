@@ -85,7 +85,9 @@ export default function HomePage() {
                 {/* Front Card (Light Mode / Furry) */}
                 <div className="absolute inset-0 rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-50" />
-                  <span className="text-9xl animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">🧸</span>
+                  <div className="relative w-48 h-48 animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">
+                    <img src="/tbr_logo.png" alt="TBR Logo" className="w-full h-full object-contain" />
+                  </div>
                   <div className="absolute bottom-10 px-6 py-2 bg-white/90 rounded-full shadow-sm text-sm font-bold tracking-wider uppercase">
                     Touch Me
                   </div>
