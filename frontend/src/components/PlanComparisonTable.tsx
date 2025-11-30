@@ -131,10 +131,6 @@ export function PlanComparisonTable() {
   };
 
   return (
-    {/* ─────────────────────────────────────
-        모바일 대응 컨테이너 (가로 스크롤)
-        - overflow-x-auto: 작은 화면에서 가로 스크롤 가능
-        ───────────────────────────────────── */}
     <div className="overflow-x-auto">
       {/* 비교 테이블 (border-collapse)
           - w-full: 전체 너비 사용
@@ -179,9 +175,6 @@ export function PlanComparisonTable() {
             comparisonData를 map()으로 순회하며 각 행 렌더링 */}
         <tbody>
           {comparisonData.map((row, idx) => (
-            {/* 데이터 행
-                - hover:bg-muted/30: 호버 시 배경 강조
-                - transition-colors: 부드러운 색상 전환 애니메이션 */}
             <tr
               key={idx}
               className="hover:bg-muted/30 transition-colors"

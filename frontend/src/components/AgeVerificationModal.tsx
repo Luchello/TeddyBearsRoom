@@ -232,5 +232,6 @@ export function AgeVerificationModal() {
                 </p>
             </div>
         </div>
+      </>
     );
 }

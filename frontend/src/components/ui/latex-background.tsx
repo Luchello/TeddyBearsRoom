@@ -69,8 +69,8 @@ import React from 'react';
  *   return (
  *     <html>
  *       <body>
- *         <LatexBackground /> {/* Dark Mode 전용 배경 */}
- *         {/* 나머지 콘텐츠 */}
+ *         <LatexBackground />
+ *         {children}
  *       </body>
  *     </html>
  *   );
@@ -78,15 +78,6 @@ import React from 'react';
  */
 export const LatexBackground = () => {
   return (
-    {/* ─────────────────────────────────────
-        최상단 컨테이너 (고정 배경)
-        - fixed inset-0: 전체 화면 고정 배치
-        - pointer-events-none: 마우스 클릭 투과
-        - z-[-1]: 콘텐츠 뒤에 배치
-        - overflow-hidden: 배경 이미지 화면 밖으로 나가지 않음
-        - opacity-0 dark:opacity-100: Light 숨김, Dark 표시
-        - transition-opacity duration-1000: 1초 부드러운 전환
-        ───────────────────────────────────── */}
     <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden opacity-0 dark:opacity-100 transition-opacity duration-1000">
       {/* ─────────────────────────────────────
           라텍스 광택 기본 배경

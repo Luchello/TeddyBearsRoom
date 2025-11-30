@@ -33,6 +33,7 @@
 // - ToastContext: 알림 표시
 // ====================================
 
+import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -219,16 +220,20 @@ export function ProductCard({
           <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-white via-primary/5 to-accent/5 dark:from-neutral-900 dark:via-primary/10 dark:to-neutral-800">
             {/* 상품 이미지 (현재는 로고로 대체) */}
             <div className="absolute inset-0 flex items-center justify-center p-8">
-              <img
-                src="/tbr_logo.png"
-                alt={name}
-                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 dark:hidden"
-              />
-              <img
-                src="/tbr_logo_dark.png"
-                alt={name}
-                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 hidden dark:block"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src="/tbr_logo.png"
+                  alt={name}
+                  fill
+                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 dark:hidden"
+                />
+                <Image
+                  src="/tbr_logo_dark.png"
+                  alt={name}
+                  fill
+                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 hidden dark:block"
+                />
+              </div>
             </div>
 
             {/* Tail (꼬리 - hover 시 흔들림) */}

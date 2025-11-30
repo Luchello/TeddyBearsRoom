@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ProductCard } from "@/components/ProductCard";
 import { Testimonials } from "@/components/Testimonials";
 import { featuredProducts, subscriptionBenefits } from "@/lib/data";
@@ -77,7 +77,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 rounded-[3rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
                   <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(0,255,65,0.5)] filter group-hover:brightness-125 transition-all duration-300">
-                    <img src="/tbr_logo_dark.png" alt="TBR Logo Dark" className="w-full h-full object-contain" />
+                    <Image src="/tbr_logo_dark.png" alt="TBR Logo Dark" fill className="object-contain" />
                   </div>
                   <div className="absolute bottom-10 px-6 py-2 bg-black/80 border border-primary/50 rounded-full shadow-[0_0_20px_rgba(0,255,65,0.3)] text-sm font-bold tracking-wider uppercase text-primary animate-pulse">
                     Enter The Void
@@ -88,7 +88,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-50" />
                   <div className="relative w-48 h-48 animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">
-                    <img src="/tbr_logo.png" alt="TBR Logo" className="w-full h-full object-contain" />
+                    <Image src="/tbr_logo.png" alt="TBR Logo" fill className="object-contain" />
                   </div>
                   <div className="absolute bottom-10 px-6 py-2 bg-white/90 rounded-full shadow-sm text-sm font-bold tracking-wider uppercase">
                     Touch Me

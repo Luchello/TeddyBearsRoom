@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { brandValues, brandTimeline } from "@/lib/data";
@@ -27,15 +28,17 @@ export default function AboutPage() {
             <div className="relative">
               <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 dark:bg-none flex items-center justify-center p-12">
                 <div className="w-full h-full relative">
-                  <img
+                  <Image
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
-                    className="absolute inset-0 w-full h-full object-contain drop-shadow-xl animate-float dark:hidden"
+                    fill
+                    className="object-contain drop-shadow-xl animate-float dark:hidden"
                   />
-                  <img
+                  <Image
                     src="/tbr_logo_dark.png"
                     alt="TeddyBear's Room Logo"
-                    className="absolute inset-0 w-full h-full object-contain drop-shadow-xl animate-float hidden dark:block"
+                    fill
+                    className="object-contain drop-shadow-xl animate-float hidden dark:block"
                   />
                 </div>
               </div>
