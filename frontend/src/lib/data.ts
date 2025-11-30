@@ -1,6 +1,22 @@
 // ====================================
-// TeddyBear's Room - Mock Data
-// Centralized data for consistency
+// TeddyBear's Room - Mock Data & Constants
+// 정적 데이터 및 상수 중앙 관리
+// ====================================
+//
+// 🎯 용도:
+// 1. 네비게이션/푸터 링크 (정적)
+// 2. 상품 Mock 데이터 (개발용, 추후 API로 대체)
+// 3. 구독 플랜 정보 (MVP Single Tier)
+// 4. FAQ, 브랜드 정보 (마케팅 콘텐츠)
+//
+// 📝 MVP 전략 (2025-11-30):
+// - 2-Tier → Single Tier 전환
+// - TBR 멤버십: 19,900원/월
+// - 포인트 5%, 기부 5%, 무료배송 5만원↑
+//
+// ⚠️ 주의:
+// - featuredProducts/allProducts는 개발용 Mock
+// - 프로덕션에서는 Supabase API 사용
 // ====================================
 
 import type {
@@ -14,7 +30,12 @@ import type {
   TimelineItem,
 } from "./types";
 
-// Navigation
+// ──────────────────────────────────────
+// Navigation (네비게이션)
+// Header, MobileMenu에서 사용
+// ──────────────────────────────────────
+
+/** 메인 네비게이션 메뉴 */
 export const navigation: NavItem[] = [
   { name: "홈", href: "/" },
   { name: "상품", href: "/products" },
@@ -23,18 +44,26 @@ export const navigation: NavItem[] = [
   { name: "소개", href: "/about" },
 ];
 
-// Footer Links
+// ──────────────────────────────────────
+// Footer Links (푸터)
+// Footer 컴포넌트에서 사용
+// ──────────────────────────────────────
+
+/** 푸터 링크 그룹 */
 export const footerLinks: FooterLinks = {
+  // 쇼핑 관련 링크
   shop: [
     { name: "전체 상품", href: "/products" },
     { name: "신상품", href: "/products?sort=new" },
     { name: "베스트셀러", href: "/products?sort=best" },
   ],
+  // 고객 지원 링크
   support: [
     { name: "고객센터", href: "/support" },
     { name: "배송 안내", href: "/shipping" },
     { name: "교환/반품", href: "/returns" },
   ],
+  // 회사 정보 링크
   company: [
     { name: "회사 소개", href: "/about" },
     { name: "기부 현황", href: "/donation" },
@@ -43,7 +72,12 @@ export const footerLinks: FooterLinks = {
   ],
 };
 
-// Featured Products (Home)
+// ──────────────────────────────────────
+// Products (상품 Mock 데이터)
+// ⚠️ 개발용 - 프로덕션에서는 API 사용
+// ──────────────────────────────────────
+
+/** 추천 상품 (홈페이지 섹션용) */
 export const featuredProducts: Product[] = [
   {
     id: "1",
@@ -81,7 +115,7 @@ export const featuredProducts: Product[] = [
   },
 ];
 
-// All Products
+/** 전체 상품 목록 (개발용 Mock) */
 export const allProducts: Product[] = [
   ...featuredProducts,
   {
@@ -117,10 +151,21 @@ export const allProducts: Product[] = [
   },
 ];
 
-// Product Categories
+// ──────────────────────────────────────
+// Product Categories (상품 카테고리)
+// 필터링 UI에서 사용하는 카테고리 목록
+// as const로 타입 안전성 보장
+// ──────────────────────────────────────
+
+/** 상품 카테고리 (타입: readonly tuple) */
 export const productCategories = ["전체", "토이", "케어", "무드", "라이프"] as const;
 
-// Subscription Benefits (Home)
+// ──────────────────────────────────────
+// Subscription Benefits (구독 혜택)
+// 홈페이지 멤버십 섹션에서 표시
+// ──────────────────────────────────────
+
+/** 멤버십 혜택 카드 목록 (홈페이지용) */
 export const subscriptionBenefits: Benefit[] = [
   { icon: "🎁", title: "포인트 5% 적립", desc: "모든 구매에 포인트 5% 적립" },
   { icon: "💝", title: "기부 참여", desc: "구매금액 일부가 기부됩니다" },
@@ -128,10 +173,32 @@ export const subscriptionBenefits: Benefit[] = [
   { icon: "🎀", title: "회원 전용 할인", desc: "매월 특별 할인 쿠폰" },
 ];
 
-// Subscription Plan (MVP: Single Tier)
-// 포인트 적립률: 비회원 0%, 멤버십 5%
-// 기부 비율: 멤버십 5%
-// 2025-11-30: 2-Tier → Single Tier 전환 (MVP 단순화)
+// ──────────────────────────────────────
+// Subscription Plans (구독 플랜)
+// MVP: Single Tier 전략 (2025-11-30)
+// ──────────────────────────────────────
+//
+// 📝 MVP 전략 변경 이력:
+// - 이전: 2-Tier (스탠다드 19,900원 + 프리미엄 29,900원)
+// - 현재: Single Tier (TBR 멤버십 19,900원)
+//
+// 🎯 변경 사유:
+// - 선택의 역설 해결 → 고객 결정 단순화
+// - YAGNI 원칙 → 필요한 것만 구현
+// - 핵심 가치 검증 → MVP에서 빠른 피드백
+//
+// 💰 혜택 구조:
+// - 포인트 적립: 비회원 0% → 멤버십 5%
+// - 기부 비율: 멤버십 회원 5%
+// - 무료 배송: 비회원 7만원↑ → 멤버십 5만원↑
+//
+// ──────────────────────────────────────
+
+/**
+ * 구독 플랜 목록
+ * @description MVP에서는 단일 플랜만 제공 (향후 Premium 확장 검토)
+ * @see types.ts - SubscriptionPlan 인터페이스
+ */
 export const subscriptionPlans: SubscriptionPlan[] = [
   {
     name: "TBR 멤버십",
@@ -152,7 +219,13 @@ export const subscriptionPlans: SubscriptionPlan[] = [
   },
 ];
 
-// FAQs
+// ──────────────────────────────────────
+// FAQs (자주 묻는 질문)
+// 구독 페이지 하단에서 사용
+// 아코디언 UI로 표시
+// ──────────────────────────────────────
+
+/** 구독 관련 FAQ 목록 */
 export const subscriptionFAQs: FAQ[] = [
   {
     q: "구독은 언제든지 취소할 수 있나요?",
@@ -172,7 +245,13 @@ export const subscriptionFAQs: FAQ[] = [
   },
 ];
 
-// Brand Values (About)
+// ──────────────────────────────────────
+// Brand Values (브랜드 가치)
+// About 페이지에서 브랜드 핵심 가치 표시
+// 4개의 핵심 가치: 감성, 프라이버시, 사회공헌, 큐레이션
+// ──────────────────────────────────────
+
+/** 브랜드 핵심 가치 목록 (About 페이지용) */
 export const brandValues: BrandValue[] = [
   {
     icon: "🧸",
@@ -200,7 +279,13 @@ export const brandValues: BrandValue[] = [
   },
 ];
 
-// Timeline (About)
+// ──────────────────────────────────────
+// Timeline (브랜드 타임라인)
+// About 페이지에서 브랜드 히스토리 표시
+// 과거 → 현재 → 미래 순서
+// ──────────────────────────────────────
+
+/** 브랜드 타임라인 (About 페이지용) */
 export const brandTimeline: TimelineItem[] = [
   { year: "2024", event: "TeddyBear's Room 브랜드 기획 시작" },
   { year: "2025", event: "온라인 쇼핑몰 런칭 예정" },

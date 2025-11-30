@@ -1,5 +1,41 @@
 "use client";
 
+// ====================================
+// TeddyBear's Room - Footer 컴포넌트
+// 뉴스레터, SNS, 링크, 결제/신뢰 배지
+// ====================================
+//
+// 🎯 용도:
+// - 모든 페이지 하단 푸터
+// - 뉴스레터 구독 폼
+// - SNS 링크 (Instagram, Twitter, Kakao, Naver)
+// - Shop/Support/Company 링크 그룹
+// - 결제 방법 및 신뢰 배지
+//
+// 📦 구조:
+// - Wave Divider (Top): 섹션 분리 장식
+// - Newsletter Section: 이메일 구독 폼
+// - Main Footer: 4컬럼 그리드 (브랜드, Shop, Support, Company)
+// - Payment & Trust: 결제수단 + 안전 배지
+// - Copyright: 사업자 정보 + 법적 고지
+//
+// 🎨 디자인:
+// - Wave SVG로 부드러운 섹션 분리
+// - 그라데이션 배경 + backdrop-blur
+// - hover 애니메이션 (scale, translate)
+// - 지뢰계 이모지 + 파스텔 톤
+//
+// 🔧 주요 기능:
+// - 뉴스레터 폼 제출 + 성공 피드백
+// - 반응형 그리드 레이아웃
+// - 외부 링크 aria-label 접근성
+//
+// 📝 의존성:
+// - shadcn/ui: Button, Input
+// - lucide-react: 아이콘
+// - data.ts: footerLinks 데이터
+// ====================================
+
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -19,20 +55,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { footerLinks } from "@/lib/data";
 
-// Korean SNS Custom Icons
+// ──────────────────────────────────────
+// 한국 SNS 커스텀 아이콘
+// - SVG 기반 카카오톡, 네이버 블로그 아이콘
+// ──────────────────────────────────────
+
+/**
+ * 카카오톡 아이콘 SVG
+ * @description 공식 카카오톡 말풍선 형태
+ */
 const KakaoIcon = () => (
   <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
     <path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.47 1.607 4.647 4.035 5.876l-.857 3.214a.5.5 0 00.748.544l3.722-2.481C10.41 17.384 11.19 17.5 12 17.5c5.523 0 10-3.477 10-7.5S17.523 3 12 3z" />
   </svg>
 );
 
+/**
+ * 네이버 블로그 아이콘 SVG
+ * @description 네이버 N 자 형태
+ */
 const NaverBlogIcon = () => (
   <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
     <path d="M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845z" />
   </svg>
 );
 
-// Payment Method Icons
+// ──────────────────────────────────────
+// 결제 수단 목록
+// - 이모지 아이콘으로 표시
+// ──────────────────────────────────────
 const paymentMethods = [
   { name: "신용카드", icon: "💳" },
   { name: "카카오페이", icon: "🟡" },
@@ -40,29 +91,62 @@ const paymentMethods = [
   { name: "토스", icon: "🔵" },
 ];
 
-// Trust Badges
+// ──────────────────────────────────────
+// 신뢰 배지 목록
+// - 무지박스 배송, 안전결제, 개인정보보호
+// ──────────────────────────────────────
 const trustBadges = [
   { icon: Package, label: "무지박스 배송", emoji: "📦" },
   { icon: ShieldCheck, label: "안전결제", emoji: "🔒" },
   { icon: Lock, label: "개인정보보호", emoji: "🛡️" },
 ];
 
+// ──────────────────────────────────────
+// Footer 컴포넌트
+// ──────────────────────────────────────
+
+/**
+ * 푸터 컴포넌트
+ *
+ * @description
+ * 사이트 하단에 표시되는 종합 푸터입니다.
+ * - 뉴스레터 구독
+ * - SNS 링크
+ * - 사이트맵 링크 (Shop, Support, Company)
+ * - 결제 방법 및 신뢰 배지
+ * - 사업자 정보 및 법적 고지
+ *
+ * @example
+ * // layout.tsx에서 사용
+ * <Header />
+ * <main>{children}</main>
+ * <Footer />
+ */
 export function Footer() {
+  // 뉴스레터 폼 상태
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
+  /**
+   * 뉴스레터 폼 제출 핸들러
+   * @description 이메일 입력 후 구독 완료 메시지 표시 (3초 후 리셋)
+   */
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       setIsSubscribed(true);
       setEmail("");
+      // 3초 후 상태 리셋
       setTimeout(() => setIsSubscribed(false), 3000);
     }
   };
 
   return (
     <footer className="relative pt-20 overflow-hidden">
-      {/* Wave Divider (Top) */}
+      {/* ─────────────────────────────────────
+          Wave Divider (Top)
+          - 푸터 상단 물결 모양 장식
+          ───────────────────────────────────── */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none -translate-y-[1px] z-10">
         <svg
           className="relative block w-[calc(100%+1.3px)] h-[50px] sm:h-[80px]"
@@ -76,10 +160,16 @@ export function Footer() {
         </svg>
       </div>
 
-      {/* Newsletter Section */}
+      {/* ─────────────────────────────────────
+          Newsletter Section
+          - 이메일 구독 폼
+          - 구독 완료 시 애니메이션 피드백
+          ───────────────────────────────────── */}
       <section className="relative bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 dark:from-primary/10 dark:via-accent/10 dark:to-secondary/10 py-16 border-b border-primary/10">
+        {/* 노이즈 텍스처 오버레이 */}
         <div className="absolute inset-0 bg-[url('/patterns/noise.png')] opacity-5 mix-blend-overlay"></div>
         <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
+          {/* 헤더 */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center gap-3 mb-4">
               <span className="text-4xl animate-bounce-slow">💌</span>
@@ -96,6 +186,7 @@ export function Footer() {
             </p>
           </div>
 
+          {/* 구독 폼 */}
           <form
             onSubmit={handleNewsletterSubmit}
             className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
@@ -132,6 +223,7 @@ export function Footer() {
             </Button>
           </form>
 
+          {/* 구독 성공 메시지 */}
           {isSubscribed && (
             <p className="text-center text-sm text-primary font-medium mt-4 animate-fade-in-up">
               🎉 환영합니다! 당신만의 달콤한 여정이 시작되었어요 💕
@@ -140,20 +232,28 @@ export function Footer() {
         </div>
       </section>
 
-      {/* Main Footer Content */}
+      {/* ─────────────────────────────────────
+          Main Footer Content
+          - 4컬럼 그리드: 브랜드, Shop, Support, Company
+          ───────────────────────────────────── */}
       <div className="bg-muted/20 dark:bg-black/40 backdrop-blur-sm pt-16 pb-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-            {/* Brand Column */}
+            {/* ──────────────────────────────────────
+                Brand Column
+                - 로고, 브랜드 설명, SNS 링크
+                ────────────────────────────────────── */}
             <div className="space-y-6">
               <Link href="/" className="flex items-center gap-3 group w-fit">
                 <div className="relative w-16 h-16 transition-transform duration-500 group-hover:rotate-12">
+                  {/* Light Mode 로고 */}
                   <Image
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
                     className="object-contain drop-shadow-md dark:hidden"
                   />
+                  {/* Dark Mode 로고 */}
                   <Image
                     src="/tbr_logo_dark.png"
                     alt="TeddyBear's Room Logo"
@@ -178,7 +278,7 @@ export function Footer() {
                 <span className="text-primary font-bold mt-2 inline-block">♡ Made with Love & Fantasy ✧</span>
               </p>
 
-              {/* Social Links */}
+              {/* SNS Links */}
               <div className="flex gap-3 pt-2">
                 {[
                   { icon: Instagram, color: "from-pink-500 to-purple-500", label: "Instagram" },
@@ -193,6 +293,7 @@ export function Footer() {
                     <social.icon className="h-4 w-4" />
                   </a>
                 ))}
+                {/* 카카오톡 */}
                 <a
                   href="#"
                   className="p-2.5 rounded-xl bg-[#FEE500] text-[#3C1E1E] hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
@@ -200,6 +301,7 @@ export function Footer() {
                 >
                   <KakaoIcon />
                 </a>
+                {/* 네이버 블로그 */}
                 <a
                   href="#"
                   className="p-2.5 rounded-xl bg-[#03C75A] text-white hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
@@ -210,7 +312,9 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Shop Links */}
+            {/* ──────────────────────────────────────
+                Shop Links
+                ────────────────────────────────────── */}
             <div>
               <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-6 uppercase tracking-wider opacity-80">
                 <span className="text-lg">🛍️</span> Shop
@@ -230,7 +334,9 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Support Links */}
+            {/* ──────────────────────────────────────
+                Support Links
+                ────────────────────────────────────── */}
             <div>
               <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-6 uppercase tracking-wider opacity-80">
                 <span className="text-lg">💬</span> Support
@@ -250,7 +356,9 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Company Links */}
+            {/* ──────────────────────────────────────
+                Company Links
+                ────────────────────────────────────── */}
             <div>
               <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-6 uppercase tracking-wider opacity-80">
                 <span className="text-lg">🏢</span> Company
@@ -271,7 +379,11 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Payment & Trust Section */}
+          {/* ─────────────────────────────────────
+              Payment & Trust Section
+              - 결제 수단 배지
+              - 신뢰 배지 (무지박스, 안전결제, 개인정보보호)
+              ───────────────────────────────────── */}
           <div className="mt-12 pt-8 border-t border-primary/10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               {/* Payment Methods */}
@@ -305,7 +417,10 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Bottom Copyright */}
+      {/* ─────────────────────────────────────
+          Bottom Copyright
+          - 법적 고지 및 사업자 정보
+          ───────────────────────────────────── */}
       <div className="bg-muted/30 dark:bg-black/60 border-t border-primary/5 py-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/60">
@@ -322,6 +437,7 @@ export function Footer() {
               <span className="text-primary/60 font-medium">19세 이상 전용</span>
             </div>
           </div>
+          {/* 사업자 정보 */}
           <p className="mt-4 text-center text-[10px] text-muted-foreground/40 leading-relaxed">
             사업자등록번호: 000-00-00000 | 통신판매업신고: 제0000-서울강남-0000호 | 대표: 홍길동 <br className="hidden sm:block" />
             주소: 서울특별시 강남구 테헤란로 000 | 고객센터: 1588-0000 | 이메일: help@tbr.universe
@@ -329,7 +445,10 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Floating Decoration (Hidden on mobile) */}
+      {/* ─────────────────────────────────────
+          Floating Decoration
+          - 데스크탑에서만 표시되는 장식 이모지
+          ───────────────────────────────────── */}
       <div className="absolute bottom-20 right-10 text-4xl opacity-20 animate-float pointer-events-none hidden lg:block blur-[1px]">
         💕
       </div>
