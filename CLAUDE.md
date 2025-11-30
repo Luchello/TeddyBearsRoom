@@ -48,10 +48,12 @@ TeddyBear'sRoom/
     │   │   └── subscribe/      # 구독 멤버십 페이지
     │   ├── components/         # 재사용 컴포넌트
     │   │   ├── ui/             # shadcn/ui 컴포넌트
+    │   │   │   └── latex-background.tsx # 다크모드 라텍스 배경 효과
     │   │   ├── Header.tsx      # 반응형 헤더 (모바일 메뉴 + ThemeToggle)
     │   │   ├── Footer.tsx      # 푸터 (Wave Divider + Newsletter + SNS)
     │   │   ├── Testimonials.tsx # 고객 후기 캐러셀
     │   │   ├── ProductCard.tsx # 상품 카드
+    │   │   ├── AgeVerificationModal.tsx # 성인 인증 모달 (19세 확인)
     │   │   ├── ThemeProvider.tsx # next-themes Provider
     │   │   └── ThemeToggle.tsx # Light/Dark 모드 토글
     │   └── lib/
@@ -285,6 +287,24 @@ Frontend Design System Update
     └── particles-bg, dots-pattern, grid-pattern, blob-bg
 ```
 
+### 2025-11-30: Adult Verification & Jirai-kei Design System ✅
+```
+성인 인증 시스템 + 지뢰계 디자인 강화
+├── ✅ AgeVerificationModal.tsx 신규 추가
+│   ├── 19세 이상 성인 인증 모달
+│   ├── localStorage 기반 인증 상태 저장
+│   ├── Light Mode: 구름 효과 + 파스텔 배경
+│   └── Dark Mode: Matrix 그리드 + 네온 효과
+├── ✅ latex-background.tsx 신규 추가
+│   ├── 다크모드 전용 라텍스 광택 배경
+│   ├── 물방울/땀 효과 (Water Droplets)
+│   └── Matrix Neon 그리드 오버레이
+├── ✅ 지뢰계(Jirai-kei) 디자인 시스템 강화
+│   ├── Header/Footer UI 리뉴얼
+│   └── ProductCard 시각 효과 개선
+└── ✅ 빌드 테스트 통과
+```
+
 ### 2025-11-30: Official Logo Implementation ✅
 ```
 TBR Official Logo (Teddy Bear with Heart)
@@ -351,3 +371,5 @@ OLD Project: bwbqtknwfslviwqophtc (DEPRECATED)
 - CSS color-mix(): `color-mix(in srgb, var(--primary) 20%, transparent)` 로 CSS 변수 투명도 구현
 - CSS antialiased: `-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;` 직접 사용
 - SVG Path: d 속성에 잘못된 문자열 포함 시 silent fail → 렌더링 자체가 안됨
+- Age Verification: localStorage + useEffect로 페이지 진입 시 성인 인증 상태 확인
+- CSS Dark Mode Only: `opacity-0 dark:opacity-100`으로 다크모드 전용 요소 구현

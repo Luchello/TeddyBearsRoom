@@ -8,6 +8,7 @@ import { ToastProvider } from "@/contexts/ToastContext";
 import { CartDrawer } from "@/components/CartDrawer";
 import { WishlistDrawer } from "@/components/WishlistDrawer";
 import { AuthModal } from "@/components/AuthModal";
+import { AgeVerificationModal } from "@/components/AgeVerificationModal";
 
 // Optimized font loading with next/font
 const notoSansKR = Noto_Sans_KR({
@@ -54,6 +55,7 @@ export default function RootLayout({
             <CartDrawer />
             <WishlistDrawer />
             <AuthModal />
+            <AgeVerificationModal />
           </ToastProvider>
         </ThemeProvider>
       </body>

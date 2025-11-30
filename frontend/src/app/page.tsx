@@ -4,99 +4,131 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ProductCard } from "@/components/ProductCard";
 import { Testimonials } from "@/components/Testimonials";
 import { featuredProducts, subscriptionBenefits } from "@/lib/data";
+import { LatexBackground } from "@/components/ui/latex-background";
+import { Sparkles, ArrowRight, Heart } from "lucide-react";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col">
-      {/* Hero Section - 지뢰계 스타일 ♡ */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/15 via-background to-accent/15 py-20 lg:py-32 dark:from-primary/10 dark:via-background dark:to-accent/10">
-        {/* 지뢰계 floating decorations ♡✧🎀 */}
-        <div className="absolute top-16 left-8 text-4xl opacity-30 animate-float">♡</div>
-        <div className="absolute top-32 right-16 text-3xl opacity-25 animate-sparkle-twinkle">✧</div>
-        <div className="absolute top-48 left-1/3 text-2xl opacity-20 animate-ribbon-flutter">🎀</div>
-        <div className="absolute bottom-24 left-16 text-3xl opacity-20 animate-heart-beat">💗</div>
-        <div className="absolute bottom-32 right-1/4 text-2xl opacity-25 animate-float" style={{ animationDelay: '0.7s' }}>☆</div>
-        <div className="absolute top-1/2 left-8 text-xl opacity-15 animate-sparkle-twinkle" style={{ animationDelay: '1.2s' }}>✦</div>
+    <div className="flex flex-col min-h-screen">
+      <LatexBackground />
 
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary/30 via-secondary/40 to-accent/30 px-5 py-2.5 text-sm font-bold text-foreground shadow-lg border border-primary/20 dark:bg-primary/10 dark:border dark:border-primary/40 dark:shadow-[0_0_15px_rgba(255,105,180,0.2)]">
-                <span className="animate-heart-beat text-xl">🎀</span>
-                <span className="dark:text-primary">TeddyBear&apos;s Room에 오신 것을 환영해요!</span>
-                <span className="animate-sparkle-twinkle">✧</span>
+      {/* Hero Section - The "Unexpected" Reveal */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        {/* Light Mode Background: Soft Furry Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FFF0F5] via-[#E6E6FA] to-[#F0F8FF] dark:opacity-0 transition-opacity duration-700 -z-10" />
+
+        {/* Noise Texture for "Furry" feel */}
+        <div className="absolute inset-0 bg-[url('/patterns/noise.png')] opacity-[0.03] mix-blend-multiply pointer-events-none dark:opacity-0" />
+
+        <div className="mx-auto max-w-7xl px-4 lg:px-8 w-full relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Typography & Message */}
+            <div className="space-y-8 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-primary/20 backdrop-blur-sm shadow-sm dark:bg-black/30 dark:border-primary/40">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-xs font-bold tracking-widest uppercase text-muted-foreground dark:text-primary">
+                  TBR Universe Collection
+                </span>
               </div>
-              <h1 className="text-4xl font-bold tracking-tight text-foreground lg:text-6xl">
-                <span className="text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text dark:from-[#FF69B4] dark:via-[#9D4EDD] dark:to-[#FF69B4]">지뢰계 감성</span>의<br />
-                <span className="relative">
-                  프라이빗 셀프케어
-                  <span className="absolute -right-8 top-0 text-2xl animate-heart-beat">♡</span>
+
+              <h1 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-foreground">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary dark:from-[#FF00FF] dark:via-[#00FF41] dark:to-[#9D00FF] animate-gradient-x">
+                  Soft Outside,
+                </span>
+                <span className="block relative">
+                  Wild Inside.
+                  <svg className="absolute -bottom-4 left-0 w-full h-3 text-primary/30 dark:text-primary/60" viewBox="0 0 100 10" preserveAspectRatio="none">
+                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
+                  </svg>
                 </span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                파스텔 핑크와 라벤더 속에서 나만의 특별한 시간을 만들어보세요 ♡
-                <br />
-                TeddyBear&apos;s Room이 달콤하게 함께할게요 ✧
+
+              <p className="text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                일상의 귀여움 뒤에 숨겨진 당신만의 본능.<br />
+                <span className="font-bold text-foreground dark:text-white">지뢰계 감성 프라이빗 셀프케어</span>를 경험하세요.
               </p>
-              <div className="flex flex-wrap gap-4">
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-2xl shadow-[0_4px_20px_rgba(255,182,193,0.4)] hover:shadow-[0_8px_30px_rgba(255,182,193,0.6)]"
+                  className="rounded-full text-lg px-8 py-7 bg-foreground text-background hover:bg-foreground/90 dark:bg-primary dark:text-black dark:hover:bg-primary/80 transition-all duration-300 hover:scale-105 shadow-xl"
                 >
-                  <Link href="/products">🎀 상품 둘러보기</Link>
+                  <Link href="/products">
+                    Explore Collection <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
                   variant="outline"
-                  className="rounded-2xl border-accent/50 hover:border-accent hover:bg-accent/10"
+                  className="rounded-full text-lg px-8 py-7 border-2 border-foreground/10 hover:bg-foreground/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10 transition-all duration-300"
                 >
-                  <Link href="/subscribe">♡ 구독 혜택 보기</Link>
+                  <Link href="/about">Our Story</Link>
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <div className="aspect-square rounded-[2.5rem] bg-gradient-to-br from-primary/25 via-secondary/15 to-accent/25 p-8 flex items-center justify-center shadow-[0_20px_60px_rgba(255,182,193,0.25)] border-2 border-primary/30 dark:from-primary/15 dark:via-secondary/10 dark:to-accent/15 dark:shadow-[0_0_60px_rgba(255,105,180,0.2)] dark:border-primary/40">
-                <span className="text-[180px] animate-soft-float drop-shadow-2xl">🧸</span>
+
+            {/* Right: Visual "The Portal" */}
+            <div className="relative h-[500px] lg:h-[700px] flex items-center justify-center perspective-1000">
+              {/* Abstract Shape representing "Soft vs Hard" */}
+              <div className="relative w-[300px] h-[400px] sm:w-[400px] sm:h-[500px]">
+                {/* Back Card (Dark Mode / Latex) */}
+                <div className="absolute inset-0 rounded-[3rem] bg-neutral-900 border border-primary/50 shadow-[0_0_50px_rgba(255,0,255,0.3)] rotate-6 scale-95 dark:rotate-0 dark:scale-100 transition-all duration-700 ease-out overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent)]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-primary/20 to-transparent" />
+                  <div className="flex items-center justify-center h-full">
+                    <span className="text-9xl filter blur-sm animate-pulse opacity-50">⛓️</span>
+                  </div>
+                </div>
+
+                {/* Front Card (Light Mode / Furry) */}
+                <div className="absolute inset-0 rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-50" />
+                  <span className="text-9xl animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">🧸</span>
+                  <div className="absolute bottom-10 px-6 py-2 bg-white/90 rounded-full shadow-sm text-sm font-bold tracking-wider uppercase">
+                    Touch Me
+                  </div>
+                </div>
               </div>
-              {/* 지뢰계 decorative elements ♡✧🎀 */}
-              <div className="absolute -top-4 -right-4 text-3xl animate-sparkle-twinkle">✧</div>
-              <div className="absolute -bottom-2 -left-2 text-2xl animate-heart-beat" style={{ animationDelay: '0.3s' }}>♡</div>
-              <div className="absolute top-1/2 -right-6 text-xl animate-ribbon-flutter" style={{ animationDelay: '0.7s' }}>🎀</div>
-              <div className="absolute top-1/4 -left-4 text-lg animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>☆</div>
-              {/* Decorative pink/purple orbs for dark mode */}
-              <div className="hidden dark:block absolute -top-10 -right-10 w-40 h-40 bg-[#FF69B4]/20 rounded-full blur-3xl animate-pink-glow-pulse" />
-              <div className="hidden dark:block absolute -bottom-10 -left-10 w-32 h-32 bg-[#9D4EDD]/20 rounded-full blur-3xl animate-pink-glow-pulse" style={{ animationDelay: '1s' }} />
             </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 rounded-full border-2 border-foreground/20 flex justify-center pt-2 dark:border-white/20">
+            <div className="w-1.5 h-1.5 rounded-full bg-foreground/50 dark:bg-white/50" />
           </div>
         </div>
       </section>
 
-      {/* Featured Products - 지뢰계 ♡ */}
-      <section className="py-16 lg:py-24 relative">
-        <div className="absolute top-10 right-10 text-3xl opacity-15 animate-ribbon-flutter">🎀</div>
-        <div className="absolute bottom-16 left-8 text-2xl opacity-10 animate-heart-beat">♡</div>
+      {/* Featured Products - "The Collection" */}
+      <section className="py-24 relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-3xl animate-heart-beat">♡</span>
-                <h2 className="text-3xl font-bold text-foreground dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">인기 상품</h2>
-              </div>
-              <p className="text-muted-foreground">
-                지금 가장 사랑받는 아이템들을 만나보세요 ✧
+              <h2 className="text-4xl font-bold text-foreground mb-4 dark:text-white">
+                Curated Pleasure
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-md">
+                엄선된 아이템으로 당신의 취향을 발견하세요.
+                <br />귀여움 속에 숨겨진 기능을 탐험해보세요.
               </p>
             </div>
             <Button
               asChild
-              variant="outline"
-              className="rounded-2xl border-primary/40 hover:border-primary"
+              variant="ghost"
+              className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0"
             >
-              <Link href="/products">전체 보기 →</Link>
+              <Link href="/products" className="flex items-center gap-2">
+                View All Products
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
+              </Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+
+          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
@@ -104,100 +136,72 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Subscription CTA - 지뢰계 ♡ */}
-      <section className="bg-gradient-to-r from-primary/15 via-accent/10 to-secondary/15 py-16 lg:py-24 dark:from-primary/10 dark:via-accent/5 dark:to-secondary/10 relative overflow-hidden">
-        {/* 지뢰계 decorative elements */}
-        <div className="absolute top-10 left-10 text-5xl opacity-15 animate-ribbon-flutter">🎀</div>
-        <div className="absolute bottom-10 right-10 text-4xl opacity-10 animate-heart-beat" style={{ animationDelay: '1s' }}>♡</div>
-        <div className="absolute top-1/2 right-16 text-3xl opacity-10 animate-sparkle-twinkle">✧</div>
-        <div className="absolute bottom-1/4 left-16 text-2xl opacity-10 animate-float">☆</div>
+      {/* Subscription CTA - "The Inner Circle" */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 -skew-y-3 transform origin-top-left scale-110" />
 
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center gap-3 mb-4">
-              <span className="text-4xl animate-sparkle-twinkle">✧</span>
-              <span className="text-6xl animate-soft-float">🧸</span>
-              <span className="text-4xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
+        <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
+          <div className="bg-white dark:bg-neutral-900 rounded-[3rem] p-8 md:p-16 shadow-2xl border border-primary/10 dark:border-primary/30 overflow-hidden relative">
+            {/* Decorative Blobs */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none" />
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div className="inline-block p-3 rounded-2xl bg-primary/10 text-primary">
+                  <Sparkles className="w-8 h-8" />
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white leading-tight">
+                  Join the <br />
+                  <span className="text-primary">Inner Circle</span>
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  매달 도착하는 시크릿 박스. <br />
+                  당신의 취향을 분석해 가장 완벽한 경험을 선물합니다.
+                </p>
+                <ul className="space-y-4">
+                  {subscriptionBenefits.slice(0, 3).map((benefit, i) => (
+                    <li key={i} className="flex items-center gap-3 text-foreground font-medium">
+                      <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center text-xs">✓</div>
+                      {benefit.title}
+                    </li>
+                  ))}
+                </ul>
+                <Button size="lg" className="rounded-full px-10 py-6 text-lg shadow-lg shadow-primary/25">
+                  <Link href="/subscribe">Start Membership</Link>
+                </Button>
+              </div>
+
+              <div className="relative">
+                <div className="aspect-[4/5] rounded-[2.5rem] bg-neutral-100 dark:bg-neutral-800 overflow-hidden relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <span className="text-8xl mb-4 block animate-bounce-slow">🎁</span>
+                      <p className="font-bold text-xl text-foreground/50 uppercase tracking-widest">Mystery Box</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Floating Elements */}
+                <div className="absolute -bottom-6 -right-6 bg-white dark:bg-neutral-800 p-6 rounded-3xl shadow-xl border border-primary/10 animate-float">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                      <Heart className="w-5 h-5 fill-current" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground font-bold uppercase">Satisfaction</p>
+                      <p className="text-lg font-bold">100% Guaranteed</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h2 className="text-3xl font-bold text-foreground dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">
-              스탠다드 멤버십
-            </h2>
-            <p className="mt-3 text-muted-foreground text-lg">
-              월 <span className="text-primary font-bold">19,900원</span>으로 특별한 혜택을 누리세요 ♡
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-12">
-            {subscriptionBenefits.map((benefit, index) => (
-              <Card key={index} className="rounded-3xl border-2 border-primary/25 bg-card/70 backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(255,182,193,0.25)] dark:bg-card/30 dark:border-primary/40 dark:hover:shadow-[0_0_30px_rgba(255,105,180,0.2)] group">
-                <CardContent className="p-6 text-center">
-                  <span className="text-5xl mb-4 block group-hover:animate-heart-beat transition-transform">{benefit.icon}</span>
-                  <h3 className="font-bold text-foreground text-lg">{benefit.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{benefit.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center">
-            <Button
-              asChild
-              size="lg"
-              className="rounded-2xl text-lg px-10 shadow-[0_4px_20px_rgba(255,182,193,0.4)] hover:shadow-[0_8px_30px_rgba(255,182,193,0.6)]"
-            >
-              <Link href="/subscribe">✧ 구독 시작하기</Link>
-            </Button>
-            <p className="mt-6 text-muted-foreground dark:text-secondary">
-              ♡ <span className="font-bold text-primary">프리미엄 멤버십</span>도 있어요! 혜택 2배, 가격은 절반만 더!
-            </p>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
       <Testimonials />
-
-      {/* Brand Values - 지뢰계 ♡ */}
-      <section className="py-16 lg:py-24 relative">
-        <div className="absolute top-12 left-12 text-2xl opacity-10 animate-sparkle-twinkle">✧</div>
-        <div className="absolute bottom-12 right-12 text-2xl opacity-10 animate-heart-beat">♡</div>
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground flex items-center justify-center gap-2">
-              <span className="text-3xl animate-sparkle-twinkle">✧</span>
-              TeddyBear&apos;s Room만의 특별함
-              <span className="text-3xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
-            </h2>
-          </div>
-          <div className="grid gap-8 lg:grid-cols-3">
-            <div className="text-center group p-6 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/15 border-2 border-primary/25 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(255,182,193,0.2)]">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/80 shadow-lg dark:bg-card/80 dark:shadow-[0_0_20px_rgba(255,105,180,0.15)] group-hover:scale-110 transition-transform">
-                <span className="text-4xl group-hover:animate-heart-beat">🔒</span>
-              </div>
-              <h3 className="text-lg font-bold text-foreground">프라이버시 보장</h3>
-              <p className="mt-3 text-muted-foreground leading-relaxed">
-                무지 박스 배송과 안전한 결제로<br />프라이버시를 완벽히 보장해요 ✧
-              </p>
-            </div>
-            <div className="text-center group p-6 rounded-3xl bg-gradient-to-br from-secondary/10 to-secondary/15 border-2 border-secondary/25 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(245,208,224,0.2)]">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/80 shadow-lg dark:bg-card/80 dark:shadow-[0_0_20px_rgba(157,78,221,0.15)] group-hover:scale-110 transition-transform">
-                <span className="text-4xl group-hover:animate-heart-beat">♡</span>
-              </div>
-              <h3 className="text-lg font-bold text-foreground">기부 투표</h3>
-              <p className="mt-3 text-muted-foreground leading-relaxed">
-                매출의 일부를 사회에 환원하고<br />구독자가 기부처를 선택해요 ♡
-              </p>
-            </div>
-            <div className="text-center group p-6 rounded-3xl bg-gradient-to-br from-accent/10 to-accent/15 border-2 border-accent/25 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(197,163,255,0.2)]">
-              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/80 shadow-lg dark:bg-card/80 dark:shadow-[0_0_20px_rgba(197,163,255,0.15)] group-hover:scale-110 transition-transform">
-                <span className="text-4xl group-hover:animate-ribbon-flutter">🎀</span>
-              </div>
-              <h3 className="text-lg font-bold text-foreground">큐레이션</h3>
-              <p className="mt-3 text-muted-foreground leading-relaxed">
-                엄선된 고품질 상품만을<br />지뢰계 감성으로 선보여요 ✧
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
