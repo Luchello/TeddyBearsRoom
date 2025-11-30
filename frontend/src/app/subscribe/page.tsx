@@ -47,11 +47,12 @@ export default function SubscribePage() {
       {/* Pricing Cards */}
       <section className="py-12 lg:py-16">
         <div className="mx-auto max-w-5xl px-4 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-2">
+          {/* MVP: 단일 멤버십 - 중앙 정렬 */}
+          <div className="flex justify-center">
             {subscriptionPlans.map((plan) => (
               <Card
                 key={plan.name}
-                className={`relative rounded-3xl transition-all duration-300 hover:-translate-y-1 ${
+                className={`relative rounded-3xl transition-all duration-300 hover:-translate-y-1 max-w-md w-full ${
                   plan.popular
                     ? "border-2 border-primary shadow-lg shadow-primary/20 dark:neon-card dark:neon-glow"
                     : "border-border hover:shadow-lg dark:neon-card"
@@ -117,7 +118,7 @@ export default function SubscribePage() {
           {/* Value Message */}
           <div className="mt-8 text-center">
             <p className="text-sm text-muted-foreground">
-              💡 <span className="font-medium text-primary">프리미엄 팁:</span> 혜택은 스탠다드의 2배, 가격은 혜택의 절반만!
+              💡 <span className="font-medium text-primary">멤버십 혜택:</span> 포인트 적립 + 기부 참여 + 무료 배송까지!
             </p>
           </div>
         </div>
@@ -202,7 +203,7 @@ export default function SubscribePage() {
               size="lg"
               className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
             >
-              프리미엄 시작하기 👑
+              멤버십 시작하기 🐻
             </Button>
             <Button
               size="lg"

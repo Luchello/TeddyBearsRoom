@@ -128,43 +128,27 @@ export const subscriptionBenefits: Benefit[] = [
   { icon: "🎀", title: "회원 전용 할인", desc: "매월 특별 할인 쿠폰" },
 ];
 
-// Subscription Plans
-// 포인트 적립률: 비회원 0%, 스탠다드 5%, 프리미엄 10%
-// 기부 비율: 스탠다드 5%, 프리미엄 10%
+// Subscription Plan (MVP: Single Tier)
+// 포인트 적립률: 비회원 0%, 멤버십 5%
+// 기부 비율: 멤버십 5%
+// 2025-11-30: 2-Tier → Single Tier 전환 (MVP 단순화)
 export const subscriptionPlans: SubscriptionPlan[] = [
   {
-    name: "스탠다드",
+    name: "TBR 멤버십",
     icon: "🐻",
     price: 19900,
     period: "월",
-    description: "TeddyBear's Room을 시작하는 분들을 위한 플랜",
+    description: "TeddyBear's Room의 모든 혜택을 누려보세요",
     features: [
       { text: "포인트 5% 적립", included: true },
       { text: "구매금액 5% 기부", included: true },
       { text: "5만원 이상 무료 배송", included: true },
       { text: "매월 5% 할인 쿠폰", included: true },
-      { text: "신상품 얼리 액세스", included: false },
-      { text: "전용 고객 상담", included: false },
-    ],
-    popular: false,
-    cta: "스탠다드 시작하기",
-  },
-  {
-    name: "프리미엄",
-    icon: "👑",
-    price: 29900,
-    period: "월",
-    description: "혜택은 2배! 가격은 혜택의 절반만!",
-    features: [
-      { text: "포인트 10% 적립", included: true },
-      { text: "구매금액 10% 기부", included: true },
-      { text: "전 상품 무료 배송", included: true },
-      { text: "매월 10% 할인 쿠폰", included: true },
       { text: "신상품 얼리 액세스", included: true },
-      { text: "전용 고객 상담", included: true },
+      { text: "생일 특별 혜택", included: true },
     ],
     popular: true,
-    cta: "프리미엄 시작하기",
+    cta: "멤버십 시작하기",
   },
 ];
 

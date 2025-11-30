@@ -2,7 +2,8 @@
 
 // ====================================
 // TeddyBear's Room - Plan Comparison Table
-// Side-by-side subscription plan comparison
+// MVP: 비회원 vs 멤버십 2컬럼 비교
+// 2025-11-30: 2-Tier → Single Tier 전환
 // ====================================
 
 import { Check, X } from "lucide-react";
@@ -10,19 +11,16 @@ import { Check, X } from "lucide-react";
 interface ComparisonRow {
   feature: string;
   nonMember: string | boolean;
-  standard: string | boolean;
-  premium: string | boolean;
+  member: string | boolean;
 }
 
 const comparisonData: ComparisonRow[] = [
-  { feature: "포인트 적립", nonMember: "0%", standard: "5%", premium: "10%" },
-  { feature: "기부 투표 참여", nonMember: false, standard: "5%", premium: "10%" },
-  { feature: "무료 배송", nonMember: "7만원 이상", standard: "5만원 이상", premium: "전 상품" },
-  { feature: "할인 쿠폰", nonMember: false, standard: "매월 5%", premium: "매월 10%" },
-  { feature: "신상품 얼리 액세스", nonMember: false, standard: false, premium: true },
-  { feature: "전용 고객 상담", nonMember: false, standard: false, premium: true },
-  { feature: "생일 특별 혜택", nonMember: false, standard: true, premium: true },
-  { feature: "한정판 우선 구매", nonMember: false, standard: false, premium: true },
+  { feature: "포인트 적립", nonMember: "0%", member: "5%" },
+  { feature: "기부 투표 참여", nonMember: false, member: "5%" },
+  { feature: "무료 배송", nonMember: "7만원 이상", member: "5만원 이상" },
+  { feature: "할인 쿠폰", nonMember: false, member: "매월 5%" },
+  { feature: "신상품 얼리 액세스", nonMember: false, member: true },
+  { feature: "생일 특별 혜택", nonMember: false, member: true },
 ];
 
 export function PlanComparisonTable() {
@@ -49,19 +47,12 @@ export function PlanComparisonTable() {
               <div className="text-muted-foreground">비회원</div>
               <div className="text-sm font-normal text-muted-foreground/70">0원</div>
             </th>
-            <th className="text-center p-4 border-b border-border bg-muted/30">
-              <div className="flex items-center justify-center gap-1">
-                <span>🐻</span>
-                <span>스탠다드</span>
-              </div>
-              <div className="text-sm font-normal text-primary">19,900원/월</div>
-            </th>
             <th className="text-center p-4 border-b border-border bg-primary/10 rounded-tr-xl">
               <div className="flex items-center justify-center gap-1">
-                <span>👑</span>
-                <span className="text-primary">프리미엄</span>
+                <span>🐻</span>
+                <span className="text-primary">TBR 멤버십</span>
               </div>
-              <div className="text-sm font-normal text-primary">29,900원/월</div>
+              <div className="text-sm font-normal text-primary">19,900원/월</div>
             </th>
           </tr>
         </thead>
@@ -77,11 +68,8 @@ export function PlanComparisonTable() {
               <td className="p-4 border-b border-border text-center text-muted-foreground">
                 {renderValue(row.nonMember)}
               </td>
-              <td className="p-4 border-b border-border text-center text-foreground">
-                {renderValue(row.standard)}
-              </td>
               <td className="p-4 border-b border-border text-center text-foreground bg-primary/5">
-                {renderValue(row.premium)}
+                {renderValue(row.member)}
               </td>
             </tr>
           ))}

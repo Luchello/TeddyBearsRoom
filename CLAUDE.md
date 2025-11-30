@@ -158,11 +158,11 @@ Infra: Vercel + Custom Domain + 환경변수 ✅
 
 ## Business Context
 
-### Subscription Model
-- 👤 **비회원**: 포인트 적립 0%
-- 🐻 **스탠다드**: 19,900원/월 (기부 5%, 포인트 5% 적립)
-- 👑 **프리미엄**: 29,900원/월 (기부 10%, 포인트 10% 적립)
-- 💡 **메시지**: "혜택은 스탠다드의 두 배! 가격은 혜택의 절반만!"
+### Subscription Model (MVP Single Tier - 2025-11-30)
+- ❌ **비회원**: 포인트 0%, 무료배송 7만원↑, 기부 참여 불가
+- 🐻 **TBR 멤버십**: 19,900원/월 (포인트 5%, 기부 5%, 무료배송 5만원↑, 매월 5% 쿠폰)
+- 💡 **메시지**: "포인트 적립 + 기부 참여 + 무료 배송까지!"
+- 📌 **MVP 전략**: 단일 tier로 핵심 가치 검증 후 확장 검토
 
 ### 차별화 기능
 1. **구독 멤버십**: TossPayments 빌링키 기반 정기결제
@@ -269,6 +269,26 @@ npm run lint         # ESLint 검사
 ---
 
 ## 📈 Recent Changes
+
+### 2025-11-30: MVP Single Tier 구독 시스템 전환 ✅
+```
+2-Tier → Single Tier MVP 전환 (선택의 역설 해결)
+├── ✅ Frontend 코드 수정
+│   ├── data.ts: subscriptionPlans 단일 플랜으로 변경
+│   ├── subscribe/page.tsx: 중앙 정렬 단일 카드 레이아웃
+│   ├── PlanComparisonTable.tsx: 3컬럼 → 2컬럼 (비회원 vs 멤버십)
+│   └── about/page.tsx: 기부 섹션 단일 tier 카드
+├── ✅ 문서 업데이트
+│   ├── subscription_standard.md: MVP 전략 변경 반영
+│   ├── subscription_briefing_2025-11-22.md: MVP 전략 변경 반영
+│   └── CLAUDE.md: Business Context 섹션 업데이트
+├── ✅ Notion 페이지 업데이트
+│   └── 기술 스택 페이지: 구독 시스템 블록 재작성
+└── ✅ 빌드 검증 통과 (15 routes)
+
+MVP 핵심 메시지: "포인트 적립 + 기부 참여 + 무료 배송까지!"
+TBR 멤버십: 19,900원/월 | 포인트 5% | 기부 5% | 무료배송 5만원↑
+```
 
 ### 2025-11-30: Dark Mode Logo Variant & CSS Enhancement ✅
 ```

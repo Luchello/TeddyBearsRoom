@@ -25,17 +25,19 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center p-12">
-                <img
-                  src="/tbr_logo.png"
-                  alt="TeddyBear's Room Logo"
-                  className="w-full h-full object-contain drop-shadow-xl animate-float dark:hidden"
-                />
-                <img
-                  src="/tbr_logo_dark.png"
-                  alt="TeddyBear's Room Logo"
-                  className="w-full h-full object-contain drop-shadow-xl animate-float hidden dark:block"
-                />
+              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 dark:bg-none flex items-center justify-center p-12">
+                <div className="w-full h-full relative">
+                  <img
+                    src="/tbr_logo.png"
+                    alt="TeddyBear's Room Logo"
+                    className="absolute inset-0 w-full h-full object-contain drop-shadow-xl animate-float dark:hidden"
+                  />
+                  <img
+                    src="/tbr_logo_dark.png"
+                    alt="TeddyBear's Room Logo"
+                    className="absolute inset-0 w-full h-full object-contain drop-shadow-xl animate-float hidden dark:block"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -138,21 +140,14 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 max-w-lg mx-auto">
-            <Card className="rounded-2xl bg-primary/10">
-              <CardContent className="p-6 text-center">
-                <span className="text-2xl">🐻</span>
-                <p className="font-semibold text-foreground mt-2">스탠다드</p>
-                <p className="text-2xl font-bold text-primary">5%</p>
-                <p className="text-sm text-muted-foreground">기부</p>
-              </CardContent>
-            </Card>
-            <Card className="rounded-2xl bg-accent/10">
-              <CardContent className="p-6 text-center">
-                <span className="text-2xl">👑</span>
-                <p className="font-semibold text-foreground mt-2">프리미엄</p>
-                <p className="text-2xl font-bold text-primary">10%</p>
-                <p className="text-sm text-muted-foreground">기부</p>
+          {/* MVP: 단일 멤버십 기부 카드 */}
+          <div className="mt-10 max-w-xs mx-auto">
+            <Card className="rounded-2xl bg-primary/10 border-2 border-primary/30">
+              <CardContent className="p-8 text-center">
+                <span className="text-4xl">🐻</span>
+                <p className="font-semibold text-foreground mt-3 text-lg">TBR 멤버십</p>
+                <p className="text-3xl font-bold text-primary mt-2">5%</p>
+                <p className="text-sm text-muted-foreground">구매금액 기부</p>
               </CardContent>
             </Card>
           </div>
