@@ -25,8 +25,17 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center">
-                <span className="text-[180px]">🧸</span>
+              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center p-12">
+                <img
+                  src="/tbr_logo.png"
+                  alt="TeddyBear's Room Logo"
+                  className="w-full h-full object-contain drop-shadow-xl animate-float dark:hidden"
+                />
+                <img
+                  src="/tbr_logo_dark.png"
+                  alt="TeddyBear's Room Logo"
+                  className="w-full h-full object-contain drop-shadow-xl animate-float hidden dark:block"
+                />
               </div>
             </div>
           </div>
