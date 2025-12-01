@@ -1,6 +1,6 @@
 # 📚 TeddyBear's Room Documentation
 
-**최종 업데이트**: 2025-11-29
+**최종 업데이트**: 2025-12-01
 **총 문서 수**: 13개
 **프로젝트 상태**: ✅ Production Ready
 
@@ -10,7 +10,7 @@
 
 ```
 ╔═══════════════════════════════════════════════════════════════════════════╗
-║                     DOCUMENTATION STATUS: 2025-11-29                      ║
+║                     DOCUMENTATION STATUS: 2025-12-01                      ║
 ╠═══════════════════════════════════════════════════════════════════════════╣
 ║                                                                           ║
 ║  📁 전략 & 기획        │ 3개 문서                                         ║
@@ -93,7 +93,13 @@
 
 ## 🔄 업데이트 이력
 
-### 2025-11-29 ✨ Latest
+### 2025-12-01 ✨ Latest
+- 📝 Footer SNS/결제 간소화 (Twitter only, 무통장입금/카카오페이/토스)
+- 🗑️ Dead code 정리 (dropdown-menu.tsx 삭제, unused imports 제거)
+- 🔧 JSX 문법 오류 수정 (3개 파일)
+- 📄 문서 날짜 업데이트
+
+### 2025-11-29
 - 📝 tech_stack_summary v3.0 업데이트
 - ✅ Supabase 마이그레이션 완료 반영
 - 📁 README.md 전면 리뉴얼
@@ -148,4 +154,4 @@
 ---
 
 **Maintained by**: Claude Code
-**Last Updated**: 2025-11-29
+**Last Updated**: 2025-12-01
