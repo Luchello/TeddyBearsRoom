@@ -8,9 +8,9 @@
 // 🎯 용도:
 // - 모든 페이지 하단 푸터
 // - 뉴스레터 구독 폼
-// - SNS 링크 (Instagram, Twitter, Kakao, Naver)
+// - SNS 링크 (Twitter)
 // - Shop/Support/Company 링크 그룹
-// - 결제 방법 및 신뢰 배지
+// - 결제 방법 (무통장입금, 카카오페이, 토스) 및 신뢰 배지
 //
 // 📦 구조:
 // - Wave Divider (Top): 섹션 분리 장식
@@ -40,15 +40,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import {
-  Instagram,
   Twitter,
   Mail,
-  MessageCircle,
   Heart,
   ShieldCheck,
   Package,
   Lock,
-  Sparkles,
   Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,38 +53,12 @@ import { Input } from "@/components/ui/input";
 import { footerLinks } from "@/lib/data";
 
 // ──────────────────────────────────────
-// 한국 SNS 커스텀 아이콘
-// - SVG 기반 카카오톡, 네이버 블로그 아이콘
-// ──────────────────────────────────────
-
-/**
- * 카카오톡 아이콘 SVG
- * @description 공식 카카오톡 말풍선 형태
- */
-const KakaoIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.47 1.607 4.647 4.035 5.876l-.857 3.214a.5.5 0 00.748.544l3.722-2.481C10.41 17.384 11.19 17.5 12 17.5c5.523 0 10-3.477 10-7.5S17.523 3 12 3z" />
-  </svg>
-);
-
-/**
- * 네이버 블로그 아이콘 SVG
- * @description 네이버 N 자 형태
- */
-const NaverBlogIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845z" />
-  </svg>
-);
-
-// ──────────────────────────────────────
-// 결제 수단 목록
+// 결제 수단 목록 (주력: 무통장입금, 카카오페이, 토스)
 // - 이모지 아이콘으로 표시
 // ──────────────────────────────────────
 const paymentMethods = [
-  { name: "신용카드", icon: "💳" },
+  { name: "무통장입금", icon: "🏦" },
   { name: "카카오페이", icon: "🟡" },
-  { name: "네이버페이", icon: "🟢" },
   { name: "토스", icon: "🔵" },
 ];
 
@@ -278,36 +249,14 @@ export function Footer() {
                 <span className="text-primary font-bold mt-2 inline-block">♡ Made with Love & Fantasy ✧</span>
               </p>
 
-              {/* SNS Links */}
+              {/* SNS Links - Twitter Only */}
               <div className="flex gap-3 pt-2">
-                {[
-                  { icon: Instagram, color: "from-pink-500 to-purple-500", label: "Instagram" },
-                  { icon: Twitter, color: "from-blue-400 to-blue-600", label: "Twitter" },
-                ].map((social, idx) => (
-                  <a
-                    key={idx}
-                    href="#"
-                    className={`p-2.5 rounded-xl bg-gradient-to-br ${social.color} text-white hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-4 w-4" />
-                  </a>
-                ))}
-                {/* 카카오톡 */}
                 <a
                   href="#"
-                  className="p-2.5 rounded-xl bg-[#FEE500] text-[#3C1E1E] hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                  aria-label="KakaoTalk"
+                  className="p-2.5 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  aria-label="Twitter"
                 >
-                  <KakaoIcon />
-                </a>
-                {/* 네이버 블로그 */}
-                <a
-                  href="#"
-                  className="p-2.5 rounded-xl bg-[#03C75A] text-white hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                  aria-label="Naver Blog"
-                >
-                  <NaverBlogIcon />
+                  <Twitter className="h-4 w-4" />
                 </a>
               </div>
             </div>

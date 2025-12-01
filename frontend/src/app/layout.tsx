@@ -9,6 +9,7 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { WishlistDrawer } from "@/components/WishlistDrawer";
 import { AuthModal } from "@/components/AuthModal";
 import { AgeVerificationModal } from "@/components/AgeVerificationModal";
+import { LatexBackground } from "@/components/ui/latex-background";
 
 // Optimized font loading with next/font
 const notoSansKR = Noto_Sans_KR({
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider>
           <ToastProvider>
+            <LatexBackground />
             <div className="relative flex min-h-screen flex-col">
               <Header />
               <main className="flex-1">{children}</main>

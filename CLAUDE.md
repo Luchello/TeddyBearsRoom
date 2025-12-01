@@ -270,6 +270,22 @@ npm run lint         # ESLint 검사
 
 ## 📈 Recent Changes
 
+### 2025-12-01: Footer SNS & Payment Methods Update ✅
+```
+Footer.tsx 결제 수단 및 SNS 링크 간소화
+├── 🗑️ 삭제된 항목
+│   ├── Instagram import 제거
+│   ├── KakaoIcon, NaverBlogIcon 커스텀 컴포넌트 삭제
+│   ├── SNS: 인스타그램, 카카오톡, 네이버 삭제
+│   └── 결제: 신용카드, 네이버페이 삭제
+├── ✅ 유지/추가된 항목
+│   ├── SNS: Twitter 아이콘만 유지
+│   └── 결제: 무통장입금🏦, 카카오페이🟡, 토스🔵 (3개)
+├── 📝 JSDoc 주석 업데이트
+│   └── SNS 및 결제 방법 설명 수정
+└── ✅ 빌드 검증 통과 (15 routes, 8.9s)
+```
+
 ### 2025-12-01: Dead Code Cleanup & Syntax Fix ✅
 ```
 /sc:cleanup ultrathink 실행 결과

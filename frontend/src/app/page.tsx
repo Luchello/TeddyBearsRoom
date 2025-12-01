@@ -4,140 +4,136 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { Testimonials } from "@/components/Testimonials";
 import { featuredProducts, subscriptionBenefits } from "@/lib/data";
-import { LatexBackground } from "@/components/ui/latex-background";
 import { Sparkles, ArrowRight, Heart } from "lucide-react";
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <LatexBackground />
+      {/* Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 to-white/50 dark:from-neutral-950 dark:to-neutral-900 z-0" />
 
-      {/* Hero Section - The "Unexpected" Reveal */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Light Mode Background: Soft Furry Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FFF0F5] via-[#E6E6FA] to-[#F0F8FF] dark:opacity-0 transition-opacity duration-700 -z-10" />
-
-        {/* Noise Texture for "Furry" feel */}
-        <div className="absolute inset-0 bg-[url('/patterns/noise.png')] opacity-[0.03] mix-blend-multiply pointer-events-none dark:opacity-0" />
-
-        <div className="mx-auto max-w-7xl px-4 lg:px-8 w-full relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Typography & Message */}
-            <div className="space-y-8 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-primary/20 backdrop-blur-sm shadow-sm dark:bg-black/30 dark:border-primary/40">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-xs font-bold tracking-widest uppercase text-muted-foreground dark:text-primary">
-                  TBR Universe Collection
-                </span>
-              </div>
-
-              <h1 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-foreground">
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary dark:from-[#FF00FF] dark:via-[#00FF41] dark:to-[#9D00FF] animate-gradient-x">
-                  Soft Outside,
-                </span>
-                <span className="block relative">
-                  Wild Inside.
-                  <svg className="absolute -bottom-4 left-0 w-full h-3 text-primary/30 dark:text-primary/60" viewBox="0 0 100 10" preserveAspectRatio="none">
-                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
-                  </svg>
-                </span>
-              </h1>
-
-              <p className="text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                일상의 귀여움 뒤에 숨겨진 당신만의 본능.<br />
-                <span className="font-bold text-foreground dark:text-white">지뢰계 감성 프라이빗 셀프케어</span>를 경험하세요.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full text-lg px-8 py-7 bg-foreground text-background hover:bg-foreground/90 dark:bg-primary dark:text-black dark:hover:bg-primary/80 transition-all duration-300 hover:scale-105 shadow-xl"
-                >
-                  <Link href="/products">
-                    Explore Collection <ArrowRight className="ml-2 w-5 h-5" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full text-lg px-8 py-7 border-2 border-foreground/10 hover:bg-foreground/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10 transition-all duration-300"
-                >
-                  <Link href="/about">Our Story</Link>
-                </Button>
-              </div>
+        {/* Animated Blobs (Light Mode) */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl animate-pulse dark:hidden" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl animate-pulse delay-1000 dark:hidden" />
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Typography & Message */}
+          <div className="space-y-8 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-primary/20 backdrop-blur-sm shadow-sm dark:bg-black/30 dark:border-primary/40">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-xs font-bold tracking-widest uppercase text-muted-foreground dark:text-primary">
+                TBR Universe Collection
+              </span>
             </div>
 
-            {/* Right: Visual "The Portal" */}
-            <div className="relative h-[500px] lg:h-[700px] flex items-center justify-center perspective-1000">
-              {/* Abstract Shape representing "Soft vs Hard" */}
-              <div className="relative w-[300px] h-[400px] sm:w-[400px] sm:h-[500px]">
-                {/* Back Card (Dark Mode / Latex) */}
-                <div className="absolute inset-0 rounded-[3rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
-                  <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(0,255,65,0.5)] filter group-hover:brightness-125 transition-all duration-300">
-                    <Image src="/tbr_logo_dark.png" alt="TBR Logo Dark" fill className="object-contain" />
-                  </div>
-                  <div className="absolute bottom-10 px-6 py-2 bg-black/80 border border-primary/50 rounded-full shadow-[0_0_20px_rgba(0,255,65,0.3)] text-sm font-bold tracking-wider uppercase text-primary animate-pulse">
-                    Enter The Void
-                  </div>
-                </div>
+            <h1 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-foreground">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary dark:from-[#FF00FF] dark:via-[#00FF41] dark:to-[#9D00FF] animate-gradient-x">
+                Soft Outside,
+              </span>
+              <span className="block relative">
+                Wild Inside.
+                <svg className="absolute -bottom-4 left-0 w-full h-3 text-primary/30 dark:text-primary/60" viewBox="0 0 100 10" preserveAspectRatio="none">
+                  <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
+                </svg>
+              </span>
+            </h1>
 
-                {/* Front Card (Light Mode / Furry) */}
-                <div className="absolute inset-0 rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-50" />
-                  <div className="relative w-48 h-48 animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">
-                    <Image src="/tbr_logo.png" alt="TBR Logo" fill className="object-contain" />
-                  </div>
-                  <div className="absolute bottom-10 px-6 py-2 bg-white/90 rounded-full shadow-sm text-sm font-bold tracking-wider uppercase">
-                    Touch Me
-                  </div>
+            <p className="text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              일상의 귀여움 뒤에 숨겨진 당신만의 본능.<br />
+              <span className="font-bold text-foreground dark:text-white">지뢰계 감성 프라이빗 셀프케어</span>를 경험하세요.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full text-lg px-8 py-7 bg-foreground text-background hover:bg-foreground/90 dark:bg-primary dark:text-black dark:hover:bg-primary/80 transition-all duration-300 hover:scale-105 shadow-xl"
+              >
+                <Link href="/products">
+                  Explore Collection <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full text-lg px-8 py-7 border-2 border-foreground/10 hover:bg-foreground/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10 transition-all duration-300"
+              >
+                <Link href="/about">Our Story</Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Right: Visual "The Portal" */}
+          <div className="relative h-[500px] lg:h-[700px] flex items-center justify-center perspective-1000">
+            {/* Abstract Shape representing "Soft vs Hard" */}
+            <div className="relative w-[300px] h-[400px] sm:w-[400px] sm:h-[500px]">
+              {/* Back Card (Dark Mode / Latex) */}
+              <div className="absolute inset-0 rounded-[3rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
+                <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(0,255,65,0.5)] filter group-hover:brightness-125 transition-all duration-300">
+                  <Image src="/tbr_logo_dark.png" alt="TBR Logo Dark" fill className="object-contain" />
+                </div>
+                <div className="absolute bottom-10 px-6 py-2 bg-black/80 border border-primary/50 rounded-full shadow-[0_0_20px_rgba(0,255,65,0.3)] text-sm font-bold tracking-wider uppercase text-primary animate-pulse">
+                  Enter The Void
+                </div>
+              </div>
+
+              {/* Front Card (Light Mode / Furry) */}
+              <div className="absolute inset-0 rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-50" />
+                <div className="relative w-48 h-48 animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">
+                  <Image src="/tbr_logo.png" alt="TBR Logo" fill className="object-contain" />
+                </div>
+                <div className="absolute bottom-10 px-6 py-2 bg-white/90 rounded-full shadow-sm text-sm font-bold tracking-wider uppercase">
+                  Touch Me
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-foreground/20 flex justify-center pt-2 dark:border-white/20">
-            <div className="w-1.5 h-1.5 rounded-full bg-foreground/50 dark:bg-white/50" />
-          </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 rounded-full border-2 border-foreground/20 flex justify-center pt-2 dark:border-white/20">
+          <div className="w-1.5 h-1.5 rounded-full bg-foreground/50 dark:bg-white/50" />
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Featured Products - "The Collection" */}
       <section className="py-24 relative z-10">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div>
-              <h2 className="text-4xl font-bold text-foreground mb-4 dark:text-white">
-                Curated Pleasure
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-md">
-                엄선된 아이템으로 당신의 취향을 발견하세요.
-                <br />귀여움 속에 숨겨진 기능을 탐험해보세요.
-              </p>
-            </div>
-            <Button
-              asChild
-              variant="ghost"
-              className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0"
-            >
-              <Link href="/products" className="flex items-center gap-2">
-                View All Products
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-              </Link>
-            </Button>
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <h2 className="text-4xl font-bold text-foreground mb-4 dark:text-white">
+              Curated Pleasure
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-md">
+              엄선된 아이템으로 당신의 취향을 발견하세요.
+              <br />귀여움 속에 숨겨진 기능을 탐험해보세요.
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+          <Button
+            asChild
+            variant="ghost"
+            className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0"
+          >
+            <Link href="/products" className="flex items-center gap-2">
+              View All Products
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
+            </Link>
+          </Button>
         </div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredProducts.map((product) => (
+            <ProductCard key={product.id} {...product} />
+          ))}
+        </div>
+      </div>
       </section>
 
       {/* Subscription CTA - "The Inner Circle" */}
