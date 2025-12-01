@@ -174,8 +174,17 @@ export default function CheckoutPage() {
                     key={item.product.id}
                     className="flex gap-3 p-3 rounded-xl bg-muted/50"
                   >
-                    <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                      <span className="text-2xl">🧸</span>
+                    <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden relative">
+                      <img
+                        src="/tbr_logo.png"
+                        alt={item.product.name}
+                        className="w-full h-full object-contain p-2 dark:hidden"
+                      />
+                      <img
+                        src="/tbr_logo_dark.png"
+                        alt={item.product.name}
+                        className="w-full h-full object-contain p-2 hidden dark:block"
+                      />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-sm line-clamp-1">
@@ -225,11 +234,10 @@ export default function CheckoutPage() {
                         key={memo}
                         type="button"
                         onClick={() => handleMemoChange(memo)}
-                        className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                          selectedMemoOption === memo
+                        className={`px-3 py-1 rounded-full text-sm transition-colors ${selectedMemoOption === memo
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted text-muted-foreground hover:bg-muted/80"
-                        }`}
+                          }`}
                       >
                         {memo}
                       </button>
@@ -260,11 +268,10 @@ export default function CheckoutPage() {
                       key={method.id}
                       type="button"
                       onClick={() => setPaymentMethod(method.id)}
-                      className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${
-                        paymentMethod === method.id
+                      className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${paymentMethod === method.id
                           ? "border-primary bg-primary/5 dark:neon-glow-subtle"
                           : "border-border hover:border-primary/50"
-                      }`}
+                        }`}
                     >
                       <method.icon className="h-5 w-5 text-muted-foreground" />
                       <div className="text-left">

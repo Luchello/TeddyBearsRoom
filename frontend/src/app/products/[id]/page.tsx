@@ -73,8 +73,19 @@ export default function ProductPage({ params }: ProductPageProps) {
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Image */}
           <div className="relative">
-            <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center overflow-hidden dark:neon-card">
-              <span className="text-[150px] animate-float">🧸</span>
+            <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center overflow-hidden dark:neon-card relative">
+              <div className="relative w-3/4 h-3/4 animate-float">
+                <img
+                  src="/tbr_logo.png"
+                  alt={product.name}
+                  className="w-full h-full object-contain drop-shadow-xl dark:hidden"
+                />
+                <img
+                  src="/tbr_logo_dark.png"
+                  alt={product.name}
+                  className="w-full h-full object-contain drop-shadow-xl hidden dark:block"
+                />
+              </div>
             </div>
 
             {/* Badges */}

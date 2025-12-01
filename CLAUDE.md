@@ -263,12 +263,61 @@ npm run lint         # ESLint 검사
 
 ---
 
-**Last Updated**: 2025-11-30
+**Last Updated**: 2025-12-01
 **Status**: ✅ **Production Ready** - https://teddybearsroom.com
 
 ---
 
 ## 📈 Recent Changes
+
+### 2025-12-01: Dead Code Cleanup & Syntax Fix ✅
+```
+/sc:cleanup ultrathink 실행 결과
+├── 🗑️ Dead Code 제거
+│   └── dropdown-menu.tsx 삭제 (-257 lines, 미사용 shadcn/ui 컴포넌트)
+├── 🧹 Unused Imports 정리
+│   └── page.tsx: Card, CardContent 제거
+├── 🔧 Syntax Errors 수정 (3개 파일)
+│   ├── AgeVerificationModal.tsx: Fragment 닫기 태그 누락 수정
+│   ├── PlanComparisonTable.tsx: JSX 주석 위치 오류 수정
+│   └── latex-background.tsx: JSDoc 내 JSX 주석 충돌 수정
+├── 📊 결과 메트릭
+│   ├── -264 net lines removed
+│   ├── 0 TypeScript errors
+│   └── 0 ESLint warnings
+└── ✅ 빌드 검증 통과 (15 routes)
+```
+
+### 2025-12-01: Comprehensive Code Documentation ✅
+```
+31+ 파일에 4,100+ 줄의 JSDoc/인라인 주석 추가
+├── 📝 API Routes (6개)
+│   ├── products/route.ts: GET/POST 핸들러 + Prisma 쿼리
+│   ├── products/[id]/route.ts: 상품 상세 + 재고 관리
+│   ├── orders/route.ts: 주문 생성 + 트랜잭션
+│   ├── orders/[id]/route.ts: 주문 조회/수정
+│   ├── users/route.ts: 사용자 CRUD
+│   └── users/[id]/route.ts: 사용자 상세/인증
+├── 🧩 Components (17개)
+│   ├── Header.tsx, Footer.tsx, ProductCard.tsx
+│   ├── CartDrawer.tsx, CartButton.tsx, WishlistButton.tsx
+│   ├── AuthModal.tsx, AgeVerificationModal.tsx
+│   ├── Testimonials.tsx, FAQAccordion.tsx
+│   └── ThemeProvider.tsx, ThemeToggle.tsx 등
+├── 🎨 UI Components (10개)
+│   ├── button.tsx, card.tsx, input.tsx
+│   ├── dialog.tsx, accordion.tsx
+│   └── latex-background.tsx 등
+├── 📁 Pages (7개)
+│   ├── page.tsx (홈), products/page.tsx
+│   ├── products/[id]/page.tsx (상세)
+│   ├── subscribe/page.tsx, about/page.tsx
+│   └── layout.tsx, globals.css
+└── 🔧 Stores & Contexts (5개)
+    ├── cartStore.ts, wishlistStore.ts
+    ├── authStore.ts, checkoutStore.ts
+    └── ToastContext.tsx
+```
 
 ### 2025-11-30: MVP Single Tier 구독 시스템 전환 ✅
 ```
@@ -410,3 +459,7 @@ OLD Project: bwbqtknwfslviwqophtc (DEPRECATED)
 - Age Verification: localStorage + useEffect로 페이지 진입 시 성인 인증 상태 확인
 - CSS Dark Mode Only: `opacity-0 dark:opacity-100`으로 다크모드 전용 요소 구현
 - Dark Mode Logo Pattern: `dark:hidden` + `hidden dark:block` 조합으로 라이트/다크 로고 분기 구현
+- JSX Comment Placement: JSX 주석 `{/* */}`은 직접 return 값이나 Fragment의 직접 자식이 될 수 없음
+- JSDoc JSX Conflict: JSDoc @example 내 `{/* */}` 사용 시 `*/`로 인해 JSDoc이 조기 종료됨
+- Dead Code Detection: 미사용 컴포넌트는 전체 import 스캔으로 확인 후 안전하게 삭제
+- Cleanup Workflow: Analyze → Plan → Execute → Validate → Report 5단계 순차 진행

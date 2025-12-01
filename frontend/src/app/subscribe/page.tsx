@@ -27,7 +27,18 @@ export default function SubscribePage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8 text-center relative">
           <div className="inline-flex items-center justify-center gap-3 mb-4">
             <span className="text-4xl animate-sparkle-twinkle">✧</span>
-            <span className="text-6xl animate-soft-float">🧸</span>
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 animate-soft-float">
+              <img
+                src="/tbr_logo.png"
+                alt="TeddyBear's Room Logo"
+                className="w-full h-full object-contain drop-shadow-xl dark:hidden"
+              />
+              <img
+                src="/tbr_logo_dark.png"
+                alt="TeddyBear's Room Logo"
+                className="w-full h-full object-contain drop-shadow-xl hidden dark:block"
+              />
+            </div>
             <span className="text-4xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
           <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">
@@ -52,11 +63,10 @@ export default function SubscribePage() {
             {subscriptionPlans.map((plan) => (
               <Card
                 key={plan.name}
-                className={`relative rounded-3xl transition-all duration-300 hover:-translate-y-1 max-w-md w-full ${
-                  plan.popular
+                className={`relative rounded-3xl transition-all duration-300 hover:-translate-y-1 max-w-md w-full ${plan.popular
                     ? "border-2 border-primary shadow-lg shadow-primary/20 dark:neon-card dark:neon-glow"
                     : "border-border hover:shadow-lg dark:neon-card"
-                }`}
+                  }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -102,11 +112,10 @@ export default function SubscribePage() {
                 </CardContent>
                 <CardFooter className="p-8 pt-0">
                   <Button
-                    className={`w-full rounded-xl py-6 text-lg transition-all ${
-                      plan.popular
+                    className={`w-full rounded-xl py-6 text-lg transition-all ${plan.popular
                         ? "bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
                         : "bg-muted hover:bg-muted/80 text-foreground"
-                    }`}
+                      }`}
                   >
                     {plan.cta}
                   </Button>
