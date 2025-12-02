@@ -105,18 +105,31 @@ Payments: TossPayments SDK (빌링키) ⏳
 Infra: Vercel + Custom Domain + 환경변수 ✅
 ```
 
-### Design System
-- **Light Mode** (Coral/Peach/Mint):
-  - Background: `#FFF8F5` (크림)
-  - Primary: `#D4856B` (코랄)
-  - Secondary: `#F5D4C0` (피치)
-  - Accent: `#A8E0D0` (민트)
-- **Dark Mode** (Matrix Neon):
-  - Background: `#0a0a10` (매트릭스 블랙)
-  - Primary: `#00FF88` (네온 그린)
-  - Accent: `#00FFFF` (시안), `#FF3399` (핫핑크)
+### Design System (v2.0 - 2025-12-02)
+- **Light Mode** (Pastel Furry):
+  - Background: `#FFF0F5` (Lavender Blush)
+  - Primary: `#E08B7D` (Melon Coral - WCAG AA 준수)
+  - Secondary: `#B5EAD7` (Magic Mint)
+  - Accent: `#C7CEEA` (Periwinkle)
+- **Dark Mode** (Latex Matrix):
+  - Background: `#050505` (Deep Black)
+  - Primary: `#00FF41` (Neon Green)
+  - Accent: `#39FF14` (Bright Neon)
+- **Design Tokens** (신규):
+  - Spacing: 8px base scale (space-1 ~ space-24)
+  - Type: text-xs ~ text-5xl + Korean optimized line-height
+  - Radius: sm(8px) / md(16px) / lg(24px) / xl(32px)
+  - Shadow: sm / md / lg / xl / cute / neon
+- **Accessibility**:
+  - prefers-reduced-motion 지원
+  - Focus visible enhancement
+  - Color contrast WCAG AA 준수
+- **Korean Typography**:
+  - word-break: keep-all
+  - line-height: 1.7 (body), 1.8 (paragraph)
+  - letter-spacing: -0.01em (body), -0.02em (heading)
 - **Concept**: 파스텔 + 귀여움 + 페티시 전문화
-- **Shape**: `border-radius: 1rem+` (둥근 UI)
+- **Shape**: Standardized border-radius system
 - **Font**: Noto Sans KR (next/font 최적화)
 
 ## Key Architecture Decisions
@@ -263,12 +276,37 @@ npm run lint         # ESLint 검사
 
 ---
 
-**Last Updated**: 2025-12-01
+**Last Updated**: 2025-12-02
 **Status**: ✅ **Production Ready** - https://teddybearsroom.com
 
 ---
 
 ## 📈 Recent Changes
+
+### 2025-12-02: Design System v2.0 - Token 체계화 & 접근성 개선 ✅
+```
+globals.css 대규모 업데이트 (디자인 시스템 표준화)
+├── 🎨 Design Tokens 추가
+│   ├── Spacing Scale: space-1 ~ space-24 (8px base)
+│   ├── Type Scale: text-xs ~ text-5xl
+│   ├── Line Height: leading-none ~ leading-korean
+│   ├── Border Radius: radius-sm/md/lg/xl/2xl/full
+│   ├── Shadow Scale: shadow-sm/md/lg/xl/cute/neon
+│   ├── Transition: fast/normal/slow
+│   └── Z-Index: dropdown/sticky/modal/tooltip/toast
+├── 🔧 색상 대비 수정 (WCAG AA 준수)
+│   └── Light Mode primary: #FFB7B2 → #E08B7D (대비율 4.5:1↑)
+├── ♿ 접근성 개선
+│   ├── @media (prefers-reduced-motion: reduce) 추가
+│   ├── Focus visible enhancement (dark mode 포함)
+│   └── 애니메이션 비활성화 옵션
+├── 🇰🇷 한글 타이포그래피 최적화
+│   ├── word-break: keep-all (단어 단위 줄바꿈)
+│   ├── line-height: 1.7 (body), 1.8 (paragraph)
+│   ├── letter-spacing: -0.01em (body), -0.02em (heading)
+│   └── overflow-wrap: break-word
+└── ✅ 빌드 검증 통과 (15 routes, 8.8s)
+```
 
 ### 2025-12-01: Footer SNS & Payment Methods Update ✅
 ```

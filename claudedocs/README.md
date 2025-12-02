@@ -1,6 +1,6 @@
 # 📚 TeddyBear's Room Documentation
 
-**최종 업데이트**: 2025-12-01
+**최종 업데이트**: 2025-12-02
 **총 문서 수**: 13개
 **프로젝트 상태**: ✅ Production Ready
 
@@ -93,7 +93,14 @@
 
 ## 🔄 업데이트 이력
 
-### 2025-12-01 ✨ Latest
+### 2025-12-02 ✨ Latest
+- 🎨 **Design System v2.0**: Token 체계화 (spacing, type, radius, shadow)
+- 🔧 색상 대비 수정: Light Mode primary WCAG AA 준수 (#FFB7B2 → #E08B7D)
+- ♿ 접근성 개선: prefers-reduced-motion, focus visible enhancement
+- 🇰🇷 한글 타이포그래피 최적화: word-break, line-height, letter-spacing
+- 📄 CLAUDE.md Design System 섹션 v2.0 업데이트
+
+### 2025-12-01
 - 📝 Footer SNS/결제 간소화 (Twitter only, 무통장입금/카카오페이/토스)
 - 🗑️ Dead code 정리 (dropdown-menu.tsx 삭제, unused imports 제거)
 - 🔧 JSX 문법 오류 수정 (3개 파일)
