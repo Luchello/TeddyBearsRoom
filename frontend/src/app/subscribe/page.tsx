@@ -17,17 +17,15 @@ export default function SubscribePage() {
     <div className="min-h-screen bg-background">
       {/* Hero - 지뢰계 스타일 ♡ */}
       <section className="bg-gradient-to-b from-primary/15 via-accent/10 to-background py-16 lg:py-24 dark:from-primary/20 dark:via-secondary/10 relative overflow-hidden">
-        {/* 지뢰계 floating decorations ♡✧🎀 */}
-        <div className="absolute top-12 left-10 text-4xl opacity-20 animate-heart-beat pointer-events-none">♡</div>
-        <div className="absolute top-20 right-16 text-3xl opacity-15 animate-sparkle-twinkle pointer-events-none">✧</div>
-        <div className="absolute bottom-16 left-1/4 text-2xl opacity-15 animate-ribbon-flutter pointer-events-none">🎀</div>
-        <div className="absolute top-1/3 right-10 text-xl opacity-10 animate-float pointer-events-none" style={{ animationDelay: '0.5s' }}>☆</div>
-        <div className="absolute bottom-20 right-1/3 text-3xl opacity-15 animate-heart-beat pointer-events-none" style={{ animationDelay: '1s' }}>💗</div>
+        {/* 지뢰계 floating decorations - P1 표준화: opacity-15, text-2xl, animate-float */}
+        <div className="absolute top-12 left-10 text-2xl opacity-15 animate-float pointer-events-none">♡</div>
+        <div className="absolute top-20 right-16 text-2xl opacity-15 animate-float pointer-events-none" style={{ animationDelay: '1s' }}>✧</div>
+        <div className="absolute bottom-16 left-1/4 text-2xl opacity-15 animate-float pointer-events-none" style={{ animationDelay: '2s' }}>🎀</div>
 
         <div className="mx-auto max-w-7xl px-4 lg:px-8 text-center relative">
           <div className="inline-flex items-center justify-center gap-3 mb-4">
-            <span className="text-4xl animate-sparkle-twinkle">✧</span>
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 animate-soft-float">
+            <span className="text-2xl opacity-60 animate-float">✧</span>
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 animate-float">
               <img
                 src="/tbr_logo.png"
                 alt="TeddyBear's Room Logo"
@@ -39,13 +37,13 @@ export default function SubscribePage() {
                 className="w-full h-full object-contain drop-shadow-xl hidden dark:block"
               />
             </div>
-            <span className="text-4xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
+            <span className="text-2xl opacity-60 animate-float" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
           <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">
             TeddyBear&apos;s Room
             <br />
-            <span className="text-primary">멤버십</span>
-            <span className="text-2xl ml-2 animate-heart-beat">♡</span>
+            <span className="text-primary">Roommate</span>
+            <span className="text-xl ml-2 animate-float">🏠</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
             특별한 혜택과 함께 더 특별한 경험을 만들어보세요 ✧
@@ -71,7 +69,7 @@ export default function SubscribePage() {
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                     <span className="rounded-full bg-primary px-4 py-1 text-sm font-medium text-primary-foreground dark:neon-glow-subtle">
-                      🔥 인기 플랜
+                      🏠 추천
                     </span>
                   </div>
                 )}
@@ -124,10 +122,10 @@ export default function SubscribePage() {
             ))}
           </div>
 
-          {/* Value Message */}
+          {/* Value Message - Notion v3.0 */}
           <div className="mt-8 text-center">
             <p className="text-sm text-muted-foreground">
-              💡 <span className="font-medium text-primary">멤버십 혜택:</span> 포인트 적립 + 기부 참여 + 무료 배송까지!
+              💡 <span className="font-medium text-primary">Roommate 혜택:</span> 10% 상시 할인 + 1% 기부 + 3만원↑ 무료배송!
             </p>
           </div>
         </div>
@@ -192,17 +190,17 @@ export default function SubscribePage() {
 
       {/* Final CTA - 지뢰계 스타일 ♡ */}
       <section className="py-16 bg-gradient-to-b from-background to-primary/10 dark:to-primary/15 relative overflow-hidden">
-        {/* 지뢰계 decorations */}
-        <div className="absolute top-8 left-16 text-3xl opacity-15 animate-sparkle-twinkle pointer-events-none">✧</div>
-        <div className="absolute bottom-12 right-16 text-2xl opacity-15 animate-heart-beat pointer-events-none">♡</div>
+        {/* 지뢰계 decorations - P1 표준화 */}
+        <div className="absolute top-8 left-16 text-2xl opacity-15 animate-float pointer-events-none">✧</div>
+        <div className="absolute bottom-12 right-16 text-2xl opacity-15 animate-float pointer-events-none" style={{ animationDelay: '1s' }}>♡</div>
 
         <div className="mx-auto max-w-2xl px-4 lg:px-8 text-center relative">
           <div className="inline-flex items-center justify-center gap-2 mb-4">
-            <span className="text-3xl animate-heart-beat">♡</span>
+            <span className="text-2xl opacity-60 animate-float">♡</span>
             <h2 className="text-2xl font-bold text-foreground">
               지금 시작해보세요!
             </h2>
-            <span className="text-3xl animate-sparkle-twinkle">✧</span>
+            <span className="text-2xl opacity-60 animate-float" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
           <p className="text-muted-foreground mb-6">
             첫 달 구독료 50% 할인 혜택을 놓치지 마세요 ♡
@@ -212,7 +210,7 @@ export default function SubscribePage() {
               size="lg"
               className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
             >
-              멤버십 시작하기 🐻
+              Roommate 되기 🏠
             </Button>
             <Button
               size="lg"

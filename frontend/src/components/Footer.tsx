@@ -9,14 +9,18 @@
 // - 모든 페이지 하단 푸터
 // - 뉴스레터 구독 폼
 // - SNS 링크 (Twitter)
-// - Shop/Support/Company 링크 그룹
-// - 결제 방법 (무통장입금, 카카오페이, 토스) 및 신뢰 배지
+// - Quick Links (Shop + Support 통합)
+// - Company + Contact 정보
+// - 결제 방법 (무통장입금, 카카오페이, 토스)
 //
-// 📦 구조:
+// 📦 구조 (P1 개선: 4컬럼 → 3컬럼 간소화):
 // - Wave Divider (Top): 섹션 분리 장식
 // - Newsletter Section: 이메일 구독 폼
-// - Main Footer: 4컬럼 그리드 (브랜드, Shop, Support, Company)
-// - Payment & Trust: 결제수단 + 안전 배지
+// - Main Footer: 3컬럼 그리드
+//   ├ Brand + Trust: 로고, 설명, 신뢰배지, SNS
+//   ├ Quick Links: Shop + Support 통합
+//   └ Company + Contact: 회사정보 + 고객센터
+// - Payment: 결제수단 배지
 // - Copyright: 사업자 정보 + 법적 고지
 //
 // 🎨 디자인:
@@ -209,22 +213,24 @@ export function Footer() {
           ───────────────────────────────────── */}
       <div className="bg-muted/20 dark:bg-black/40 backdrop-blur-sm pt-16 pb-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          {/* ──────────────────────────────────────
+              P1 개선: 4컬럼 → 3컬럼 구조 간소화
+              - Brand + Trust | Shop + Support 통합 | Company + Contact
+              ────────────────────────────────────── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
             {/* ──────────────────────────────────────
-                Brand Column
-                - 로고, 브랜드 설명, SNS 링크
+                Brand Column + Trust Badges
+                - 로고, 브랜드 설명, 신뢰 배지, SNS
                 ────────────────────────────────────── */}
-            <div className="space-y-6">
+            <div className="space-y-6 lg:col-span-1">
               <Link href="/" className="flex items-center gap-3 group w-fit">
-                <div className="relative w-16 h-16 transition-transform duration-500 group-hover:rotate-12">
-                  {/* Light Mode 로고 */}
+                <div className="relative w-14 h-14 transition-transform duration-500 group-hover:rotate-12">
                   <Image
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
                     className="object-contain drop-shadow-md dark:hidden"
                   />
-                  {/* Dark Mode 로고 */}
                   <Image
                     src="/tbr_logo_dark.png"
                     alt="TeddyBear's Room Logo"
@@ -233,7 +239,7 @@ export function Footer() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl font-bold text-primary dark:text-neon-glow transition-colors duration-300 group-hover:text-accent">
+                  <span className="text-lg font-bold text-primary dark:text-neon-glow transition-colors duration-300 group-hover:text-accent">
                     TeddyBear&apos;s Room
                   </span>
                   <span className="text-[10px] text-muted-foreground font-medium tracking-widest uppercase">
@@ -242,18 +248,29 @@ export function Footer() {
                 </div>
               </Link>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                일상을 특별하게 만드는 마법 같은 순간.<br />
-                지뢰계 감성의 프라이빗 셀프케어 브랜드,<br />
-                테디베어즈 룸에 오신 것을 환영합니다.
+                지뢰계 감성의 프라이빗 셀프케어 브랜드 ♡
                 <br />
-                <span className="text-primary font-bold mt-2 inline-block">♡ Made with Love & Fantasy ✧</span>
+                <span className="text-primary font-medium">Made with Love & Fantasy ✧</span>
               </p>
 
-              {/* SNS Links - Twitter Only */}
-              <div className="flex gap-3 pt-2">
+              {/* Trust Badges - 브랜드 컬럼으로 이동 */}
+              <div className="flex flex-wrap gap-2">
+                {trustBadges.map((badge) => (
+                  <div
+                    key={badge.label}
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg bg-primary/5 border border-primary/10 text-[10px] font-medium text-muted-foreground"
+                  >
+                    <span>{badge.emoji}</span>
+                    <span>{badge.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* SNS Links */}
+              <div className="flex gap-2">
                 <a
                   href="#"
-                  className="p-2.5 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white hover:scale-110 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  className="p-2 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 text-white hover:scale-110 transition-all duration-300"
                   aria-label="Twitter"
                 >
                   <Twitter className="h-4 w-4" />
@@ -262,105 +279,86 @@ export function Footer() {
             </div>
 
             {/* ──────────────────────────────────────
-                Shop Links
+                Quick Links (Shop + Support 통합)
                 ────────────────────────────────────── */}
             <div>
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-6 uppercase tracking-wider opacity-80">
-                <span className="text-lg">🛍️</span> Shop
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-5 uppercase tracking-wider opacity-80">
+                <span className="text-lg">🛍️</span> Quick Links
               </h3>
-              <ul className="space-y-3">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                {/* Shop Links */}
                 {footerLinks.shop.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-all duration-200"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/30 group-hover:bg-primary transition-colors"></span>
-                      <span className="group-hover:translate-x-1 transition-transform">{link.name}</span>
-                    </Link>
-                  </li>
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors py-1"
+                  >
+                    {link.name}
+                  </Link>
                 ))}
-              </ul>
-            </div>
-
-            {/* ──────────────────────────────────────
-                Support Links
-                ────────────────────────────────────── */}
-            <div>
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-6 uppercase tracking-wider opacity-80">
-                <span className="text-lg">💬</span> Support
-              </h3>
-              <ul className="space-y-3">
+                {/* Support Links */}
                 {footerLinks.support.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-all duration-200"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/30 group-hover:bg-primary transition-colors"></span>
-                      <span className="group-hover:translate-x-1 transition-transform">{link.name}</span>
-                    </Link>
-                  </li>
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors py-1"
+                  >
+                    {link.name}
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </div>
 
             {/* ──────────────────────────────────────
-                Company Links
+                Company + Contact
                 ────────────────────────────────────── */}
             <div>
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-6 uppercase tracking-wider opacity-80">
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2 mb-5 uppercase tracking-wider opacity-80">
                 <span className="text-lg">🏢</span> Company
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-2 mb-6">
                 {footerLinks.company.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-all duration-200"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/30 group-hover:bg-primary transition-colors"></span>
-                      <span className="group-hover:translate-x-1 transition-transform">{link.name}</span>
+                      {link.name}
                     </Link>
                   </li>
                 ))}
               </ul>
+              {/* Contact Info */}
+              <div className="pt-4 border-t border-primary/10 space-y-2">
+                <p className="text-xs text-muted-foreground flex items-center gap-2">
+                  <span>📞</span> 1588-0000
+                </p>
+                <p className="text-xs text-muted-foreground flex items-center gap-2">
+                  <span>✉️</span> help@tbr.universe
+                </p>
+                <p className="text-xs text-muted-foreground flex items-center gap-2">
+                  <span>🕐</span> 평일 10:00 - 18:00
+                </p>
+              </div>
             </div>
           </div>
 
           {/* ─────────────────────────────────────
-              Payment & Trust Section
-              - 결제 수단 배지
-              - 신뢰 배지 (무지박스, 안전결제, 개인정보보호)
+              Payment Methods (간소화 - Trust는 Brand로 이동)
               ───────────────────────────────────── */}
-          <div className="mt-12 pt-8 border-t border-primary/10">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              {/* Payment Methods */}
-              <div className="flex flex-wrap justify-center gap-2">
-                {paymentMethods.map((method) => (
-                  <div
-                    key={method.name}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-background border border-primary/10 text-xs font-medium hover:border-primary/30 transition-colors shadow-sm"
-                    title={method.name}
-                  >
-                    <span className="text-base">{method.icon}</span>
-                    <span className="hidden sm:inline opacity-80">{method.name}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Trust Badges */}
-              <div className="flex flex-wrap justify-center gap-2">
-                {trustBadges.map((badge) => (
-                  <div
-                    key={badge.label}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 text-xs font-medium text-primary/80"
-                  >
-                    <span>{badge.emoji}</span>
-                    <span>{badge.label}</span>
-                  </div>
-                ))}
-              </div>
+          <div className="mt-10 pt-6 border-t border-primary/10">
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span className="text-xs text-muted-foreground mr-2">결제수단</span>
+              {paymentMethods.map((method) => (
+                <div
+                  key={method.name}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background/80 border border-primary/10 text-xs font-medium"
+                  title={method.name}
+                >
+                  <span>{method.icon}</span>
+                  <span className="opacity-70">{method.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -395,14 +393,15 @@ export function Footer() {
       </div>
 
       {/* ─────────────────────────────────────
-          Floating Decoration
+          Floating Decoration - P1 표준화
           - 데스크탑에서만 표시되는 장식 이모지
+          - 표준: text-2xl, opacity-15, animate-float
           ───────────────────────────────────── */}
-      <div className="absolute bottom-20 right-10 text-4xl opacity-20 animate-float pointer-events-none hidden lg:block blur-[1px]">
+      <div className="absolute bottom-20 right-10 text-2xl opacity-15 animate-float pointer-events-none hidden lg:block">
         💕
       </div>
       <div
-        className="absolute bottom-40 left-10 text-3xl opacity-20 animate-float pointer-events-none hidden lg:block blur-[1px]"
+        className="absolute bottom-40 left-10 text-2xl opacity-15 animate-float pointer-events-none hidden lg:block"
         style={{ animationDelay: "1.5s" }}
       >
         ✨

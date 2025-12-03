@@ -4,15 +4,17 @@
 // ====================================
 //
 // 🎯 용도:
-// 1. 네비게이션/푸터 링크 (정적)
+// 1. 푸터 링크 (정적)
 // 2. 상품 Mock 데이터 (개발용, 추후 API로 대체)
 // 3. 구독 플랜 정보 (MVP Single Tier)
 // 4. FAQ, 브랜드 정보 (마케팅 콘텐츠)
 //
-// 📝 MVP 전략 (2025-11-30):
-// - 2-Tier → Single Tier 전환
-// - TBR 멤버십: 19,900원/월
-// - 포인트 5%, 기부 5%, 무료배송 5만원↑
+// 📝 Roommate 구독 (Notion v3.0 동기화 - 2025-12-03):
+// - 브랜드: Roommate
+// - 가격: 9,900원/월
+// - 할인: 10% 상시
+// - 기부: 구매액 1% (전체 회원)
+// - 무료배송: 3만원↑ (멤버 전용)
 //
 // ⚠️ 주의:
 // - featuredProducts/allProducts는 개발용 Mock
@@ -20,7 +22,6 @@
 // ====================================
 
 import type {
-  NavItem,
   FooterLinks,
   Product,
   SubscriptionPlan,
@@ -29,20 +30,6 @@ import type {
   BrandValue,
   TimelineItem,
 } from "./types";
-
-// ──────────────────────────────────────
-// Navigation (네비게이션)
-// Header, MobileMenu에서 사용
-// ──────────────────────────────────────
-
-/** 메인 네비게이션 메뉴 */
-export const navigation: NavItem[] = [
-  { name: "홈", href: "/" },
-  { name: "상품", href: "/products" },
-  { name: "구독", href: "/subscribe" },
-  { name: "기부", href: "/donation" },
-  { name: "소개", href: "/about" },
-];
 
 // ──────────────────────────────────────
 // Footer Links (푸터)
@@ -165,12 +152,12 @@ export const productCategories = ["전체", "토이", "케어", "무드", "라�
 // 홈페이지 멤버십 섹션에서 표시
 // ──────────────────────────────────────
 
-/** 멤버십 혜택 카드 목록 (홈페이지용) */
+/** Roommate 멤버십 혜택 카드 목록 (홈페이지용) - Notion v3.0 */
 export const subscriptionBenefits: Benefit[] = [
-  { icon: "🎁", title: "포인트 5% 적립", desc: "모든 구매에 포인트 5% 적립" },
-  { icon: "💝", title: "기부 참여", desc: "구매금액 일부가 기부됩니다" },
-  { icon: "🚚", title: "무료 배송", desc: "5만원 이상 무료 배송" },
-  { icon: "🎀", title: "회원 전용 할인", desc: "매월 특별 할인 쿠폰" },
+  { icon: "💰", title: "10% 상시 할인", desc: "모든 상품 상시 10% 할인" },
+  { icon: "💝", title: "1% 기부 참여", desc: "구매금액 1% 자동 기부" },
+  { icon: "🚚", title: "무료 배송", desc: "3만원 이상 무료 배송" },
+  { icon: "🎁", title: "시즌 서프라이즈", desc: "특별한 깜짝 혜택" },
 ];
 
 // ──────────────────────────────────────
@@ -201,21 +188,21 @@ export const subscriptionBenefits: Benefit[] = [
  */
 export const subscriptionPlans: SubscriptionPlan[] = [
   {
-    name: "TBR 멤버십",
-    icon: "🐻",
-    price: 19900,
+    name: "Roommate",
+    icon: "🏠",
+    price: 9900, // Notion v3.0: 9,900원/월
     period: "월",
-    description: "TeddyBear's Room의 모든 혜택을 누려보세요",
+    description: "TeddyBear's Room의 특별한 룸메이트가 되어보세요",
     features: [
-      { text: "포인트 5% 적립", included: true },
-      { text: "구매금액 5% 기부", included: true },
-      { text: "5만원 이상 무료 배송", included: true },
-      { text: "매월 5% 할인 쿠폰", included: true },
+      { text: "모든 상품 10% 상시 할인", included: true },
+      { text: "구매금액 1% 기부 참여", included: true },
+      { text: "3만원 이상 무료 배송", included: true },
+      { text: "시즌별 깜짝 서프라이즈", included: true },
       { text: "신상품 얼리 액세스", included: true },
       { text: "생일 특별 혜택", included: true },
     ],
     popular: true,
-    cta: "멤버십 시작하기",
+    cta: "Roommate 되기",
   },
 ];
 
@@ -225,7 +212,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
 // 아코디언 UI로 표시
 // ──────────────────────────────────────
 
-/** 구독 관련 FAQ 목록 */
+/** 구독 관련 FAQ 목록 - Notion v3.0 동기화 */
 export const subscriptionFAQs: FAQ[] = [
   {
     q: "구독은 언제든지 취소할 수 있나요?",
@@ -233,15 +220,15 @@ export const subscriptionFAQs: FAQ[] = [
   },
   {
     q: "기부는 어떻게 진행되나요?",
-    a: "구독 회원의 구매금액 일부(스탠다드 5%, 프리미엄 10%)가 분기별로 선정된 기부 단체에 전달됩니다. 기부 내역은 '기부' 페이지에서 투명하게 공개됩니다.",
+    a: "Roommate 회원의 구매금액 1%가 분기별로 선정된 기부 단체에 전달됩니다. 기부 내역은 '기부' 페이지에서 투명하게 공개됩니다.",
   },
   {
-    q: "포인트는 어떻게 사용하나요?",
-    a: "적립된 포인트는 1포인트 = 1원으로 모든 상품 구매 시 사용 가능합니다. 유효기간은 적립일로부터 1년입니다.",
+    q: "할인 혜택은 어떻게 적용되나요?",
+    a: "Roommate 회원은 모든 상품에 10% 상시 할인이 자동 적용됩니다. 별도 쿠폰 입력 없이 결제 시 바로 할인된 가격으로 구매하실 수 있어요.",
   },
   {
     q: "배송은 어떻게 되나요?",
-    a: "모든 배송은 무지 박스로 진행되어 프라이버시를 보장합니다. 주문 후 1-2일 내 출고됩니다.",
+    a: "모든 배송은 무지 박스로 진행되어 프라이버시를 보장합니다. Roommate 회원은 3만원 이상 구매 시 무료 배송됩니다.",
   },
 ];
 

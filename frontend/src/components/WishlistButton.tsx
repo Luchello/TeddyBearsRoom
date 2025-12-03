@@ -65,11 +65,11 @@ export function WishlistButton() {
   return (
     <button
       onClick={toggleWishlist}
-      className="relative p-2 rounded-xl hover:bg-muted transition-colors group"
+      className="relative p-2.5 rounded-xl hover:bg-muted transition-colors group min-w-[44px] min-h-[44px] flex items-center justify-center"
       aria-label={`찜 목록 (${itemCount}개)`}
     >
-      {/* 하트 아이콘 - hover 시 색상 변경 */}
-      <Heart className="h-5 w-5 text-foreground group-hover:text-primary transition-colors" />
+      {/* 하트 아이콘 - hover 시 색상 변경, 44px+ 터치 타겟 (WCAG 2.5.5) */}
+      <Heart className="h-6 w-6 text-foreground group-hover:text-primary transition-colors" />
 
       {/* ─────────────────────────────────────
           수량 배지

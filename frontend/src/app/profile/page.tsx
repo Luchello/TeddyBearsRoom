@@ -8,7 +8,8 @@ import { User, Package, Heart, Settings, LogOut, Crown } from "lucide-react";
 import Link from "next/link";
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState("overview");
+  // Note: activeTab은 Tabs 컴포넌트의 value로 사용 예정
+  const [_activeTab, setActiveTab] = useState("overview");
 
   // Mock User Data
   const user = {

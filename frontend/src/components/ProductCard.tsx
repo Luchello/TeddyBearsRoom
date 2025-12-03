@@ -153,57 +153,9 @@ export function ProductCard({
     <Card className="group relative overflow-visible rounded-[2rem] border-0 bg-transparent transition-all duration-500 hover:-translate-y-2">
       {/* ─────────────────────────────────────
           Furry Ears (지뢰계 귀 장식)
-          - hover 시에만 나타남
-          - 왼쪽/오른쪽 대칭 배치
-          - SVG 기반 네온 스타일
+          - P1 최적화: hover 효과 단순화로 제거
+          - 과도한 동시 애니메이션 방지
           ───────────────────────────────────── */}
-      {/* Left Ear */}
-      <div className="absolute -top-6 left-6 w-16 h-16 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-2 group-hover:rotate-[-10deg] z-0">
-        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
-          {/* Outer Ear Outline (White/Primary Neon) */}
-          <path
-            d="M10,90 Q10,10 50,5 Q90,10 90,90"
-            fill="none"
-            stroke="white"
-            strokeWidth="8"
-            strokeLinecap="round"
-            className="dark:stroke-primary"
-          />
-          {/* Inner Zigzag (Pink Neon) */}
-          <path
-            d="M30,70 L40,50 L50,65 L60,45 L70,60"
-            fill="none"
-            stroke="#FF69B4"
-            strokeWidth="6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="animate-pulse"
-          />
-        </svg>
-      </div>
-
-      {/* Right Ear */}
-      <div className="absolute -top-6 right-6 w-16 h-16 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-2 group-hover:rotate-[10deg] z-0">
-        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
-          <path
-            d="M10,90 Q10,10 50,5 Q90,10 90,90"
-            fill="none"
-            stroke="white"
-            strokeWidth="8"
-            strokeLinecap="round"
-            className="dark:stroke-primary"
-          />
-          <path
-            d="M30,70 L40,50 L50,65 L60,45 L70,60"
-            fill="none"
-            stroke="#FF69B4"
-            strokeWidth="6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="animate-pulse"
-          />
-        </svg>
-      </div>
 
       {/* ─────────────────────────────────────
           Main Card Content
@@ -225,21 +177,21 @@ export function ProductCard({
                   src="/tbr_logo.png"
                   alt={name}
                   fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 dark:hidden"
+                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl dark:hidden"
                 />
                 <Image
                   src="/tbr_logo_dark.png"
                   alt={name}
                   fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl filter grayscale-[0.2] group-hover:grayscale-0 hidden dark:block"
+                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl hidden dark:block"
                 />
               </div>
             </div>
 
-            {/* Tail (꼬리 - hover 시 흔들림) */}
-            <div className="absolute bottom-4 right-4 text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 origin-bottom-left group-hover:animate-tail-wag">
-              ☁️
-            </div>
+            {/* Tail (꼬리 - hover 시 흔들림)
+                - P1 최적화: hover 효과 단순화로 제거
+                - 과도한 동시 애니메이션 방지
+            */}
 
             {/* ─────────────────────────────────────
                 Badges (NEW, BEST, 할인율)

@@ -62,12 +62,17 @@
   --font-bold: 700;
 
   /* ========== BORDER RADIUS (Standardized) ========== */
+  /*
+   * Usage in Tailwind: rounded-[2rem] or rounded-[2.5rem]
+   * ⚠️ MAX rounded value should be --radius-2xl (2.5rem)
+   * Do NOT use rounded-[3rem] or larger - exceeds design system
+   */
   --radius-none: 0;
   --radius-sm: 0.5rem;    /* 8px - small elements, badges */
   --radius-md: 1rem;      /* 16px - buttons, inputs */
   --radius-lg: 1.5rem;    /* 24px - cards */
-  --radius-xl: 2rem;      /* 32px - large containers */
-  --radius-2xl: 2.5rem;   /* 40px - hero sections */
+  --radius-xl: 2rem;      /* 32px - large containers, ProductCard */
+  --radius-2xl: 2.5rem;   /* 40px - hero sections, featured cards (MAX) */
   --radius-full: 9999px;  /* circular */
 
   /* ========== SHADOW SCALE ========== */
@@ -231,7 +236,7 @@
   /* 매트릭스 그린 */
   --secondary-foreground: #F0FFF4;
   --muted: #111111;
-  --muted-foreground: #4A6A4A;
+  --muted-foreground: #7A9A7A; /* 대비율 개선: #4A6A4A → #7A9A7A (4.5:1+ on #050505) */
   --accent: #39FF14;
   /* 브라이트 네온 */
   --accent-foreground: #000000;

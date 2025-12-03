@@ -65,11 +65,11 @@ export function CartButton() {
   return (
     <button
       onClick={toggleCart}
-      className="relative p-2 rounded-xl hover:bg-accent transition-colors"
+      className="relative p-2.5 rounded-xl hover:bg-accent transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
       aria-label={`장바구니 (${totalItems}개)`}
     >
-      {/* 장바구니 아이콘 */}
-      <ShoppingCart className="h-5 w-5" />
+      {/* 장바구니 아이콘 - 44px+ 터치 타겟 (WCAG 2.5.5) */}
+      <ShoppingCart className="h-6 w-6" />
 
       {/* ─────────────────────────────────────
           수량 배지

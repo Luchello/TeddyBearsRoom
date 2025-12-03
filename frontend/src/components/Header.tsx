@@ -45,7 +45,6 @@ import {
   LogOut,
   Home,
   Gift,
-  Sparkles,
   Info,
   Crown,
 } from "lucide-react";
@@ -265,7 +264,7 @@ export function Header() {
                   <p className="text-xs font-bold text-muted-foreground px-4 mb-3 uppercase tracking-wider opacity-70">
                     Navigation
                   </p>
-                  {navItems.map((item, index) => (
+                  {navItems.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}

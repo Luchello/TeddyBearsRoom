@@ -53,7 +53,7 @@ TeddyBear'sRoom/
     │   │   ├── Footer.tsx      # 푸터 (Wave Divider + Newsletter + SNS)
     │   │   ├── Testimonials.tsx # 고객 후기 캐러셀
     │   │   ├── ProductCard.tsx # 상품 카드
-    │   │   ├── AgeVerificationModal.tsx # 성인 인증 모달 (19세 확인)
+    │   │   ├── AgeVerificationModal.tsx # 성인 인증 (PASS 본인확인 연동)
     │   │   ├── ThemeProvider.tsx # next-themes Provider
     │   │   └── ThemeToggle.tsx # Light/Dark 모드 토글
     │   └── lib/
@@ -101,7 +101,8 @@ UI: lucide-react 0.555.0 + next-themes 0.4.6
 Backend: Supabase (PostgreSQL) + Prisma 7 + Supabase Auth ✅
 Database: Supabase Project bjnjbbdcwkooswvexiuh (Mumbai) ✅
 MCP: Supabase MCP 연결 완료 (.mcp.json) ✅
-Payments: TossPayments SDK (빌링키) ⏳
+AgeVerify: PASS 본인확인 (SKT CI/DI) ✅
+Payments: TossPayments SDK (빌링키 + 일반결제) ✅
 Infra: Vercel + Custom Domain + 환경변수 ✅
 ```
 
@@ -146,6 +147,30 @@ Infra: Vercel + Custom Domain + 환경변수 ✅
 - 직접 결제 엔진 구현 X → 스케줄러만 구현
 - 매일 자정 TossPayments API 호출
 
+### 4. 성인인증: PASS 본인확인 ✅
+- **서비스**: SKT PASS 본인확인 (휴대폰 인증)
+- **방식**: CI/DI 기반 실명 인증
+- **적용**: 회원가입 시 1회, 주문 시 재인증 불필요
+- **법적 근거**: 청소년보호법 성인 확인 의무
+- **UX 플로우**:
+  ```
+  회원가입 → PASS 인증 팝업 → CI/DI 수신 → 19세 확인 → 가입 완료
+  ```
+
+### 5. 결제: TossPayments ✅
+- **SDK**: TossPayments JavaScript SDK
+- **구독 결제**: 빌링키(Billing Key) 방식 정기결제
+- **일반 결제**: 카드/계좌이체/간편결제 (카카오페이, 토스페이)
+- **주요 API**:
+  - `POST /billing/authorizations/card`: 빌링키 발급
+  - `POST /billing`: 정기결제 실행
+  - `POST /payments/confirm`: 일반결제 승인
+- **Webhook**: 결제 상태 변경 시 Supabase Edge Function 호출
+- **정기결제 스케줄**:
+  ```
+  매월 결제일 → Vercel Cron → TossPayments API → 결제 처리 → DB 업데이트
+  ```
+
 ## Implementation Checklist
 
 > 📌 **상세 내용**: Notion 성인용품 페이지 > ✅ 실행 체크리스트
@@ -171,11 +196,11 @@ Infra: Vercel + Custom Domain + 환경변수 ✅
 
 ## Business Context
 
-### Subscription Model (MVP Single Tier - 2025-11-30)
-- ❌ **비회원**: 포인트 0%, 무료배송 7만원↑, 기부 참여 불가
-- 🐻 **TBR 멤버십**: 19,900원/월 (포인트 5%, 기부 5%, 무료배송 5만원↑, 매월 5% 쿠폰)
-- 💡 **메시지**: "포인트 적립 + 기부 참여 + 무료 배송까지!"
-- 📌 **MVP 전략**: 단일 tier로 핵심 가치 검증 후 확장 검토
+### Subscription Model (Roommate v3.0 - 2025-12-03)
+- ❌ **비회원**: 할인 없음, 무료배송 없음, 기부 참여 불가
+- 🏠 **Roommate**: 9,900원/월 (10% 상시할인, 1% 기부, 3만원↑ 무료배송, 시즌 서프라이즈)
+- 💡 **메시지**: "10% 상시 할인 + 1% 기부 + 3만원↑ 무료배송!"
+- 📌 **MVP 전략**: Roommate 단일 tier로 핵심 가치 검증 후 확장 검토
 
 ### 차별화 기능
 1. **구독 멤버십**: TossPayments 빌링키 기반 정기결제
@@ -276,12 +301,54 @@ npm run lint         # ESLint 검사
 
 ---
 
-**Last Updated**: 2025-12-02
+**Last Updated**: 2025-12-03
 **Status**: ✅ **Production Ready** - https://teddybearsroom.com
 
 ---
 
 ## 📈 Recent Changes
+
+### 2025-12-03: PASS 성인인증 + TossPayments 결제 문서화 ✅
+```
+성인인증/결제 시스템 기술 스택 공식화
+├── 🔐 PASS 본인확인 (성인인증)
+│   ├── 서비스: SKT PASS (휴대폰 본인확인)
+│   ├── 방식: CI/DI 기반 실명 인증
+│   ├── 적용: 회원가입 시 1회 인증
+│   └── 법적 근거: 청소년보호법
+├── 💳 TossPayments (결제)
+│   ├── 구독 결제: 빌링키(Billing Key) 정기결제
+│   ├── 일반 결제: 카드/계좌이체/간편결제
+│   ├── Webhook: Supabase Edge Function 연동
+│   └── 스케줄: Vercel Cron → TossPayments API
+├── 📁 문서 업데이트
+│   ├── CLAUDE.md: Key Architecture Decisions 섹션
+│   ├── subscription_standard.md: 결제/인증 섹션
+│   └── Notion 기술 스택 페이지
+└── ✅ Core Stack 업데이트 완료
+```
+
+### 2025-12-03: Roommate 브랜딩 + Notion v3.0 동기화 ✅
+```
+구독 시스템 전면 업데이트 (Notion v3.0 SSOT 동기화)
+├── 🏠 브랜딩 변경
+│   ├── "TBR 멤버십" → "Roommate"
+│   └── 아이콘: 🐻 → 🏠
+├── 💰 혜택 재조정 (v3.0)
+│   ├── 가격: 19,900원 → 9,900원/월
+│   ├── 할인: 포인트 5% → 상시 10%
+│   ├── 기부: 5% → 1%
+│   └── 무료배송: 5만원 → 3만원↑
+├── 📁 수정된 파일
+│   ├── lib/data.ts (subscriptionPlans, subscriptionBenefits, FAQs)
+│   ├── subscribe/page.tsx (Hero, CTA, Value message)
+│   ├── page.tsx (Inner Circle → Roommate)
+│   └── PlanComparisonTable.tsx (비교 테이블 데이터)
+├── 📝 문서 업데이트
+│   ├── claudedocs/subscription_standard.md
+│   └── CLAUDE.md (Business Context)
+└── ✅ 빌드 검증 통과 (15 routes, 30.5s)
+```
 
 ### 2025-12-02: Design System v2.0 - Token 체계화 & 접근성 개선 ✅
 ```
@@ -390,7 +457,7 @@ Footer.tsx 결제 수단 및 SNS 링크 간소화
 └── ✅ 빌드 검증 통과 (15 routes)
 
 MVP 핵심 메시지: "포인트 적립 + 기부 참여 + 무료 배송까지!"
-TBR 멤버십: 19,900원/월 | 포인트 5% | 기부 5% | 무료배송 5만원↑
+TBR 멤버십: 9,900원/월 | 포인트 5% | 기부 5% | 무료배송 5만원↑
 ```
 
 ### 2025-11-30: Dark Mode Logo Variant & CSS Enhancement ✅

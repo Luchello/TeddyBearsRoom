@@ -85,7 +85,10 @@ export function AgeVerificationModal() {
         const verified = localStorage.getItem("age-verified");
         if (!verified) {
             // 미인증 시: 모달 표시 + 배경 스크롤 잠금
-            setIsOpen(true);
+            // Note: setTimeout으로 비동기화하여 cascading render 방지
+            setTimeout(() => {
+                setIsOpen(true);
+            }, 0);
             document.body.style.overflow = "hidden";
         }
     }, []);

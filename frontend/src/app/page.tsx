@@ -17,7 +17,10 @@ export default function HomePage() {
         {/* Animated Blobs (Light Mode) */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl animate-pulse dark:hidden" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl animate-pulse delay-1000 dark:hidden" />
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+        {/* Content Container - max-w-7xl로 큰 화면에서도 적절한 너비 유지 */}
+        <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Typography & Message */}
           <div className="space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-primary/20 backdrop-blur-sm shadow-sm dark:bg-black/30 dark:border-primary/40">
@@ -70,7 +73,8 @@ export default function HomePage() {
             {/* Abstract Shape representing "Soft vs Hard" */}
             <div className="relative w-[300px] h-[400px] sm:w-[400px] sm:h-[500px]">
               {/* Back Card (Dark Mode / Latex) */}
-              <div className="absolute inset-0 rounded-[3rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
+              {/* P1: rounded-[2.5rem] = --radius-2xl (40px) - Design Token 표준화 */}
+              <div className="absolute inset-0 rounded-[2.5rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
                 <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(0,255,65,0.5)] filter group-hover:brightness-125 transition-all duration-300">
                   <Image src="/tbr_logo_dark.png" alt="TBR Logo Dark" fill className="object-contain" />
@@ -81,7 +85,8 @@ export default function HomePage() {
               </div>
 
               {/* Front Card (Light Mode / Furry) */}
-              <div className="absolute inset-0 rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
+              {/* P1: rounded-[2.5rem] = --radius-2xl (40px) - Design Token 표준화 */}
+              <div className="absolute inset-0 rounded-[2.5rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] -rotate-6 hover:rotate-0 transition-all duration-700 ease-out dark:opacity-0 dark:translate-x-full dark:pointer-events-none flex flex-col items-center justify-center overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-50" />
                 <div className="relative w-48 h-48 animate-bounce-slow drop-shadow-lg filter group-hover:blur-[2px] transition-all duration-300">
                   <Image src="/tbr_logo.png" alt="TBR Logo" fill className="object-contain" />
@@ -93,6 +98,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        </div> {/* Close Content Container */}
 
 
       {/* Scroll Indicator */}
@@ -141,7 +147,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 -skew-y-3 transform origin-top-left scale-110" />
 
         <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
-          <div className="bg-white dark:bg-neutral-900 rounded-[3rem] p-8 md:p-16 shadow-2xl border border-primary/10 dark:border-primary/30 overflow-hidden relative">
+          {/* P1: rounded-[2.5rem] = --radius-2xl (40px) - Design Token 표준화 */}
+          <div className="bg-white dark:bg-neutral-900 rounded-[2.5rem] p-8 md:p-16 shadow-2xl border border-primary/10 dark:border-primary/30 overflow-hidden relative">
             {/* Decorative Blobs */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none" />
@@ -152,8 +159,8 @@ export default function HomePage() {
                   <Sparkles className="w-8 h-8" />
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white leading-tight">
-                  Join the <br />
-                  <span className="text-primary">Inner Circle</span>
+                  Become a <br />
+                  <span className="text-primary">Roommate</span>
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   매달 도착하는 시크릿 박스. <br />
@@ -168,7 +175,7 @@ export default function HomePage() {
                   ))}
                 </ul>
                 <Button size="lg" className="rounded-full px-10 py-6 text-lg shadow-lg shadow-primary/25">
-                  <Link href="/subscribe">Start Membership</Link>
+                  <Link href="/subscribe">Roommate 되기 🏠</Link>
                 </Button>
               </div>
 

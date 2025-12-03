@@ -2,13 +2,13 @@
 
 // ====================================
 // TeddyBear's Room - PlanComparisonTable 컴포넌트
-// 구독 플랜 비교 테이블 (비회원 vs TBR 멤버십)
+// 구독 플랜 비교 테이블 (비회원 vs Roommate)
 // ====================================
 //
 // 🎯 용도:
-// - 비회원과 TBR 멤버십(19,900원/월) 혜택 비교
+// - 비회원과 Roommate(9,900원/월) 혜택 비교 - Notion v3.0
 // - 구독 페이지(subscribe/page.tsx)에서 사용
-// - MVP Single Tier 디자인 (2025-11-30)
+// - MVP Single Tier 디자인 (2025-12-03 v3.0 동기화)
 // - 사용자가 구독의 가치를 직관적으로 파악
 //
 // 📦 구조:
@@ -64,21 +64,22 @@ interface ComparisonRow {
 
 /**
  * 플랜 비교 데이터
- * MVP Single Tier: 비회원 vs TBR 멤버십(19,900원/월) 6가지 혜택 비교
+ * MVP Single Tier: 비회원 vs Roommate(9,900원/월) 6가지 혜택 비교
+ * Notion v3.0 동기화 (2025-12-03)
  *
  * 각 항목의 비회원/멤버 가치:
- * - "포인트 적립": 0% vs 5% (매 구매마다 포인트)
- * - "기부 투표 참여": false vs "5%" (기부금 1% → 사용자 추천 기부처에 기부)
- * - "무료 배송": "7만원 이상" vs "5만원 이상" (배송료 3,000원 절약)
- * - "할인 쿠폰": false vs "매월 5%" (매달 첫날 5% 할인 쿠폰)
+ * - "상시 할인": 없음 vs 10% (모든 상품 상시 10% 할인)
+ * - "기부 참여": false vs "1%" (구매금액 1% 자동 기부)
+ * - "무료 배송": 없음 vs "3만원 이상" (멤버 전용 무료배송)
+ * - "시즌 서프라이즈": false vs true (깜짝 혜택)
  * - "신상품 얼리 액세스": false vs true (신상품 미리 구매 가능)
- * - "생일 특별 혜택": false vs true (생일달 추가 할인/포인트 등)
+ * - "생일 특별 혜택": false vs true (생일달 추가 혜택)
  */
 const comparisonData: ComparisonRow[] = [
-  { feature: "포인트 적립", nonMember: "0%", member: "5%" },
-  { feature: "기부 투표 참여", nonMember: false, member: "5%" },
-  { feature: "무료 배송", nonMember: "7만원 이상", member: "5만원 이상" },
-  { feature: "할인 쿠폰", nonMember: false, member: "매월 5%" },
+  { feature: "상시 할인", nonMember: "없음", member: "10%" },
+  { feature: "기부 참여", nonMember: false, member: "1%" },
+  { feature: "무료 배송", nonMember: "없음", member: "3만원 이상" },
+  { feature: "시즌 서프라이즈", nonMember: false, member: true },
   { feature: "신상품 얼리 액세스", nonMember: false, member: true },
   { feature: "생일 특별 혜택", nonMember: false, member: true },
 ];
@@ -157,16 +158,16 @@ export function PlanComparisonTable() {
               <div className="text-sm font-normal text-muted-foreground/70">0원</div>
             </th>
 
-            {/* 헤더 3: "TBR 멤버십" 섹션 (가운데 정렬)
+            {/* 헤더 3: "Roommate" 섹션 (가운데 정렬)
                 - bg-primary/10: primary 색상 배경
                 - rounded-tr-xl: 오른쪽 위 모서리 둥글게
-                - 🐻 + "TBR 멤버십" 라벨 + "19,900원/월" 가격 */}
+                - 🏠 + "Roommate" 라벨 + "9,900원/월" 가격 - Notion v3.0 */}
             <th className="text-center p-4 border-b border-border bg-primary/10 rounded-tr-xl">
               <div className="flex items-center justify-center gap-1">
-                <span>🐻</span>
-                <span className="text-primary">TBR 멤버십</span>
+                <span>🏠</span>
+                <span className="text-primary">Roommate</span>
               </div>
-              <div className="text-sm font-normal text-primary">19,900원/월</div>
+              <div className="text-sm font-normal text-primary">9,900원/월</div>
             </th>
           </tr>
         </thead>
