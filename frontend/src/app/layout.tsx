@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "TeddyBear's Room",
-  description: "Coming Soon - TeddyBear's Room",
+  description: "Coming Soon - New Design in Progress",
 };
 
 export default function RootLayout({

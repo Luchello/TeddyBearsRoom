@@ -1,8 +1,10 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-4">TeddyBear&apos;s Room</h1>
-      <p className="text-xl text-gray-600">Coming Soon...</p>
+    <main className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">TeddyBear&apos;s Room</h1>
+        <p className="text-gray-600">New Design Coming Soon</p>
+      </div>
     </main>
   );
 }

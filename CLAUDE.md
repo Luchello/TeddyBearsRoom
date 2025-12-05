@@ -1,586 +1,117 @@
 # CLAUDE.md
 
-프로젝트 가이드 for Claude Code (claude.ai/code)
+프로젝트 가이드 for Claude Code
 
 ## Project Overview
 
-**TeddyBear'sRoom** - Next.js 기반 E-commerce & Notion 문서 관리 통합 프로젝트
+**TeddyBear's Room** - 성인용품 E-commerce 플랫폼
 
-- **🌐 Live**: https://teddybearsroom.com
-- **목적**: 테디베어즈룸 쇼핑몰 + Notion 기반 문서 SSOT 관리
-- **전략**: Next.js Full Stack 직접 개발 (WordPress 전략 폐기)
-- **차별화**: 구독 멤버십, 스마트 사이즈 추천, 기부 투표 시스템
+| 항목 | 내용 |
+|------|------|
+| **Live** | https://teddybearsroom.com |
+| **Stack** | Next.js 16 + Supabase + Prisma 7 |
+| **Status** | Frontend Clean Slate (2025-12-05) |
 
 ## Repository Structure
 
 ```
 TeddyBear'sRoom/
-├── .claude/                    # Claude Code 설정 디렉토리
-├── .gitignore                  # Git ignore 규칙
-├── CLAUDE.md                   # 본 파일 (Claude Code 가이드)
-├── claudedocs/                 # Claude 생성 문서 (전략, 리서치, 가이드, 구독설계)
-│   ├── README.md
-│   ├── brand_marketing_guidelines_2025-11-22.md
-│   ├── customer_interview_guide_2025-11-20.md
-│   ├── figma_design_guide_2025-11-21.md
-│   ├── interview_recruiting_action_plan_2025-11-20.md
-│   ├── market_research_strategy_2025-11-20.md
-│   ├── project_briefing_2025-11-21.md
-│   ├── subscription_briefing_2025-11-22.md
-│   ├── subscription_standard.md
-│   ├── tech_stack_summary_2025-11-19.md
-│   ├── tech_stack_summary_2025-11-27.md  # 최신 버전
-│   ├── 구독_시스템_개선_방안.txt
-│   └── 구독_시스템_최종_설계안.txt
-└── frontend/                   # Next.js 16 프론트엔드 애플리케이션
-    ├── prisma.config.ts        # Prisma 7 설정 (defineConfig, dotenv)
+├── CLAUDE.md                 # 본 파일
+├── claudedocs/
+│   └── subscription_standard.md  # 구독 비즈니스 로직
+└── frontend/
     ├── prisma/
-    │   ├── schema.prisma       # 데이터베이스 스키마 (9개 모델)
-    │   └── migrations/         # Migration 히스토리
+    │   ├── schema.prisma     # DB 스키마 (9개 모델)
+    │   └── migrations/       # Migration 히스토리
     ├── src/
-    │   ├── app/                # App Router 페이지
-    │   │   ├── api/            # API Routes (products, orders, users)
-    │   │   ├── layout.tsx      # 루트 레이아웃 (Header/Footer)
-    │   │   ├── page.tsx        # 홈페이지
-    │   │   ├── globals.css     # TBR 디자인 시스템 (색상, 유틸리티)
-    │   │   ├── about/          # 소개 페이지
-    │   │   ├── products/       # 상품 목록 페이지
-    │   │   └── subscribe/      # 구독 멤버십 페이지
-    │   ├── components/         # 재사용 컴포넌트
-    │   │   ├── ui/             # shadcn/ui 컴포넌트
-    │   │   │   └── latex-background.tsx # 다크모드 라텍스 배경 효과
-    │   │   ├── Header.tsx      # 반응형 헤더 (모바일 메뉴 + ThemeToggle)
-    │   │   ├── Footer.tsx      # 푸터 (Wave Divider + Newsletter + SNS)
-    │   │   ├── Testimonials.tsx # 고객 후기 캐러셀
-    │   │   ├── ProductCard.tsx # 상품 카드
-    │   │   ├── AgeVerificationModal.tsx # 성인 인증 (PASS 본인확인 연동)
-    │   │   ├── ThemeProvider.tsx # next-themes Provider
-    │   │   └── ThemeToggle.tsx # Light/Dark 모드 토글
+    │   ├── app/
+    │   │   ├── api/          # ✅ Backend API (보존)
+    │   │   │   ├── products/
+    │   │   │   ├── orders/
+    │   │   │   └── users/
+    │   │   ├── layout.tsx    # 🆕 최소 레이아웃
+    │   │   ├── page.tsx      # 🆕 최소 홈페이지
+    │   │   └── globals.css   # 🆕 최소 CSS
     │   └── lib/
-    │       ├── supabase/       # Supabase 클라이언트 (client, server, middleware)
-    │       ├── prisma.ts       # Prisma 싱글톤
-    │       └── utils.ts        # 유틸리티 함수
-    ├── .env.local              # 환경변수 (gitignore)
-    ├── package.json            # 의존성 관리
-    ├── tailwind.config.ts      # Tailwind 설정
-    └── tsconfig.json           # TypeScript 설정
+    │       ├── prisma.ts     # Prisma 싱글톤
+    │       └── supabase/     # Supabase 클라이언트
+    ├── middleware.ts         # Auth 미들웨어
+    └── .env.local            # 환경변수
 ```
 
-> ✅ **Frontend MVP 완료** (2025-11-26): Next.js 16 + TypeScript + Tailwind CSS + shadcn/ui 기반 프론트엔드 구축 완료
+## Tech Stack
 
-## Notion Integration
-
-### 주요 페이지
-- **🔧 기술 스택 & 아키텍처**: `2b877770-ad42-81c5-9a86-f1bd40c74f38`
-- **🐻 구독 멤버십**: Notion > 브랜딩 > 구독 멤버십 시스템
-- **업무 허브**: 12개 통합 페이지 (브랜드&디자인, 마케팅&콘텐츠 등)
-
-### Workflow
-```bash
-# Notion → Repository 동기화
-1. mcp__notion__API-post-search → 페이지 검색
-2. mcp__notion__API-retrieve-a-page → 내용 읽기
-3. 분석 → claudedocs/ 저장
-4. mcp__notion__API-patch-page → 업데이트 (필요시)
-```
-
-## Technology Stack (Latest: 2025-11-29)
-
-> 📌 **상세 내용**: [Notion 기술 스택 페이지](https://www.notion.so/2b877770ad4281c59a86f1bd40c74f38) | [claudedocs/tech_stack_summary_2025-11-27.md](./claudedocs/tech_stack_summary_2025-11-27.md)
-
-### ✅ 최근 완료
-- **Supabase 프로젝트 마이그레이션 완료** (2025-11-29)
-- TanStack Query 제거 (Next.js 16 Server Components 완벽 호환)
-- Zustand 5.0.8로 Cart, Wishlist, Auth, Checkout 상태 관리
-
-### Core Stack
 ```yaml
-Frontend: Next.js 16.0.4 (App Router) + React 19.2.0 + TypeScript 5 + Tailwind 4 + shadcn/ui
-State: Zustand 5.0.8 (localStorage persist)
-UI: lucide-react 0.555.0 + next-themes 0.4.6
-Backend: Supabase (PostgreSQL) + Prisma 7 + Supabase Auth ✅
-Database: Supabase Project bjnjbbdcwkooswvexiuh (Mumbai) ✅
-MCP: Supabase MCP 연결 완료 (.mcp.json) ✅
-AgeVerify: PASS 본인확인 (SKT CI/DI) ✅
-Payments: TossPayments SDK (빌링키 + 일반결제) ✅
-Infra: Vercel + Custom Domain + 환경변수 ✅
+# Backend (보존됨)
+Database: Supabase PostgreSQL (bjnjbbdcwkooswvexiuh)
+ORM: Prisma 7 with @prisma/adapter-pg
+Auth: Supabase Auth + PASS 본인확인
+Payment: TossPayments (빌링키 정기결제)
+Deploy: Vercel
+
+# Frontend (재구현 예정)
+Framework: Next.js 16.0.4 (App Router)
+Styling: Tailwind CSS 4
+State: 미정 (Zustand 또는 기타)
 ```
 
-### Design System (v2.0 - 2025-12-02)
-- **Light Mode** (Pastel Furry):
-  - Background: `#FFF0F5` (Lavender Blush)
-  - Primary: `#E08B7D` (Melon Coral - WCAG AA 준수)
-  - Secondary: `#B5EAD7` (Magic Mint)
-  - Accent: `#C7CEEA` (Periwinkle)
-- **Dark Mode** (Latex Matrix):
-  - Background: `#050505` (Deep Black)
-  - Primary: `#00FF41` (Neon Green)
-  - Accent: `#39FF14` (Bright Neon)
-- **Design Tokens** (신규):
-  - Spacing: 8px base scale (space-1 ~ space-24)
-  - Type: text-xs ~ text-5xl + Korean optimized line-height
-  - Radius: sm(8px) / md(16px) / lg(24px) / xl(32px)
-  - Shadow: sm / md / lg / xl / cute / neon
-- **Accessibility**:
-  - prefers-reduced-motion 지원
-  - Focus visible enhancement
-  - Color contrast WCAG AA 준수
-- **Korean Typography**:
-  - word-break: keep-all
-  - line-height: 1.7 (body), 1.8 (paragraph)
-  - letter-spacing: -0.01em (body), -0.02em (heading)
-- **Concept**: 파스텔 + 귀여움 + 페티시 전문화
-- **Shape**: Standardized border-radius system
-- **Font**: Noto Sans KR (next/font 최적화)
-
-## Key Architecture Decisions
+## Architecture Decisions
 
 ### 1. 보안: pgcrypto 암호화
-- PostgreSQL `pgcrypto` 확장으로 신체정보 DB 레벨 암호화
-- 클라이언트에서만 복호화 (Privacy-First)
+- 신체정보 DB 레벨 암호화
+- 클라이언트에서만 복호화
 
-### 2. 단순화: Pass/Fail 추천 로직
-- 복잡한 점수제 대신 범위 기반 단순 매칭
-- OK (green) / TIGHT/LOOSE (yellow) / NO (red)
+### 2. 성인인증: PASS 본인확인
+- SKT CI/DI 기반 실명 인증
+- 회원가입 시 1회 인증
 
-### 3. 자동화: Vercel Cron 스케줄러
-- 직접 결제 엔진 구현 X → 스케줄러만 구현
-- 매일 자정 TossPayments API 호출
+### 3. 결제: TossPayments
+- 구독: 빌링키(Billing Key) 정기결제
+- 일반: 카드/계좌이체/간편결제
+- 스케줄: Vercel Cron → TossPayments API
 
-### 4. 성인인증: PASS 본인확인 ✅
-- **서비스**: SKT PASS 본인확인 (휴대폰 인증)
-- **방식**: CI/DI 기반 실명 인증
-- **적용**: 회원가입 시 1회, 주문 시 재인증 불필요
-- **법적 근거**: 청소년보호법 성인 확인 의무
-- **UX 플로우**:
-  ```
-  회원가입 → PASS 인증 팝업 → CI/DI 수신 → 19세 확인 → 가입 완료
-  ```
-
-### 5. 결제: TossPayments ✅
-- **SDK**: TossPayments JavaScript SDK
-- **구독 결제**: 빌링키(Billing Key) 방식 정기결제
-- **일반 결제**: 카드/계좌이체/간편결제 (카카오페이, 토스페이)
-- **주요 API**:
-  - `POST /billing/authorizations/card`: 빌링키 발급
-  - `POST /billing`: 정기결제 실행
-  - `POST /payments/confirm`: 일반결제 승인
-- **Webhook**: 결제 상태 변경 시 Supabase Edge Function 호출
-- **정기결제 스케줄**:
-  ```
-  매월 결제일 → Vercel Cron → TossPayments API → 결제 처리 → DB 업데이트
-  ```
-
-## Implementation Checklist
-
-> 📌 **상세 내용**: Notion 성인용품 페이지 > ✅ 실행 체크리스트
-
-시간 기반 로드맵 대신 실행 가능한 체크리스트로 관리합니다.
-
-### 주요 카테고리
-1. **🏗️ 사업 준비**: 법률/행정, 도메인/브랜딩
-2. **🛍️ 상품 & 소싱**: 공급처 확보, 상품 큐레이션
-3. **💻 기술 개발**: 인프라 구축, 핵심 기능, 차별화 기능
-4. **🎨 디자인 & UX**: 디자인 시스템, 프라이버시 강화
-5. **📦 물류 & 운영**: 택배, 포장, 배송 정책
-6. **📣 마케팅 & 런칭**: 페르소나, 경쟁사 분석, 콘텐츠 제작
-7. **💰 재무 & 분석**: 예산 관리, KPI 대시보드
-8. **🤝 고객 서비스**: CS 채널, FAQ, 응대 매뉴얼
-
-### 우선순위 Phase
-- **Phase 0**: 법률/도메인/사업자등록 (개발 전)
-- **Phase 1**: 기술 인프라 + 핵심 기능 (1~2개월)
-- **Phase 2**: 상품 소싱 + 디자인 완성 (2~3개월)
-- **Phase 3**: 물류 + CS 구축 (3~4개월)
-- **Phase 4**: 마케팅 + 런칭 (4개월+)
+### 4. 사이즈 추천: Pass/Fail 로직
+- 복잡한 점수제 X → 범위 기반 단순 매칭
+- OK / TIGHT·LOOSE / NO
 
 ## Business Context
 
-### Subscription Model (Roommate v3.0 - 2025-12-03)
-- ❌ **비회원**: 할인 없음, 무료배송 없음, 기부 참여 불가
-- 🏠 **Roommate**: 9,900원/월 (10% 상시할인, 1% 기부, 3만원↑ 무료배송, 시즌 서프라이즈)
-- 💡 **메시지**: "10% 상시 할인 + 1% 기부 + 3만원↑ 무료배송!"
-- 📌 **MVP 전략**: Roommate 단일 tier로 핵심 가치 검증 후 확장 검토
+### 이너 서클 (Inner Circle) 구독 시스템
 
-### 차별화 기능
-1. **구독 멤버십**: TossPayments 빌링키 기반 정기결제
-2. **스마트 사이즈 추천**: pgcrypto 암호화 + Pass/Fail 로직
-3. **기부 투표**: Supabase Realtime 기반 실시간 투표
+```
+이너 서클 = 구독 프로그램 브랜드
+└── Roommate 🏠 = 구독 상품 (9,900원/월)
+    ├── 10% 상시 할인
+    ├── 1% 기부 참여
+    └── 3만원↑ 무료배송
+```
 
-## MCP Server Usage
+> 📌 상세: `claudedocs/subscription_standard.md`
 
-### Supabase MCP (프로젝트 연결됨)
-- Project Ref: `bjnjbbdcwkooswvexiuh`
-- Config: `.mcp.json` (프로젝트 루트)
-- 기능: SQL 실행, Auth 관리, Storage, Edge Functions
+## API Reference
 
-### Notion MCP (필수)
-- `API-post-search`: 페이지 검색
-- `API-retrieve-a-page`: 페이지 읽기
-- `API-patch-page`: 페이지 업데이트
-- `API-patch-block-children`: 블록 추가/수정
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/products` | GET | 상품 목록 |
+| `/api/products/[id]` | GET | 상품 상세 |
+| `/api/orders` | POST | 주문 생성 |
+| `/api/users/me` | GET | 내 정보 |
+| `/api/users/me/measurements` | GET/POST | 신체 정보 |
 
-### Sequential MCP (복잡한 분석)
-- 다중 페이지 비교 분석
-- 불일치 사항 체계적 식별
+## Development
 
-## Development Guidelines
-
-### Frontend Development Commands
 ```bash
 cd frontend
-
-# 개발 서버 실행
-npm run dev          # http://localhost:3000
-
-# 프로덕션 빌드
-npm run build        # 정적 페이지 생성
-
-# 코드 품질 검사
-npm run lint         # ESLint 검사
+npm run dev      # 개발 서버 (localhost:3000)
+npm run build    # 프로덕션 빌드
+npm run lint     # ESLint 검사
 ```
 
-### Claude Code Workflow
-```
-1. Feature Request → /sc:research (best practices)
-2. /sc:brainstorm → /sc:workflow → /sc:design
-3. /sc:implement → /sc:test → /sc:improve
-4. /sc:document
-```
-
-### Best Practices
-- TypeScript strict mode 사용
-- 복잡한 로직은 주석 필수
-- 보안 고려사항 항상 체크
-- 상세 문서는 `claudedocs/` 저장
-- Feature branch workflow 사용 (main branch 직접 수정 지양)
-
-## File Management
-
-### Conventions
-- **Reports**: `{topic}_{action}_report.md`
-- **Analysis**: `{scope}_{subject}_{type}.md`
-- **Standards**: `{subject}_standard.md`
-- **위치**: 모두 `claudedocs/` 디렉토리
-
-### Version Control
-- 각 파일에 timestamp 포함
-- 중복 파일 생성 지양 (기존 파일 업데이트 선호)
-- **Feature Branch Workflow**: main branch 직접 수정 지양
-  - 새 기능 개발 시: `git checkout -b feature/[feature-name]`
-  - 커밋 후 merge 또는 PR 생성
-
-## References
-
-### Notion Pages
-- [🔧 기술 스택 & 아키텍처](https://www.notion.so/2b877770ad4281c59a86f1bd40c74f38) - 최신 업데이트: 2025-11-28
-- 🎨 브랜드 & 디자인: `2af77770-ad42-8162-bcd3-dd1ffd8e96a5`
-- 📣 마케팅 & 콘텐츠: `2af77770-ad42-816c-b6d0-c089f0139da3`
-- 📊 운영 & 분석: `2af77770-ad42-81ff-b7b8-cc6f89767d4e`
-
-### Documentation (주요 문서)
-- **전략 & 기획**
-  - `brand_marketing_guidelines_2025-11-22.md` - 브랜드 마케팅 가이드라인
-  - `project_briefing_2025-11-21.md` - 프로젝트 브리핑
-  - `market_research_strategy_2025-11-20.md` - 시장 조사 전략
-- **디자인**
-  - `figma_design_guide_2025-11-21.md` - Figma 디자인 가이드
-- **리서치**
-  - `customer_interview_guide_2025-11-20.md` - 고객 인터뷰 가이드
-  - `interview_recruiting_action_plan_2025-11-20.md` - 인터뷰 모집 액션 플랜
-- **기술 & 표준**
-  - `tech_stack_summary_2025-11-27.md` - 기술 스택 요약 (최신)
-  - `tech_stack_summary_2025-11-19.md` - 기술 스택 초기 버전
-  - `subscription_standard.md` - 구독 멤버십 표준
-- **구독 설계**
-  - `subscription_briefing_2025-11-22.md` - 구독 시스템 브리핑
-  - `구독_시스템_개선_방안.txt` - 구독 시스템 개선안
-  - `구독_시스템_최종_설계안.txt` - 구독 시스템 최종 설계
-
-> 📁 **전체 문서**: `claudedocs/` 디렉토리에 13개 문서 보관 중 (전략/리서치/가이드/구독설계/기술스택)
+### 규칙
+- TypeScript strict mode
+- Feature branch workflow
+- 문서는 `claudedocs/`에 저장
 
 ---
 
-**Last Updated**: 2025-12-03
-**Status**: ✅ **Production Ready** - https://teddybearsroom.com
-
----
-
-## 📈 Recent Changes
-
-### 2025-12-03: PASS 성인인증 + TossPayments 결제 문서화 ✅
-```
-성인인증/결제 시스템 기술 스택 공식화
-├── 🔐 PASS 본인확인 (성인인증)
-│   ├── 서비스: SKT PASS (휴대폰 본인확인)
-│   ├── 방식: CI/DI 기반 실명 인증
-│   ├── 적용: 회원가입 시 1회 인증
-│   └── 법적 근거: 청소년보호법
-├── 💳 TossPayments (결제)
-│   ├── 구독 결제: 빌링키(Billing Key) 정기결제
-│   ├── 일반 결제: 카드/계좌이체/간편결제
-│   ├── Webhook: Supabase Edge Function 연동
-│   └── 스케줄: Vercel Cron → TossPayments API
-├── 📁 문서 업데이트
-│   ├── CLAUDE.md: Key Architecture Decisions 섹션
-│   ├── subscription_standard.md: 결제/인증 섹션
-│   └── Notion 기술 스택 페이지
-└── ✅ Core Stack 업데이트 완료
-```
-
-### 2025-12-03: Roommate 브랜딩 + Notion v3.0 동기화 ✅
-```
-구독 시스템 전면 업데이트 (Notion v3.0 SSOT 동기화)
-├── 🏠 브랜딩 변경
-│   ├── "TBR 멤버십" → "Roommate"
-│   └── 아이콘: 🐻 → 🏠
-├── 💰 혜택 재조정 (v3.0)
-│   ├── 가격: 19,900원 → 9,900원/월
-│   ├── 할인: 포인트 5% → 상시 10%
-│   ├── 기부: 5% → 1%
-│   └── 무료배송: 5만원 → 3만원↑
-├── 📁 수정된 파일
-│   ├── lib/data.ts (subscriptionPlans, subscriptionBenefits, FAQs)
-│   ├── subscribe/page.tsx (Hero, CTA, Value message)
-│   ├── page.tsx (Inner Circle → Roommate)
-│   └── PlanComparisonTable.tsx (비교 테이블 데이터)
-├── 📝 문서 업데이트
-│   ├── claudedocs/subscription_standard.md
-│   └── CLAUDE.md (Business Context)
-└── ✅ 빌드 검증 통과 (15 routes, 30.5s)
-```
-
-### 2025-12-02: Design System v2.0 - Token 체계화 & 접근성 개선 ✅
-```
-globals.css 대규모 업데이트 (디자인 시스템 표준화)
-├── 🎨 Design Tokens 추가
-│   ├── Spacing Scale: space-1 ~ space-24 (8px base)
-│   ├── Type Scale: text-xs ~ text-5xl
-│   ├── Line Height: leading-none ~ leading-korean
-│   ├── Border Radius: radius-sm/md/lg/xl/2xl/full
-│   ├── Shadow Scale: shadow-sm/md/lg/xl/cute/neon
-│   ├── Transition: fast/normal/slow
-│   └── Z-Index: dropdown/sticky/modal/tooltip/toast
-├── 🔧 색상 대비 수정 (WCAG AA 준수)
-│   └── Light Mode primary: #FFB7B2 → #E08B7D (대비율 4.5:1↑)
-├── ♿ 접근성 개선
-│   ├── @media (prefers-reduced-motion: reduce) 추가
-│   ├── Focus visible enhancement (dark mode 포함)
-│   └── 애니메이션 비활성화 옵션
-├── 🇰🇷 한글 타이포그래피 최적화
-│   ├── word-break: keep-all (단어 단위 줄바꿈)
-│   ├── line-height: 1.7 (body), 1.8 (paragraph)
-│   ├── letter-spacing: -0.01em (body), -0.02em (heading)
-│   └── overflow-wrap: break-word
-└── ✅ 빌드 검증 통과 (15 routes, 8.8s)
-```
-
-### 2025-12-01: Footer SNS & Payment Methods Update ✅
-```
-Footer.tsx 결제 수단 및 SNS 링크 간소화
-├── 🗑️ 삭제된 항목
-│   ├── Instagram import 제거
-│   ├── KakaoIcon, NaverBlogIcon 커스텀 컴포넌트 삭제
-│   ├── SNS: 인스타그램, 카카오톡, 네이버 삭제
-│   └── 결제: 신용카드, 네이버페이 삭제
-├── ✅ 유지/추가된 항목
-│   ├── SNS: Twitter 아이콘만 유지
-│   └── 결제: 무통장입금🏦, 카카오페이🟡, 토스🔵 (3개)
-├── 📝 JSDoc 주석 업데이트
-│   └── SNS 및 결제 방법 설명 수정
-└── ✅ 빌드 검증 통과 (15 routes, 8.9s)
-```
-
-### 2025-12-01: Dead Code Cleanup & Syntax Fix ✅
-```
-/sc:cleanup ultrathink 실행 결과
-├── 🗑️ Dead Code 제거
-│   └── dropdown-menu.tsx 삭제 (-257 lines, 미사용 shadcn/ui 컴포넌트)
-├── 🧹 Unused Imports 정리
-│   └── page.tsx: Card, CardContent 제거
-├── 🔧 Syntax Errors 수정 (3개 파일)
-│   ├── AgeVerificationModal.tsx: Fragment 닫기 태그 누락 수정
-│   ├── PlanComparisonTable.tsx: JSX 주석 위치 오류 수정
-│   └── latex-background.tsx: JSDoc 내 JSX 주석 충돌 수정
-├── 📊 결과 메트릭
-│   ├── -264 net lines removed
-│   ├── 0 TypeScript errors
-│   └── 0 ESLint warnings
-└── ✅ 빌드 검증 통과 (15 routes)
-```
-
-### 2025-12-01: Comprehensive Code Documentation ✅
-```
-31+ 파일에 4,100+ 줄의 JSDoc/인라인 주석 추가
-├── 📝 API Routes (6개)
-│   ├── products/route.ts: GET/POST 핸들러 + Prisma 쿼리
-│   ├── products/[id]/route.ts: 상품 상세 + 재고 관리
-│   ├── orders/route.ts: 주문 생성 + 트랜잭션
-│   ├── orders/[id]/route.ts: 주문 조회/수정
-│   ├── users/route.ts: 사용자 CRUD
-│   └── users/[id]/route.ts: 사용자 상세/인증
-├── 🧩 Components (17개)
-│   ├── Header.tsx, Footer.tsx, ProductCard.tsx
-│   ├── CartDrawer.tsx, CartButton.tsx, WishlistButton.tsx
-│   ├── AuthModal.tsx, AgeVerificationModal.tsx
-│   ├── Testimonials.tsx, FAQAccordion.tsx
-│   └── ThemeProvider.tsx, ThemeToggle.tsx 등
-├── 🎨 UI Components (10개)
-│   ├── button.tsx, card.tsx, input.tsx
-│   ├── dialog.tsx, accordion.tsx
-│   └── latex-background.tsx 등
-├── 📁 Pages (7개)
-│   ├── page.tsx (홈), products/page.tsx
-│   ├── products/[id]/page.tsx (상세)
-│   ├── subscribe/page.tsx, about/page.tsx
-│   └── layout.tsx, globals.css
-└── 🔧 Stores & Contexts (5개)
-    ├── cartStore.ts, wishlistStore.ts
-    ├── authStore.ts, checkoutStore.ts
-    └── ToastContext.tsx
-```
-
-### 2025-11-30: MVP Single Tier 구독 시스템 전환 ✅
-```
-2-Tier → Single Tier MVP 전환 (선택의 역설 해결)
-├── ✅ Frontend 코드 수정
-│   ├── data.ts: subscriptionPlans 단일 플랜으로 변경
-│   ├── subscribe/page.tsx: 중앙 정렬 단일 카드 레이아웃
-│   ├── PlanComparisonTable.tsx: 3컬럼 → 2컬럼 (비회원 vs 멤버십)
-│   └── about/page.tsx: 기부 섹션 단일 tier 카드
-├── ✅ 문서 업데이트
-│   ├── subscription_standard.md: MVP 전략 변경 반영
-│   ├── subscription_briefing_2025-11-22.md: MVP 전략 변경 반영
-│   └── CLAUDE.md: Business Context 섹션 업데이트
-├── ✅ Notion 페이지 업데이트
-│   └── 기술 스택 페이지: 구독 시스템 블록 재작성
-└── ✅ 빌드 검증 통과 (15 routes)
-
-MVP 핵심 메시지: "포인트 적립 + 기부 참여 + 무료 배송까지!"
-TBR 멤버십: 9,900원/월 | 포인트 5% | 기부 5% | 무료배송 5만원↑
-```
-
-### 2025-11-30: Dark Mode Logo Variant & CSS Enhancement ✅
-```
-Dark Mode Logo System + CSS Architecture Improvements
-├── ✅ 다크모드 로고 추가
-│   └── public/tbr_logo_dark.png (Matrix Neon 스타일)
-├── ✅ 컴포넌트별 로고 분기 적용
-│   ├── Header.tsx: dark:hidden / hidden dark:block 패턴
-│   ├── Footer.tsx: 동일 패턴 적용
-│   ├── ProductCard.tsx: 상품 카드 내 로고 분기
-│   └── page.tsx: Hero 섹션 로고 분기
-├── ✅ globals.css 대규모 리팩토링
-│   ├── +135 lines / -76 lines
-│   └── 다크모드 CSS 변수 최적화
-└── ✅ 빌드 테스트 통과
-```
-
-### 2025-11-29: CSS Architecture Fix + Design System Enhancement ✅
-```
-Frontend Design System Update
-├── ✅ Tailwind 4 @apply 호환성 수정
-│   ├── @layer utilities 내 @apply → 직접 CSS 변환
-│   └── @layer base 내 @apply → 직접 CSS 변환 (추가 수정)
-├── ✅ color-mix() 함수로 투명도 구현
-│   └── color-mix(in srgb, var(--primary) 20%, transparent)
-├── ✅ 새 컴포넌트 추가
-│   ├── Testimonials.tsx (고객 후기 캐러셀)
-│   └── Footer.tsx (Wave divider + 뉴스레터 + SNS)
-├── ✅ Micro-interactions 추가
-│   └── rubber-band, heart-beat, jello, pop-in animations
-└── ✅ Background patterns
-    └── particles-bg, dots-pattern, grid-pattern, blob-bg
-```
-
-### 2025-11-30: Adult Verification & Jirai-kei Design System ✅
-```
-성인 인증 시스템 + 지뢰계 디자인 강화
-├── ✅ AgeVerificationModal.tsx 신규 추가
-│   ├── 19세 이상 성인 인증 모달
-│   ├── localStorage 기반 인증 상태 저장
-│   ├── Light Mode: 구름 효과 + 파스텔 배경
-│   └── Dark Mode: Matrix 그리드 + 네온 효과
-├── ✅ latex-background.tsx 신규 추가
-│   ├── 다크모드 전용 라텍스 광택 배경
-│   ├── 물방울/땀 효과 (Water Droplets)
-│   └── Matrix Neon 그리드 오버레이
-├── ✅ 지뢰계(Jirai-kei) 디자인 시스템 강화
-│   ├── Header/Footer UI 리뉴얼
-│   └── ProductCard 시각 효과 개선
-└── ✅ 빌드 테스트 통과
-```
-
-### 2025-11-30: Official Logo Implementation ✅
-```
-TBR Official Logo (Teddy Bear with Heart)
-├── ✅ 로고 이미지 저장
-│   ├── public/logo.png (메인 로고)
-│   ├── public/favicon.png (파비콘)
-│   └── src/app/icon.png (앱 아이콘)
-├── ✅ Header.tsx 로고 적용
-│   └── Next.js Image 컴포넌트 + hover scale effect
-├── ✅ Footer.tsx 로고 적용
-│   └── 브랜드 섹션 + 하단 copyright
-├── ✅ 메타데이터 업데이트 (layout.tsx)
-│   ├── title: "지뢰계 감성 프라이빗 셀프케어"
-│   ├── icons: favicon.png, logo.png
-│   └── openGraph: images 추가
-└── ✅ 빌드 테스트 통과 (15 routes)
-```
-
-### 2025-11-29: Supabase 프로젝트 마이그레이션 완료 ✅
-```
-OLD → NEW Project Migration (100% Complete)
-├── ✅ .env.local 환경변수 업데이트
-├── ✅ Database Schema 재생성 (9개 테이블)
-├── ✅ 상품 데이터 Seed (8개 상품)
-├── ✅ Vercel 환경변수 업데이트
-├── ✅ Production Redeploy 완료
-└── ✅ Live Site 검증 통과
-
-NEW Project: bjnjbbdcwkooswvexiuh (Mumbai)
-OLD Project: bwbqtknwfslviwqophtc (DEPRECATED)
-```
-
-### 2025-11-28: Backend Integration + Production Deployment
-- ✅ Supabase Auth + Prisma 7 + API Routes
-- ✅ Vercel 배포 + Custom Domain (teddybearsroom.com)
-- ✅ SSL 인증서 (Let's Encrypt)
-
-### 2025-11-27: E-commerce 핵심 기능
-- ✅ 장바구니/위시리스트 (Zustand persist)
-- ✅ 상품 상세/필터/정렬
-- ✅ Matrix Neon Dark Mode
-
-### 2025-11-26: Frontend MVP
-- ✅ Next.js 16 + shadcn/ui 기반 구축
-
-**Micro-Lessons**:
-- Zustand persist로 localStorage 장바구니 자동 저장
-- React Context + setTimeout으로 Toast auto-dismiss 구현
-- Next.js 15+ params는 Promise로 use() 훅 필요
-- useSearchParams + useRouter로 URL 기반 필터 상태 관리
-- Skeleton 패턴: 외부 서비스(Supabase, TossPayments) 연동 전 UI 먼저 구현
-- useEffect 내 setState는 setTimeout으로 비동기화하여 lint 에러 방지
-- Vercel monorepo 배포: Root Directory를 "frontend"로 설정, Framework Preset 확인 필수
-- Cloudflare DNS: Vercel 연결 시 A record (76.76.21.21) + CNAME (cname.vercel-dns.com)
-- Prisma 7: @prisma/adapter-pg 필수, tsconfig에서 prisma 폴더 exclude 필요
-- Prisma 7 Config: prisma.config.ts는 프로젝트 루트에 위치, defineConfig 사용
-- Prisma 7 dotenv: .env.local 로드를 위해 dotenv.config({ path: '.env.local' }) 명시 필요
-- Supabase SSR: createBrowserClient (client) vs createServerClient (server) 구분 사용
-- API Routes 인증: supabase.auth.getUser()로 서버사이드 인증 확인
-- Supabase Connection: DATABASE_URL(port 6543, pgbouncer) vs DIRECT_URL(port 5432) 구분
-- Prisma 7 Seed: seed.ts도 adapter 방식 필수, prisma.config.ts의 migrations.seed에 명령 설정
-- Tailwind 4: `@layer utilities` 내 `@apply` 제한 → 직접 CSS로 변환 필요
-- Tailwind 4: `@layer base` 내 `@apply`도 동일하게 제한됨 → border-border, bg-background 등 직접 CSS로 변환
-- CSS color-mix(): `color-mix(in srgb, var(--primary) 20%, transparent)` 로 CSS 변수 투명도 구현
-- CSS antialiased: `-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;` 직접 사용
-- SVG Path: d 속성에 잘못된 문자열 포함 시 silent fail → 렌더링 자체가 안됨
-- Age Verification: localStorage + useEffect로 페이지 진입 시 성인 인증 상태 확인
-- CSS Dark Mode Only: `opacity-0 dark:opacity-100`으로 다크모드 전용 요소 구현
-- Dark Mode Logo Pattern: `dark:hidden` + `hidden dark:block` 조합으로 라이트/다크 로고 분기 구현
-- JSX Comment Placement: JSX 주석 `{/* */}`은 직접 return 값이나 Fragment의 직접 자식이 될 수 없음
-- JSDoc JSX Conflict: JSDoc @example 내 `{/* */}` 사용 시 `*/`로 인해 JSDoc이 조기 종료됨
-- Dead Code Detection: 미사용 컴포넌트는 전체 import 스캔으로 확인 후 안전하게 삭제
-- Cleanup Workflow: Analyze → Plan → Execute → Validate → Report 5단계 순차 진행
+**Last Updated**: 2025-12-05 | **Status**: Clean Slate - Frontend 재구현 대기
