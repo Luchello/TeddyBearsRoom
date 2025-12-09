@@ -65,6 +65,7 @@
   --color-beige-700: #9C8A74;
   --color-beige-800: #806F5C;
   --color-beige-900: #644E4A;
+  --color-beige-950: #3D2F2B;
 
   /* MINT - CTA Color */
   --color-mint-50: #F0FDFA;
@@ -77,20 +78,33 @@
   --color-mint-700: #008485;
   --color-mint-800: #006E6A;
   --color-mint-900: #004D4F;
+  --color-mint-950: #002D30;
 
   /* PINK - Accent/Favorite Color */
+  --color-pink-50: #FEF7F8;
   --color-pink-100: #FDF2F4;
   --color-pink-200: #FBCDD9;
   --color-pink-300: #F9A8BE;
   --color-pink-400: #F783A3;
   --color-pink-500: #F56088;
+  --color-pink-600: #E84A6F;
+  --color-pink-700: #D63A5C;
+  --color-pink-800: #B12D4A;
+  --color-pink-900: #8C2339;
+  --color-pink-950: #4A1220;
 
   /* LAVENDER - Premium/Inner Circle */
+  --color-lavender-50: #FAF5FF;
   --color-lavender-100: #F3E8FF;
   --color-lavender-200: #E9D5FF;
   --color-lavender-300: #DFC2FF;
   --color-lavender-400: #D5BFFF;
   --color-lavender-500: #CBBFFF;
+  --color-lavender-600: #A78BFA;
+  --color-lavender-700: #8B5CF6;
+  --color-lavender-800: #7C3AED;
+  --color-lavender-900: #6D28D9;
+  --color-lavender-950: #3B1A70;
 
   /* GRAY - Neutral */
   --color-gray-50: #FAFAFA;
