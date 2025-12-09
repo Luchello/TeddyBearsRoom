@@ -86,6 +86,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Comp = asChild ? Slot : "button";
 
+    // asChild일 때는 children만 직접 전달 (Fragment로 감싸면 className 전달 에러)
+    if (asChild) {
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+          ref={ref}
+          disabled={disabled || isLoading}
+          {...props}
+        >
+          {children}
+        </Comp>
+      );
+    }
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, fullWidth, className }))}
