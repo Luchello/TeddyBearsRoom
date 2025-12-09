@@ -10,7 +10,7 @@
 |------|------|
 | **Live** | https://teddybearsroom.com |
 | **Stack** | Next.js 16 + Supabase + Prisma 7 |
-| **Status** | Frontend Clean Slate (2025-12-05) |
+| **Status** | ✅ MVP Complete (2025-12-09) |
 
 ## Repository Structure
 
@@ -19,19 +19,40 @@ TeddyBear'sRoom/
 ├── CLAUDE.md                 # 본 파일
 ├── claudedocs/
 │   └── subscription_standard.md  # 구독 비즈니스 로직
-└── frontend/
+└── web/                      # Full-stack Next.js App
     ├── prisma/
-    │   ├── schema.prisma     # DB 스키마 (9개 모델)
+    │   ├── schema.prisma     # DB 스키마 (20+ 모델)
     │   └── migrations/       # Migration 히스토리
     ├── src/
     │   ├── app/
-    │   │   ├── api/          # ✅ Backend API (보존)
+    │   │   ├── api/          # Backend API
     │   │   │   ├── products/
     │   │   │   ├── orders/
     │   │   │   └── users/
-    │   │   ├── layout.tsx    # 🆕 최소 레이아웃
-    │   │   ├── page.tsx      # 🆕 최소 홈페이지
-    │   │   └── globals.css   # 🆕 최소 CSS
+    │   │   ├── (auth)/       # Auth 라우트 그룹
+    │   │   │   ├── login/
+    │   │   │   └── register/
+    │   │   ├── (shop)/       # Shop 라우트 그룹
+    │   │   │   ├── account/
+    │   │   │   ├── cart/
+    │   │   │   ├── checkout/
+    │   │   │   ├── orders/
+    │   │   │   ├── products/
+    │   │   │   └── wishlist/
+    │   │   ├── layout.tsx    # Root 레이아웃
+    │   │   ├── page.tsx      # Homepage
+    │   │   └── globals.css   # Tailwind 4 Design System
+    │   ├── components/
+    │   │   ├── ui/           # shadcn/ui 기반 컴포넌트
+    │   │   ├── layout/       # Header, Footer, Navigation
+    │   │   ├── auth/         # LoginForm, RegisterForm
+    │   │   ├── product/      # ProductCard, ProductGrid, Filters
+    │   │   ├── cart/         # CartItem, CartSummary
+    │   │   └── checkout/     # Shipping, Payment, Summary
+    │   ├── stores/           # Zustand 상태 관리
+    │   │   ├── cart-store.ts
+    │   │   ├── wishlist-store.ts
+    │   │   └── auth-store.ts
     │   └── lib/
     │       ├── prisma.ts     # Prisma 싱글톤
     │       └── supabase/     # Supabase 클라이언트
@@ -49,10 +70,11 @@ Auth: Supabase Auth + PASS 본인확인
 Payment: TossPayments (빌링키 정기결제)
 Deploy: Vercel
 
-# Frontend (재구현 예정)
-Framework: Next.js 16.0.4 (App Router)
-Styling: Tailwind CSS 4
-State: 미정 (Zustand 또는 기타)
+# UI Layer (✅ MVP Complete)
+Framework: Next.js 16.0.7 (App Router)
+Styling: Tailwind CSS 4 (@theme directive)
+State: Zustand 5 (cart, wishlist, auth stores)
+UI Components: shadcn/ui + Radix primitives
 ```
 
 ## Architecture Decisions
@@ -101,7 +123,7 @@ State: 미정 (Zustand 또는 기타)
 ## Development
 
 ```bash
-cd frontend
+cd web
 npm run dev      # 개발 서버 (localhost:3000)
 npm run build    # 프로덕션 빌드
 npm run lint     # ESLint 검사
@@ -112,6 +134,13 @@ npm run lint     # ESLint 검사
 - Feature branch workflow
 - 문서는 `claudedocs/`에 저장
 
+### Micro-Lessons (Learnings)
+- Zustand persist: version 변경 시 반드시 `migrate` 함수 제공 필요
+- Light Mode 가독성: muted-foreground #9C→#5C, glass-morphism 88% 불투명도 필요
+- Tailwind CSS 4: `@apply`로 custom utilities 사용 불가 → `@theme` directive로 CSS 변수 직접 정의
+- Next.js 16 + `useSearchParams()`: 반드시 Suspense boundary로 감싸야 함 (서버 컴포넌트 호환)
+- Route Groups: `(auth)`, `(shop)` 괄호 표기로 URL 영향 없이 레이아웃/로직 분리 가능
+
 ---
 
-**Last Updated**: 2025-12-05 | **Status**: Clean Slate - Frontend 재구현 대기
+**Last Updated**: 2025-12-09 | **Status**: ✅ MVP Build Complete

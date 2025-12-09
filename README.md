@@ -44,13 +44,13 @@ TeddyBear's Room은 **지뢰계(Jirai-kei) 감성**의 프라이빗 셀프케어
 ```
 TeddyBear'sRoom/
 ├── CLAUDE.md           # Claude Code 개발 가이드
-├── claudedocs/         # 전략/기획/기술 문서 (13개)
-└── frontend/           # Next.js 16 애플리케이션
+├── claudedocs/         # 전략/기획/기술 문서
+└── web/                # Full-stack Next.js 16 App
     ├── prisma/         # DB 스키마 & 마이그레이션
     └── src/
-        ├── app/        # App Router 페이지
-        ├── components/ # 재사용 컴포넌트
-        ├── lib/        # 유틸리티 & Supabase 클라이언트
+        ├── app/        # App Router (pages + API)
+        ├── components/ # UI 컴포넌트 (재구현 예정)
+        ├── lib/        # Prisma & Supabase 클라이언트
         └── store/      # Zustand 상태 관리
 ```
 
@@ -77,7 +77,7 @@ TeddyBear'sRoom/
 ```bash
 # Clone
 git clone https://github.com/your-repo/TeddyBearsRoom.git
-cd TeddyBearsRoom/frontend
+cd TeddyBearsRoom/web
 
 # Install
 npm install
@@ -105,4 +105,4 @@ Private - All rights reserved.
 
 ---
 
-**Last Updated**: 2025-12-01 | **Status**: ✅ Production Ready
+**Last Updated**: 2025-12-08 | **Status**: 🔄 UI Rebuild in Progress
