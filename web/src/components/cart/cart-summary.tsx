@@ -197,7 +197,7 @@ export function CartSummary({
 
           {/* Inner Circle Promotion */}
           {!isInnerCircle && (
-            <div className="mt-4 p-3 rounded-lg bg-gradient-to-r from-pink-50 to-lavender-50 dark:from-pink-950/20 dark:to-lavender-950/20">
+            <div className="mt-4 p-3 rounded-lg bg-gradient-to-r from-pink-50 to-lavender-50">
               <p className="text-sm font-medium text-center">
                 🎁 이너 써클 가입 시 추가{" "}
                 <span className="text-primary font-bold">10% 할인</span>

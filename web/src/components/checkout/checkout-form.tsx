@@ -141,7 +141,7 @@ export function CheckoutForm({
 
   const handleAddressSearch = (type: "shipping" | "billing") => {
     // TODO: Integrate Daum Postcode API
-    console.log("Search address for:", type);
+    void type; // Placeholder until Daum Postcode integration
   };
 
   const canSubmit = formData.agreeTerms && formData.agreeRefund;

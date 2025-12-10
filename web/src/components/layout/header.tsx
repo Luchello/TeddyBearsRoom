@@ -6,10 +6,12 @@
 "use client";
 
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useUIStore, useCartStore } from "@/stores";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/logo";
 import {
   Sheet,
   SheetContent,
@@ -18,6 +20,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { SearchInput } from "@/components/ui/input";
+
+// ============================================================
+// Client-Only Wrapper - Prevents hydration mismatch for Radix components
+// ============================================================
+function useHydrated() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  return hydrated;
+}
 
 // Icons as inline SVGs for performance
 const MenuIcon = () => (
@@ -118,6 +131,7 @@ interface HeaderProps {
 }
 
 export function Header({ className }: HeaderProps) {
+  const isHydrated = useHydrated();
   const { isMobileMenuOpen, setMobileMenuOpen, isSearchOpen, setSearchOpen } =
     useUIStore();
   const cartItems = useCartStore((state) => state.items);
@@ -130,59 +144,66 @@ export function Header({ className }: HeaderProps) {
         className
       )}
     >
-      {/* Top Bar - Announcement */}
-      <div className="bg-primary text-primary-foreground">
-        <div className="container flex h-8 items-center justify-center text-xs sm:text-sm">
-          <span>🎁 이너 써클 가입 시 첫 구매 15% 할인</span>
-        </div>
-      </div>
-
       {/* Main Header */}
       <div className="container">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Left: Mobile Menu + Logo */}
           <div className="flex items-center gap-2">
-            {/* Mobile Menu */}
-            <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon">
-                  <MenuIcon />
-                  <span className="sr-only">메뉴 열기</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[280px]">
-                <SheetHeader>
-                  <SheetTitle>메뉴</SheetTitle>
-                </SheetHeader>
-                <nav className="flex flex-col gap-4 mt-8">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="text-lg font-medium hover:text-primary transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                  <div className="border-t pt-4 mt-4">
-                    <Link
-                      href="/auth/login"
-                      className="text-lg font-medium hover:text-primary transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      로그인
-                    </Link>
-                  </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
+            {/* Mobile Menu - Only render after hydration to prevent ID mismatch */}
+            {isHydrated ? (
+              <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild className="lg:hidden">
+                  <Button variant="ghost" size="icon">
+                    <MenuIcon />
+                    <span className="sr-only">메뉴 열기</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[280px]">
+                  <SheetHeader>
+                    <SheetTitle>메뉴</SheetTitle>
+                  </SheetHeader>
+                  <nav className="flex flex-col gap-4 mt-8">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                    <div className="border-t pt-4 mt-4">
+                      <Link
+                        href="/auth/login"
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        로그인
+                      </Link>
+                    </div>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            ) : (
+              /* SSR placeholder - same visual as trigger button */
+              <Button variant="ghost" size="icon" className="lg:hidden">
+                <MenuIcon />
+                <span className="sr-only">메뉴 열기</span>
+              </Button>
+            )}
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl font-bold tracking-tight">
-                TeddyBear&apos;s Room
-              </span>
+              <Logo width={40} height={48} className="h-10 w-auto" priority />
+              <div className="hidden sm:flex flex-col">
+                <span className="text-lg font-bold tracking-tight leading-tight">
+                  TeddyBear&apos;s Room
+                </span>
+                <span className="text-[10px] text-muted-foreground tracking-widest uppercase leading-tight">
+                  PASTEL FURRY UNIVERSE
+                </span>
+              </div>
             </Link>
           </div>
 

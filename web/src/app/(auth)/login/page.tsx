@@ -20,8 +20,6 @@ function LoginContent() {
     password: string;
     remember: boolean;
   }) => {
-    console.log("Login attempt:", data);
-
     // TODO: Implement actual login via Supabase Auth
     // const { data: authData, error } = await supabase.auth.signInWithPassword({
     //   email: data.email,

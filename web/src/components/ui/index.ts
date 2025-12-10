@@ -4,7 +4,6 @@
  */
 
 // Primitives
-export { Avatar, AvatarImage, AvatarFallback, InitialsAvatar } from "./avatar";
 export { Badge, StatusBadge, DiscountBadge, badgeVariants } from "./badge";
 export { Button, buttonVariants } from "./button";
 export {
@@ -32,23 +31,6 @@ export {
   DialogTitle,
   DialogDescription,
 } from "./dialog";
-export {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuRadioGroup,
-} from "./dropdown-menu";
 export { Input, SearchInput, PasswordInput } from "./input";
 export { Label } from "./label";
 export { RadioGroup, RadioGroupItem, RadioCard } from "./radio-group";

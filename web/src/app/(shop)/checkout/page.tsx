@@ -23,9 +23,8 @@ export default function CheckoutPage() {
   const isInnerCircle = false;
 
   const handleCheckoutSubmit = async (data: unknown) => {
-    console.log("Checkout data:", data);
-
     // TODO: Implement actual checkout via TossPayments
+    void data; // Used in TossPayments integration
     // 1. Create order in database
     // 2. Initialize TossPayments SDK
     // 3. Process payment

@@ -24,8 +24,6 @@ function RegisterContent() {
     agreePrivacy: boolean;
     agreeMarketing: boolean;
   }) => {
-    console.log("Register attempt:", data);
-
     // TODO: Implement actual registration via Supabase Auth
     // 1. Create user in Supabase Auth
     // 2. Store additional user data in users table

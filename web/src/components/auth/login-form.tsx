@@ -43,7 +43,7 @@ export function LoginForm({ className, onSubmit, redirectUrl }: LoginFormProps) 
 
   const handleSocialLogin = (provider: "kakao" | "naver" | "google") => {
     // TODO: Implement social login via Supabase
-    console.log("Social login:", provider);
+    void provider; // Placeholder until implementation
   };
 
   return (

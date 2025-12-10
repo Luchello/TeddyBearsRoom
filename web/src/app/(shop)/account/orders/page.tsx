@@ -151,24 +151,6 @@ function getOrderStatusBadge(status: string) {
   }
 }
 
-function getOrderStatusText(status: string) {
-  switch (status) {
-    case "PENDING":
-      return "결제 대기";
-    case "PAID":
-      return "결제 완료";
-    case "PREPARING":
-      return "상품 준비중";
-    case "SHIPPED":
-      return "배송중";
-    case "DELIVERED":
-      return "배송 완료";
-    case "CANCELLED":
-      return "취소됨";
-    default:
-      return status;
-  }
-}
 
 function OrderSkeleton() {
   return (

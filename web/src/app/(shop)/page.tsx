@@ -1,333 +1,271 @@
 /**
  * Homepage
  * TeddyBear's Room - "Soft Outside, Wild Inside"
- * 지뢰계 감성 프라이빗 셀프케어
+ * Premium Pastel Aesthetic - Matching Live Site
  */
 
+"use client";
+
+import { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ProductsSection } from "./products-section";
+import { HeroCircle } from "./hero-circle";
 
 // ============================================================
-// HERO SECTION - "Soft Outside, Wild Inside"
+// STAR ICON - React State-based fallback (prevents DOM manipulation)
+// ============================================================
+const StarIcon = memo(function StarIcon() {
+  const [useFallback, setUseFallback] = useState(false);
+
+  if (useFallback) {
+    return <span className="text-lg text-[#FFD700]">★</span>;
+  }
+
+  return (
+    <Image
+      src="/star.svg"
+      alt=""
+      width={24}
+      height={24}
+      className="w-6 h-6"
+      onError={() => setUseFallback(true)}
+    />
+  );
+});
+
+// ============================================================
+// SPARKLE ICON - React State-based fallback
+// ============================================================
+const SparkleIcon = memo(function SparkleIcon() {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return null; // Hide on error
+  }
+
+  return (
+    <Image
+      src="/sparkle.svg"
+      alt=""
+      width={40}
+      height={40}
+      className="inline-block w-8 h-8 sm:w-10 sm:h-10"
+      onError={() => setHasError(true)}
+    />
+  );
+});
+
+// ============================================================
+// HERO SECTION - Premium Pastel Luxury
 // ============================================================
 function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-pink-50 via-beige-50 to-lavender-50">
-      {/* Decorative Background Elements */}
+    <section className="relative min-h-[95vh] flex items-center overflow-hidden">
+      {/* Multi-layer Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#FFFBF5] via-[#FFE8EE] to-[#F3E8FF]" />
+
+      {/* Decorative Orbs - Enhanced Pastel Glow */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-[10%] w-72 h-72 rounded-full bg-pink-200/40 blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-[10%] w-96 h-96 rounded-full bg-lavender-200/40 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-beige-200/30 blur-3xl" />
-        {/* Floating decorations */}
-        <span className="absolute top-[15%] left-[20%] text-4xl animate-bounce opacity-40" style={{ animationDelay: '0.5s' }}>♡</span>
-        <span className="absolute top-[25%] right-[15%] text-3xl animate-bounce opacity-30" style={{ animationDelay: '1s' }}>✧</span>
-        <span className="absolute bottom-[30%] left-[10%] text-2xl animate-bounce opacity-35" style={{ animationDelay: '1.5s' }}>🎀</span>
-        <span className="absolute bottom-[20%] right-[25%] text-3xl animate-bounce opacity-30" style={{ animationDelay: '2s' }}>☆</span>
+        <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-[#FFD6E0] opacity-40 blur-[100px]" />
+        <div className="absolute bottom-[10%] right-[5%] w-[500px] h-[500px] rounded-full bg-[#E8D5F2] opacity-50 blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#FFF0F3] opacity-60 blur-[80px]" />
+
+        {/* Floating Decorations - Refined */}
+        <span className="absolute top-[12%] left-[15%] text-5xl opacity-20 animate-pulse" style={{ animationDuration: '4s' }}>♡</span>
+        <span className="absolute top-[20%] right-[12%] text-4xl opacity-15 animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}>✧</span>
+        <span className="absolute bottom-[25%] left-[8%] text-3xl opacity-20 animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }}>🎀</span>
+        <span className="absolute bottom-[15%] right-[20%] text-4xl opacity-15 animate-pulse" style={{ animationDuration: '4.5s', animationDelay: '0.5s' }}>☆</span>
+        <span className="absolute top-[40%] right-[8%] text-3xl opacity-10 animate-pulse" style={{ animationDuration: '5.5s', animationDelay: '1.5s' }}>♡</span>
       </div>
 
-      <div className="container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="text-center lg:text-left">
-            <Badge className="mb-6 bg-pink-100 text-pink-600 border-pink-200 px-4 py-1.5">
-              ✧ TBR Universe Collection ✧
-            </Badge>
+      <div className="container relative z-10 px-6 sm:px-8 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Content - Premium Typography */}
+          <div className="text-center lg:text-left space-y-8">
+            {/* Premium Badge */}
+            <div className="inline-flex">
+              <Badge className="bg-white/80 backdrop-blur-sm text-[#E8879C] border border-[#FFD6E0] px-5 py-2 text-sm font-medium shadow-lg">
+                <span className="mr-2 opacity-70">✧</span>
+                TBR Universe Collection
+                <span className="ml-2 opacity-70">✧</span>
+              </Badge>
+            </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
-              <span className="block text-foreground">Soft Outside,</span>
-              <span className="block bg-gradient-to-r from-pink-500 via-lavender-500 to-mint-500 bg-clip-text text-transparent">
-                Wild Inside.
-              </span>
-            </h1>
+            {/* Headline - Luxury Typography */}
+            <div className="space-y-2">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+                <span className="block text-[#4A4A4A]">Soft Outside,</span>
+                <span className="flex items-center gap-3 bg-gradient-to-r from-[#FF8FAB] via-[#C9A8E2] to-[#8BD4C0] bg-clip-text text-transparent">
+                  Wild Inside.
+                  <SparkleIcon />
+                </span>
+              </h1>
+            </div>
 
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
+            {/* Subtitle - Refined */}
+            <p className="text-lg sm:text-xl text-[#6B6B6B] leading-relaxed max-w-lg mx-auto lg:mx-0 font-light">
               일상의 귀여움 뒤에 숨겨진 당신만의 본능.
               <br />
-              지뢰계 감성 프라이빗 셀프케어를 경험하세요.
+              <span className="text-[#E8879C]">파스텔 무드</span> 프라이빗 셀프케어를 경험하세요.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Button size="lg" className="bg-pink-500 hover:bg-pink-600 text-white px-8" asChild>
-                <Link href="/products" className="flex items-center gap-2">
+            {/* CTA Buttons - Premium */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#FFB5C5] to-[#E8A8C8] hover:from-[#FFA5B8] hover:to-[#D898B8] text-white px-10 py-6 text-base shadow-lg shadow-pink-200/50 border-0 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-pink-300/50 hover:-translate-y-1"
+                asChild
+              >
+                <Link href="/products" className="flex items-center gap-3">
                   Explore Collection
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-pink-200 hover:bg-pink-50" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-[#E8D5F2] hover:bg-[#F3E8FF]/50 text-[#8B7AA8] px-10 py-6 text-base rounded-2xl transition-all duration-300 hover:-translate-y-1 bg-white/50 backdrop-blur-sm"
+                asChild
+              >
                 <Link href="/about">Our Story</Link>
               </Button>
             </div>
           </div>
 
-          {/* Right Visual - Interactive Cards */}
+          {/* Right Visual - Theme-Aware Interactive Element */}
           <div className="relative hidden lg:flex items-center justify-center">
-            <div className="relative w-80 h-80">
-              {/* Main Circle */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-pink-100 to-lavender-100 border border-pink-200/50 flex items-center justify-center shadow-xl">
-                <div className="text-center">
-                  <div className="text-6xl mb-2">🧸</div>
-                  <span className="text-sm text-pink-600 font-medium">Touch Me</span>
-                </div>
-              </div>
-              {/* Orbiting badge */}
-              <div className="absolute -top-4 -right-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                Enter The Void ✧
-              </div>
-            </div>
+            <HeroCircle />
           </div>
         </div>
       </div>
+
+      {/* Bottom Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
     </section>
   );
 }
 
 // ============================================================
-// CURATED PLEASURE - PRODUCT CARDS SECTION
-// ============================================================
-function ProductsSection() {
-  const products = [
-    {
-      id: 1,
-      name: "파스텔 드림 컬렉션 - 소프트 터치",
-      category: "토이",
-      price: 39000,
-      originalPrice: 49000,
-      badges: ["NEW", "BEST"],
-      discount: 20,
-      rating: 5,
-      image: "/placeholder-product.jpg",
-    },
-    {
-      id: 2,
-      name: "코지 나이트 아로마 캔들 세트",
-      category: "무드",
-      price: 28000,
-      badges: ["NEW"],
-      rating: 5,
-      image: "/placeholder-product.jpg",
-    },
-    {
-      id: 3,
-      name: "실크 터치 마사지 오일",
-      category: "케어",
-      price: 32000,
-      originalPrice: 38000,
-      badges: ["BEST"],
-      discount: 16,
-      rating: 5,
-      image: "/placeholder-product.jpg",
-    },
-    {
-      id: 4,
-      name: "베어 허그 쿠션 세트",
-      category: "라이프",
-      price: 45000,
-      rating: 5,
-      image: "/placeholder-product.jpg",
-    },
-  ];
-
-  return (
-    <section className="py-20 bg-white">
-      <div className="container">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2">Curated Pleasure</h2>
-            <p className="text-muted-foreground">
-              엄선된 아이템으로 당신의 취향을 발견하세요.
-              <br className="hidden sm:block" />
-              귀여움 속에 숨겨진 기능을 탐험해보세요.
-            </p>
-          </div>
-          <Link
-            href="/products"
-            className="flex items-center gap-2 text-pink-600 hover:text-pink-700 font-medium group"
-          >
-            View All Products
-            <svg
-              width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-              className="group-hover:translate-x-1 transition-transform"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </Link>
-        </div>
-
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// Product Card Component
-function ProductCard({ product }: { product: {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  originalPrice?: number;
-  badges?: string[];
-  discount?: number;
-  rating: number;
-  image: string;
-}}) {
-  return (
-    <div className="group">
-      {/* Image Container */}
-      <Link href={`/products/${product.id}`} className="block relative aspect-square mb-3 rounded-2xl overflow-hidden bg-gradient-to-br from-pink-50 to-beige-50 border border-pink-100">
-        {/* Placeholder for product image */}
-        <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-30">
-          🧸
-        </div>
-
-        {/* Badges */}
-        {product.badges && product.badges.length > 0 && (
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-            {product.badges.map((badge) => (
-              <span
-                key={badge}
-                className={`px-2 py-0.5 text-xs font-medium rounded-full ${
-                  badge === 'NEW' ? 'bg-mint-500 text-white' :
-                  badge === 'BEST' ? 'bg-pink-500 text-white' :
-                  'bg-gray-900 text-white'
-                }`}
-              >
-                {badge}
-              </span>
-            ))}
-            {product.discount && (
-              <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-red-500 text-white">
-                -{product.discount}%
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Wishlist Button */}
-        <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-pink-500">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-        </button>
-
-        {/* Quick View Button */}
-        <button className="absolute bottom-3 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white">
-          Quick View
-        </button>
-      </Link>
-
-      {/* Product Info */}
-      <div className="px-1">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-xs text-muted-foreground">{product.category}</span>
-          <div className="flex gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <span key={i} className="text-xs text-yellow-400">★</span>
-            ))}
-          </div>
-        </div>
-
-        <Link href={`/products/${product.id}`}>
-          <h3 className="font-medium text-sm mb-2 line-clamp-2 hover:text-pink-600 transition-colors">
-            {product.name}
-          </h3>
-        </Link>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-baseline gap-2">
-            <span className="font-bold">{product.price.toLocaleString()}</span>
-            {product.originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                {product.originalPrice.toLocaleString()}
-              </span>
-            )}
-          </div>
-          <button className="w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 flex items-center justify-center transition-colors">
-            <span className="text-pink-600 font-medium">+</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================
-// BECOME A ROOMMATE - SUBSCRIPTION SECTION
+// ROOMMATE SECTION - Matching Live Site Layout
 // ============================================================
 function RoommateSection() {
   return (
-    <section className="py-20 bg-gradient-to-br from-pink-50 via-white to-lavender-50">
-      <div className="container">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
-            <div className="inline-flex items-center gap-2 mb-4">
-              <span className="text-2xl">🏠</span>
-            </div>
+    <section className="py-28 relative overflow-hidden">
+      {/* Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#FFFBF8] via-[#FFF5F7] to-[#F3E8FF]" />
 
-            <h2 className="text-3xl sm:text-4xl font-bold mb-2">
-              Become a
-            </h2>
-            <h2 className="text-3xl sm:text-4xl font-bold text-pink-500 mb-6">
-              Roommate
-            </h2>
+      {/* Decorative Orbs */}
+      <div className="absolute top-[10%] right-[10%] w-[400px] h-[400px] bg-[#E8D5F2] rounded-full blur-[120px] opacity-40" />
+      <div className="absolute bottom-[10%] left-[10%] w-[350px] h-[350px] bg-[#FFD6E0] rounded-full blur-[100px] opacity-35" />
 
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              매달 도착하는 시크릿 박스.
-              <br />
-              당신의 취향을 분석해 가장 완벽한 경험을 선물합니다.
-            </p>
+      <div className="container relative z-10">
+        <div className="max-w-6xl mx-auto">
+          {/* Main Card */}
+          <div className="bg-white/90 backdrop-blur-xl rounded-[40px] p-10 sm:p-14 shadow-2xl border border-[#FFE8EE]/50 relative overflow-hidden">
+            {/* Inner Glow */}
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gradient-to-bl from-[#FFE8EE] to-transparent rounded-full blur-[60px] opacity-60" />
 
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-center gap-3">
-                <span className="w-6 h-6 rounded-full bg-mint-100 text-mint-600 flex items-center justify-center text-sm">✓</span>
-                <span>10% 상시 할인</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-6 h-6 rounded-full bg-mint-100 text-mint-600 flex items-center justify-center text-sm">✓</span>
-                <span>1% 기부 참여</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-6 h-6 rounded-full bg-mint-100 text-mint-600 flex items-center justify-center text-sm">✓</span>
-                <span>무료 배송</span>
-              </li>
-            </ul>
-
-            <Button className="bg-pink-500 hover:bg-pink-600 text-white px-6" asChild>
-              <Link href="/subscribe">
-                Roommate 되기 🏠
-              </Link>
-            </Button>
-          </div>
-
-          {/* Right Visual */}
-          <div className="relative flex items-center justify-center">
-            <div className="relative">
-              {/* Mystery Box Card */}
-              <div className="bg-white rounded-3xl shadow-xl p-8 border border-pink-100">
-                <div className="text-center mb-4">
-                  <span className="text-6xl">🎁</span>
+            <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div className="space-y-8">
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FFE8EE] to-[#FFD6E0] flex items-center justify-center shadow-lg">
+                  <span className="text-2xl">🎁</span>
                 </div>
-                <p className="text-center font-medium text-pink-600">Mystery Box</p>
+
+                {/* Heading */}
+                <div>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D2D2D] leading-tight">
+                    Become a
+                    <br />
+                    <span className="bg-gradient-to-r from-[#E8879C] via-[#C9A8E2] to-[#8BD4C0] bg-clip-text text-transparent">
+                      Roommate
+                    </span>
+                  </h2>
+                </div>
+
+                {/* Description */}
+                <p className="text-[#6B6B6B] text-lg leading-relaxed">
+                  매달 도착하는 시크릿 박스.
+                  <br />
+                  당신의 취향을 분석해 가장 완벽한 경험을 선물합니다.
+                </p>
+
+                {/* Benefits List */}
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-[#4A4A4A]">
+                    <span className="w-6 h-6 rounded-full bg-gradient-to-r from-[#7DD3C0] to-[#5BC4B0] flex items-center justify-center text-white text-sm font-bold">✓</span>
+                    10% 상시 할인
+                  </li>
+                  <li className="flex items-center gap-3 text-[#4A4A4A]">
+                    <span className="w-6 h-6 rounded-full bg-gradient-to-r from-[#7DD3C0] to-[#5BC4B0] flex items-center justify-center text-white text-sm font-bold">✓</span>
+                    1% 기부 참여
+                  </li>
+                  <li className="flex items-center gap-3 text-[#4A4A4A]">
+                    <span className="w-6 h-6 rounded-full bg-gradient-to-r from-[#7DD3C0] to-[#5BC4B0] flex items-center justify-center text-white text-sm font-bold">✓</span>
+                    무료 배송
+                  </li>
+                </ul>
+
+                {/* CTA Button */}
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-[#E8879C] to-[#C9A8E2] hover:from-[#D87790] hover:to-[#B898D2] text-white px-10 py-6 text-base shadow-lg shadow-pink-200/50 border-0 rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                  asChild
+                >
+                  <Link href="/subscribe" className="flex items-center gap-2">
+                    Roommate 되기
+                    <span className="text-lg">🏠</span>
+                  </Link>
+                </Button>
               </div>
 
-              {/* Satisfaction Badge */}
-              <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-lg px-4 py-3 border border-pink-100">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">✓</span>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Satisfaction</p>
-                    <p className="text-sm font-bold text-pink-600">100% Guaranteed</p>
+              {/* Right Visual - Mystery Box */}
+              <div className="relative flex items-center justify-center">
+                <div className="relative">
+                  {/* Mystery Box Badge */}
+                  <div className="absolute -top-4 -left-4 z-20 bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-2 shadow-lg border border-[#FFE8EE]">
+                    <span className="text-2xl mr-2">🎁</span>
+                    <span className="text-sm font-semibold text-[#4A4A4A]">Mystery Box</span>
+                  </div>
+
+                  {/* Main Box Visual */}
+                  <div className="w-[280px] h-[320px] sm:w-[320px] sm:h-[360px] bg-gradient-to-br from-[#FFF5F7] to-[#FFE8EE] rounded-3xl shadow-2xl flex items-center justify-center relative overflow-hidden border border-[#FFD6E0]/30">
+                    {/* TBR Logo in Box */}
+                    <div className="relative w-32 h-32">
+                      <Image
+                        src="/logo.png"
+                        alt="TBR Mystery Box"
+                        fill
+                        sizes="128px"
+                        className="object-contain drop-shadow-lg"
+                        priority={false}
+                      />
+                    </div>
+
+                    {/* Decorative Elements */}
+                    <div className="absolute top-4 right-4 text-2xl opacity-30">✧</div>
+                    <div className="absolute bottom-4 left-4 text-2xl opacity-30">♡</div>
+                  </div>
+
+                  {/* Satisfaction Badge */}
+                  <div className="absolute -bottom-4 -right-4 z-20 bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-lg border border-[#E8FFF5]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-full bg-gradient-to-r from-[#7DD3C0] to-[#5BC4B0] flex items-center justify-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </span>
+                      <div>
+                        <p className="text-xs font-semibold text-[#5BC4B0]">Satisfaction</p>
+                        <p className="text-sm font-bold text-[#2D2D2D]">100% Guaranteed</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -340,13 +278,16 @@ function RoommateSection() {
 }
 
 // ============================================================
-// CUSTOMER REVIEWS SECTION
+// CUSTOMER REVIEWS - CAROUSEL WITH 4 REVIEWS
 // ============================================================
 function ReviewsSection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
   const reviews = [
     {
       id: 1,
-      content: "포장이 정말 꼼꼼하고 예뻐요! 무지박스 배송이라 프라이버시도 완벽하게 지켜지네요. 지뢰계 감성 제품들이 너무 귀여워서 방 분위기가 확 바뀌었어요 ♡",
+      content: "포장이 정말 꼼꼼하고 예뻐요! 무지박스 배송이라 프라이버시도 완벽하게 지켜지네요. 파스텔 감성 제품들이 너무 귀여워서 방 분위기가 확 바뀌었어요 ♡",
       author: "김**",
       verified: true,
       product: "베어 컴포트 세트",
@@ -371,6 +312,15 @@ function ReviewsSection() {
       date: "2025.11.08",
       emoji: "🐻",
     },
+    {
+      id: 4,
+      content: "디자인이 너무 예쁘고 품질도 좋아요. 다크모드에서 보는 네온 디자인이 진짜 감각적이에요! 친구들한테도 추천했어요 💖",
+      author: "최**",
+      verified: true,
+      product: "네온 무드 컬렉션",
+      date: "2025.11.05",
+      emoji: "🐱",
+    },
   ];
 
   const stats = [
@@ -380,124 +330,154 @@ function ReviewsSection() {
     { icon: "🔄", value: "95%", label: "재구매율" },
   ];
 
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % reviews.length);
+  }, [reviews.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  }, [reviews.length]);
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 5000);
+  };
+
+  // Auto-play carousel
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const interval = setInterval(nextSlide, 4000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, nextSlide]);
+
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-pink-50 relative overflow-hidden">
-      {/* Floating decorations */}
-      <span className="absolute top-[10%] left-[5%] text-3xl opacity-20">♡</span>
-      <span className="absolute top-[20%] right-[10%] text-2xl opacity-15">✧</span>
-      <span className="absolute bottom-[15%] left-[15%] text-3xl opacity-20">🎀</span>
-      <span className="absolute bottom-[25%] right-[5%] text-2xl opacity-15">☆</span>
+    <section className="py-28 relative overflow-hidden">
+      {/* Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-[#FFFBF8] to-[#FFF5F7]" />
+      <div className="absolute top-[20%] left-[5%] w-[300px] h-[300px] bg-[#FFE8EE] rounded-full blur-[100px] opacity-30" />
+      <div className="absolute bottom-[20%] right-[5%] w-[400px] h-[400px] bg-[#F3E8FF] rounded-full blur-[120px] opacity-30" />
+
+      {/* Floating Decorations */}
+      <span className="absolute top-[8%] left-[10%] text-4xl opacity-10">♡</span>
+      <span className="absolute top-[15%] right-[15%] text-3xl opacity-8">✧</span>
+      <span className="absolute bottom-[12%] left-[20%] text-3xl opacity-10">🎀</span>
+      <span className="absolute bottom-[20%] right-[10%] text-2xl opacity-8">☆</span>
 
       <div className="container relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-2 mb-4">
+        {/* Section Header - Premium */}
+        <div className="text-center mb-16 space-y-4">
+          <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-full px-5 py-2 shadow-sm border border-[#FFE8EE]">
             <span className="text-xl opacity-60">✧</span>
             <span className="text-2xl">💌</span>
             <span className="text-xl opacity-60">✧</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-            고객님들의 솔직한 후기 ♡
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#2D2D2D]">
+            고객님들의 솔직한 후기 <span className="text-[#FFB5C5]">♡</span>
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-[#6B6B6B] text-lg">
             TeddyBear&apos;s Room과 함께한 분들의 이야기를 들어보세요 ✧
           </p>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {reviews.map((review) => (
+        {/* Carousel Container */}
+        <div className="relative mb-16">
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-[#FFE8EE] flex items-center justify-center hover:bg-white transition-all hover:scale-110"
+            aria-label="Previous review"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A4A4A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-[#FFE8EE] flex items-center justify-center hover:bg-white transition-all hover:scale-110"
+            aria-label="Next review"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A4A4A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+
+          {/* Reviews Carousel */}
+          <div className="overflow-hidden px-8">
             <div
-              key={review.id}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-pink-100 hover:shadow-md transition-shadow"
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-400">★</span>
-                ))}
-              </div>
+              {reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="w-full flex-shrink-0 px-4"
+                >
+                  <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-[#FFE8EE]/50">
+                    {/* Stars */}
+                    <div className="flex justify-center gap-1 mb-5">
+                      {[...Array(5)].map((_, i) => (
+                        <StarIcon key={i} />
+                      ))}
+                    </div>
 
-              {/* Content */}
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                &ldquo;{review.content}&rdquo;
-              </p>
+                    {/* Content */}
+                    <p className="text-[#4A4A4A] mb-6 leading-relaxed text-center text-lg">
+                      &ldquo;{review.content}&rdquo;
+                    </p>
 
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-xl">
-                  {review.emoji}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-sm">{review.author}</span>
-                    {review.verified && (
-                      <span className="text-xs text-mint-600">구매인증 ✓</span>
-                    )}
+                    {/* Author - Premium */}
+                    <div className="flex items-center justify-center gap-4 pt-4 border-t border-[#FFE8EE]">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FFE8EE] to-[#FFD6E0] flex items-center justify-center text-2xl shadow-inner">
+                        {review.emoji}
+                      </div>
+                      <div className="text-left">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-[#2D2D2D]">{review.author}</span>
+                          {review.verified && (
+                            <span className="text-xs bg-[#E8FFF5] text-[#5BC4B0] px-2 py-0.5 rounded-full font-medium">구매인증 ✓</span>
+                          )}
+                        </div>
+                        <div className="text-xs text-[#8B8B8B]">
+                          {review.product} • {review.date}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    {review.product} • {review.date}
-                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="flex justify-center gap-2 mt-8">
+            {reviews.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex
+                    ? 'bg-gradient-to-r from-[#FFB5C5] to-[#E8A8C8] w-8'
+                    : 'bg-[#E5E5E5] hover:bg-[#FFD6E0]'
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {/* Stats - Premium */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-4 text-center shadow-sm border border-pink-100"
+              className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-[#FFE8EE]/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className="text-2xl font-bold text-pink-600">{stat.value}</div>
-              <div className="text-xs text-muted-foreground">{stat.label}</div>
+              <div className="text-3xl mb-2">{stat.icon}</div>
+              <div className="text-2xl font-bold text-[#2D2D2D] mb-1">{stat.value}</div>
+              <div className="text-sm text-[#8B8B8B]">{stat.label}</div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ============================================================
-// NEWSLETTER SECTION
-// ============================================================
-function NewsletterSection() {
-  return (
-    <section className="py-16 bg-gradient-to-r from-pink-100 via-lavender-100 to-mint-100">
-      <div className="container">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-pink-400">💕</span>
-            <span className="text-2xl">📧</span>
-          </div>
-
-          <h3 className="text-xl sm:text-2xl font-bold mb-3">
-            Join the TBR Universe
-          </h3>
-          <p className="text-sm text-muted-foreground mb-6">
-            신상품 출시 알림, 시크릿 할인 코드, 그리고 특별한 초대장을 보내드려요 ✨
-          </p>
-
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <div className="relative flex-1">
-              <input
-                type="email"
-                placeholder="이메일 주소를 입력해주세요"
-                className="w-full px-4 py-3 pl-10 rounded-full border border-pink-200 bg-white/80 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
-              />
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">📧</span>
-            </div>
-            <Button type="submit" className="bg-pink-500 hover:bg-pink-600 text-white rounded-full px-6">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-              </svg>
-              구독하기
-            </Button>
-          </form>
         </div>
       </div>
     </section>
@@ -513,8 +493,6 @@ export default function HomePage() {
       <HeroSection />
       <ProductsSection />
       <RoommateSection />
-      <ReviewsSection />
-      <NewsletterSection />
     </>
   );
 }

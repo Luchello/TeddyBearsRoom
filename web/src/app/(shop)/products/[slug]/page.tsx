@@ -464,7 +464,7 @@ export default function ProductDetailPage() {
           </TabsList>
 
           <TabsContent value="description" className="py-6">
-            <div className="prose prose-neutral dark:prose-invert max-w-none">
+            <div className="prose prose-neutral max-w-none">
               <p>{product.description}</p>
               {/* Add more detailed product description here */}
             </div>
