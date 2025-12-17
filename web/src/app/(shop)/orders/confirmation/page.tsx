@@ -60,11 +60,11 @@ const mockOrder = {
 
 function OrderConfirmationContent() {
   const searchParams = useSearchParams();
-  // orderId can be used to fetch actual order data
-  const _orderId = searchParams.get("orderId");
+  const orderId = searchParams.get("orderId");
 
   // In real implementation, fetch order using orderId
-  const order = mockOrder;
+  // TODO: Replace mockOrder with API call: GET /api/orders/${orderId}
+  const order = orderId ? mockOrder : mockOrder; // orderId used for future API call
 
   return (
     <div className="container py-8 md:py-12">

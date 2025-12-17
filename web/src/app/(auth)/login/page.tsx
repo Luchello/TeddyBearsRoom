@@ -15,15 +15,15 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
 
-  const handleLogin = async (data: {
+  const handleLogin = async (_credentials: {
     email: string;
     password: string;
     remember: boolean;
   }) => {
     // TODO: Implement actual login via Supabase Auth
     // const { data: authData, error } = await supabase.auth.signInWithPassword({
-    //   email: data.email,
-    //   password: data.password,
+    //   email: _credentials.email,
+    //   password: _credentials.password,
     // });
 
     // Mock login success

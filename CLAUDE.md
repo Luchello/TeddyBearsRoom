@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-프로젝트 가이드 for Claude Code
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-**TeddyBear's Room** - 성인용품 E-commerce 플랫폼
+**TeddyBear's Room** - 성인용품 E-commerce 플랫폼 (Korean Adult Products E-commerce)
 
 | 항목 | 내용 |
 |------|------|
@@ -12,135 +12,115 @@
 | **Stack** | Next.js 16 + Supabase + Prisma 7 |
 | **Status** | ✅ MVP Complete (2025-12-09) |
 
-## Repository Structure
+## Commands
 
-```
-TeddyBear'sRoom/
-├── CLAUDE.md                 # 본 파일
-├── claudedocs/
-│   └── subscription_standard.md  # 구독 비즈니스 로직
-└── web/                      # Full-stack Next.js App
-    ├── prisma/
-    │   ├── schema.prisma     # DB 스키마 (20+ 모델)
-    │   └── migrations/       # Migration 히스토리
-    ├── src/
-    │   ├── app/
-    │   │   ├── api/          # Backend API
-    │   │   │   ├── products/
-    │   │   │   ├── orders/
-    │   │   │   └── users/
-    │   │   ├── (auth)/       # Auth 라우트 그룹
-    │   │   │   ├── login/
-    │   │   │   └── register/
-    │   │   ├── (shop)/       # Shop 라우트 그룹
-    │   │   │   ├── account/
-    │   │   │   ├── cart/
-    │   │   │   ├── checkout/
-    │   │   │   ├── orders/
-    │   │   │   ├── products/
-    │   │   │   └── wishlist/
-    │   │   ├── layout.tsx    # Root 레이아웃
-    │   │   ├── page.tsx      # Homepage
-    │   │   └── globals.css   # Tailwind 4 Design System
-    │   ├── components/
-    │   │   ├── ui/           # shadcn/ui 기반 컴포넌트
-    │   │   ├── layout/       # Header, Footer, Navigation
-    │   │   ├── auth/         # LoginForm, RegisterForm
-    │   │   ├── product/      # ProductCard, ProductGrid, Filters
-    │   │   ├── cart/         # CartItem, CartSummary
-    │   │   └── checkout/     # Shipping, Payment, Summary
-    │   ├── stores/           # Zustand 상태 관리
-    │   │   ├── cart-store.ts
-    │   │   ├── wishlist-store.ts
-    │   │   └── auth-store.ts
-    │   └── lib/
-    │       ├── prisma.ts     # Prisma 싱글톤
-    │       └── supabase/     # Supabase 클라이언트
-    ├── middleware.ts         # Auth 미들웨어
-    └── .env.local            # 환경변수
+```bash
+# Development (run from /web directory)
+cd web
+npm run dev          # Start dev server (localhost:3000)
+npm run build        # Production build (includes prisma generate)
+npm run lint         # ESLint check
+
+# Prisma (run from /web directory)
+npx prisma generate  # Generate Prisma Client after schema changes
+npx prisma db push   # Push schema changes without migration
+npx prisma migrate dev --name <name>  # Create migration
+npx prisma studio    # Open DB GUI
+npx tsx prisma/seed.ts  # Run seed script
 ```
 
-## Tech Stack
+## Architecture
 
-```yaml
-# Backend (보존됨)
-Database: Supabase PostgreSQL (bjnjbbdcwkooswvexiuh)
-ORM: Prisma 7 with @prisma/adapter-pg
-Auth: Supabase Auth + PASS 본인확인
-Payment: TossPayments (빌링키 정기결제)
-Deploy: Vercel
-
-# UI Layer (✅ MVP Complete)
-Framework: Next.js 16.0.7 (App Router)
-Styling: Tailwind CSS 4 (@theme directive)
-State: Zustand 5 (cart, wishlist, auth stores)
-UI Components: shadcn/ui + Radix primitives
+### Tech Stack
+```
+┌──────────────────────────────────────────────────────────┐
+│  Frontend: Next.js 16 (App Router) + Tailwind CSS 4     │
+│  State: Zustand 5 (cart, wishlist, auth stores)         │
+│  UI: shadcn/ui + Radix primitives                       │
+├──────────────────────────────────────────────────────────┤
+│  Backend: Next.js API Routes (/app/api/)                │
+│  ORM: Prisma 7 with @prisma/adapter-pg                  │
+│  Database: Supabase PostgreSQL                          │
+│  Auth: Supabase Auth + PASS 본인확인                    │
+│  Payment: TossPayments (billing key)                    │
+└──────────────────────────────────────────────────────────┘
 ```
 
-## Architecture Decisions
+### Database Schema (Dual-Layer)
 
-### 1. 보안: pgcrypto 암호화
-- 신체정보 DB 레벨 암호화
-- 클라이언트에서만 복호화
+Prisma schema (`web/prisma/schema.prisma`) has two distinct model groups:
 
-### 2. 성인인증: PASS 본인확인
-- SKT CI/DI 기반 실명 인증
-- 회원가입 시 1회 인증
+**1. E-commerce Models (PascalCase)** - Core shop functionality
+- `Profile`, `Product`, `CartItem`, `WishlistItem`
+- `Order`, `OrderItem`, `Subscription`
+- `DonationOrg`, `DonationVote`
 
-### 3. 결제: TossPayments
-- 구독: 빌링키(Billing Key) 정기결제
-- 일반: 카드/계좌이체/간편결제
-- 스케줄: Vercel Cron → TossPayments API
+**2. Legacy/Analytics Models (snake_case, `ts_` prefix)** - Pre-existing Supabase tables
+- `body_measurements` - RLS-protected encrypted body data
+- `ts_products`, `ts_orders` - Analytics/automation tables
+- `ts_inventory`, `ts_wholesalers` - Supply chain management
 
-### 4. 사이즈 추천: Pass/Fail 로직
-- 복잡한 점수제 X → 범위 기반 단순 매칭
-- OK / TIGHT·LOOSE / NO
+⚠️ **Important**: `ts_*` tables are managed externally. Focus new features on PascalCase models.
+
+### State Management Pattern
+
+Zustand stores with localStorage persistence (`web/src/stores/`):
+- `cart-store.ts` - Cart items, coupon, totals calculation
+- `wishlist-store.ts` - Wishlist items
+- `filter-store.ts` - Product filtering state
+
+**Key Pattern**: Stores use `version` + `migrate` function for persistence schema changes.
+
+### Route Groups (Next.js App Router)
+
+```
+app/
+├── (auth)/     # Auth pages: /login, /register
+├── (shop)/     # Shop pages: /products, /cart, /checkout
+└── api/        # API routes
+```
+
+Route groups `(name)` organize code without affecting URLs.
+
+## Key Integrations
+
+| System | Purpose | Notes |
+|--------|---------|-------|
+| **Supabase Auth** | Authentication | + PASS 본인확인 for age verification |
+| **TossPayments** | Payments | Billing key for subscriptions, standard payments |
+| **pgcrypto** | Encryption | Body measurements encrypted at DB level |
 
 ## Business Context
 
-### 이너 서클 (Inner Circle) 구독 시스템
+### Inner Circle (이너 서클) Subscription
 
 ```
-이너 서클 = 구독 프로그램 브랜드
-└── Roommate 🏠 = 구독 상품 (9,900원/월)
-    ├── 10% 상시 할인
-    ├── 1% 기부 참여
-    └── 3만원↑ 무료배송
+Inner Circle = 구독 프로그램 브랜드
+└── Roommate 🏠 = 9,900원/월
+    ├── 10% discount (INNER_CIRCLE_DISCOUNT_RATE = 0.1)
+    ├── Free shipping ≥ 30,000원 (vs 50,000원 regular)
+    └── 1% donation participation
 ```
 
-> 📌 상세: `claudedocs/subscription_standard.md`
+Constants in `web/src/types/cart.ts`:
+- `FREE_SHIPPING_THRESHOLD = 50000`
+- `INNER_CIRCLE_FREE_SHIPPING_THRESHOLD = 30000`
 
-## API Reference
+> 📌 Full details: `claudedocs/subscription_standard.md`
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/products` | GET | 상품 목록 |
-| `/api/products/[id]` | GET | 상품 상세 |
-| `/api/orders` | POST | 주문 생성 |
-| `/api/users/me` | GET | 내 정보 |
-| `/api/users/me/measurements` | GET/POST | 신체 정보 |
-
-## Development
+## Environment Variables
 
 ```bash
-cd web
-npm run dev      # 개발 서버 (localhost:3000)
-npm run build    # 프로덕션 빌드
-npm run lint     # ESLint 검사
+# Required in web/.env.local
+DATABASE_URL=        # Supabase pooler (port 6543)
+DIRECT_URL=          # Supabase direct (port 5432, for migrations)
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-### 규칙
-- TypeScript strict mode
-- Feature branch workflow
-- 문서는 `claudedocs/`에 저장
+## Micro-Lessons
 
-### Micro-Lessons (Learnings)
-- Zustand persist: version 변경 시 반드시 `migrate` 함수 제공 필요
-- Light Mode 가독성: muted-foreground #9C→#5C, glass-morphism 88% 불투명도 필요
-- Tailwind CSS 4: `@apply`로 custom utilities 사용 불가 → `@theme` directive로 CSS 변수 직접 정의
-- Next.js 16 + `useSearchParams()`: 반드시 Suspense boundary로 감싸야 함 (서버 컴포넌트 호환)
-- Route Groups: `(auth)`, `(shop)` 괄호 표기로 URL 영향 없이 레이아웃/로직 분리 가능
-
----
-
-**Last Updated**: 2025-12-09 | **Status**: ✅ MVP Build Complete
+- **Zustand persist**: Version 변경 시 반드시 `migrate` 함수 제공
+- **Tailwind CSS 4**: `@apply` 불가 → `@theme` directive로 CSS 변수 정의
+- **Next.js 16 + `useSearchParams()`**: Suspense boundary 필수
+- **Prisma 7**: `@prisma/adapter-pg` 사용, Pool 싱글톤 패턴 (`lib/prisma.ts`)

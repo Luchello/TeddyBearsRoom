@@ -6,7 +6,6 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useUIStore, useCartStore } from "@/stores";
@@ -23,13 +22,15 @@ import { SearchInput } from "@/components/ui/input";
 
 // ============================================================
 // Client-Only Wrapper - Prevents hydration mismatch for Radix components
+// Uses useSyncExternalStore pattern to avoid ESLint set-state-in-effect warning
 // ============================================================
+const emptySubscribe = () => () => {};
 function useHydrated() {
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-  return hydrated;
+  return React.useSyncExternalStore(
+    emptySubscribe,
+    () => true,  // Client: always hydrated
+    () => false  // Server: not hydrated
+  );
 }
 
 // Icons as inline SVGs for performance

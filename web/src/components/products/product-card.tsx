@@ -59,7 +59,27 @@ interface ProductCardProps {
   showQuickActions?: boolean;
 }
 
-export function ProductCard({
+/**
+ * Custom comparison function for React.memo
+ * Re-render only when relevant props change
+ */
+function arePropsEqual(
+  prevProps: ProductCardProps,
+  nextProps: ProductCardProps
+): boolean {
+  return (
+    prevProps.product.id === nextProps.product.id &&
+    prevProps.product.price === nextProps.product.price &&
+    prevProps.product.compareAtPrice === nextProps.product.compareAtPrice &&
+    prevProps.product.isNew === nextProps.product.isNew &&
+    prevProps.product.isSoldOut === nextProps.product.isSoldOut &&
+    prevProps.isWishlisted === nextProps.isWishlisted &&
+    prevProps.showQuickActions === nextProps.showQuickActions &&
+    prevProps.className === nextProps.className
+  );
+}
+
+function ProductCardComponent({
   product,
   className,
   onAddToCart,
@@ -241,4 +261,11 @@ export function ProductCard({
   );
 }
 
+/**
+ * Memoized ProductCard component
+ * Re-renders only when relevant props change (see arePropsEqual)
+ */
+const ProductCard = React.memo(ProductCardComponent, arePropsEqual);
+
+export { ProductCard };
 export default ProductCard;

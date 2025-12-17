@@ -12,6 +12,8 @@ import type {
   AddToCartInput,
   SimpleAddToCartInput,
   AppliedCoupon,
+} from "@/types/cart";
+import {
   FREE_SHIPPING_THRESHOLD,
   INNER_CIRCLE_FREE_SHIPPING_THRESHOLD,
   INNER_CIRCLE_DISCOUNT_RATE,
@@ -208,7 +210,7 @@ export const useCartStore = create<CartStore>()(
 
         // Inner Circle discount (10%)
         const innerCircleDiscount = isInnerCircle
-          ? Math.round(subtotal * 0.1) // INNER_CIRCLE_DISCOUNT_RATE
+          ? Math.round(subtotal * INNER_CIRCLE_DISCOUNT_RATE)
           : 0;
 
         // Coupon discount
@@ -232,8 +234,8 @@ export const useCartStore = create<CartStore>()(
 
         // Shipping calculation
         const freeShippingThreshold = isInnerCircle
-          ? 30000 // INNER_CIRCLE_FREE_SHIPPING_THRESHOLD
-          : 50000; // FREE_SHIPPING_THRESHOLD
+          ? INNER_CIRCLE_FREE_SHIPPING_THRESHOLD
+          : FREE_SHIPPING_THRESHOLD;
 
         const afterDiscount = subtotal - innerCircleDiscount - couponDiscount;
         const isFreeShipping =

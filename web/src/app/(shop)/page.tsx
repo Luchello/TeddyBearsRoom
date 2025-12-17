@@ -492,6 +492,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <ProductsSection />
+      <ReviewsSection />
       <RoommateSection />
     </>
   );

@@ -15,7 +15,7 @@ function RegisterContent() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
 
-  const handleRegister = async (data: {
+  const handleRegister = async (_formData: {
     email: string;
     password: string;
     name: string;
@@ -25,8 +25,8 @@ function RegisterContent() {
     agreeMarketing: boolean;
   }) => {
     // TODO: Implement actual registration via Supabase Auth
-    // 1. Create user in Supabase Auth
-    // 2. Store additional user data in users table
+    // 1. Create user in Supabase Auth (_formData.email, _formData.password)
+    // 2. Store additional user data in users table (_formData.name, _formData.phone)
     // 3. Handle adult verification result
 
     // Mock registration success

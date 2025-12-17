@@ -1,6 +1,6 @@
 // ====================================
 // TeddyBear's Room - Products API Routes
-// 상품 목록 조회 API (필터링, 정렬 기능)
+// 상품 목록 조회 API (필터링, 정렬, 페이지네이션)
 // ====================================
 //
 // 🎯 용도:
@@ -9,27 +9,29 @@
 // - 쿼리 파라미터로 동적 필터링 지원
 //
 // 📦 구조:
-// - GET 핸들러: searchParams 파싱 (category, sort, new, best)
+// - GET 핸들러: searchParams 파싱 (category, sort, new, best, page, limit)
 // - where 절 빌드: 필터 조건 (카테고리, 신상품, 베스트)
 // - orderBy 절 빌드: 정렬 옵션 (최신순, 가격 낮은순, 가격 높은순)
-// - Prisma findMany(): 조건에 맞는 상품 조회
-// - JSON 응답: success, data(상품배열), count(총 개수)
+// - Prisma findMany(): 조건에 맞는 상품 조회 (with pagination)
+// - JSON 응답: success, data, pagination 메타데이터
 //
 // 🎨 디자인:
 // - Query Parameter 기반 필터링 (URL 쿼리스트링)
 // - 다중 필터 조합 가능 (category + sort + new/best)
 // - 기본 정렬: 최신순 (createdAt desc)
-// - 기본 응답: {success, data, count} 구조
+// - 기본 페이지네이션: page=1, limit=20 (max 100)
 //
 // 🔧 주요 기능:
 // - category: "전체" 제외한 특정 카테고리만 필터
 // - sort: "price-low", "price-high", "latest" 옵션
 // - new: true이면 isNew=true 상품만 필터
 // - best: true이면 isBest=true 상품만 필터
+// - page: 페이지 번호 (1부터 시작, 기본값 1)
+// - limit: 페이지당 항목 수 (기본 20, 최대 100)
 // - 에러 처리: try-catch로 500 에러 반환
 //
 // 📝 의존성:
-// - Prisma: product.findMany() ORM
+// - Prisma: product.findMany(), product.count() ORM
 // - NextResponse: API 응답 포맷
 // - NextServer: Request 타입
 // ====================================
@@ -45,20 +47,24 @@ import prisma from "@/lib/prisma";
  * - 카테고리 필터: category 파라미터로 특정 카테고리 상품만 조회
  * - 정렬: sort 파라미터 (price-low, price-high, latest)
  * - 플래그: new=true (신상품), best=true (베스트상품)
+ * - 페이지네이션: page (기본 1), limit (기본 20, 최대 100)
  * - 조합 필터링: 모든 파라미터를 AND 조건으로 결합
  *
  * @param {Request} request - Next.js Request 객체 (URL 쿼리스트링 포함)
- * @returns {Promise<NextResponse>} JSON 응답 {success, data, count} 또는 에러 응답
+ * @returns {Promise<NextResponse>} JSON 응답 {success, data, pagination} 또는 에러 응답
  *
  * @example
- * // 기본 조회 (최신순)
+ * // 기본 조회 (최신순, 페이지 1, 20개)
  * GET /api/products
  *
- * // 카테고리 필터
- * GET /api/products?category=바디토너
+ * // 페이지네이션
+ * GET /api/products?page=2&limit=12
+ *
+ * // 카테고리 필터 + 페이지네이션
+ * GET /api/products?category=바디토너&page=1&limit=24
  *
  * // 다중 필터
- * GET /api/products?category=바디토너&sort=price-low&new=true
+ * GET /api/products?category=바디토너&sort=price-low&new=true&page=1
  *
  * // 정렬 옵션
  * GET /api/products?sort=price-high  (가격 높은순)
@@ -76,6 +82,20 @@ export async function GET(request: Request) {
     const sort = searchParams.get("sort");                   // 정렬 옵션 (price-low, price-high, latest)
     const showNew = searchParams.get("new") === "true";      // 신상품 플래그 (boolean)
     const showBest = searchParams.get("best") === "true";    // 베스트상품 플래그 (boolean)
+
+    // ──────────────────────────────────────
+    // 페이지네이션 파라미터 파싱
+    // page: 1부터 시작 (기본값 1)
+    // limit: 페이지당 항목 수 (기본 20, 최대 100)
+    // ──────────────────────────────────────
+    const DEFAULT_LIMIT = 20;
+    const MAX_LIMIT = 100;
+    const pageParam = searchParams.get("page");
+    const limitParam = searchParams.get("limit");
+
+    const page = Math.max(1, parseInt(pageParam || "1", 10) || 1);
+    const limit = Math.min(MAX_LIMIT, Math.max(1, parseInt(limitParam || String(DEFAULT_LIMIT), 10) || DEFAULT_LIMIT));
+    const skip = (page - 1) * limit;
 
     // ──────────────────────────────────────
     // where 절 빌드 (필터 조건)
@@ -127,23 +147,44 @@ export async function GET(request: Request) {
     }
 
     // ──────────────────────────────────────
-    // 데이터베이스 조회
-    // Prisma ORM으로 where/orderBy 조건에 맞는 상품 배열 조회
-    // where가 빈 객체면 모든 상품 반환
+    // 데이터베이스 조회 (병렬 실행)
+    // 1. 필터 조건에 맞는 상품 조회 (with pagination)
+    // 2. 전체 개수 조회 (페이지네이션 메타데이터용)
     // ──────────────────────────────────────
-    const products = await prisma.product.findMany({
-      where,        // 필터 조건 (category, isNew, isBest)
-      orderBy,      // 정렬 조건 (price asc/desc, createdAt desc)
-    });
+    const [products, totalCount] = await Promise.all([
+      prisma.product.findMany({
+        where,        // 필터 조건 (category, isNew, isBest)
+        orderBy,      // 정렬 조건 (price asc/desc, createdAt desc)
+        skip,         // 페이지네이션: 건너뛸 항목 수
+        take: limit,  // 페이지네이션: 가져올 항목 수
+      }),
+      prisma.product.count({ where }),  // 필터 조건에 맞는 총 상품 수
+    ]);
+
+    // ──────────────────────────────────────
+    // 페이지네이션 메타데이터 계산
+    // ──────────────────────────────────────
+    const totalPages = Math.ceil(totalCount / limit);
+    const hasNextPage = page < totalPages;
+    const hasPreviousPage = page > 1;
 
     // ──────────────────────────────────────
     // 성공 응답
-    // {success: true, data: 상품배열, count: 총 개수}
+    // {success, data, pagination} 구조
+    // 하위 호환성: count 필드 유지
     // ──────────────────────────────────────
     return NextResponse.json({
       success: true,                // API 성공 플래그
       data: products,               // 조회된 상품 배열
-      count: products.length,       // 조회된 상품 개수
+      count: products.length,       // 현재 페이지 상품 개수 (하위 호환성)
+      pagination: {
+        page,                       // 현재 페이지 번호
+        limit,                      // 페이지당 항목 수
+        totalCount,                 // 필터 조건에 맞는 전체 상품 수
+        totalPages,                 // 전체 페이지 수
+        hasNextPage,                // 다음 페이지 존재 여부
+        hasPreviousPage,            // 이전 페이지 존재 여부
+      },
     });
   } catch (error) {
     // ──────────────────────────────────────
