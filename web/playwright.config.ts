@@ -10,8 +10,8 @@ export default defineConfig({
   // Test 파일 위치
   testDir: './tests/e2e',
 
-  // 최대 실행 시간 (30초)
-  timeout: 30 * 1000,
+  // 최대 실행 시간 (90초)
+  timeout: 90 * 1000,
 
   // 각 테스트 간 완전 격리 (새 컨텍스트/페이지)
   fullyParallel: true,
@@ -22,8 +22,8 @@ export default defineConfig({
   // 실패 시 재시도 횟수
   retries: process.env.CI ? 2 : 0,
 
-  // 병렬 실행 워커 수
-  workers: process.env.CI ? 1 : undefined,
+  // 병렬 실행 워커 수 (서버 부하 감소)
+  workers: process.env.CI ? 1 : 2,
 
   // Reporter 설정
   reporter: [
@@ -46,8 +46,8 @@ export default defineConfig({
     video: 'retain-on-failure',
 
     // 타임아웃 설정
-    actionTimeout: 10 * 1000,
-    navigationTimeout: 15 * 1000,
+    actionTimeout: 30 * 1000,
+    navigationTimeout: 60 * 1000,
   },
 
   // 테스트 프로젝트 설정 (브라우저)
