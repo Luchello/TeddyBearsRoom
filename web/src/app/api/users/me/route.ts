@@ -34,8 +34,8 @@
 // ====================================
 
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import prisma from "@/lib/prisma";
+import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
 
 /**
  * 현재 사용자 프로필 조회 API 핸들러
@@ -58,21 +58,13 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: "로그인이 필요합니다." },  // 사용자 친화적 메시지
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
     // 사용자 프로필 조회 또는 자동 생성
@@ -97,31 +89,24 @@ export async function GET() {
     }
 
     // ──────────────────────────────────────
-    // 성공 응답: 프로필 정보 반환
+    // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // subscriptionTier와 points는 구독 및 포인트 시스템 포함
     // ──────────────────────────────────────
-    return NextResponse.json({
-      success: true,  // API 성공 플래그
-      data: {
-        id: profile.id,  // 사용자 ID (= Supabase auth user ID)
-        email: profile.email,  // 이메일
-        name: profile.name,  // 표시 이름
-        avatar: profile.avatar,  // 아바타 URL (선택사항)
-        subscriptionTier: profile.subscriptionTier.toLowerCase(),  // 구독 tier (none, premium 등)
-        points: profile.points,  // 누적 포인트
-        createdAt: profile.createdAt.toISOString(),  // ISO 형식 생성 날짜
-      },
+    return apiSuccess({
+      id: profile.id,  // 사용자 ID (= Supabase auth user ID)
+      email: profile.email,  // 이메일
+      name: profile.name,  // 표시 이름
+      avatar: profile.avatar,  // 아바타 URL (선택사항)
+      subscriptionTier: profile.subscriptionTier.toLowerCase(),  // 구독 tier (none, premium 등)
+      points: profile.points,  // 누적 포인트
+      createdAt: profile.createdAt.toISOString(),  // ISO 형식 생성 날짜
     });
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("User GET Error:", error);  // 서버 로그에 상세 에러 기록
-    return NextResponse.json(
-      { success: false, error: "프로필을 불러오는데 실패했습니다." },  // 사용자 친화적 에러 메시지
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("프로필을 불러오는데 실패했습니다.", 500, "PROFILE_FETCH_ERROR");
   }
 }
 
@@ -151,21 +136,13 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: "로그인이 필요합니다." },  // 사용자 친화적 메시지
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
     // 요청 바디 파싱 및 수정 필드 추출
@@ -194,30 +171,23 @@ export async function PATCH(request: Request) {
     });
 
     // ──────────────────────────────────────
-    // 성공 응답: 수정된 프로필 정보 반환
+    // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // GET과 동일한 형식으로 전체 프로필 정보 반환
     // ──────────────────────────────────────
-    return NextResponse.json({
-      success: true,  // API 성공 플래그
-      data: {
-        id: profile.id,  // 사용자 ID (= Supabase auth user ID)
-        email: profile.email,  // 이메일 (수정 불가)
-        name: profile.name,  // 표시 이름 (수정됨)
-        avatar: profile.avatar,  // 아바타 URL (수정됨, 선택사항)
-        subscriptionTier: profile.subscriptionTier.toLowerCase(),  // 구독 tier (수정 불가)
-        points: profile.points,  // 누적 포인트 (수정 불가)
-        createdAt: profile.createdAt.toISOString(),  // ISO 형식 생성 날짜 (수정 불가)
-      },
+    return apiSuccess({
+      id: profile.id,  // 사용자 ID (= Supabase auth user ID)
+      email: profile.email,  // 이메일 (수정 불가)
+      name: profile.name,  // 표시 이름 (수정됨)
+      avatar: profile.avatar,  // 아바타 URL (수정됨, 선택사항)
+      subscriptionTier: profile.subscriptionTier.toLowerCase(),  // 구독 tier (수정 불가)
+      points: profile.points,  // 누적 포인트 (수정 불가)
+      createdAt: profile.createdAt.toISOString(),  // ISO 형식 생성 날짜 (수정 불가)
     });
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("User PATCH Error:", error);  // 서버 로그에 상세 에러 기록
-    return NextResponse.json(
-      { success: false, error: "프로필 업데이트에 실패했습니다." },  // 사용자 친화적 에러 메시지
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("프로필 업데이트에 실패했습니다.", 500, "PROFILE_UPDATE_ERROR");
   }
 }

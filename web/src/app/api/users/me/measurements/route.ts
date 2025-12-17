@@ -40,9 +40,9 @@
 // ====================================
 
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import prisma from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
+import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
 
 // ──────────────────────────────────────
 // 유효성 검사 헬퍼 함수
@@ -107,21 +107,13 @@ function validateGender(value: string): boolean {
 export async function GET() {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: "로그인이 필요합니다." },  // 사용자 친화적 메시지
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
     // 사용자의 신체 사이즈 정보 조회
@@ -147,39 +139,29 @@ export async function GET() {
     // 프로필이 존재하지 않으면 404 응답 반환
     // ──────────────────────────────────────
     if (!profile) {
-      return NextResponse.json(
-        { success: false, error: "프로필을 찾을 수 없습니다." },  // 사용자 친화적 메시지
-        { status: 404 }  // HTTP 404 Not Found
-      );
+      return apiError("프로필을 찾을 수 없습니다.", 404, "PROFILE_NOT_FOUND");
     }
 
     // ──────────────────────────────────────
-    // 성공 응답: 신체 사이즈 정보 반환
+    // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // null coalescing (??): 없는 필드를 null로 변환
     // 클라이언트에서 필드의 존재 여부를 쉽게 확인 가능
     // ──────────────────────────────────────
-    return NextResponse.json({
-      success: true,  // API 성공 플래그
-      data: {
-        height: profile.height ?? null,                      // 키: 설정되면 숫자, 미설정 시 null
-        weight: profile.weight ?? null,                      // 몸무게: 설정되면 숫자, 미설정 시 null
-        gender: profile.gender ?? null,                      // 성별: 설정되면 문자열, 미설정 시 null
-        topSize: profile.topSize ?? null,                    // 상의 사이즈: 설정되면 문자열, 미설정 시 null
-        bottomSize: profile.bottomSize ?? null,              // 하의 사이즈: 설정되면 문자열, 미설정 시 null
-        shoeSize: profile.shoeSize ?? null,                  // 신발 사이즈: 설정되면 숫자, 미설정 시 null
-        encryptedMeasurements: profile.encryptedMeasurements ?? null,  // 암호화된 정보: 설정되면 문자열, 미설정 시 null
-      },
+    return apiSuccess({
+      height: profile.height ?? null,                      // 키: 설정되면 숫자, 미설정 시 null
+      weight: profile.weight ?? null,                      // 몸무게: 설정되면 숫자, 미설정 시 null
+      gender: profile.gender ?? null,                      // 성별: 설정되면 문자열, 미설정 시 null
+      topSize: profile.topSize ?? null,                    // 상의 사이즈: 설정되면 문자열, 미설정 시 null
+      bottomSize: profile.bottomSize ?? null,              // 하의 사이즈: 설정되면 문자열, 미설정 시 null
+      shoeSize: profile.shoeSize ?? null,                  // 신발 사이즈: 설정되면 숫자, 미설정 시 null
+      encryptedMeasurements: profile.encryptedMeasurements ?? null,  // 암호화된 정보: 설정되면 문자열, 미설정 시 null
     });
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("Measurements GET Error:", error);  // 서버 로그에 상세 에러 기록
-    return NextResponse.json(
-      { success: false, error: "사이즈 정보를 불러오는데 실패했습니다." },  // 사용자 친화적 에러 메시지
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("사이즈 정보를 불러오는데 실패했습니다.", 500, "MEASUREMENTS_FETCH_ERROR");
   }
 }
 
@@ -207,21 +189,13 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: "로그인이 필요합니다." },  // 사용자 친화적 메시지
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
     // 요청 바디 파싱 및 필드 추출
@@ -273,10 +247,7 @@ export async function PATCH(request: Request) {
 
     // 유효성 검사 실패: 에러 배열이 비어있지 않으면 400 응답
     if (errors.length > 0) {
-      return NextResponse.json(
-        { success: false, errors },  // 모든 에러를 배열로 반환
-        { status: 400 }  // HTTP 400 Bad Request
-      );
+      return apiError(errors.join(", "), 400, "VALIDATION_ERROR");
     }
 
     // ──────────────────────────────────────
@@ -328,31 +299,24 @@ export async function PATCH(request: Request) {
     });
 
     // ──────────────────────────────────────
-    // 성공 응답: 수정된 사이즈 정보 반환
+    // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // GET과 동일한 형식으로 반환
     // ──────────────────────────────────────
-    return NextResponse.json({
-      success: true,  // API 성공 플래그
-      data: {
-        height: updatedProfile.height ?? null,                      // 키: 설정되면 숫자, 미설정 시 null
-        weight: updatedProfile.weight ?? null,                      // 몸무게: 설정되면 숫자, 미설정 시 null
-        gender: updatedProfile.gender ?? null,                      // 성별: 설정되면 문자열, 미설정 시 null
-        topSize: updatedProfile.topSize ?? null,                    // 상의 사이즈: 설정되면 문자열, 미설정 시 null
-        bottomSize: updatedProfile.bottomSize ?? null,              // 하의 사이즈: 설정되면 문자열, 미설정 시 null
-        shoeSize: updatedProfile.shoeSize ?? null,                  // 신발 사이즈: 설정되면 숫자, 미설정 시 null
-        encryptedMeasurements: updatedProfile.encryptedMeasurements ?? null,  // 암호화된 정보: 설정되면 문자열, 미설정 시 null
-      },
+    return apiSuccess({
+      height: updatedProfile.height ?? null,                      // 키: 설정되면 숫자, 미설정 시 null
+      weight: updatedProfile.weight ?? null,                      // 몸무게: 설정되면 숫자, 미설정 시 null
+      gender: updatedProfile.gender ?? null,                      // 성별: 설정되면 문자열, 미설정 시 null
+      topSize: updatedProfile.topSize ?? null,                    // 상의 사이즈: 설정되면 문자열, 미설정 시 null
+      bottomSize: updatedProfile.bottomSize ?? null,              // 하의 사이즈: 설정되면 문자열, 미설정 시 null
+      shoeSize: updatedProfile.shoeSize ?? null,                  // 신발 사이즈: 설정되면 숫자, 미설정 시 null
+      encryptedMeasurements: updatedProfile.encryptedMeasurements ?? null,  // 암호화된 정보: 설정되면 문자열, 미설정 시 null
     });
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("Measurements PATCH Error:", error);  // 서버 로그에 상세 에러 기록
-    return NextResponse.json(
-      { success: false, error: "사이즈 정보 업데이트에 실패했습니다." },  // 사용자 친화적 에러 메시지
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("사이즈 정보 업데이트에 실패했습니다.", 500, "MEASUREMENTS_UPDATE_ERROR");
   }
 }
 
@@ -377,21 +341,13 @@ export async function PATCH(request: Request) {
 export async function DELETE() {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: "로그인이 필요합니다." },  // 사용자 친화적 메시지
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
     // 모든 신체 사이즈 정보 삭제 (soft delete)
@@ -421,13 +377,9 @@ export async function DELETE() {
     });
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("Measurements DELETE Error:", error);  // 서버 로그에 상세 에러 기록
-    return NextResponse.json(
-      { success: false, error: "사이즈 정보 삭제에 실패했습니다." },  // 사용자 친화적 에러 메시지
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("사이즈 정보 삭제에 실패했습니다.", 500, "MEASUREMENTS_DELETE_ERROR");
   }
 }

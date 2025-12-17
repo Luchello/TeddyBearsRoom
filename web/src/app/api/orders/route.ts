@@ -33,8 +33,49 @@
 // ====================================
 
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import prisma from "@/lib/prisma";
+import { z } from "zod";
+import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
+
+// ──────────────────────────────────────
+// Zod Validation Schemas
+// 주문 생성 요청 유효성 검사
+// ──────────────────────────────────────
+
+/**
+ * 주문 항목 스키마
+ * productId: UUID 형식의 상품 ID (필수)
+ * quantity: 1~99 범위의 양의 정수 (필수)
+ */
+const OrderItemSchema = z.object({
+  productId: z.string().uuid("유효하지 않은 상품 ID입니다."),
+  quantity: z
+    .number()
+    .int("수량은 정수여야 합니다.")
+    .min(1, "수량은 최소 1개 이상이어야 합니다.")
+    .max(99, "수량은 최대 99개까지 가능합니다."),
+});
+
+/**
+ * 주문 생성 요청 스키마
+ * items: 최소 1개 이상의 주문 항목 배열 (필수)
+ * shippingAddress: 배송 주소 (선택, 최대 500자)
+ * shippingMemo: 배송 메모 (선택, 최대 200자)
+ */
+const CreateOrderSchema = z.object({
+  items: z
+    .array(OrderItemSchema)
+    .min(1, "주문 상품이 없습니다.")
+    .max(50, "한 번에 최대 50개 상품까지 주문 가능합니다."),
+  shippingAddress: z
+    .string()
+    .max(500, "주소는 최대 500자까지 입력 가능합니다.")
+    .optional(),
+  shippingMemo: z
+    .string()
+    .max(200, "배송 메모는 최대 200자까지 입력 가능합니다.")
+    .optional(),
+});
 
 /**
  * 사용자의 주문 목록 조회 API 핸들러
@@ -57,24 +98,13 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "로그인이 필요합니다.",  // 사용자 친화적 메시지
-        },
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
     // 사용자의 주문 목록 조회
@@ -95,25 +125,15 @@ export async function GET() {
     });
 
     // ──────────────────────────────────────
-    // 성공 응답
+    // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // ──────────────────────────────────────
-    return NextResponse.json({
-      success: true,      // API 성공 플래그
-      data: orders,       // 조회된 주문 배열 (orderItems 및 product 정보 포함)
-    });
+    return apiSuccess(orders);
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("Orders GET Error:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: "주문 목록을 불러오는데 실패했습니다.",  // 사용자 친화적 에러 메시지
-      },
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("주문 목록을 불러오는데 실패했습니다.", 500, "ORDERS_FETCH_ERROR");
   }
 }
 
@@ -149,77 +169,76 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     // ──────────────────────────────────────
-    // Supabase 서버 클라이언트 생성 및 사용자 확인
-    // 서버사이드 클라이언트로 쿠키 기반 세션 인증
-    // ──────────────────────────────────────
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();  // 현재 로그인 사용자 정보
-
-    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
+    // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: "로그인이 필요합니다." },  // 사용자 친화적 메시지
-        { status: 401 }  // HTTP 401 Unauthorized
-      );
-    }
+    const authResult = await requireAuth();
+    if (!authResult.success) return authResult.response;
+
+    const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
-    // 요청 바디 파싱 및 값 추출
-    // items: 주문에 포함할 상품 배열 [{productId, quantity}, ...]
-    // shippingAddress: 배송 주소
-    // shippingMemo: 배송 시 참고사항 메모
+    // 요청 바디 파싱 및 Zod 유효성 검사
+    // CreateOrderSchema로 타입 안전한 검증 수행
     // ──────────────────────────────────────
     const body = await request.json();
-    const { items, shippingAddress, shippingMemo } = body;
+    const parseResult = CreateOrderSchema.safeParse(body);
 
-    // ──────────────────────────────────────
-    // 주문 상품 유효성 검사
-    // items 배열이 필수이고, 비어있으면 안됨
-    // ──────────────────────────────────────
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return NextResponse.json(
-        { success: false, error: "주문 상품이 없습니다." },  // 사용자 친화적 에러 메시지
-        { status: 400 }  // HTTP 400 Bad Request
+    if (!parseResult.success) {
+      // Zod validation 실패: 첫 번째 에러 메시지 반환
+      // Zod 4.x: error.issues 사용 (error.errors 대신)
+      const firstIssue = parseResult.error.issues[0];
+      return apiError(
+        `${firstIssue.message} (필드: ${firstIssue.path.join(".")})`,
+        400,
+        "VALIDATION_ERROR"
       );
     }
+
+    // 검증된 데이터 추출 (타입 안전)
+    const { items, shippingAddress, shippingMemo } = parseResult.data;
 
     // ──────────────────────────────────────
     // 총액 계산 및 주문 항목 빌드
-    // 각 상품을 DB에서 조회하여 현재 가격 확인
+    // N+1 쿼리 방지: 모든 상품을 단일 쿼리로 조회
     // 장바구니와 DB의 가격 불일치 대응 (가격 변동 대응)
     // ──────────────────────────────────────
-    let totalPrice = 0;  // 주문 총액 누적
-    const orderItems = [];  // 주문 항목 배열 (create용)
 
-    // 각 상품별로 가격 확인 및 총액 계산
-    for (const item of items) {
-      // 상품 ID로 DB에서 상품 조회
-      const product = await prisma.product.findUnique({
-        where: { id: item.productId },
-      });
+    // 모든 상품 ID 추출 (중복 제거)
+    // Zod 검증으로 items 타입이 보장됨
+    const productIds = [...new Set(items.map((item) => item.productId))];
 
-      // 상품이 존재하지 않으면 400 에러 응답
-      if (!product) {
-        return NextResponse.json(
-          { success: false, error: `상품을 찾을 수 없습니다: ${item.productId}` },  // 어떤 상품이 없는지 명시
-          { status: 400 }  // HTTP 400 Bad Request
-        );
-      }
+    // 단일 쿼리로 모든 상품 조회 (N+1 → 1 쿼리)
+    const products = await prisma.product.findMany({
+      where: { id: { in: productIds } },
+    });
 
-      // 항목 총액: 상품 가격 × 주문 수량
-      const itemTotal = product.price * item.quantity;
-      totalPrice += itemTotal;  // 전체 총액에 누적
+    // O(1) 조회를 위한 Map 생성
+    const productMap = new Map(products.map((p) => [p.id, p]));
 
-      // orderItems 배열에 주문 항목 추가
-      // 현재 DB의 가격을 사용 (클라이언트에서 보낸 가격 무시)
-      orderItems.push({
-        productId: product.id,  // 상품 ID
-        quantity: item.quantity,  // 주문 수량
-        price: product.price,  // 현재 상품 가격 (DB에서 조회한 가격)
-      });
+    // 존재하지 않는 상품 확인
+    const missingProductIds = productIds.filter((id) => !productMap.has(id));
+    if (missingProductIds.length > 0) {
+      return apiError(
+        `상품을 찾을 수 없습니다: ${missingProductIds.join(", ")}`,
+        400,
+        "PRODUCT_NOT_FOUND"
+      );
     }
+
+    // 총액 계산 및 주문 항목 빌드
+    let totalPrice = 0;
+    const orderItems = items.map((item) => {
+      const product = productMap.get(item.productId)!;
+      const itemTotal = product.price * item.quantity;
+      totalPrice += itemTotal;
+
+      return {
+        productId: product.id,
+        quantity: item.quantity,
+        price: product.price,  // 현재 DB 가격 사용 (클라이언트 가격 무시)
+      };
+    });
 
     // ──────────────────────────────────────
     // 주문 생성 (트랜잭션)
@@ -246,25 +265,15 @@ export async function POST(request: Request) {
     });
 
     // ──────────────────────────────────────
-    // 성공 응답
+    // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // 생성된 주문 정보 (orderItems와 product 정보 포함) 반환
     // ──────────────────────────────────────
-    return NextResponse.json({
-      success: true,  // API 성공 플래그
-      data: order,  // 생성된 주문 객체 (id, totalPrice, orderItems 포함)
-    });
+    return apiSuccess(order, 201);  // HTTP 201 Created
   } catch (error) {
     // ──────────────────────────────────────
-    // 에러 처리
-    // 데이터베이스 에러 또는 Supabase 에러 시 500 응답
+    // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
     console.error("Orders POST Error:", error);  // 서버 로그에 상세 에러 기록
-    return NextResponse.json(
-      {
-        success: false,
-        error: "주문 생성에 실패했습니다.",  // 사용자 친화적 에러 메시지
-      },
-      { status: 500 }  // HTTP 500 Internal Server Error
-    );
+    return apiError("주문 생성에 실패했습니다.", 500, "ORDER_CREATE_ERROR");
   }
 }
