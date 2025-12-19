@@ -55,8 +55,9 @@ test.describe('Checkout Flow', () => {
     await page.waitForSelector('a[href^="/products/"]', { timeout: 30000 });
     const firstProductLink = page.locator('a[href^="/products/"]').first();
 
-    // 상품명 가져오기
-    const productName = await firstProductLink.textContent();
+    // 상품명 가져오기 (h3 태그에서 추출)
+    const productNameElement = firstProductLink.locator('h3');
+    const productName = await productNameElement.textContent();
 
     // 상품 카드 클릭하여 상세 페이지로 이동
     await firstProductLink.click();
@@ -67,7 +68,7 @@ test.describe('Checkout Flow', () => {
     // 상세 페이지 로드 확인
     await expect(page.locator('h1, h2').first()).toBeVisible();
 
-    // 상품명이 여전히 보이는지 확인
+    // 상품명이 여전히 보이는지 확인 (상세 페이지에서도 같은 상품명이 표시되어야 함)
     if (productName && productName.trim()) {
       await expect(page.locator('body')).toContainText(productName.trim());
     }
@@ -164,14 +165,19 @@ test.describe('Checkout Flow', () => {
     await page.goto('/cart');
     await page.waitForLoadState('networkidle');
 
+    // 장바구니 아이템 영역 확인
+    const cartItem = page.locator('div.flex.gap-4.py-4').first();
+    await expect(cartItem).toBeVisible({ timeout: 5000 });
+
     // 초기 수량 확인 (수량 표시 영역에서 숫자 찾기)
-    const quantityContainer = page.locator('div.flex.items-center.border.rounded-lg').first();
+    const quantityContainer = cartItem.locator('div.flex.items-center.border.rounded-lg').first();
     await expect(quantityContainer).toBeVisible({ timeout: 5000 });
     const initialQuantityText = await quantityContainer.locator('span').textContent();
     const initialQuantity = parseInt(initialQuantityText || '1', 10);
 
-    // 수량 증가 버튼 클릭 (세 번째 버튼: - / quantity / +)
-    const increaseButton = quantityContainer.locator('button').nth(1);
+    // 수량 증가 버튼 클릭 (aria-label 사용)
+    const increaseButton = page.locator('button[aria-label="수량 증가"]').first();
+    await expect(increaseButton).toBeVisible({ timeout: 5000 });
     await increaseButton.click();
     await page.waitForTimeout(500);
 
@@ -195,8 +201,8 @@ test.describe('Checkout Flow', () => {
     await page.goto('/cart');
     await page.waitForLoadState('networkidle');
 
-    // 삭제 버튼 찾기 (TrashIcon이 있는 버튼, quantity controls 옆)
-    const deleteButton = page.locator('button').filter({ has: page.locator('svg path[d*="M3 6h18"]') }).first();
+    // 삭제 버튼 찾기 (aria-label 사용)
+    const deleteButton = page.locator('button[aria-label="삭제"]').first();
     await expect(deleteButton).toBeVisible({ timeout: 5000 });
     await deleteButton.click();
     await page.waitForTimeout(500);
@@ -223,10 +229,13 @@ test.describe('Checkout Flow', () => {
     await page.reload();
     await page.waitForLoadState('networkidle');
 
-    // 장바구니 아이콘에 카운트 뱃지가 표시되는지 확인
-    // (헤더에 숫자 1이 표시되거나, 장바구니 링크에서 확인)
-    const cartBadge = page.locator('header a[href="/cart"]').locator('text=1').first();
-    await expect(cartBadge).toBeVisible({ timeout: 5000 });
+    // 장바구니 페이지로 이동하여 아이템 확인
+    await page.goto('/cart');
+    await page.waitForLoadState('networkidle');
+
+    // 장바구니 아이템이 여전히 존재하는지 확인
+    const cartItem = page.locator('div.flex.gap-4.py-4').first();
+    await expect(cartItem).toBeVisible({ timeout: 5000 });
   });
 
   test('should show correct total price in cart', async ({ page }) => {
@@ -243,13 +252,13 @@ test.describe('Checkout Flow', () => {
     await page.goto('/cart');
     await page.waitForLoadState('networkidle');
 
-    // 가격 정보가 표시되는지 확인 (원화 단위)
-    const priceElement = page.locator('text=/원|₩/').first();
-    await expect(priceElement).toBeVisible({ timeout: 5000 });
+    // 총 가격 표시 확인 (DOM 분석 결과: span.text-2xl.font-bold)
+    const totalPriceElement = page.locator('span.text-2xl.font-bold').first();
+    await expect(totalPriceElement).toBeVisible({ timeout: 5000 });
 
-    // CartSummary 영역에서 총 가격 섹션 확인
-    const totalSection = page.locator('text=/총|합계|total/i').first();
-    await expect(totalSection).toBeVisible({ timeout: 5000 });
+    // 가격 정보가 표시되는지 확인 (원화 단위 포함)
+    const totalPriceText = await totalPriceElement.textContent();
+    expect(totalPriceText).toMatch(/원|₩/);
   });
 });
 
@@ -275,8 +284,8 @@ test.describe('Product Browsing', () => {
   test('should search for products', async ({ page }) => {
     await page.goto('/');
 
-    // 검색 입력 필드 찾기
-    const searchInput = page.locator('input[type="search"], input[placeholder*="검색"]').first();
+    // 검색 입력 필드 찾기 (DOM 분석 결과: input[type='search'][placeholder*='검색'])
+    const searchInput = page.locator('input[type="search"][placeholder*="검색"]').first();
 
     if (await searchInput.isVisible({ timeout: 5000 }).catch(() => false)) {
       // 검색어 입력

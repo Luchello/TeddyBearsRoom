@@ -36,6 +36,53 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
+import { withRateLimit } from "@/lib/api/rate-limit";
+import { z } from "zod";
+
+// ====================================
+// Input Validation Schemas (Zod)
+// XSS 및 인젝션 방지를 위한 입력 검증
+// ====================================
+
+/**
+ * 프로필 수정 요청 스키마
+ * - name: 1-50자, 특수문자 제한
+ * - avatar: 유효한 URL 형식, 허용된 도메인만
+ */
+const UpdateProfileSchema = z.object({
+  name: z
+    .string()
+    .min(1, "이름은 1자 이상이어야 합니다.")
+    .max(50, "이름은 50자 이하여야 합니다.")
+    // XSS 방지: HTML 태그 금지
+    .regex(/^[^<>]*$/, "이름에 특수문자(<, >)를 사용할 수 없습니다.")
+    .optional(),
+  avatar: z
+    .string()
+    .url("올바른 URL 형식이 아닙니다.")
+    .max(500, "아바타 URL은 500자 이하여야 합니다.")
+    // SSRF 방지: 허용된 도메인만
+    .refine(
+      (url) => {
+        try {
+          const parsed = new URL(url);
+          const allowedHosts = [
+            "images.unsplash.com",
+            /.*\.supabase\.co$/,
+          ];
+          return allowedHosts.some((host) =>
+            typeof host === "string"
+              ? parsed.hostname === host
+              : host.test(parsed.hostname)
+          );
+        } catch {
+          return false;
+        }
+      },
+      "허용되지 않은 이미지 호스트입니다. (unsplash, supabase만 허용)"
+    )
+    .optional(),
+}).strict(); // 정의되지 않은 필드 거부
 
 /**
  * 현재 사용자 프로필 조회 API 핸들러
@@ -57,6 +104,12 @@ import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
  */
 export async function GET() {
   try {
+    // ──────────────────────────────────────
+    // Rate Limiting: 분당 30회 제한
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("default");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
     // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리
@@ -136,6 +189,12 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     // ──────────────────────────────────────
+    // Rate Limiting: 분당 30회 제한
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("default");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
+    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
@@ -145,20 +204,40 @@ export async function PATCH(request: Request) {
     const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
-    // 요청 바디 파싱 및 수정 필드 추출
-    // name: 표시 이름 (선택사항)
-    // avatar: 아바타 URL (선택사항)
+    // 요청 바디 파싱 및 Zod 유효성 검사
+    // XSS, SSRF 방지를 위한 엄격한 검증
     // ──────────────────────────────────────
-    const body = await request.json();
-    const { name, avatar } = body;
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return apiError("잘못된 JSON 형식입니다.", 400, "INVALID_JSON");
+    }
+
+    // Zod 스키마로 입력 검증
+    const validationResult = UpdateProfileSchema.safeParse(body);
+    if (!validationResult.success) {
+      // Zod 4.x: error.issues 사용 (error.errors 대신)
+      const errorMessages = validationResult.error.issues
+        .map((issue) => issue.message)
+        .join(", ");
+      return apiError(errorMessages, 400, "VALIDATION_ERROR");
+    }
+
+    const { name, avatar } = validationResult.data;
 
     // ──────────────────────────────────────
     // 수정 데이터 빌드 (선택적 업데이트)
-    // 제공된 필드만 포함 (undefined 필드는 제외)
+    // 검증된 데이터만 사용
     // ──────────────────────────────────────
-    const updateData: { name?: string; avatar?: string } = {};  // 타입 정의: name과 avatar만 수정 가능
-    if (name) updateData.name = name;  // name이 제공되면 포함
-    if (avatar) updateData.avatar = avatar;  // avatar가 제공되면 포함
+    const updateData: { name?: string; avatar?: string } = {};
+    if (name !== undefined) updateData.name = name;
+    if (avatar !== undefined) updateData.avatar = avatar;
+
+    // 업데이트할 필드가 없으면 에러
+    if (Object.keys(updateData).length === 0) {
+      return apiError("수정할 필드가 없습니다.", 400, "NO_FIELDS_TO_UPDATE");
+    }
 
     // ──────────────────────────────────────
     // 프로필 업데이트 (Prisma)

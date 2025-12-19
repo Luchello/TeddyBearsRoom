@@ -43,47 +43,74 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
+import { withRateLimit } from "@/lib/api/rate-limit";
+import { z } from "zod";
 
-// ──────────────────────────────────────
-// 유효성 검사 헬퍼 함수
-// 신체 정보의 범위를 검사합니다
-// ──────────────────────────────────────
-
-/**
- * 키(height) 유효성 검사
- * @param {number} value - 검사할 키 (cm)
- * @returns {boolean} 100cm ~ 250cm 범위 내인지 여부
- */
-function validateHeight(value: number): boolean {
-  return value >= 100 && value <= 250;  // 100cm ~ 250cm 범위 검사
-}
+// ====================================
+// Input Validation Schemas (Zod)
+// 모든 입력에 대한 엄격한 유효성 검사
+// ====================================
 
 /**
- * 몸무게(weight) 유효성 검사
- * @param {number} value - 검사할 몸무게 (kg)
- * @returns {boolean} 30kg ~ 200kg 범위 내인지 여부
+ * 의류 사이즈 enum
  */
-function validateWeight(value: number): boolean {
-  return value >= 30 && value <= 200;  // 30kg ~ 200kg 범위 검사
-}
+const ClothingSizeEnum = z.enum(["XS", "S", "M", "L", "XL", "XXL", "XXXL"]);
 
 /**
- * 신발 사이즈(shoeSize) 유효성 검사
- * @param {number} value - 검사할 신발 사이즈 (mm, 예: 260mm = 26cm)
- * @returns {boolean} 200mm ~ 320mm 범위 내인지 여부
+ * 성별 enum
  */
-function validateShoeSize(value: number): boolean {
-  return value >= 200 && value <= 320;  // 200mm ~ 320mm 범위 검사 (20cm ~ 32cm)
-}
+const GenderEnum = z.enum(["MALE", "FEMALE", "OTHER"]);
 
 /**
- * 성별(gender) 유효성 검사
- * @param {string} value - 검사할 성별 문자열
- * @returns {boolean} MALE, FEMALE, OTHER 중 하나인지 여부
+ * 신체 측정 정보 수정 요청 스키마
+ * 모든 필드가 선택사항이며, 각 필드에 대해 엄격한 범위 및 타입 검증
  */
-function validateGender(value: string): boolean {
-  return ['MALE', 'FEMALE', 'OTHER'].includes(value);  // MALE, FEMALE, OTHER만 허용
-}
+const UpdateMeasurementsSchema = z.object({
+  // 키: 100cm ~ 250cm
+  height: z
+    .number()
+    .min(100, "키는 100cm 이상이어야 합니다.")
+    .max(250, "키는 250cm 이하여야 합니다.")
+    .nullable()
+    .optional(),
+
+  // 몸무게: 30kg ~ 200kg
+  weight: z
+    .number()
+    .min(30, "몸무게는 30kg 이상이어야 합니다.")
+    .max(200, "몸무게는 200kg 이하여야 합니다.")
+    .nullable()
+    .optional(),
+
+  // 성별: MALE, FEMALE, OTHER
+  gender: GenderEnum.nullable().optional(),
+
+  // 상의 사이즈: XS ~ XXXL
+  topSize: ClothingSizeEnum.nullable().optional(),
+
+  // 하의 사이즈: XS ~ XXXL
+  bottomSize: ClothingSizeEnum.nullable().optional(),
+
+  // 신발 사이즈: 200mm ~ 320mm
+  shoeSize: z
+    .number()
+    .min(200, "신발 사이즈는 200mm 이상이어야 합니다.")
+    .max(320, "신발 사이즈는 320mm 이하여야 합니다.")
+    .nullable()
+    .optional(),
+
+  // 암호화된 측정 정보: 최대 10000자, Base64 형식만 허용
+  encryptedMeasurements: z
+    .string()
+    .max(10000, "암호화된 데이터는 10000자 이하여야 합니다.")
+    // Base64 또는 null만 허용
+    .regex(
+      /^[A-Za-z0-9+/=]*$/,
+      "암호화된 데이터 형식이 올바르지 않습니다."
+    )
+    .nullable()
+    .optional(),
+}).strict(); // 정의되지 않은 필드 거부
 
 /**
  * 사용자의 신체 사이즈 정보 조회 API 핸들러
@@ -106,6 +133,12 @@ function validateGender(value: string): boolean {
  */
 export async function GET() {
   try {
+    // ──────────────────────────────────────
+    // Rate Limiting: 분당 30회 제한
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("default");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
     // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리
@@ -189,6 +222,12 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     // ──────────────────────────────────────
+    // Rate Limiting: 분당 30회 제한
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("default");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
+    // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리
     // ──────────────────────────────────────
@@ -198,57 +237,35 @@ export async function PATCH(request: Request) {
     const user = authResult.user;  // 타입 안전한 User 객체
 
     // ──────────────────────────────────────
-    // 요청 바디 파싱 및 필드 추출
-    // 모든 필드가 선택사항 (undefined/null 가능)
+    // 요청 바디 파싱 및 Zod 유효성 검사
+    // 모든 필드에 대해 엄격한 타입 및 범위 검증
     // ──────────────────────────────────────
-    const body = await request.json();
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return apiError("잘못된 JSON 형식입니다.", 400, "INVALID_JSON");
+    }
+
+    // Zod 스키마로 입력 검증
+    const validationResult = UpdateMeasurementsSchema.safeParse(body);
+    if (!validationResult.success) {
+      // Zod 4.x: error.issues 사용 (error.errors 대신)
+      const errorMessages = validationResult.error.issues
+        .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+        .join(", ");
+      return apiError(errorMessages, 400, "VALIDATION_ERROR");
+    }
+
     const {
-      height,          // 키 (cm, 선택사항)
-      weight,          // 몸무게 (kg, 선택사항)
-      gender,          // 성별 (MALE/FEMALE/OTHER, 선택사항)
-      topSize,         // 상의 사이즈 (XS/S/M/L/XL, 선택사항)
-      bottomSize,      // 하의 사이즈 (XS/S/M/L/XL, 선택사항)
-      shoeSize,        // 신발 사이즈 (mm, 선택사항)
-      encryptedMeasurements,  // 암호화된 신체 정보 (선택사항)
-    } = body;
-
-    // ──────────────────────────────────────
-    // 입력값 유효성 검사
-    // 각 필드에 대해 범위 검사 수행
-    // 에러는 배열에 누적하여 모든 유효성 검사 완료 후 반환
-    // ──────────────────────────────────────
-    const errors: string[] = [];
-
-    // 키 유효성 검사: 100cm ~ 250cm 범위
-    if (height !== undefined && height !== null) {
-      if (typeof height !== 'number' || !validateHeight(height)) {
-        errors.push("키는 100cm ~ 250cm 사이여야 합니다.");
-      }
-    }
-
-    // 몸무게 유효성 검사: 30kg ~ 200kg 범위
-    if (weight !== undefined && weight !== null) {
-      if (typeof weight !== 'number' || !validateWeight(weight)) {
-        errors.push("몸무게는 30kg ~ 200kg 사이여야 합니다.");
-      }
-    }
-
-    // 신발 사이즈 유효성 검사: 200mm ~ 320mm 범위
-    if (shoeSize !== undefined && shoeSize !== null) {
-      if (typeof shoeSize !== 'number' || !validateShoeSize(shoeSize)) {
-        errors.push("신발 사이즈는 200mm ~ 320mm 사이여야 합니다.");
-      }
-    }
-
-    // 성별 유효성 검사: MALE, FEMALE, OTHER 중 하나
-    if (gender !== undefined && gender !== null && !validateGender(gender)) {
-      errors.push("성별은 MALE, FEMALE, OTHER 중 하나여야 합니다.");
-    }
-
-    // 유효성 검사 실패: 에러 배열이 비어있지 않으면 400 응답
-    if (errors.length > 0) {
-      return apiError(errors.join(", "), 400, "VALIDATION_ERROR");
-    }
+      height,
+      weight,
+      gender,
+      topSize,
+      bottomSize,
+      shoeSize,
+      encryptedMeasurements,
+    } = validationResult.data;
 
     // ──────────────────────────────────────
     // Upsert 데이터 빌드 (선택적 업데이트)
@@ -340,6 +357,12 @@ export async function PATCH(request: Request) {
  */
 export async function DELETE() {
   try {
+    // ──────────────────────────────────────
+    // Rate Limiting: 분당 30회 제한
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("default");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
     // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리

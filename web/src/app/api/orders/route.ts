@@ -36,6 +36,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
+import { withRateLimit } from "@/lib/api/rate-limit";
 
 // ──────────────────────────────────────
 // Zod Validation Schemas
@@ -97,6 +98,12 @@ const CreateOrderSchema = z.object({
  */
 export async function GET() {
   try {
+    // ──────────────────────────────────────
+    // Rate Limiting: 분당 30회 제한
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("default");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
     // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리
@@ -168,6 +175,12 @@ export async function GET() {
  */
 export async function POST(request: Request) {
   try {
+    // ──────────────────────────────────────
+    // Rate Limiting: 분당 10회 제한 (주문 생성은 더 엄격)
+    // ──────────────────────────────────────
+    const rateLimitCheck = await withRateLimit("orders");
+    if (!rateLimitCheck.success) return rateLimitCheck.response;
+
     // ──────────────────────────────────────
     // 인증 확인: 로그인하지 않은 사용자 차단
     // requireAuth() 헬퍼로 일관된 인증 처리
