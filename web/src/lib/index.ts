@@ -6,6 +6,10 @@
 // Core Utilities
 export { cn } from "./utils";
 
+// Logger
+export { logger } from "./logger";
+export type { LogLevel, LoggerConfig } from "./logger";
+
 // Prisma Client
 export { prisma } from "./prisma";
 
