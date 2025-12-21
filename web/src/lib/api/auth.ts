@@ -18,6 +18,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import type { User } from "@supabase/supabase-js";
+import { logger } from "@/lib/logger";
 
 /**
  * 인증 성공 결과 타입
@@ -88,7 +89,7 @@ export async function requireAuth(): Promise<AuthResult> {
       user,
     };
   } catch (error) {
-    console.error("Auth verification error:", error);
+    logger.error("[API/Auth]", "Auth verification error:", error);
     return {
       success: false,
       response: NextResponse.json(

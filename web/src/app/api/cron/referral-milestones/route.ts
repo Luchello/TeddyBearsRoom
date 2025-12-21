@@ -15,6 +15,7 @@ import {
   checkAllMilestones,
   updateAllAmbassadorStatuses,
 } from "@/lib/services/referral.service";
+import { logger } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60; // 최대 60초 (Vercel Pro 기준)
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
   const cronSecret = process.env.CRON_SECRET;
 
   if (!cronSecret) {
-    console.error("CRON_SECRET environment variable is not set");
+    logger.error("[Cron]", "CRON_SECRET environment variable is not set");
     return NextResponse.json(
       { error: "Server configuration error" },
       { status: 500 }
@@ -35,12 +36,12 @@ export async function GET(request: Request) {
   }
 
   if (authHeader !== `Bearer ${cronSecret}`) {
-    console.warn("Unauthorized cron job attempt");
+    logger.warn("[Cron]", "Unauthorized cron job attempt");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    console.log("[Cron] Starting referral-milestones job...");
+    logger.info("[Cron]", "Starting referral-milestones job...");
 
     // 1. 마일스톤 체크
     await checkAllMilestones();
@@ -50,7 +51,7 @@ export async function GET(request: Request) {
 
     const duration = Date.now() - startTime;
 
-    console.log(`[Cron] Job completed in ${duration}ms`);
+    logger.info("[Cron]", `Job completed in ${duration}ms`);
 
     return NextResponse.json({
       success: true,
@@ -66,7 +67,7 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     const duration = Date.now() - startTime;
-    console.error("[Cron] Job failed:", error);
+    logger.error("[Cron]", "Job failed:", error);
 
     return NextResponse.json(
       {

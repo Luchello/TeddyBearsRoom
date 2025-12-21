@@ -38,6 +38,7 @@
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { logger } from "@/lib/logger";
 
 /**
  * 상품 목록 조회 API 핸들러
@@ -192,7 +193,7 @@ export async function GET(request: Request) {
     // try-catch로 데이터베이스 에러 발생 시 처리
     // 500 Internal Server Error 반환 + 에러 로깅
     // ──────────────────────────────────────
-    console.error("Products API Error:", error);
+    logger.error("[API/products]", "Products API Error:", error);
     return NextResponse.json(
       {
         success: false,

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { logger } from "@/lib/logger";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -153,7 +154,7 @@ export function AuthButton({ className }: AuthButtonProps) {
     try {
       await signOut();
     } catch (error) {
-      console.error("[AuthButton] Sign out failed:", error);
+      logger.error("[AuthButton]", "Sign out failed:", error);
     }
   }, [signOut]);
 

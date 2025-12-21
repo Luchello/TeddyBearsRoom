@@ -19,6 +19,7 @@ import {
   INNER_CIRCLE_FREE_SHIPPING_THRESHOLD,
   SHIPPING_FEE,
 } from "@/types/cart";
+import { logger } from "@/lib/logger";
 
 // ============================================================
 // TYPE DEFINITIONS
@@ -251,7 +252,7 @@ export async function applyAmbassadorFreeShipping(
     const result = await consumeFreeShipping(profileId);
     return result;
   } catch (error) {
-    console.error("Failed to apply ambassador free shipping:", error);
+    logger.error("[ShippingService]", "Failed to apply ambassador free shipping:", error);
     return {
       success: false,
       error: "앰버서더 무료 배송 적용 중 오류가 발생했습니다",

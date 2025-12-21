@@ -13,6 +13,7 @@ import {
   checkFreeShippingAvailable,
 } from "@/lib/services/ambassador.service";
 import { AMBASSADOR_CONFIG } from "@/constants/referral";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   try {
@@ -59,7 +60,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Error getting ambassador status:", error);
+    logger.error("[API/referrals/ambassador]", "Error getting ambassador status:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

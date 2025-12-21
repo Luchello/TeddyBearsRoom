@@ -10,6 +10,7 @@
 import { prisma } from "@/lib/prisma";
 import { AMBASSADOR_CONFIG } from "@/constants/referral";
 import type { AmbassadorStatus } from "@prisma/client";
+import { logger } from "@/lib/logger";
 
 // ============================================================
 // TYPE DEFINITIONS
@@ -141,7 +142,7 @@ export async function updateAmbassadorQualification(
   // 혜택 자동 부여
   await grantAmbassadorBenefits(profileId);
 
-  console.log(`Ambassador qualification granted to profile: ${profileId}`);
+  logger.info("[AmbassadorService]", `Ambassador qualification granted to profile: ${profileId}`);
   return true;
 }
 
@@ -160,7 +161,7 @@ export async function grantAmbassadorBenefits(profileId: string): Promise<void> 
   });
 
   if (!ambassadorStatus || ambassadorStatus.status !== "ACTIVE") {
-    console.log(`Profile ${profileId} is not an active ambassador`);
+    logger.debug("[AmbassadorService]", `Profile ${profileId} is not an active ambassador`);
     return;
   }
 
@@ -184,7 +185,7 @@ export async function grantAmbassadorBenefits(profileId: string): Promise<void> 
     },
   });
 
-  console.log(`Ambassador benefits granted to profile: ${profileId}`);
+  logger.info("[AmbassadorService]", `Ambassador benefits granted to profile: ${profileId}`);
 }
 
 // ============================================================
@@ -274,7 +275,7 @@ export async function useFreeShipping(
     data: { nextFreeShippingAt: nextMonth },
   });
 
-  console.log(`Free shipping used by profile: ${profileId}, next available: ${nextMonth.toISOString()}`);
+  logger.info("[AmbassadorService]", `Free shipping used by profile: ${profileId}, next available: ${nextMonth.toISOString()}`);
 
   return { success: true };
 }
@@ -363,7 +364,7 @@ export async function deactivateAmbassador(
     },
   });
 
-  console.log(`Ambassador deactivated for profile: ${profileId}, reason: ${reason || "N/A"}`);
+  logger.info("[AmbassadorService]", `Ambassador deactivated for profile: ${profileId}, reason: ${reason || "N/A"}`);
 }
 
 /**
@@ -391,6 +392,6 @@ export async function reactivateAmbassador(profileId: string): Promise<boolean> 
 
   await grantAmbassadorBenefits(profileId);
 
-  console.log(`Ambassador reactivated for profile: ${profileId}`);
+  logger.info("[AmbassadorService]", `Ambassador reactivated for profile: ${profileId}`);
   return true;
 }

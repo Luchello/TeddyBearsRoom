@@ -32,6 +32,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { logger } from "@/lib/logger";
 import {
   Card,
   CardContent,
@@ -155,7 +156,7 @@ function useCopyToClipboard(): [
 
       return true;
     } catch (error) {
-      console.error("Failed to copy to clipboard:", error);
+      logger.error("[ReferralStatsCard]", "Failed to copy to clipboard:", error);
       return false;
     }
   }, []);
@@ -425,7 +426,7 @@ export function ReferralStatsCard({
     } catch (error) {
       // User cancelled or share failed - ignore AbortError
       if (error instanceof Error && error.name !== "AbortError") {
-        console.error("Share failed:", error);
+        logger.error("[ReferralStatsCard]", "Share failed:", error);
       }
     }
   }, [referralCode, referralLink]);

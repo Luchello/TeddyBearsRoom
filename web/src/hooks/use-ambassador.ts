@@ -22,6 +22,7 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react'
 import type { AmbassadorInfo, UseFreeShippingResponse } from '@/types/referral'
+import { logger } from '@/lib/logger'
 
 // ============================================
 // Types
@@ -169,7 +170,7 @@ export function useAmbassador(): UseAmbassadorReturn {
         })
       }
     } catch (err) {
-      console.error('[useAmbassador] Fetch error:', err)
+      logger.error('[useAmbassador]', 'Fetch error:', err)
 
       if (isMountedRef.current) {
         setState({
@@ -235,7 +236,7 @@ export function useAmbassador(): UseAmbassadorReturn {
 
       return result
     } catch (err) {
-      console.error('[useAmbassador] Use free shipping error:', err)
+      logger.error('[useAmbassador]', 'Use free shipping error:', err)
 
       // Rollback on error
       if (isMountedRef.current) {

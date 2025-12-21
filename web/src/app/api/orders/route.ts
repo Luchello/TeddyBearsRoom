@@ -36,6 +36,7 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
 import { withRateLimit } from "@/lib/api/rate-limit";
+import { logger } from "@/lib/logger";
 
 // ──────────────────────────────────────
 // Zod Validation Schemas
@@ -138,7 +139,7 @@ export async function GET() {
     // ──────────────────────────────────────
     // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
-    console.error("Orders GET Error:", error);
+    logger.error("[API/orders]", "Orders GET Error:", error);
     return apiError("주문 목록을 불러오는데 실패했습니다.", 500, "ORDERS_FETCH_ERROR");
   }
 }
@@ -285,7 +286,7 @@ export async function POST(request: Request) {
     // ──────────────────────────────────────
     // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
-    console.error("Orders POST Error:", error);  // 서버 로그에 상세 에러 기록
+    logger.error("[API/orders]", "Orders POST Error:", error);
     return apiError("주문 생성에 실패했습니다.", 500, "ORDER_CREATE_ERROR");
   }
 }

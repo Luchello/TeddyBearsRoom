@@ -12,6 +12,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { signOut as authSignOut } from '@/lib/auth/social'
 import type { User, Session, AuthChangeEvent } from '@supabase/supabase-js'
+import { logger } from '@/lib/logger'
 
 // ============================================
 // Types
@@ -102,7 +103,7 @@ export function useAuth(): UseAuthReturn {
         error: null,
       })
     } catch (err) {
-      console.error('[useAuth] Session refresh error:', err)
+      logger.error('[useAuth]', 'Session refresh error:', err)
       setState({
         user: null,
         session: null,
@@ -127,7 +128,7 @@ export function useAuth(): UseAuthReturn {
         error: null,
       })
     } catch (err) {
-      console.error('[useAuth] Sign out error:', err)
+      logger.error('[useAuth]', 'Sign out error:', err)
       // Still clear local state even if server signout fails
       setState({
         user: null,
@@ -149,7 +150,7 @@ export function useAuth(): UseAuthReturn {
     // Subscribe to auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: AuthChangeEvent, session: Session | null) => {
-        console.log('[useAuth] Auth state changed:', event)
+        logger.debug('[useAuth]', 'Auth state changed:', event)
 
         setState({
           user: session?.user ?? null,
@@ -162,16 +163,16 @@ export function useAuth(): UseAuthReturn {
         // Handle specific auth events
         switch (event) {
           case 'SIGNED_IN':
-            console.log('[useAuth] User signed in')
+            logger.debug('[useAuth]', 'User signed in')
             break
           case 'SIGNED_OUT':
-            console.log('[useAuth] User signed out')
+            logger.debug('[useAuth]', 'User signed out')
             break
           case 'TOKEN_REFRESHED':
-            console.log('[useAuth] Token refreshed')
+            logger.debug('[useAuth]', 'Token refreshed')
             break
           case 'USER_UPDATED':
-            console.log('[useAuth] User updated')
+            logger.debug('[useAuth]', 'User updated')
             break
         }
       }

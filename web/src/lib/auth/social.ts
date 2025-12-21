@@ -8,6 +8,7 @@
 
 import { createClient } from '@/lib/supabase/client'
 import type { Provider } from '@supabase/supabase-js'
+import { logger } from '@/lib/logger'
 
 // ============================================
 // Types
@@ -105,7 +106,7 @@ export async function signInWithSocial(
     })
 
     if (error) {
-      console.error(`[Social Login] ${provider} error:`, error.message)
+      logger.error('[Social Login]', `${provider} error:`, error.message)
       return {
         success: false,
         error: error.message,
@@ -124,7 +125,7 @@ export async function signInWithSocial(
       error: 'No redirect URL received',
     }
   } catch (err) {
-    console.error(`[Social Login] ${provider} exception:`, err)
+    logger.error('[Social Login]', `${provider} exception:`, err)
     return {
       success: false,
       error: err instanceof Error ? err.message : 'Unknown error',

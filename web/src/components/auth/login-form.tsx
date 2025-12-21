@@ -13,6 +13,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { signInWithSocial, type SocialProvider } from "@/lib/auth/social";
+import { logger } from "@/lib/logger";
 
 // ============================================
 // Types
@@ -150,7 +151,7 @@ export function LoginForm({ className, redirectUrl = "/" }: LoginFormProps) {
         setLoadingProvider(null);
       }
     } catch (err) {
-      console.error("[LoginForm] Social login error:", err);
+      logger.error("[LoginForm]", "Social login error:", err);
       setError("로그인 중 오류가 발생했습니다. 다시 시도해 주세요.");
       setIsLoading(false);
       setLoadingProvider(null);

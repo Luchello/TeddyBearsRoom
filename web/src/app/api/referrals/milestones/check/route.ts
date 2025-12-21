@@ -16,6 +16,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { checkAllMilestones } from "@/lib/services/referral.service";
+import { logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     // CRON_SECRET 미설정 시 서버 설정 오류
     if (!cronSecret) {
-      console.error("CRON_SECRET is not configured");
+      logger.error("[Cron/milestones/check]", "CRON_SECRET is not configured");
       return NextResponse.json(
         { error: "Server configuration error" },
         { status: 500 }
@@ -34,17 +35,17 @@ export async function POST(request: NextRequest) {
 
     // 인증 검증 (개발/프로덕션 모두 동일하게 적용)
     if (authHeader !== `Bearer ${cronSecret}`) {
-      console.warn("Unauthorized milestone check attempt");
+      logger.warn("[Cron/milestones/check]", "Unauthorized milestone check attempt");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("Starting milestone check...");
+    logger.info("[Cron/milestones/check]", "Starting milestone check...");
     const startTime = Date.now();
 
     await checkAllMilestones();
 
     const duration = Date.now() - startTime;
-    console.log(`Milestone check completed in ${duration}ms`);
+    logger.info("[Cron/milestones/check]", `Milestone check completed in ${duration}ms`);
 
     return NextResponse.json({
       success: true,
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
       duration: `${duration}ms`,
     });
   } catch (error) {
-    console.error("Error in milestone check:", error);
+    logger.error("[Cron/milestones/check]", "Error in milestone check:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }

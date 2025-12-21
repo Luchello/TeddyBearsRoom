@@ -17,6 +17,7 @@ import {
   checkFreeShippingAvailable,
   useFreeShipping as consumeFreeShipping,
 } from "@/lib/services/ambassador.service";
+import { logger } from "@/lib/logger";
 
 /**
  * GET - 인증된 사용자의 앰버서더 무료 배송 가능 여부 조회
@@ -41,7 +42,7 @@ export async function GET() {
       nextAvailableAt: result.nextAvailableAt?.toISOString() || null,
     });
   } catch (error) {
-    console.error("Failed to check ambassador free shipping:", error);
+    logger.error("[API/ambassador/free-shipping]", "Failed to check ambassador free shipping:", error);
     return apiError("무료 배송 가능 여부 확인에 실패했습니다.", 500);
   }
 }
@@ -73,7 +74,7 @@ export async function POST() {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Failed to use ambassador free shipping:", error);
+    logger.error("[API/ambassador/free-shipping]", "Failed to use ambassador free shipping:", error);
     return apiError("무료 배송 적용에 실패했습니다.", 500);
   }
 }

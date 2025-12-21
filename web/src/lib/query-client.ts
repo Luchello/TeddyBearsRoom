@@ -4,6 +4,7 @@
  */
 
 import { QueryClient, defaultShouldDehydrateQuery } from "@tanstack/react-query";
+import { logger } from "@/lib/logger";
 
 /**
  * Create a new QueryClient instance with TBR-specific defaults
@@ -32,7 +33,7 @@ export function makeQueryClient() {
         retry: 1,
         // Optimistic update recovery
         onError: (error) => {
-          console.error("Mutation error:", error);
+          logger.error("[QueryClient]", "Mutation error:", error);
         },
       },
       dehydrate: {

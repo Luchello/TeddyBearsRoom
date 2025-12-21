@@ -5,6 +5,7 @@ import {
   REFERRAL_MILESTONES,
   MAX_POINTS_PER_REFERRAL,
 } from "@/constants/referral";
+import { logger } from "@/lib/logger";
 
 /**
  * GET /api/referrals/milestones
@@ -119,7 +120,7 @@ export async function GET() {
       referrals: transformedReferrals,
     });
   } catch (error) {
-    console.error("Error getting referral milestones:", error);
+    logger.error("[API/referrals/milestones]", "Error getting referral milestones:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

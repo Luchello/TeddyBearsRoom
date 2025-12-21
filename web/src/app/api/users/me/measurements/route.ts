@@ -45,6 +45,7 @@ import type { Prisma } from "@prisma/client";
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
 import { withRateLimit } from "@/lib/api/rate-limit";
 import { z } from "zod";
+import { logger } from "@/lib/logger";
 
 // ====================================
 // Input Validation Schemas (Zod)
@@ -193,7 +194,7 @@ export async function GET() {
     // ──────────────────────────────────────
     // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
-    console.error("Measurements GET Error:", error);  // 서버 로그에 상세 에러 기록
+    logger.error("[API/users/me/measurements]", "Measurements GET Error:", error);
     return apiError("사이즈 정보를 불러오는데 실패했습니다.", 500, "MEASUREMENTS_FETCH_ERROR");
   }
 }
@@ -332,7 +333,7 @@ export async function PATCH(request: Request) {
     // ──────────────────────────────────────
     // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
-    console.error("Measurements PATCH Error:", error);  // 서버 로그에 상세 에러 기록
+    logger.error("[API/users/me/measurements]", "Measurements PATCH Error:", error);
     return apiError("사이즈 정보 업데이트에 실패했습니다.", 500, "MEASUREMENTS_UPDATE_ERROR");
   }
 }
@@ -402,7 +403,7 @@ export async function DELETE() {
     // ──────────────────────────────────────
     // 에러 처리: apiError 헬퍼로 일관된 에러 응답
     // ──────────────────────────────────────
-    console.error("Measurements DELETE Error:", error);  // 서버 로그에 상세 에러 기록
+    logger.error("[API/users/me/measurements]", "Measurements DELETE Error:", error);
     return apiError("사이즈 정보 삭제에 실패했습니다.", 500, "MEASUREMENTS_DELETE_ERROR");
   }
 }

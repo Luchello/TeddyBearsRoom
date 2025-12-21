@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withRateLimit } from "@/lib/api/rate-limit";
 import { validateReferralCode } from "@/lib/services/referral.service";
+import { logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result);
   } catch (error) {
-    console.error("Error validating referral code:", error);
+    logger.error("[API/referrals/validate]", "Error validating referral code:", error);
     return NextResponse.json(
       { valid: false, error: "서버 오류가 발생했습니다" },
       { status: 500 }

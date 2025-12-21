@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { claimMilestoneReward } from "@/lib/services/referral.service";
+import { logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result);
   } catch (error) {
-    console.error("Error claiming milestone reward:", error);
+    logger.error("[API/referrals/claim]", "Error claiming milestone reward:", error);
     return NextResponse.json(
       { success: false, error: "서버 오류가 발생했습니다" },
       { status: 500 }

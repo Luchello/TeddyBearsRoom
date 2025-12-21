@@ -6,6 +6,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureReferralCode } from "@/lib/services/referral.service";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   try {
@@ -25,7 +26,7 @@ export async function GET() {
       shareUrl: `https://teddybearsroom.com/join?ref=${code}`,
     });
   } catch (error) {
-    console.error("Error getting referral code:", error);
+    logger.error("[API/referrals/code]", "Error getting referral code:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

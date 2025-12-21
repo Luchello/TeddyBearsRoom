@@ -8,6 +8,7 @@
 
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { logger } from '@/lib/logger'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
 
   if (error) {
     // SECURITY: 상세 에러는 서버 로그에만 기록, 클라이언트에는 일반 에러 코드만 전달
-    console.error('[OAuth Callback] Provider error:', error, errorDescription)
+    logger.error('[OAuth Callback]', `Provider error: ${error}`, errorDescription)
     const errorUrl = new URL('/auth-code-error', origin)
     errorUrl.searchParams.set('error', error)
     // 상세 에러 설명 URL 노출 제거 (보안)
@@ -59,7 +60,7 @@ export async function GET(request: Request) {
 
     // Session exchange failed
     // SECURITY: 상세 에러 메시지는 서버 로그에만 기록, 클라이언트에는 일반 메시지만 전달
-    console.error('[OAuth Callback] Session exchange error:', exchangeError.message)
+    logger.error('[OAuth Callback]', 'Session exchange error:', exchangeError.message)
     const errorUrl = new URL('/auth-code-error', origin)
     errorUrl.searchParams.set('error', 'session_exchange_failed')
     // 상세 에러 메시지 URL 노출 제거 (보안)
@@ -67,6 +68,6 @@ export async function GET(request: Request) {
   }
 
   // No code provided - invalid callback
-  console.error('[OAuth Callback] No authorization code provided')
+  logger.error('[OAuth Callback]', 'No authorization code provided')
   return NextResponse.redirect(`${origin}/auth-code-error?error=no_code`)
 }

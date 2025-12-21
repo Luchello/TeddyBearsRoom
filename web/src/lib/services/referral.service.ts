@@ -16,6 +16,7 @@ import {
   POINTS_CONFIG,
 } from "@/constants/referral";
 import type { Referral, ReferralMilestoneReward } from "@prisma/client";
+import { logger } from "@/lib/logger";
 
 // ============================================================
 // REFERRAL CODE GENERATION
@@ -127,20 +128,20 @@ export async function registerReferral(
   });
 
   if (existingReferral) {
-    console.log(`Profile ${refereeId} already has a referral`);
+    logger.debug("[ReferralService]", `Profile ${refereeId} already has a referral`);
     return null;
   }
 
   // 추천 코드 검증
   const validation = await validateReferralCode(referralCode);
   if (!validation.valid || !validation.referrerId) {
-    console.log(`Invalid referral code: ${referralCode}`);
+    logger.debug("[ReferralService]", `Invalid referral code: ${referralCode}`);
     return null;
   }
 
   // 자기 자신 추천 방지
   if (validation.referrerId === refereeId) {
-    console.log("Cannot refer yourself");
+    logger.debug("[ReferralService]", "Cannot refer yourself");
     return null;
   }
 
@@ -195,7 +196,7 @@ export async function onRefereeSubscriptionStart(refereeId: string): Promise<voi
     data: { totalReferrals: { increment: 1 } },
   });
 
-  console.log(`Referral milestone timer started for referral ${referral.id}`);
+  logger.info("[ReferralService]", `Referral milestone timer started for referral ${referral.id}`);
 }
 
 // ============================================================
@@ -258,9 +259,7 @@ export async function checkAndCreateMilestoneRewards(
       });
       newRewards.push(reward);
 
-      console.log(
-        `Milestone achieved: ${milestone.months}M for referral ${referralId}, ${milestone.points}P`
-      );
+      logger.info("[ReferralService]", `Milestone achieved: ${milestone.months}M for referral ${referralId}, ${milestone.points}P`);
     }
   }
 
@@ -287,13 +286,13 @@ export async function checkAllMilestones(): Promise<void> {
     select: { id: true },
   });
 
-  console.log(`Checking milestones for ${activeReferrals.length} active referrals`);
+  logger.info("[ReferralService]", `Checking milestones for ${activeReferrals.length} active referrals`);
 
   for (const referral of activeReferrals) {
     try {
       await checkAndCreateMilestoneRewards(referral.id);
     } catch (error) {
-      console.error(`Error checking milestones for referral ${referral.id}:`, error);
+      logger.error("[ReferralService]", `Error checking milestones for referral ${referral.id}:`, error);
     }
   }
 }
@@ -460,9 +459,7 @@ export async function updateAllAmbassadorStatuses(): Promise<{
   });
   demotedCount = demotedAmbassadors.count;
 
-  console.log(
-    `Ambassador status update: ${newAmbassadorCount} new, ${demotedCount} demoted`
-  );
+  logger.info("[ReferralService]", `Ambassador status update: ${newAmbassadorCount} new, ${demotedCount} demoted`);
 
   return {
     updated: newAmbassadorCount + demotedCount,

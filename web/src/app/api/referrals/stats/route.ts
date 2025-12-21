@@ -10,6 +10,7 @@ import {
   checkAmbassadorStatus,
 } from "@/lib/services/referral.service";
 import { REFERRAL_MILESTONES, AMBASSADOR_CONFIG } from "@/constants/referral";
+import { logger } from "@/lib/logger";
 
 export async function GET() {
   try {
@@ -37,7 +38,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Error getting referral stats:", error);
+    logger.error("[API/referrals/stats]", "Error getting referral stats:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
