@@ -94,9 +94,9 @@ function ProductCardComponent({
     product.compareAtPrice && product.compareAtPrice > product.price;
   const discountPercent = hasDiscount
     ? Math.round(
-        ((product.compareAtPrice! - product.price) / product.compareAtPrice!) *
-          100
-      )
+      ((product.compareAtPrice! - product.price) / product.compareAtPrice!) *
+      100
+    )
     : 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -114,8 +114,8 @@ function ProductCardComponent({
   return (
     <article
       className={cn(
-        "group relative flex flex-col rounded-2xl bg-card border transition-all duration-300",
-        "hover:shadow-[var(--shadow-medium)] hover:border-primary/20",
+        "group relative flex flex-col rounded-2xl bg-white/70 backdrop-blur-sm border border-transparent transition-all duration-300",
+        "hover:shadow-[var(--shadow-dream)] hover:border-[var(--color-magic-200)] hover:-translate-y-1",
         className
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -206,7 +206,7 @@ function ProductCardComponent({
         {/* Name */}
         <Link
           href={`/products/${product.slug || product.id}`}
-          className="font-medium text-sm leading-snug line-clamp-2 hover:text-primary transition-colors"
+          className="font-medium text-sm leading-snug line-clamp-2 hover:text-[var(--color-primary)] transition-colors"
         >
           {product.name}
         </Link>
@@ -227,10 +227,10 @@ function ProductCardComponent({
           {/* Inner Circle Price */}
           {product.innerCirclePrice && (
             <div className="flex items-center gap-1 mt-1">
-              <Badge variant="innerCircle" className="text-[10px] px-1.5 py-0">
+              <Badge variant="innerCircle" className="text-[10px] px-1.5 py-0 bg-[var(--color-magic-100)] text-[var(--color-magic-600)]">
                 이너 써클
               </Badge>
-              <span className="text-sm font-medium text-primary">
+              <span className="text-sm font-medium text-[var(--color-magic-600)]">
                 {formatPrice(product.innerCirclePrice)}
               </span>
             </div>

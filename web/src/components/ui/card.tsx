@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    variant?: "default" | "glass" | "outlined" | "elevated";
+    variant?: "default" | "glass" | "outlined" | "elevated" | "whimsy";
     hover?: boolean;
   }
 >(({ className, variant = "default", hover = false, ...props }, ref) => (
@@ -22,6 +22,7 @@ const Card = React.forwardRef<
       variant === "glass" && "glass-card",
       variant === "outlined" && "border-2 border-border",
       variant === "elevated" && "shadow-[var(--shadow-medium)]",
+      variant === "whimsy" && "card-whimsy",
       // Hover effect
       hover && "hover:shadow-[var(--shadow-large)] hover:-translate-y-1 cursor-pointer",
       className

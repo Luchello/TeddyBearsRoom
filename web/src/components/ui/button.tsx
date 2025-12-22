@@ -37,6 +37,8 @@ const buttonVariants = cva(
         // Premium - For Inner Circle / special actions
         premium:
           "bg-gradient-to-r from-lavender-300 to-pink-300 text-foreground shadow-[var(--shadow-medium)] hover:shadow-[var(--shadow-large)] hover:-translate-y-0.5 active:translate-y-0",
+        // Bubbly - Whimsyshire theme default
+        bubbly: "btn-bubbly",
       },
       size: {
         default: "h-11 px-6 py-2",
@@ -60,7 +62,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   isLoading?: boolean;
   leftIcon?: React.ReactNode;

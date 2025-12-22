@@ -146,12 +146,12 @@ export function CartItem({ item, className, compact = false }: CartItemProps) {
   return (
     <div
       className={cn(
-        "flex gap-4 py-4 border-b last:border-b-0",
+        "flex gap-4 py-4 border-b border-[var(--color-border)] last:border-b-0",
         className
       )}
     >
       {/* Image */}
-      <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-muted shrink-0">
+      <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-[var(--color-love-50)] shrink-0 border border-[var(--color-border)]">
         {!imageError && item.imageUrl ? (
           <Image
             src={item.imageUrl}
@@ -186,7 +186,7 @@ export function CartItem({ item, className, compact = false }: CartItemProps) {
         <div className="flex-1">
           <Link
             href={`/products/${item.productId}`}
-            className="font-medium hover:text-primary transition-colors line-clamp-2"
+            className="font-medium hover:text-[var(--color-primary)] transition-colors line-clamp-2"
           >
             {item.name}
           </Link>

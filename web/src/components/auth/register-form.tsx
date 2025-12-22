@@ -149,11 +149,14 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
   }
 
   return (
-    <div className={cn("w-full max-w-md mx-auto", className)}>
+    <div className={cn("w-full max-w-md mx-auto card-whimsy p-8 bg-white/70 backdrop-blur-md", className)}>
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold">회원가입</h1>
-        <p className="text-muted-foreground mt-2">
-          TeddyBear&apos;s Room의 회원이 되어주세요
+        <div className="inline-block p-3 rounded-full bg-[var(--color-love-50)] mb-4 animate-pulse-glow">
+          <span className="text-3xl">🧸</span>
+        </div>
+        <h1 className="text-2xl font-bold text-[var(--color-foreground)]">회원가입</h1>
+        <p className="text-[var(--color-muted-foreground)] mt-2">
+          TeddyBear&apos;s Room의 가족이 되어주세요 ✨
         </p>
       </div>
 
@@ -315,9 +318,10 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
           type="submit"
           className="w-full"
           size="lg"
+          variant="bubbly"
           disabled={!canSubmit || isLoading}
         >
-          {isLoading ? "처리 중..." : "다음 단계"}
+          {isLoading ? "처리 중..." : "다음 단계 🪄"}
         </Button>
       </form>
 

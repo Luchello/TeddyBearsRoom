@@ -1,6 +1,7 @@
 /**
  * Products Section - Client Component
  * Product cards with Quick View, Wishlist, and Add to Cart buttons
+ * Whimsyshire Theme
  */
 
 "use client";
@@ -131,20 +132,20 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/products/${product.id}`}
-      className="group block bg-card rounded-3xl overflow-hidden border transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
+      className="group block bg-[var(--color-card)] rounded-3xl overflow-hidden border border-transparent hover:border-[var(--color-magic-200)] transition-all duration-500 hover:shadow-[var(--shadow-dream)] hover:-translate-y-2 backdrop-blur-sm"
     >
       {/* Image Area */}
-      <div className="relative aspect-square bg-muted/50 overflow-hidden">
+      <div className="relative aspect-square bg-[var(--color-muted)] overflow-hidden">
         {/* Badges */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
           {product.badges.map((badge, idx) => (
             <Badge
               key={idx}
               className={cn(
-                "text-xs font-bold px-2.5 py-1 shadow-md",
-                badge === "NEW" && "bg-primary text-primary-foreground",
-                badge === "BEST" && "bg-primary text-primary-foreground",
-                badge.startsWith("-") && "bg-destructive text-destructive-foreground"
+                "text-xs font-bold px-2.5 py-1 shadow-md badge-cloud",
+                badge === "NEW" && "text-[var(--color-secondary-foreground)] bg-[var(--color-secondary)]",
+                badge === "BEST" && "text-[var(--color-primary-foreground)] bg-[var(--color-primary)]",
+                badge.startsWith("-") && "text-[var(--color-destructive-foreground)] bg-[var(--color-destructive)]"
               )}
             >
               {badge}
@@ -158,7 +159,7 @@ function ProductCard({ product }: ProductCardProps) {
           className={cn(
             "absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300",
             "bg-white/90 backdrop-blur-sm shadow-md hover:shadow-lg hover:scale-110",
-            isWishlisted ? "text-pink-500" : "text-gray-400 hover:text-pink-400"
+            isWishlisted ? "text-[var(--color-primary)]" : "text-gray-400 hover:text-[var(--color-primary)]"
           )}
         >
           <HeartIcon filled={isWishlisted} />
@@ -167,7 +168,7 @@ function ProductCard({ product }: ProductCardProps) {
         {/* Add to Cart + Button */}
         <button
           onClick={handleAddToCart}
-          className="absolute bottom-3 right-3 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 bg-gradient-to-r from-[#FFB5C5] to-[#E8A8C8] text-white shadow-lg hover:shadow-xl hover:scale-110"
+          className="absolute bottom-3 right-3 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 bg-[var(--gradient-magic)] text-white shadow-lg hover:shadow-xl hover:scale-110"
         >
           <PlusIcon />
         </button>
@@ -197,7 +198,7 @@ function ProductCard({ product }: ProductCardProps) {
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-36 h-36">
+            <div className="relative w-36 h-36 opacity-80">
               <Image
                 src="/logo.png"
                 alt="TeddyBear's Room"
@@ -215,32 +216,32 @@ function ProductCard({ product }: ProductCardProps) {
       <div className="p-5">
         {/* Rating */}
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="text-yellow-500">★</span>
-          <span className="text-sm font-medium text-foreground">{product.rating}</span>
-          <span className="text-sm text-muted-foreground">({product.reviews})</span>
+          <span className="text-[var(--color-accent)]">★</span>
+          <span className="text-sm font-medium text-[var(--color-foreground)]">{product.rating}</span>
+          <span className="text-sm text-[var(--color-muted-foreground)]">({product.reviews})</span>
         </div>
 
         {/* Category */}
-        <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">
+        <p className="text-xs text-[var(--color-muted-foreground)] mb-1 uppercase tracking-wider">
           {product.category}
         </p>
 
         {/* Name */}
-        <h3 className="font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-1">
+        <h3 className="font-semibold text-[var(--color-foreground)] mb-3 group-hover:text-[var(--color-primary)] transition-colors line-clamp-1">
           {product.name}
         </h3>
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
-          <span className="text-lg font-bold text-foreground">
+          <span className="text-lg font-bold text-[var(--color-foreground)]">
             ₩{product.price.toLocaleString()}
           </span>
           {product.originalPrice && (
             <>
-              <span className="text-sm text-muted-foreground line-through">
+              <span className="text-sm text-[var(--color-muted-foreground)] line-through">
                 ₩{product.originalPrice.toLocaleString()}
               </span>
-              <span className="text-sm font-medium text-destructive">
+              <span className="text-sm font-medium text-[var(--color-destructive)]">
                 -{discountPercent}%
               </span>
             </>
@@ -254,13 +255,13 @@ function ProductCard({ product }: ProductCardProps) {
 // Main Products Section Export
 export function ProductsSection() {
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section className="py-28 relative overflow-hidden bg-[var(--color-background)]">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-[#FFFBF8] to-[#FFF5F7]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-background)_0%,var(--color-dream-50)_100%)]" />
 
       {/* Decorative Elements */}
-      <div className="absolute top-[10%] right-[5%] w-[300px] h-[300px] bg-[#FFE8EE] rounded-full blur-[100px] opacity-40" />
-      <div className="absolute bottom-[10%] left-[5%] w-[400px] h-[400px] bg-[#F3E8FF] rounded-full blur-[120px] opacity-30" />
+      <div className="absolute top-[10%] right-[5%] w-[300px] h-[300px] bg-[var(--color-love-50)] rounded-full blur-[100px] opacity-40" />
+      <div className="absolute bottom-[10%] left-[5%] w-[400px] h-[400px] bg-[var(--color-magic-50)] rounded-full blur-[120px] opacity-30" />
       <span className="absolute top-[15%] left-[8%] text-4xl opacity-15">✧</span>
       <span className="absolute top-[25%] right-[12%] text-3xl opacity-10">♡</span>
       <span className="absolute bottom-[20%] right-[8%] text-3xl opacity-15">🎀</span>
@@ -268,16 +269,16 @@ export function ProductsSection() {
       <div className="container relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <div className="inline-flex items-center gap-3 rounded-full px-5 py-2 shadow-sm border bg-white/80 backdrop-blur-sm border-[#FFE8EE]">
+          <div className="inline-flex items-center gap-3 rounded-full px-5 py-2 shadow-sm border bg-white/80 backdrop-blur-sm border-[var(--color-love-100)]">
             <span className="text-xl opacity-60">✧</span>
             <span className="text-2xl">🧸</span>
             <span className="text-xl opacity-60">✧</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--color-foreground)]">
             Curated Pleasure
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-[var(--color-muted-foreground)] text-lg">
             TeddyBear&apos;s Room의 신상품을 만나보세요
           </p>
         </div>
@@ -293,11 +294,11 @@ export function ProductsSection() {
         <div className="text-center">
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-medium transition-all duration-300 hover:-translate-y-1 bg-gradient-to-r from-[#FFB5C5] to-[#E8A8C8] text-white shadow-lg shadow-pink-200/50 hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-medium transition-all duration-300 hover:-translate-y-1 bg-[var(--gradient-magic)] text-white shadow-lg shadow-[var(--color-primary)]/30 hover:shadow-xl"
           >
             View All Products
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         </div>

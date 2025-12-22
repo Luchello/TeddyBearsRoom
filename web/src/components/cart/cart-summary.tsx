@@ -57,11 +57,13 @@ export function CartSummary({
   return (
     <div
       className={cn(
-        "rounded-2xl border bg-card p-6",
+        "card-whimsy p-6 bg-white/80 backdrop-blur-md border-[var(--color-border)]",
         className
       )}
     >
-      <h2 className="font-bold text-lg mb-4">주문 요약</h2>
+      <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+        <span>🧾</span> 주문 요약
+      </h2>
 
       {isEmpty ? (
         <p className="text-muted-foreground text-center py-8">
@@ -120,7 +122,7 @@ export function CartSummary({
 
             {totals.shipping > 0 && (
               <p className="text-xs text-muted-foreground">
-                {formatPrice(30000 - totals.subtotal)} 더 구매 시 무료배송
+                {formatPrice(totals.freeShippingThreshold - totals.subtotal)} 더 구매 시 무료배송
               </p>
             )}
           </div>
@@ -161,8 +163,8 @@ export function CartSummary({
                     {appliedCoupon.discountType === "PERCENTAGE"
                       ? `${appliedCoupon.discountValue}% 할인`
                       : appliedCoupon.discountType === "FREE_SHIPPING"
-                      ? "무료배송"
-                      : `${appliedCoupon.discountValue.toLocaleString()}원 할인`}
+                        ? "무료배송"
+                        : `${appliedCoupon.discountValue.toLocaleString()}원 할인`}
                   </p>
                 </div>
                 <button
@@ -190,8 +192,8 @@ export function CartSummary({
 
           {/* Checkout Button */}
           {showCheckoutButton && (
-            <Button className="w-full mt-6" size="lg" asChild>
-              <Link href="/checkout">결제하기</Link>
+            <Button className="w-full mt-6" size="lg" variant="bubbly" asChild>
+              <Link href="/checkout">결제하기 ✨</Link>
             </Button>
           )}
 

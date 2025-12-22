@@ -4,19 +4,24 @@
  */
 
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import * as React from 'react';
+import { vi, beforeEach } from 'vitest';
 import type { ReactNode } from 'react';
 
 // Type definitions for mocks
 interface MockImageProps {
   src: string;
   alt: string;
+  fill?: boolean;
+  priority?: boolean;
+  style?: React.CSSProperties;
   [key: string]: unknown;
 }
 
 interface MockLinkProps {
   href: string;
   children?: ReactNode;
+  prefetch?: boolean;
   [key: string]: unknown;
 }
 
@@ -49,16 +54,18 @@ vi.mock('next/navigation', () => ({
 
 // Mock Next.js Image
 vi.mock('next/image', () => ({
-  default: ({ src, alt, ...props }: MockImageProps) => {
-
-    return { src, alt, ...props };
+  default: ({ fill, ...props }: MockImageProps) => {
+    return React.createElement('img', {
+      ...props,
+      style: fill ? { position: 'absolute', height: '100%', width: '100%', top: 0, left: 0 } : props.style
+    });
   },
 }));
 
 // Mock Next.js Link
 vi.mock('next/link', () => ({
-  default: (props: MockLinkProps) => {
-    return props;
+  default: ({ children, href, ...props }: MockLinkProps) => {
+    return React.createElement('a', { ...props, href }, children);
   },
 }));
 
@@ -110,22 +117,28 @@ class MockIntersectionObserver implements IntersectionObserver {
   readonly rootMargin: string = '';
   readonly thresholds: ReadonlyArray<number> = [];
 
-  constructor(_callback: IntersectionObserverCallback, _options?: IntersectionObserverInit) {}
-  disconnect(): void {}
-  observe(_target: Element): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) { }
+  disconnect(): void { }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  observe(target: Element): void { }
   takeRecords(): IntersectionObserverEntry[] {
     return [];
   }
-  unobserve(_target: Element): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  unobserve(target: Element): void { }
 }
 global.IntersectionObserver = MockIntersectionObserver;
 
 // Mock ResizeObserver
 class MockResizeObserver implements ResizeObserver {
-  constructor(_callback: ResizeObserverCallback) {}
-  disconnect(): void {}
-  observe(_target: Element, _options?: ResizeObserverOptions): void {}
-  unobserve(_target: Element): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(callback: ResizeObserverCallback) { }
+  disconnect(): void { }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  observe(target: Element, options?: ResizeObserverOptions): void { }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  unobserve(target: Element): void { }
 }
 global.ResizeObserver = MockResizeObserver;
 

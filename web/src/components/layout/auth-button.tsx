@@ -26,7 +26,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 // ============================================================
 // Hydration Pattern - Prevents SSR/CSR mismatch for Radix
 // ============================================================
-const emptySubscribe = () => () => {};
+const emptySubscribe = () => () => { };
 function useHydrated() {
   return React.useSyncExternalStore(
     emptySubscribe,
@@ -175,7 +175,7 @@ export function AuthButton({ className }: AuthButtonProps) {
   // Unauthenticated - show login button
   if (!isAuthenticated) {
     return (
-      <Button variant="outline" size="sm" asChild className={className}>
+      <Button variant="bubbly" size="sm" asChild className={className}>
         <Link href="/login">로그인</Link>
       </Button>
     );

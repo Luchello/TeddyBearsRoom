@@ -159,12 +159,15 @@ export function LoginForm({ className, redirectUrl = "/" }: LoginFormProps) {
   };
 
   return (
-    <div className={cn("w-full max-w-md mx-auto", className)}>
+    <div className={cn("w-full max-w-md mx-auto card-whimsy p-8 bg-white/70 backdrop-blur-md", className)}>
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold">로그인</h1>
-        <p className="text-muted-foreground mt-2">
-          TeddyBear&apos;s Room에 오신 것을 환영합니다
+        <div className="w-20 h-20 mx-auto mb-4 text-5xl flex items-center justify-center animate-bounce-soft">
+          ☁️
+        </div>
+        <h1 className="text-2xl font-bold text-[var(--color-foreground)]">로그인</h1>
+        <p className="text-[var(--color-muted-foreground)] mt-2">
+          TeddyBear&apos;s Room에 오신 것을 환영합니다 🎀
         </p>
       </div>
 

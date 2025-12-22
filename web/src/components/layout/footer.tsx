@@ -106,7 +106,7 @@ const PaymentIcon = ({ type }: { type: string }) => {
       return (
         <div className="w-12 h-8 rounded bg-[#FEE500] flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E">
-            <path d="M12 3C6.477 3 2 6.463 2 10.714c0 2.69 1.72 5.06 4.307 6.424-.19.712-.687 2.57-.787 2.966-.123.488.18.482.377.35.155-.104 2.465-1.672 3.46-2.356.855.128 1.74.193 2.643.193 5.523 0 10-3.463 10-7.577C22 6.463 17.523 3 12 3z"/>
+            <path d="M12 3C6.477 3 2 6.463 2 10.714c0 2.69 1.72 5.06 4.307 6.424-.19.712-.687 2.57-.787 2.966-.123.488.18.482.377.35.155-.104 2.465-1.672 3.46-2.356.855.128 1.74.193 2.643.193 5.523 0 10-3.463 10-7.577C22 6.463 17.523 3 12 3z" />
           </svg>
         </div>
       );
@@ -141,7 +141,7 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer className={cn("border-t bg-muted/30", className)}>
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-[#FFF5F7] via-[#FFFBF8] to-[#F3E8FF]">
+      <div className="bg-[linear-gradient(90deg,var(--color-love-50)_0%,var(--color-dream-50)_50%,var(--color-magic-50)_100%)]">
         <div className="container py-12">
           <div className="max-w-2xl mx-auto text-center space-y-4">
             <div className="inline-flex items-center gap-2 text-3xl">
@@ -164,7 +164,8 @@ export function Footer({ className }: FooterProps) {
               />
               <Button
                 type="submit"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB5C5] to-[#E8A8C8] text-white font-medium hover:shadow-lg transition-all"
+                variant="bubbly"
+                className="px-6 py-3"
               >
                 {isSubscribed ? "구독 완료! ✓" : "구독하기"}
               </Button>

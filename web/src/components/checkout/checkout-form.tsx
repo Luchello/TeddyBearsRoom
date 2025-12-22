@@ -149,8 +149,10 @@ export function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-8", className)}>
       {/* Shipping Information */}
-      <section>
-        <h2 className="text-lg font-bold mb-4">배송 정보</h2>
+      <section className="card-whimsy p-6 bg-white/70">
+        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+          <span>🚚</span> 배송 정보
+        </h2>
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -290,8 +292,10 @@ export function CheckoutForm({
       <Separator />
 
       {/* Payment Method */}
-      <section>
-        <h2 className="text-lg font-bold mb-4">결제 수단</h2>
+      <section className="card-whimsy p-6 bg-white/70">
+        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+          <span>💳</span> 결제 수단
+        </h2>
         <RadioGroup
           value={formData.paymentMethod}
           onValueChange={(value) =>
@@ -328,8 +332,10 @@ export function CheckoutForm({
       <Separator />
 
       {/* Agreements */}
-      <section>
-        <h2 className="text-lg font-bold mb-4">약관 동의</h2>
+      <section className="card-whimsy p-6 bg-white/70">
+        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+          <span>📝</span> 약관 동의
+        </h2>
         <div className="space-y-3">
           <Checkbox
             label="주문 내용을 확인했으며, 결제에 동의합니다 (필수)"
@@ -353,10 +359,11 @@ export function CheckoutForm({
       <Button
         type="submit"
         size="lg"
+        variant="bubbly"
         className="w-full"
         disabled={!canSubmit || isLoading}
       >
-        {isLoading ? "처리 중..." : "결제하기"}
+        {isLoading ? "처리 중..." : "결제하기 ✨"}
       </Button>
     </form>
   );

@@ -18,7 +18,7 @@ import {
   FREE_SHIPPING_THRESHOLD,
   INNER_CIRCLE_FREE_SHIPPING_THRESHOLD,
   SHIPPING_FEE,
-} from "@/types/cart";
+} from "@/config/cart";
 import { logger } from "@/lib/logger";
 
 // ============================================================

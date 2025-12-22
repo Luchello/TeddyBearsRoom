@@ -43,7 +43,12 @@ function RegisterContent() {
 
 function RegisterSkeleton() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[var(--color-background)]">
+      {/* Background Decorations */}
+      <div className="absolute top-[10%] left-[5%] text-6xl opacity-20 animate-float" style={{ animationDelay: '0s' }}>☁️</div>
+      <div className="absolute bottom-[20%] right-[10%] text-6xl opacity-20 animate-float" style={{ animationDelay: '2s' }}>☁️</div>
+      <div className="absolute top-[30%] right-[20%] w-64 h-64 bg-[var(--color-love-50)] rounded-full blur-[80px] opacity-40" />
+      <div className="absolute bottom-[10%] left-[10%] w-80 h-80 bg-[var(--color-dream-50)] rounded-full blur-[100px] opacity-40" />
       <div className="w-full max-w-md space-y-6 p-6">
         <Skeleton className="h-8 w-32" />
         <Skeleton className="h-10 w-full" />

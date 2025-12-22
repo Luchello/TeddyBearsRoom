@@ -21,7 +21,9 @@ export default function CartPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">장바구니</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-[var(--color-foreground)]">
+            <span className="mr-2">🛒</span>나의 보물 상자
+          </h1>
           {!isEmpty && (
             <p className="text-muted-foreground">
               {items.length}개의 상품이 담겨 있습니다
@@ -37,35 +39,20 @@ export default function CartPage() {
 
       {isEmpty ? (
         <div className="flex flex-col items-center justify-center py-20">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="80"
-            height="80"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-muted-foreground/50 mb-6"
-          >
-            <circle cx="8" cy="21" r="1" />
-            <circle cx="19" cy="21" r="1" />
-            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
-          </svg>
-          <h2 className="text-xl font-semibold mb-2">장바구니가 비어 있어요</h2>
-          <p className="text-muted-foreground mb-6">
-            마음에 드는 상품을 담아보세요
+          <div className="w-24 h-24 mb-6 text-6xl animate-bounce-soft">☁️</div>
+          <h2 className="text-xl font-semibold mb-2 text-[var(--color-foreground)]">보물 상자가 비어 있어요!</h2>
+          <p className="text-[var(--color-muted-foreground)] mb-6">
+            환상적인 아이템으로 상자를 채워보세요 ✨
           </p>
-          <Button asChild>
-            <Link href="/products">쇼핑하러 가기</Link>
+          <Button asChild variant="bubbly" className="px-8">
+            <Link href="/products">보물 찾으러 가기 💎</Link>
           </Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="rounded-2xl border bg-card p-6">
+            <div className="card-whimsy p-6 bg-white/70">
               {items.map((item, index) => (
                 <div key={item.id}>
                   <CartItem item={item} />

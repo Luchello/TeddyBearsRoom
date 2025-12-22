@@ -75,7 +75,11 @@ function LoginSkeleton() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center p-4">
+    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute top-[5%] right-[5%] text-4xl opacity-10 animate-float" style={{ animationDelay: '1s' }}>✨</div>
+      <div className="absolute bottom-[10%] left-[5%] text-4xl opacity-10 animate-float" style={{ animationDelay: '3s' }}>✨</div>
+
       <Suspense fallback={<LoginSkeleton />}>
         <LoginContent />
       </Suspense>

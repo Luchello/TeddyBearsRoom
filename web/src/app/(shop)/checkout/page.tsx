@@ -71,11 +71,32 @@ export default function CheckoutPage() {
   return (
     <div className="container py-8">
       {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">결제하기</h1>
-        <p className="text-muted-foreground">
-          배송 정보와 결제 수단을 입력해주세요
+      {/* Page Header */}
+      <div className="mb-8 text-center">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-[var(--color-foreground)]">
+          <span className="mr-2">🛍️</span>결제하기
+        </h1>
+        <p className="text-[var(--color-muted-foreground)]">
+          안전하고 행복한 쇼핑되세요 💖
         </p>
+      </div>
+
+      {/* Simple Progress Bar (Stepping Stones) */}
+      <div className="flex justify-center items-center gap-4 mb-10">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-bold shadow-lg">1</div>
+          <span className="text-xs font-medium text-[var(--color-primary)]">배송 정보</span>
+        </div>
+        <div className="w-12 h-1 bg-[var(--color-love-100)] rounded-full" />
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[var(--color-muted)] text-[var(--color-muted-foreground)] flex items-center justify-center font-bold">2</div>
+          <span className="text-xs font-medium text-[var(--color-muted-foreground)]">결제</span>
+        </div>
+        <div className="w-12 h-1 bg-[var(--color-love-100)] rounded-full" />
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[var(--color-muted)] text-[var(--color-muted-foreground)] flex items-center justify-center font-bold">3</div>
+          <span className="text-xs font-medium text-[var(--color-muted-foreground)]">완료</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -91,8 +112,10 @@ export default function CheckoutPage() {
         <div className="lg:col-span-1">
           <div className="sticky top-24 space-y-6">
             {/* Cart Items Preview */}
-            <div className="rounded-2xl border bg-card p-6">
-              <h3 className="font-bold mb-4">주문 상품</h3>
+            <div className="card-whimsy bg-white/70 p-6">
+              <h3 className="font-bold mb-4 flex items-center gap-2">
+                <span>📦</span> 주문 상품
+              </h3>
               <ScrollArea className="max-h-[300px]">
                 <div className="space-y-3">
                   {items.map((item) => (

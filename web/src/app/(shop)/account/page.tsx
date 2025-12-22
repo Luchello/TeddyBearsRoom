@@ -211,43 +211,48 @@ export default function AccountPage() {
     <div className="container py-8">
       {/* Welcome Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-2xl font-bold">{mockUser.name}님, 안녕하세요!</h1>
-            {mockUser.isInnerCircle && (
-              <Badge className="bg-tbr-lavender text-tbr-lavender-foreground">
-                이너 써클
-              </Badge>
-            )}
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-full bg-[var(--color-love-100)] flex items-center justify-center text-3xl animate-bounce-soft border-4 border-white shadow-md">
+            📔
           </div>
-          <p className="text-muted-foreground">{mockUser.email}</p>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <h1 className="text-2xl font-bold text-[var(--color-foreground)]">{mockUser.name}님의 비밀 다이어리</h1>
+              {mockUser.isInnerCircle && (
+                <Badge className="bg-[var(--color-magic-500)] text-white hover:bg-[var(--color-magic-600)]">
+                  이너 써클
+                </Badge>
+              )}
+            </div>
+            <p className="text-[var(--color-muted-foreground)]">{mockUser.email}</p>
+          </div>
         </div>
-        <Button variant="outline" asChild>
-          <Link href="/account/profile">정보 수정</Link>
+        <Button variant="outline" asChild className="rounded-full border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors">
+          <Link href="/account/profile">프로필 꾸미기 ✏️</Link>
         </Button>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="rounded-2xl border bg-card p-4 text-center">
-          <p className="text-2xl font-bold">{mockStats.totalOrders}</p>
-          <p className="text-sm text-muted-foreground">총 주문</p>
+        <div className="rounded-3xl border-none bg-[var(--color-dream-50)] p-4 text-center shadow-sm hover:scale-105 transition-transform">
+          <p className="text-2xl font-bold text-[var(--color-secondary-foreground)]">{mockStats.totalOrders}</p>
+          <p className="text-sm text-[var(--color-muted-foreground)]">총 주문</p>
         </div>
-        <div className="rounded-2xl border bg-card p-4 text-center">
-          <p className="text-2xl font-bold">
+        <div className="rounded-3xl border-none bg-[var(--color-love-50)] p-4 text-center shadow-sm hover:scale-105 transition-transform">
+          <p className="text-2xl font-bold text-[var(--color-primary-foreground)]">
             {(mockStats.totalSpent / 10000).toFixed(1)}만원
           </p>
-          <p className="text-sm text-muted-foreground">누적 구매</p>
+          <p className="text-sm text-[var(--color-muted-foreground)]">누적 구매</p>
         </div>
-        <div className="rounded-2xl border bg-card p-4 text-center">
-          <p className="text-2xl font-bold text-tbr-pink-foreground">
+        <div className="rounded-3xl border-none bg-[var(--color-magic-50)] p-4 text-center shadow-sm hover:scale-105 transition-transform">
+          <p className="text-2xl font-bold text-[var(--color-magic-600)]">
             {(mockStats.savedAmount / 1000).toFixed(0)}천원
           </p>
-          <p className="text-sm text-muted-foreground">절약 금액</p>
+          <p className="text-sm text-[var(--color-muted-foreground)]">절약 금액 💰</p>
         </div>
-        <div className="rounded-2xl border bg-card p-4 text-center">
-          <p className="text-2xl font-bold">{mockStats.wishlistCount}</p>
-          <p className="text-sm text-muted-foreground">위시리스트</p>
+        <div className="rounded-3xl border-none bg-[var(--color-fresh-50)] p-4 text-center shadow-sm hover:scale-105 transition-transform">
+          <p className="text-2xl font-bold text-[var(--color-fresh-600)]">{mockStats.wishlistCount}</p>
+          <p className="text-sm text-[var(--color-muted-foreground)]">위시리스트</p>
         </div>
       </div>
 
