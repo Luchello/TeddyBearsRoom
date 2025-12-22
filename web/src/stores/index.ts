@@ -23,9 +23,6 @@ export {
 // Filter Store
 export {
   useFilterStore,
-  useProductSort,
-  useProductView,
-  useActiveFilters,
   SORT_OPTIONS,
   type SortOption,
   type ViewMode,

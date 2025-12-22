@@ -199,23 +199,5 @@ export const useFilterStore = create<FilterState>()(
   )
 );
 
-// Selector hooks
-export const useProductSort = () =>
-  useFilterStore((state) => ({
-    sortOption: state.sortOption,
-    setSortOption: state.setSortOption,
-    getSortParams: state.getSortParams,
-  }));
-
-export const useProductView = () =>
-  useFilterStore((state) => ({
-    viewMode: state.viewMode,
-    setViewMode: state.setViewMode,
-  }));
-
-export const useActiveFilters = () =>
-  useFilterStore((state) => ({
-    hasActiveFilters: state.hasActiveFilters,
-    getActiveFilterCount: state.getActiveFilterCount,
-    clearAll: state.clearAllFilters,
-  }));
+// Note: Selector hooks removed as unused. Use useFilterStore directly.
+// If needed in future, recreate with: useFilterStore((state) => ({ ... }))

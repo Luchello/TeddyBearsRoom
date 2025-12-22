@@ -20,7 +20,7 @@ import {
   INNER_CIRCLE_FREE_SHIPPING_THRESHOLD,
   INNER_CIRCLE_DISCOUNT_RATE,
   SHIPPING_FEE,
-} from "@/types/cart";
+} from "@/config/cart";
 import type { Product, ProductVariant } from "@/types/product";
 import { generateId } from "@/lib/utils";
 
@@ -97,10 +97,10 @@ export const useCartStore = create<CartStore>()(
             imageUrl,
             variant: variant
               ? {
-                  id: variant.id,
-                  name: variant.name,
-                  options: variant.options,
-                }
+                id: variant.id,
+                name: variant.name,
+                options: variant.options,
+              }
               : null,
           };
 
@@ -296,7 +296,7 @@ export const useCartStore = create<CartStore>()(
             case "PERCENTAGE":
               couponDiscount = Math.round(
                 (subtotal - innerCircleDiscount) *
-                  (appliedCoupon.discountValue / 100)
+                (appliedCoupon.discountValue / 100)
               );
               break;
             case "FIXED_AMOUNT":
@@ -414,13 +414,5 @@ export const useCartActions = () =>
     setIsOpen: state.setIsOpen,
   }));
 
-// Ambassador Free Shipping Selectors
-export const useAmbassadorShipping = () =>
-  useCartStore((state) => state.ambassadorShipping);
-
-export const useAmbassadorShippingActions = () =>
-  useCartStore((state) => ({
-    checkAmbassadorFreeShipping: state.checkAmbassadorFreeShipping,
-    applyAmbassadorFreeShipping: state.applyAmbassadorFreeShipping,
-    resetAmbassadorShipping: state.resetAmbassadorShipping,
-  }));
+// Note: Ambassador shipping selectors removed as unused.
+// Access via useCartStore((state) => state.ambassadorShipping) if needed.
