@@ -22,12 +22,12 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground",
         outline: "text-foreground border-border",
         // TBR Specific variants
-        new: "border-transparent bg-mint-200 text-mint-800",
-        sale: "border-transparent bg-pink-200 text-pink-800",
+        new: "border-transparent bg-secondary text-secondary-foreground",
+        sale: "border-transparent bg-primary text-primary-foreground",
         soldout: "border-transparent bg-muted text-muted-foreground",
-        premium: "border-transparent bg-lavender-200 text-lavender-800",
+        premium: "badge-silk",
         innerCircle:
-          "border-transparent bg-gradient-to-r from-lavender-200 to-pink-200 text-foreground",
+          "border-transparent bg-gradient-to-r from-primary/30 to-accent/30 text-foreground",
       },
       size: {
         default: "px-2.5 py-0.5 text-xs",
@@ -44,7 +44,7 @@ const badgeVariants = cva(
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+  VariantProps<typeof badgeVariants> {
   removable?: boolean;
   onRemove?: () => void;
 }
@@ -96,12 +96,12 @@ function Badge({
 // Status Badge - For order/subscription status
 interface StatusBadgeProps extends Omit<BadgeProps, "variant"> {
   status:
-    | "pending"
-    | "processing"
-    | "completed"
-    | "cancelled"
-    | "active"
-    | "inactive";
+  | "pending"
+  | "processing"
+  | "completed"
+  | "cancelled"
+  | "active"
+  | "inactive";
 }
 
 function StatusBadge({ status, className, ...props }: StatusBadgeProps) {
@@ -138,8 +138,8 @@ function DiscountBadge({
   const displayText = discountPercent
     ? `-${discountPercent}%`
     : discountAmount
-    ? `-₩${discountAmount.toLocaleString()}`
-    : null;
+      ? `-₩${discountAmount.toLocaleString()}`
+      : null;
 
   if (!displayText) return null;
 

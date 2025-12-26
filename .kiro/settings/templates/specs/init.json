@@ -1,0 +1,18 @@
+{
+  "name": "{{FEATURE_NAME}}",
+  "description": "{{PROJECT_DESCRIPTION}}",
+  "language": "ko",
+  "version": "1.0.0",
+  "createdAt": "{{TIMESTAMP}}",
+  "status": {
+    "requirements": "pending",
+    "design": "pending",
+    "tasks": "pending",
+    "implementation": "pending"
+  },
+  "phases": [
+    { "name": "requirements", "file": "requirements.md", "status": "pending" },
+    { "name": "design", "file": "design.md", "status": "pending" },
+    { "name": "tasks", "file": "tasks.md", "status": "pending" }
+  ]
+}

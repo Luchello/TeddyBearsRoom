@@ -141,33 +141,34 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer className={cn("border-t bg-muted/30", className)}>
       {/* Newsletter Section */}
-      <div className="bg-[linear-gradient(90deg,var(--color-love-50)_0%,var(--color-dream-50)_50%,var(--color-magic-50)_100%)]">
-        <div className="container py-12">
-          <div className="max-w-2xl mx-auto text-center space-y-4">
+      <div className="bg-silk-texture silk-texture bg-[var(--color-muted)]">
+        <div className="container py-16">
+          <div className="max-w-2xl mx-auto text-center space-y-6">
             <div className="inline-flex items-center gap-2 text-3xl">
               <span>💌</span>
             </div>
-            <h3 className="text-2xl font-bold text-foreground">
+            <h3 className="text-3xl font-bold text-foreground">
               뉴스레터 구독하기
             </h3>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-lg">
               새로운 상품과 특별한 혜택을 가장 먼저 받아보세요
             </p>
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-4">
               <input
                 type="email"
                 placeholder="이메일 주소를 입력하세요"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 px-4 py-3 rounded-xl border border-pink-200 bg-white/80 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all"
+                className="flex-1 px-5 py-3 rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium"
                 required
               />
               <Button
                 type="submit"
-                variant="bubbly"
-                className="px-6 py-3"
+                variant="default"
+                size="lg"
+                className="rounded-full px-8"
               >
-                {isSubscribed ? "구독 완료! ✓" : "구독하기"}
+                {isSubscribed ? "구독 완료!" : "구독하기"}
               </Button>
             </form>
           </div>

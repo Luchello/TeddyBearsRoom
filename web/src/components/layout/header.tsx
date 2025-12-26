@@ -25,7 +25,7 @@ import { AuthButton } from "@/components/layout/auth-button";
 // Client-Only Wrapper - Prevents hydration mismatch for Radix components
 // Uses useSyncExternalStore pattern to avoid ESLint set-state-in-effect warning
 // ============================================================
-const emptySubscribe = () => () => {};
+const emptySubscribe = () => () => { };
 function useHydrated() {
   return React.useSyncExternalStore(
     emptySubscribe,
@@ -117,7 +117,7 @@ interface HeaderProps {
 
 export function Header({ className }: HeaderProps) {
   const isHydrated = useHydrated();
-  const { isMobileMenuOpen, setMobileMenuOpen, isSearchOpen, setSearchOpen } =
+  const { isMobileMenuOpen, setMobileMenuOpen, isSearchOpen, setSearchOpen, isDiscreetMode, setDiscreetMode } =
     useUIStore();
   const cartItems = useCartStore((state) => state.items);
   const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -229,6 +229,49 @@ export function Header({ className }: HeaderProps) {
                 <HeartIcon />
                 <span className="sr-only">위시리스트</span>
               </Link>
+            </Button>
+
+            {/* Discreet Mode Toggle */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setDiscreetMode(!isDiscreetMode)}
+              title={isDiscreetMode ? "Discreet Mode Off" : "Discreet Mode On"}
+            >
+              {isDiscreetMode ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                  <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                  <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                  <line x1="2" x2="22" y1="2" y2="22" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              )}
+              <span className="sr-only">Discreet Mode</span>
             </Button>
 
             {/* Auth Button - Login/User Menu */}

@@ -13,31 +13,30 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Primary - Beige brand color
+        // Primary - Rose Skin
         default:
-          "bg-primary text-primary-foreground shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] hover:-translate-y-0.5 active:translate-y-0",
-        // Secondary - Mint accent
+          "bg-primary text-primary-foreground shadow-md hover:bg-primary/90 hover:-translate-y-0.5 active:translate-y-0",
+        // Secondary - Soft Sand
         secondary:
-          "bg-secondary text-secondary-foreground shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] hover:-translate-y-0.5 active:translate-y-0",
-        // Accent - Pink
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        // Accent - Champagne
         accent:
-          "bg-accent text-accent-foreground shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] hover:-translate-y-0.5 active:translate-y-0",
-        // Destructive - Error/Delete actions
+          "bg-accent text-accent-foreground shadow-sm hover:bg-accent/80",
+        // Destructive
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        // Outline - Bordered style
+        // Outline
         outline:
-          "border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:border-accent",
-        // Ghost - Minimal style
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        // Link - Text only
+          "border-2 border-border bg-transparent hover:bg-muted hover:text-foreground",
+        // Ghost
+        ghost: "hover:bg-muted hover:text-foreground",
+        // Link
         link: "text-primary underline-offset-4 hover:underline",
-        // Soft - Muted background
+        // Soft
         soft: "bg-muted text-muted-foreground hover:bg-muted/80",
-        // Premium - For Inner Circle / special actions
-        premium:
-          "bg-gradient-to-r from-lavender-300 to-pink-300 text-foreground shadow-[var(--shadow-medium)] hover:shadow-[var(--shadow-large)] hover:-translate-y-0.5 active:translate-y-0",
-        // Bubbly - Whimsyshire theme default
+        // Premium - Discreet elegance
+        premium: "btn-premium",
+        // Bubbly - Playful gradient style
         bubbly: "btn-bubbly",
       },
       size: {

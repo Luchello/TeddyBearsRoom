@@ -5,116 +5,91 @@
 
 "use client";
 
-import { useState, useCallback, memo } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProductsSection } from "./products-section";
 import { HeroCircle } from "./hero-circle";
 
 // ============================================================
-// ICONS
-// ============================================================
-const SparkleIcon = memo(function SparkleIcon() {
-  const [hasError, setHasError] = useState(false);
-  if (hasError) return null;
-  return (
-    <Image
-      src="/sparkle.svg"
-      alt=""
-      width={40}
-      height={40}
-      className="inline-block w-8 h-8 sm:w-10 sm:h-10 animate-pulse"
-      onError={() => setHasError(true)}
-    />
-  );
-});
-
-// ============================================================
 // HERO SECTION
 // ============================================================
 function HeroSection() {
   return (
-    <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-[var(--color-dream-50)]">
+    <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-[var(--color-background)]">
       {/* Dynamic Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--color-love-50)_0%,var(--color-dream-100)_50%,var(--color-magic-50)_100%)] opacity-80" />
+      <div className="absolute inset-0 bg-silk-texture silk-texture opacity-40" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--color-secondary)_0%,transparent_50%),radial-gradient(circle_at_bottom_left,var(--color-accent)_0%,transparent_50%)] opacity-30" />
 
-      {/* Cloud Decoration */}
+      {/* Premium Decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[10%] left-[5%] w-[500px] h-[500px] rounded-full bg-[var(--color-love-200)] opacity-30 blur-[120px] animate-float" />
-        <div className="absolute bottom-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[var(--color-dream-200)] opacity-30 blur-[150px] animate-float" style={{ animationDelay: '-2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[var(--color-magic-200)] opacity-20 blur-[100px]" />
-
-        {/* Whimsy Particles */}
-        <div className="absolute top-[15%] left-[10%] text-4xl opacity-40 animate-bounce-soft">☁️</div>
-        <div className="absolute bottom-[20%] right-[15%] text-4xl opacity-40 animate-bounce-soft" style={{ animationDelay: '1s' }}>✨</div>
-        <div className="absolute top-[25%] right-[25%] text-2xl opacity-60 animate-pulse text-[var(--color-primary)]">♥</div>
+        <div className="absolute top-[10%] left-[5%] w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px] animate-float" />
+        <div className="absolute bottom-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-accent/10 blur-[150px] animate-float" style={{ animationDelay: '-2s' }} />
       </div>
 
       <div className="container relative z-10 px-6 sm:px-8 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
-          <div className="text-center lg:text-left space-y-8">
-            <div className="inline-flex animate-bounce-soft">
-              <Badge className="badge-cloud shadow-lg backdrop-blur-md">
-                <span className="mr-2">🌈</span>
-                Welcome to Whimsyshire
-                <span className="ml-2">☁️</span>
+          <div className="text-center lg:text-left space-y-10">
+            <div className="inline-flex animate-reveal">
+              <Badge className="badge-silk shadow-sm px-6 py-2">
+                <span className="mr-2 opacity-60">✧</span>
+                PREMIUM ADULT LIFESTYLE
+                <span className="ml-2 opacity-60">✧</span>
               </Badge>
             </div>
 
-            <div className="space-y-4">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-[var(--color-foreground)]">
-                <span className="block opacity-80">Dreamy Soft,</span>
-                <span className="flex items-center gap-3 text-rainbow">
-                  Wildly Cute.
-                  <SparkleIcon />
+            <div className="space-y-6">
+              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight leading-[1] text-[var(--color-foreground)]">
+                <span className="block opacity-90">Skin Deep,</span>
+                <span className="flex items-center gap-3 text-premium italic font-serif">
+                  Silk Smooth.
                 </span>
               </h1>
             </div>
 
-            <p className="text-lg sm:text-xl text-[var(--color-foreground)]/70 leading-relaxed max-w-lg mx-auto lg:mx-0 font-light">
-              솜사탕 같은 일상 속 숨겨진 환상의 세계.
+            <p className="text-xl sm:text-2xl text-[var(--color-foreground)]/80 leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+              당신의 가장 사적인 순간을 위한 가장 아름다운 선택.
               <br />
-              <strong className="text-[var(--color-primary)]">TeddyBear&apos;s Room</strong>에서 마법 같은 편안함을 만나보세요.
+              <strong className="text-[var(--color-primary)] font-semibold">TeddyBear&quot;s Room</strong>에서 조용한 혁명을 경험하세요.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6">
               <Button
-                size="lg"
-                variant="bubbly"
-                className="text-base px-10 py-6"
+                size="xl"
+                variant="default"
+                className="rounded-full px-12 h-16 text-lg"
                 asChild
               >
                 <Link href="/products" className="flex items-center gap-3">
-                  Start Dreaming
-                  <span className="text-xl">🦄</span>
+                  Shop Collection
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </Link>
               </Button>
               <Button
-                size="lg"
+                size="xl"
                 variant="outline"
-                className="rounded-full border-2 border-[var(--color-magic-200)] text-[var(--color-magic-500)] hover:bg-[var(--color-magic-50)] px-10 py-6 text-base"
+                className="rounded-full px-12 h-16 text-lg border-primary/20 hover:border-primary"
                 asChild
               >
-                <Link href="/about">Our Story</Link>
+                <Link href="/about">Our Philosophy</Link>
               </Button>
             </div>
           </div>
 
           {/* Right Visual */}
-          <div className="relative hidden lg:flex items-center justify-center">
+          <div className="relative hidden lg:flex items-center justify-center animate-reveal" style={{ animationDelay: '0.2s' }}>
             <HeroCircle />
-            {/* Extra Sparkles around HeroCircle */}
-            <div className="absolute -top-10 -right-10 text-6xl animate-pulse opacity-50">✨</div>
-            <div className="absolute -bottom-10 -left-10 text-5xl animate-bounce-soft opacity-50">🌟</div>
+            <div className="absolute -top-20 -right-20 text-[180px] font-serif italic opacity-[0.03] select-none text-primary">TBR</div>
           </div>
         </div>
       </div>
 
-      {/* Cloud Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--color-background)] to-transparent" />
+      {/* Bottom Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[var(--color-background)] to-transparent" />
     </section>
   );
 }

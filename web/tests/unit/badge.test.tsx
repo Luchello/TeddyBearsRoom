@@ -49,13 +49,13 @@ describe('Badge Component', () => {
         it('should render new variant', () => {
             render(<Badge variant="new">신상품</Badge>);
             const badge = screen.getByText('신상품');
-            expect(badge).toHaveClass('bg-mint-200');
+            expect(badge).toHaveClass('bg-secondary');
         });
 
         it('should render sale variant', () => {
             render(<Badge variant="sale">할인</Badge>);
             const badge = screen.getByText('할인');
-            expect(badge).toHaveClass('bg-pink-200');
+            expect(badge).toHaveClass('bg-primary');
         });
 
         it('should render soldout variant', () => {
@@ -67,13 +67,13 @@ describe('Badge Component', () => {
         it('should render premium variant', () => {
             render(<Badge variant="premium">프리미엄</Badge>);
             const badge = screen.getByText('프리미엄');
-            expect(badge).toHaveClass('bg-lavender-200');
+            expect(badge).toHaveClass('badge-silk');
         });
 
         it('should render innerCircle variant', () => {
             render(<Badge variant="innerCircle">이너 써클</Badge>);
             const badge = screen.getByText('이너 써클');
-            expect(badge).toHaveClass('from-lavender-200');
+            expect(badge).toHaveClass('from-primary/30');
         });
     });
 
@@ -239,7 +239,7 @@ describe('DiscountBadge Component', () => {
         it('should use sale variant', () => {
             render(<DiscountBadge discountPercent={20} />);
             const badge = screen.getByText('-20%');
-            expect(badge).toHaveClass('bg-pink-200');
+            expect(badge).toHaveClass('bg-primary');
         });
     });
 

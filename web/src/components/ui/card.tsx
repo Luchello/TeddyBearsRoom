@@ -18,13 +18,13 @@ const Card = React.forwardRef<
     className={cn(
       "rounded-2xl bg-card text-card-foreground transition-all duration-300",
       // Variants
-      variant === "default" && "border border-border shadow-[var(--shadow-soft)]",
-      variant === "glass" && "glass-card",
+      variant === "default" && "border border-border shadow-md",
+      variant === "glass" && "card-premium",
       variant === "outlined" && "border-2 border-border",
-      variant === "elevated" && "shadow-[var(--shadow-medium)]",
-      variant === "whimsy" && "card-whimsy",
+      variant === "elevated" && "shadow-xl",
+      variant === "whimsy" && "card-premium",
       // Hover effect
-      hover && "hover:shadow-[var(--shadow-large)] hover:-translate-y-1 cursor-pointer",
+      hover && "hover:shadow-2xl hover:-translate-y-1.5 cursor-pointer",
       className
     )}
     {...props}

@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Soft, Cute, Safe. Premium Adult Toy Shop.",
 };
 
+import { AgeGate, BottomNav } from "@/components/layout";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +23,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <AgeGate />
+          {children}
+          <BottomNav />
+        </QueryProvider>
       </body>
     </html>
   );

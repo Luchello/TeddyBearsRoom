@@ -9,35 +9,30 @@ import Image from "next/image";
 export function HeroCircle() {
   return (
     <div className="relative animate-float">
-      {/* Glow Ring */}
-      <div className="absolute inset-0 rounded-full blur-2xl opacity-60 scale-110 bg-[var(--gradient-rainbow-soft)]" />
+      {/* Premium Glow */}
+      <div className="absolute inset-0 rounded-full blur-3xl opacity-30 scale-125 bg-primary" />
+      <div className="absolute inset-0 rounded-full blur-2xl opacity-20 scale-110 bg-accent" />
 
-      {/* Main Circle */}
-      <div className="relative w-[340px] h-[340px] rounded-full flex items-center justify-center shadow-2xl bg-white/80 backdrop-blur-xl border border-white/50">
-        <div className="text-center">
-          {/* Logo */}
-          <div className="relative w-32 h-32 mx-auto mb-3">
+      {/* Main Container */}
+      <div className="relative w-[380px] h-[380px] rounded-full flex items-center justify-center shadow-2xl bg-card backdrop-blur-2xl border border-white/20 overflow-hidden">
+        {/* Subtle Silk Pattern */}
+        <div className="absolute inset-0 bg-silk-texture silk-texture opacity-[0.05]" />
+
+        <div className="relative z-10 text-center">
+          <div className="relative w-40 h-40 mx-auto">
             <Image
               src="/logo.png"
               alt="TeddyBear's Room"
               fill
-              sizes="128px"
-              className="object-contain drop-shadow-md"
+              sizes="160px"
+              className="object-contain drop-shadow-xl saturate-[0.8]"
               priority
             />
           </div>
         </div>
 
-        {/* Inner Glow */}
-        <div className="absolute inset-4 rounded-full bg-gradient-to-t from-[var(--color-love-50)]/30 to-transparent" />
-      </div>
-
-
-      {/* Decorative Dots */}
-      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        <span className="w-2 h-2 rounded-full bg-[var(--color-primary)]" />
-        <span className="w-2 h-2 rounded-full bg-[var(--color-magic-300)]" />
-        <span className="w-2 h-2 rounded-full bg-[var(--color-secondary)]" />
+        {/* Ambient Ring */}
+        <div className="absolute inset-0 rounded-full border border-primary/10" />
       </div>
     </div>
   );

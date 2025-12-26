@@ -42,6 +42,12 @@ interface UIState {
   theme: "light" | "dark" | "system";
   setTheme: (theme: "light" | "dark" | "system") => void;
 
+  // Privacy & Safety
+  isDiscreetMode: boolean;
+  setDiscreetMode: (isDiscreet: boolean) => void;
+  isAgeVerified: boolean;
+  setAgeVerified: (isVerified: boolean) => void;
+
   // Scroll
   isScrolled: boolean;
   setIsScrolled: (isScrolled: boolean) => void;
@@ -95,6 +101,12 @@ export const useUIStore = create<UIState>((set, get) => ({
   // Theme
   theme: "system",
   setTheme: (theme) => set({ theme }),
+
+  // Privacy & Safety
+  isDiscreetMode: false,
+  setDiscreetMode: (isDiscreet) => set({ isDiscreetMode: isDiscreet }),
+  isAgeVerified: false,
+  setAgeVerified: (isVerified) => set({ isAgeVerified: isVerified }),
 
   // Scroll
   isScrolled: false,
