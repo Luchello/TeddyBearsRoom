@@ -143,38 +143,3 @@ export async function signOut(): Promise<void> {
   await supabase.auth.signOut()
 }
 
-// ============================================
-// Convenience Functions
-// ============================================
-
-/**
- * Sign in with Kakao
- */
-export function signInWithKakao(redirectTo?: string): Promise<SocialLoginResult> {
-  return signInWithSocial('kakao', redirectTo)
-}
-
-/**
- * Sign in with Google
- */
-export function signInWithGoogle(redirectTo?: string): Promise<SocialLoginResult> {
-  return signInWithSocial('google', redirectTo)
-}
-
-// ============================================
-// Provider Information
-// ============================================
-
-/**
- * Get display information for available providers
- */
-export function getAvailableProviders(): SocialProvider[] {
-  return ['kakao', 'google']
-}
-
-/**
- * Check if a provider is supported
- */
-export function isProviderSupported(provider: string): provider is SocialProvider {
-  return ['kakao', 'google'].includes(provider)
-}
