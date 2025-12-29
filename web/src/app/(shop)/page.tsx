@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProductsSection } from "./products-section";
 import { HeroCircle } from "./hero-circle";
+import { cn } from "@/lib/utils";
 
 // ============================================================
 // HERO SECTION

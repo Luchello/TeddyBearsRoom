@@ -90,7 +90,6 @@ export function AgeGate() {
                             </button>
                             <button
                                 type="button"
-                                variant="ghost"
                                 className="w-full h-12 text-muted-foreground hover:text-foreground font-semibold transition-colors"
                                 onClick={() => window.location.href = "https://www.google.com"}
                             >
