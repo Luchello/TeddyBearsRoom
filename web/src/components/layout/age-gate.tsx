@@ -39,56 +39,76 @@ export function AgeGate() {
     if (!isMounted || isAgeVerified) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-md px-4">
-            <Card className="max-w-md w-full animate-reveal border-primary/20 shadow-2xl">
-                <CardHeader className="text-center space-y-4">
-                    <div className="mx-auto w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-4xl animate-pulse-glow">
-                        🧸
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background overflow-hidden p-4">
+            {/* Immersive Background */}
+            <div className="absolute inset-0 bg-silk-texture silk-texture opacity-[0.05] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-secondary)_0%,transparent_70%)] opacity-30 pointer-events-none" />
+
+            <div className="relative w-full max-w-lg">
+                <div className="card-premium p-8 sm:p-12 text-center space-y-8 animate-reveal">
+                    {/* Brand Icon */}
+                    <div className="relative mx-auto w-24 h-24 rounded-full bg-primary/5 flex items-center justify-center text-5xl shadow-inner-silk">
+                        <span className="animate-float">🧸</span>
+                        <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse-glow" />
                     </div>
-                    <CardTitle className="text-3xl font-bold tracking-tight">Access Restricted</CardTitle>
-                    <p className="text-muted-foreground">
-                        TeddyBear&apos;s Room은 성인 전용 서비스입니다.
-                        <br />
-                        이용을 위해 출생 연도를 입력해 주세요.
-                    </p>
-                </CardHeader>
-                <CardContent>
-                    <form id="age-gate-form" onSubmit={handleVerify} className="space-y-4">
-                        <div className="space-y-2">
-                            <Input
+
+                    <div className="space-y-4">
+                        <h1 className="text-4xl font-black tracking-tight text-foreground">
+                            Access <span className="text-premium">Restricted</span>
+                        </h1>
+                        <p className="text-muted-foreground text-lg font-medium leading-relaxed">
+                            TeddyBear&apos;s Room은 성인 전용 서비스입니다.
+                            <br />
+                            <span className="text-sm opacity-80">이용을 위해 출생 연도를 입력해 주세요.</span>
+                        </p>
+                    </div>
+
+                    <form id="age-gate-form" onSubmit={handleVerify} className="space-y-6">
+                        <div className="space-y-3">
+                            <input
                                 type="number"
-                                placeholder="YYYY (예: 1990)"
+                                placeholder="YYYY"
                                 value={birthYear}
                                 onChange={(e) => setBirthYear(e.target.value)}
-                                className="text-center text-2xl h-16 tracking-widest rounded-full border-2 focus:border-primary"
+                                className="w-full text-center text-4xl h-20 tracking-[0.2em] rounded-2xl bg-primary/5 border-2 border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all font-bold outline-none"
                                 autoFocus
                                 required
                             />
-                            {error && <p className="text-sm font-medium text-destructive text-center">{error}</p>}
+                            {error && (
+                                <p className="text-sm font-bold text-destructive animate-bounce">
+                                    {error}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col gap-4">
+                            <button
+                                type="submit"
+                                className="btn-premium w-full h-16 text-xl"
+                            >
+                                입장하기
+                            </button>
+                            <button
+                                type="button"
+                                variant="ghost"
+                                className="w-full h-12 text-muted-foreground hover:text-foreground font-semibold transition-colors"
+                                onClick={() => window.location.href = "https://www.google.com"}
+                            >
+                                나가기
+                            </button>
                         </div>
                     </form>
-                </CardContent>
-                <CardFooter className="flex flex-col gap-3">
-                    <Button
-                        form="age-gate-form"
-                        type="submit"
-                        className="w-full text-lg h-14"
-                        variant="default"
-                    >
-                        입장하기
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className="w-full"
-                        onClick={() => window.location.href = "https://www.google.com"}
-                    >
-                        나가기
-                    </Button>
-                    <p className="text-[10px] text-center text-muted-foreground mt-2">
+
+                    <p className="text-[11px] text-muted-foreground max-w-xs mx-auto opacity-60">
                         본 사이트는 쿠키를 사용하여 성인 인증 상태를 유지합니다.
+                        입장은 만 19세 이상의 성인임을 동의하는 것으로 간주됩니다.
                     </p>
-                </CardFooter>
-            </Card>
+                </div>
+
+                {/* Floating Decoration */}
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl animate-float" />
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+            </div>
         </div>
     );
 }

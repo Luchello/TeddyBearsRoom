@@ -117,90 +117,102 @@ interface HeaderProps {
 
 export function Header({ className }: HeaderProps) {
   const isHydrated = useHydrated();
+  const [isScrolled, setIsScrolled] = React.useState(false);
   const { isMobileMenuOpen, setMobileMenuOpen, isSearchOpen, setSearchOpen, isDiscreetMode, setDiscreetMode } =
     useUIStore();
   const cartItems = useCartStore((state) => state.items);
   const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
+  React.useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        "sticky top-0 z-50 w-full transition-all duration-500",
+        isScrolled
+          ? "bg-background/80 backdrop-blur-xl border-b py-2"
+          : "bg-transparent py-4",
         className
       )}
     >
       {/* Main Header */}
-      <div className="container">
+      <div className="container px-4">
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Left: Mobile Menu + Logo */}
-          <div className="flex items-center gap-2">
-            {/* Mobile Menu - Only render after hydration to prevent ID mismatch */}
+          <div className="flex items-center gap-4">
+            {/* Mobile Menu */}
             {isHydrated ? (
               <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild className="lg:hidden">
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" className="hover:bg-primary/5 rounded-full">
                     <MenuIcon />
                     <span className="sr-only">메뉴 열기</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[280px]">
-                  <SheetHeader>
-                    <SheetTitle>메뉴</SheetTitle>
+                <SheetContent side="left" className="w-[300px] border-r-0 shadow-2xl">
+                  <SheetHeader className="text-left pb-8 border-b">
+                    <SheetTitle className="text-2xl font-bold tracking-tight">Menu</SheetTitle>
                   </SheetHeader>
-                  <nav className="flex flex-col gap-4 mt-8">
+                  <nav className="flex flex-col gap-6 mt-8">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="text-lg font-medium hover:text-primary transition-colors"
+                        className="text-xl font-medium text-foreground/80 hover:text-primary transition-all hover:translate-x-2"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.name}
                       </Link>
                     ))}
-                    <div className="border-t pt-4 mt-4">
+                    <div className="border-t pt-8 mt-4 space-y-4">
                       <Link
                         href="/auth/login"
-                        className="text-lg font-medium hover:text-primary transition-colors"
+                        className="flex items-center gap-2 text-xl font-medium text-foreground/80 hover:text-primary transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         로그인
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
+                        </svg>
                       </Link>
                     </div>
                   </nav>
                 </SheetContent>
               </Sheet>
             ) : (
-              /* SSR placeholder - same visual as trigger button */
               <Button variant="ghost" size="icon" className="lg:hidden">
                 <MenuIcon />
-                <span className="sr-only">메뉴 열기</span>
               </Button>
             )}
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <Logo width={40} height={48} className="h-10 w-auto" priority />
+            <Link href="/" className="flex items-center gap-3 group transition-transform hover:scale-[1.02]">
+              <Logo width={40} height={48} className="h-10 w-auto filter drop-shadow-sm" priority />
               <div className="hidden sm:flex flex-col">
-                <span className="text-lg font-bold tracking-tight leading-tight">
+                <span className="text-xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors">
                   TeddyBear&apos;s Room
                 </span>
-                <span className="text-[10px] text-muted-foreground tracking-widest uppercase leading-tight">
-                  PASTEL FURRY UNIVERSE
+                <span className="text-[10px] text-muted-foreground tracking-[0.2em] uppercase leading-tight font-bold">
+                  Skin & Silk Lifestyle
                 </span>
               </div>
             </Link>
           </div>
 
           {/* Center: Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-10">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium hover:text-primary transition-colors"
+                className="text-sm font-semibold text-foreground/70 hover:text-primary transition-all relative group"
               >
                 {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
               </Link>
             ))}
           </nav>
@@ -208,33 +220,38 @@ export function Header({ className }: HeaderProps) {
           {/* Right: Search + Actions */}
           <div className="flex items-center gap-2">
             {/* Desktop Search */}
-            <div className="hidden md:block w-64">
-              <SearchInput placeholder="상품 검색..." />
+            <div className="hidden md:block w-56 lg:w-64">
+              <SearchInput placeholder="Search moments..." className="input-glass h-10 rounded-full" />
             </div>
 
             {/* Mobile Search Toggle */}
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden rounded-full"
               onClick={() => setSearchOpen(!isSearchOpen)}
             >
               <SearchIcon />
-              <span className="sr-only">검색</span>
             </Button>
 
-            {/* Wishlist */}
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/wishlist">
-                <HeartIcon />
-                <span className="sr-only">위시리스트</span>
-              </Link>
-            </Button>
+            {/* Profile/Wishlist for Desktop */}
+            <div className="hidden sm:flex items-center gap-1">
+              <Button variant="ghost" size="icon" className="rounded-full" asChild>
+                <Link href="/wishlist">
+                  <HeartIcon />
+                </Link>
+              </Button>
+              <AuthButton />
+            </div>
 
             {/* Discreet Mode Toggle */}
             <Button
               variant="ghost"
               size="icon"
+              className={cn(
+                "rounded-full transition-all",
+                isDiscreetMode ? "text-primary bg-primary/10" : "hover:bg-primary/5"
+              )}
               onClick={() => setDiscreetMode(!isDiscreetMode)}
               title={isDiscreetMode ? "Discreet Mode Off" : "Discreet Mode On"}
             >
@@ -271,22 +288,17 @@ export function Header({ className }: HeaderProps) {
                   <circle cx="12" cy="12" r="3" />
                 </svg>
               )}
-              <span className="sr-only">Discreet Mode</span>
             </Button>
 
-            {/* Auth Button - Login/User Menu */}
-            <AuthButton />
-
             {/* Cart */}
-            <Button variant="ghost" size="icon" className="relative" asChild>
+            <Button variant="ghost" size="icon" className="relative rounded-full bg-primary/5 hover:bg-primary/10" asChild>
               <Link href="/cart">
                 <CartIcon />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center shadow-lg border-2 border-background">
                     {cartItemCount > 99 ? "99+" : cartItemCount}
                   </span>
                 )}
-                <span className="sr-only">장바구니</span>
               </Link>
             </Button>
           </div>
@@ -294,8 +306,8 @@ export function Header({ className }: HeaderProps) {
 
         {/* Mobile Search Bar */}
         {isSearchOpen && (
-          <div className="md:hidden pb-4">
-            <SearchInput placeholder="상품 검색..." className="w-full" />
+          <div className="md:hidden pb-4 animate-reveal">
+            <SearchInput placeholder="Search moments..." className="w-full input-glass rounded-full h-12" />
           </div>
         )}
       </div>
