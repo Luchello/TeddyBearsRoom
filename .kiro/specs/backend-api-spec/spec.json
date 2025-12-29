@@ -2,14 +2,15 @@
   "name": "backend-api-spec",
   "description": "TeddyBear's Room 백엔드 API 전체 명세 - E-commerce 플랫폼의 인증, 사용자, 상품, 주문, 추천 시스템 API",
   "language": "ko",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "createdAt": "2025-12-25T00:00:00.000Z",
-  "updatedAt": "2025-12-26T12:00:00.000Z",
+  "updatedAt": "2025-12-29T00:00:00.000Z",
   "status": {
     "requirements": "approved",
-    "design": "approved",
+    "design": "synchronized",
     "tasks": "completed",
-    "implementation": "completed"
+    "implementation": "completed",
+    "gapAnalysis": "completed"
   },
   "approvals": {
     "requirements": {
@@ -18,9 +19,14 @@
     },
     "design": {
       "generated": true,
-      "approved": true
+      "approved": true,
+      "synchronized": true
     },
     "tasks": {
+      "generated": true,
+      "approved": true
+    },
+    "gapAnalysis": {
       "generated": true,
       "approved": true
     }
@@ -28,8 +34,9 @@
   "phases": [
     { "name": "requirements", "file": "requirements.md", "status": "completed" },
     { "name": "research", "file": "research.md", "status": "generated" },
-    { "name": "design", "file": "design.md", "status": "approved" },
-    { "name": "tasks", "file": "tasks.md", "status": "completed" }
+    { "name": "design", "file": "design.md", "status": "synchronized" },
+    { "name": "tasks", "file": "tasks.md", "status": "completed" },
+    { "name": "gap-analysis", "file": "gap-analysis.md", "status": "completed" }
   ],
   "scope": {
     "include": [

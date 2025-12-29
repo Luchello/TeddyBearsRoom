@@ -1,7 +1,8 @@
 # Design: backend-api-spec
 
 > Generated: 2025-12-25
-> Status: Generated
+> Updated: 2025-12-29
+> Status: Approved (Synchronized with implementation)
 > Language: ko
 
 ## 1. 아키텍처 개요
@@ -87,46 +88,184 @@ app/api/
 
 ### 2.2 Service Layer 인터페이스
 
-#### ReferralService
+#### ReferralService (`lib/services/referral.service.ts`)
 
 ```typescript
-interface ReferralService {
-  // 추천 코드
-  generateReferralCode(userId: string): Promise<string>;
-  getReferralCode(userId: string): Promise<ReferralCodeResult>;
-  validateReferralCode(code: string): Promise<ValidationResult>;
+// ============================================================
+// REFERRAL CODE GENERATION
+// ============================================================
 
-  // 마일스톤
-  checkMilestonesForReferral(referralId: string): Promise<MilestoneCheckResult>;
-  checkAllActiveMilestones(): Promise<BatchCheckResult>;
-  getMilestoneStatus(userId: string): Promise<MilestoneStatus>;
+/** 고유한 추천 코드 생성 (형식: TBR + 6자리 영숫자) */
+function generateReferralCode(): Promise<string>;
 
-  // 보상
-  claimMilestoneReward(userId: string, rewardId: string): Promise<ClaimResult>;
-  getUnclaimedRewards(userId: string): Promise<ReferralMilestoneReward[]>;
+/** 프로필에 추천 코드 할당 (없는 경우에만) */
+function ensureReferralCode(profileId: string): Promise<string>;
 
-  // 통계
-  getReferralStats(userId: string): Promise<ReferralStats>;
-}
+// ============================================================
+// REFERRAL CODE VALIDATION
+// ============================================================
+
+/** 추천 코드 유효성 검증 */
+function validateReferralCode(code: string): Promise<{
+  valid: boolean;
+  referrerId?: string;
+  error?: string;
+}>;
+
+// ============================================================
+// REFERRAL REGISTRATION
+// ============================================================
+
+/** 추천 관계 등록 (회원가입 시 호출) */
+function registerReferral(
+  refereeId: string,
+  referralCode: string
+): Promise<Referral | null>;
+
+/** 피추천인(B)이 구독을 시작할 때 호출 - 마일스톤 타이머 시작 */
+function onRefereeSubscriptionStart(refereeId: string): Promise<void>;
+
+// ============================================================
+// MILESTONE CHECK & REWARD
+// ============================================================
+
+/** 특정 추천 관계의 마일스톤 체크 및 보상 생성 */
+function checkAndCreateMilestoneRewards(
+  referralId: string
+): Promise<ReferralMilestoneReward[]>;
+
+/** 모든 활성 추천 관계의 마일스톤 체크 (Cron Job용) */
+function checkAllMilestones(): Promise<void>;
+
+/** 마일스톤 보상 수령 */
+function claimMilestoneReward(
+  rewardId: string,
+  referrerId: string
+): Promise<{ success: boolean; error?: string; points?: number }>;
+
+// ============================================================
+// AMBASSADOR CHECK
+// ============================================================
+
+/** 앰버서더 자격 확인 */
+function checkAmbassadorStatus(profileId: string): Promise<{
+  isAmbassador: boolean;
+  referralCount: number;
+  remaining: number;
+}>;
+
+/** 모든 사용자의 앰버서더 자격 일괄 업데이트 (Cron Job용) */
+function updateAllAmbassadorStatuses(): Promise<{
+  updated: number;
+  newAmbassadors: number;
+}>;
+
+// ============================================================
+// REFERRAL STATS
+// ============================================================
+
+/** 추천인의 추천 현황 조회 */
+function getReferralStats(referrerId: string): Promise<{
+  totalReferrals: number;
+  activeReferrals: number;
+  completedReferrals: number;
+  totalPointsEarned: number;
+  unclaimedPoints: number;
+  referrals: ReferralDetail[];
+}>;
 ```
 
-#### AmbassadorService
+#### AmbassadorService (`lib/services/ambassador.service.ts`)
 
 ```typescript
-interface AmbassadorService {
-  // 자격
-  checkAmbassadorQualification(userId: string): Promise<AmbassadorQualification>;
-  updateAmbassadorStatus(userId: string): Promise<AmbassadorStatus>;
-  updateAllAmbassadorStatuses(): Promise<BatchUpdateResult>;
+// ============================================================
+// TYPE DEFINITIONS
+// ============================================================
 
-  // 상태 & 혜택
-  getAmbassadorStatus(userId: string): Promise<AmbassadorStatusResponse>;
-  getAmbassadorBenefits(userId: string): Promise<AmbassadorBenefits>;
-
-  // 무료 배송
-  checkFreeShippingAvailability(userId: string): Promise<FreeShippingAvailability>;
-  useFreeShipping(userId: string): Promise<UseFreeShippingResult>;
+interface AmbassadorBenefits {
+  newProductEarlyAccess: boolean;
+  monthlyFreeShipping: number;
 }
+
+interface FreeShippingResult {
+  available: boolean;
+  nextAvailableAt: Date | null;
+}
+
+interface UseFreeShippingResult {
+  success: boolean;
+  error?: string;
+}
+
+// ============================================================
+// AMBASSADOR STATUS MANAGEMENT
+// ============================================================
+
+/** 앰버서더 상태 생성 또는 조회 (없으면 CANDIDATE로 생성) */
+function getOrCreateAmbassadorStatus(
+  profileId: string
+): Promise<AmbassadorStatus>;
+
+// ============================================================
+// AMBASSADOR QUALIFICATION
+// ============================================================
+
+/** 앰버서더 자격 업데이트 (10명 이상 추천 성공 시 ACTIVE로 전환) */
+function updateAmbassadorQualification(profileId: string): Promise<boolean>;
+
+// ============================================================
+// AMBASSADOR BENEFITS
+// ============================================================
+
+/** 앰버서더 혜택 부여 (신제품 미리보기, 월 1회 무료 배송) */
+function grantAmbassadorBenefits(profileId: string): Promise<void>;
+
+// ============================================================
+// FREE SHIPPING MANAGEMENT
+// ============================================================
+
+/** 무료 배송 사용 가능 여부 체크 */
+function checkFreeShippingAvailable(
+  profileId: string
+): Promise<FreeShippingResult>;
+
+/** 무료 배송 사용 (다음 달 1일로 nextFreeShippingAt 업데이트) */
+function useFreeShipping(profileId: string): Promise<UseFreeShippingResult>;
+
+// ============================================================
+// NEW PRODUCT EARLY ACCESS
+// ============================================================
+
+/** 신제품 미리보기 자격 체크 */
+function hasNewProductEarlyAccess(profileId: string): Promise<boolean>;
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+
+/** 앰버서더 상태 전체 조회 (대시보드용) */
+function getAmbassadorDashboard(profileId: string): Promise<{
+  status: AmbassadorStatusType;
+  isActive: boolean;
+  totalReferrals: number;
+  requiredReferrals: number;
+  remaining: number;
+  qualifiedAt: Date | null;
+  badge: string | null;
+  benefits: {
+    freeShipping: FreeShippingResult & { monthlyLimit: number };
+    newProductEarlyAccess: boolean;
+  };
+}>;
+
+/** 앰버서더 상태 비활성화 */
+function deactivateAmbassador(
+  profileId: string,
+  reason?: string
+): Promise<void>;
+
+/** 앰버서더 상태 재활성화 */
+function reactivateAmbassador(profileId: string): Promise<boolean>;
 ```
 
 ### 2.3 Utility/Helper 인터페이스
@@ -134,49 +273,142 @@ interface AmbassadorService {
 #### Auth Helper (`lib/api/auth.ts`)
 
 ```typescript
-// 타입
-interface AuthResult {
-  user: {
-    id: string;
-    email: string;
-  } | null;
-  error: {
-    message: string;
-    status: number;
-  } | null;
+// ============================================================
+// TYPE DEFINITIONS
+// ============================================================
+
+/** 인증 성공 결과 타입 */
+interface AuthSuccess {
+  success: true;
+  user: User;  // from @supabase/supabase-js
 }
 
-interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  code?: string;
+/** 인증 실패 결과 타입 */
+interface AuthFailure {
+  success: false;
+  response: NextResponse;
 }
 
-// 함수
+/** 인증 검증 결과 Union 타입 */
+type AuthResult = AuthSuccess | AuthFailure;
+
+// ============================================================
+// AUTHENTICATION FUNCTIONS
+// ============================================================
+
+/**
+ * API Route에서 인증을 검증하는 헬퍼 함수
+ * - 성공: { success: true, user: User } 반환
+ * - 실패: { success: false, response: NextResponse } 반환
+ *
+ * @example
+ * const authResult = await requireAuth();
+ * if (!authResult.success) return authResult.response;
+ * const user = authResult.user;
+ */
 async function requireAuth(): Promise<AuthResult>;
-function apiError(message: string, status?: number, code?: string): NextResponse;
+
+/**
+ * 선택적 인증 검증 헬퍼
+ * 로그인되어 있으면 user를 반환하고, 아니면 null을 반환
+ *
+ * @example
+ * const user = await optionalAuth();
+ * // user가 null일 수 있음 (비로그인 상태)
+ */
+async function optionalAuth(): Promise<User | null>;
+
+// ============================================================
+// RESPONSE HELPERS
+// ============================================================
+
+/** 일관된 API 에러 응답 생성 헬퍼 */
+function apiError(
+  message: string,
+  status?: number,  // 기본 500
+  code?: string
+): NextResponse;
+
+/** 일관된 API 성공 응답 생성 헬퍼 */
 function apiSuccess<T>(data: T, status?: number): NextResponse;
 ```
 
 #### Rate Limiter (`lib/api/rate-limit.ts`)
 
 ```typescript
+// ============================================================
+// TYPE DEFINITIONS
+// ============================================================
+
 interface RateLimitConfig {
+  /** 윈도우 당 최대 요청 수 */
   maxRequests: number;
+  /** 시간 윈도우 (밀리초) */
   windowMs: number;
 }
 
 interface RateLimitResult {
-  allowed: boolean;
+  /** 요청 허용 여부 */
+  success: boolean;
+  /** 남은 요청 수 */
   remaining: number;
-  resetAt: Date;
+  /** 리셋 시간 (Unix timestamp) */
+  resetTime: number;
+  /** 현재 윈도우 내 요청 수 */
+  count: number;
 }
 
+// ============================================================
+// RATE LIMIT CONFIGURATIONS
+// ============================================================
+
+/** 엔드포인트별 Rate Limit 설정 */
+const RATE_LIMIT_CONFIGS: Record<string, RateLimitConfig> = {
+  auth: { maxRequests: 5, windowMs: 60000 },      // 인증: 분당 5회
+  orders: { maxRequests: 10, windowMs: 60000 },   // 주문: 분당 10회
+  default: { maxRequests: 30, windowMs: 60000 },  // 기본: 분당 30회
+};
+
+// ============================================================
+// CORE FUNCTIONS
+// ============================================================
+
+/** 요청 클라이언트 식별자 추출 (IP 또는 사용자 ID) */
+async function getClientIdentifier(userId?: string): Promise<string>;
+
+/** Rate Limit 체크 (메모리 기반) */
+function checkRateLimit(
+  identifier: string,
+  configKey?: keyof typeof RATE_LIMIT_CONFIGS
+): RateLimitResult;
+
+/** Rate Limit 초과 응답 생성 (429 Too Many Requests) */
+function rateLimitResponse(resetTime?: number): NextResponse;
+
+/** Rate Limit 헤더 추가 헬퍼 */
+function addRateLimitHeaders(
+  response: NextResponse,
+  result: RateLimitResult,
+  configKey?: keyof typeof RATE_LIMIT_CONFIGS
+): NextResponse;
+
+// ============================================================
+// CONVENIENCE WRAPPER
+// ============================================================
+
+/**
+ * Rate Limit 미들웨어 래퍼
+ *
+ * @example
+ * const rateLimitCheck = await withRateLimit("orders");
+ * if (!rateLimitCheck.success) {
+ *   return rateLimitCheck.response;
+ * }
+ */
 async function withRateLimit(
-  configKey: string,
-  identifier?: string
-): Promise<RateLimitResult>;
+  configKey?: keyof typeof RATE_LIMIT_CONFIGS,
+  userId?: string
+): Promise<{ success: true } | { success: false; response: NextResponse }>;
 ```
 
 ---
@@ -554,6 +786,11 @@ describe('POST /api/orders', () => {
 
 ## Notes
 
-- 이 문서는 `/kiro:spec-design backend-api-spec -y`로 생성됨
+- 이 문서는 `/kiro:spec-design backend-api-spec -y`로 생성됨 (2025-12-25)
 - requirements.md 기반 아키텍처 설계
-- 다음 단계: `/kiro:spec-tasks backend-api-spec`으로 태스크 분해
+- **2025-12-29: 실제 구현에 맞게 동기화됨** (`/kiro:validate-gap` 결과 반영)
+  - ReferralService: 함수명 및 시그니처 업데이트
+  - AmbassadorService: 실제 구현된 함수 목록으로 갱신
+  - Auth Helper: `optionalAuth()` 추가, 타입 정의 상세화
+  - Rate Limiter: 헬퍼 함수들 및 설정 상수 추가
+- 구현 완료: 모든 API 엔드포인트, 서비스, 테스트 구현됨
