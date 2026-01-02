@@ -9,7 +9,7 @@
  * TDD: RED Phase - 실패하는 테스트 먼저 작성
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 // 테스트 환경에서 PortOne SDK 호출을 모킹하기 위한 설정
 test.describe('Adult Verification Flow', () => {
@@ -53,7 +53,7 @@ test.describe('Adult Verification Flow', () => {
   // 10.1.2 인증 시작 플로우 테스트
   // =============================================
   test.describe('Verification Initiation', () => {
-    test('should call initiate API when starting verification', async ({ page, request }) => {
+    test('should call initiate API when starting verification', async ({ request }) => {
       // Note: 이 테스트는 인증된 사용자 세션이 필요
       // 실제 환경에서는 테스트용 세션 토큰 사용
 
@@ -72,7 +72,7 @@ test.describe('Adult Verification Flow', () => {
       }
     });
 
-    test('should return ALREADY_VERIFIED for already verified user', async ({ page, request }) => {
+    test('should return ALREADY_VERIFIED for already verified user', async ({ request }) => {
       // Note: 이미 성인인증이 완료된 사용자로 테스트
       // 실제 환경에서는 테스트용 verified 사용자 세션 사용
 
@@ -152,7 +152,7 @@ test.describe('Adult Verification Flow', () => {
   // 10.1.5 실패 시나리오 테스트
   // =============================================
   test.describe('Failure Scenarios', () => {
-    test('should handle PortOne API error gracefully', async ({ page, request }) => {
+    test('should handle PortOne API error gracefully', async ({ request }) => {
       // PortOne API 장애 시뮬레이션
       // Note: 실제 환경에서는 네트워크 인터셉터로 모킹 필요
 
@@ -190,7 +190,7 @@ test.describe('Adult Verification Flow', () => {
       const testTxid = 'test-duplicate-callback-' + Date.now();
 
       // 첫 번째 요청
-      const response1 = await request.post('/api/auth/adult-verification/verify', {
+      await request.post('/api/auth/adult-verification/verify', {
         data: {
           identityVerificationId: testTxid
         }

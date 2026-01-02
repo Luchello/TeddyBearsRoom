@@ -20,7 +20,6 @@ import { requireAdultVerification } from "@/lib/api/adult-auth";
 import { withRateLimit } from "@/lib/api/rate-limit";
 import { logger } from "@/lib/logger";
 import { isAdultVerificationEnabled } from "@/lib/feature-flags";
-import { ADULT_VERIFICATION, ERROR_MESSAGES } from "@/constants/adult-verification";
 
 // ──────────────────────────────────────
 // 성인 상품 판별 로직

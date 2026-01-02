@@ -42,14 +42,6 @@ import { apiError } from "@/lib/api/auth";
 import { isAdultVerificationEnabled } from "@/lib/feature-flags";
 import { ADULT_VERIFICATION, ERROR_MESSAGES } from "@/constants/adult-verification";
 
-// 성인 전용 상품 카테고리 목록
-// 참고: 성인용품 쇼핑몰이므로 기본적으로 모든 카테고리가 성인용
-// 향후 비성인 카테고리(일반 상품, 건강용품 등) 추가 시 예외 처리 필요
-const ADULT_ONLY_CATEGORIES: string[] = [
-  // 현재는 모든 상품을 성인용으로 취급
-  // 추후 비성인 카테고리 추가 시 이 배열에서 제외할 카테고리 정의
-];
-
 // 비성인 카테고리 (성인인증 없이 접근 가능)
 const NON_ADULT_CATEGORIES: string[] = [
   // "general", "health", "beauty" 등 추가 가능

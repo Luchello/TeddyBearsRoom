@@ -8,6 +8,7 @@
 import * as React from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -286,12 +287,14 @@ export default function OrderDetailPage() {
         <div className="divide-y">
           {order.orderItems.map((item) => (
             <div key={item.id} className="p-4 flex gap-4">
-              <div className="w-24 h-24 rounded-lg bg-muted flex-shrink-0 overflow-hidden">
+              <div className="w-24 h-24 rounded-lg bg-muted flex-shrink-0 overflow-hidden relative">
                 {item.product.imageUrl && item.product.imageUrl !== "/placeholder.jpg" ? (
-                  <img
+                  <Image
                     src={item.product.imageUrl}
                     alt={item.product.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="96px"
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-3xl">

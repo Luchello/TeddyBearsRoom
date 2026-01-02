@@ -10,6 +10,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -310,12 +311,14 @@ export default function AccountPage() {
       {/* Welcome Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-[var(--color-love-100)] flex items-center justify-center text-3xl animate-bounce-soft border-4 border-white shadow-md">
+          <div className="w-16 h-16 rounded-full bg-[var(--color-love-100)] flex items-center justify-center text-3xl animate-bounce-soft border-4 border-white shadow-md overflow-hidden relative">
             {profile.avatar ? (
-              <img
+              <Image
                 src={profile.avatar}
                 alt={displayName}
-                className="w-full h-full rounded-full object-cover"
+                fill
+                sizes="64px"
+                className="rounded-full object-cover"
               />
             ) : (
               "📔"

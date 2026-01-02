@@ -136,7 +136,8 @@ describe("Verification Nonce Service", () => {
   // ============================================================
   describe("clearExpiredNonces", () => {
     it("만료된 nonce만 제거", () => {
-      const oldNonce = generateNonce();
+      // Generate nonce that will expire (intentionally not used after creation)
+      generateNonce();
 
       // 11분 경과
       vi.advanceTimersByTime(11 * 60 * 1000);
@@ -146,7 +147,7 @@ describe("Verification Nonce Service", () => {
       // 만료된 nonce 정리
       const clearedCount = clearExpiredNonces();
 
-      // oldNonce는 제거됨
+      // 만료된 nonce 1개 제거됨
       expect(clearedCount).toBe(1);
 
       // newNonce는 여전히 유효

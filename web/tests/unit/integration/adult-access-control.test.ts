@@ -43,7 +43,7 @@ vi.mock("@/lib/api/auth", () => ({
 
 // Import after mock setup
 import { prisma } from "@/lib/prisma";
-import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
+import { requireAuth } from "@/lib/api/auth";
 import { requireAdultVerification, optionalAdultVerification } from "@/lib/api/adult-auth";
 import { isVerificationExpired } from "@/lib/services/adult-verification.service";
 import { ADULT_VERIFICATION } from "@/constants/adult-verification";
@@ -191,7 +191,7 @@ describe("Expired Verification Access Control", () => {
       adultVerifiedAt: verifiedAt,
     } as never);
 
-    const result = await requireAdultVerification();
+    await requireAdultVerification();
 
     // isVerificationExpired 함수에서 365일 경과는 true (만료)
     expect(isVerificationExpired(verifiedAt)).toBe(true);

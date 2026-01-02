@@ -59,11 +59,13 @@ interface AdultVerificationModalProps {
 export function AdultVerificationModal({
   open,
   onClose,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSuccess,
   onStartVerification,
   isLoading = false,
   error = null,
 }: AdultVerificationModalProps) {
+  // Note: onSuccess is part of the interface but handled by onStartVerification flow
   const handleStartVerification = async () => {
     await onStartVerification();
   };

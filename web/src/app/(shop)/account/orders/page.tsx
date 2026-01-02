@@ -10,6 +10,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -111,12 +112,14 @@ function OrderCard({ order }: OrderCardProps) {
         <div className="space-y-4">
           {order.orderItems.slice(0, 2).map((item) => (
             <div key={item.id} className="flex gap-4">
-              <div className="w-20 h-20 rounded-lg bg-muted flex-shrink-0 overflow-hidden">
+              <div className="w-20 h-20 rounded-lg bg-muted flex-shrink-0 overflow-hidden relative">
                 {item.product.imageUrl && item.product.imageUrl !== "/placeholder.jpg" ? (
-                  <img
+                  <Image
                     src={item.product.imageUrl}
                     alt={item.product.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="80px"
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-2xl">
