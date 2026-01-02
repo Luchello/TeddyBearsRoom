@@ -170,7 +170,7 @@ export function Header({ className }: HeaderProps) {
                     ))}
                     <div className="border-t pt-8 mt-4 space-y-4">
                       <Link
-                        href="/auth/login"
+                        href="/login"
                         className="flex items-center gap-2 text-xl font-medium text-foreground/80 hover:text-primary transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >

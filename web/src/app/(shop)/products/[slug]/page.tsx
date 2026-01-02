@@ -204,12 +204,9 @@ export default function ProductDetailPage() {
           {/* Brand & Name */}
           <div>
             {product.brand && (
-              <Link
-                href={`/brands/${product.brand.slug}`}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
+              <p className="text-sm text-muted-foreground">
                 {product.brand.name}
-              </Link>
+              </p>
             )}
             <h1 className="text-2xl md:text-3xl font-bold mt-1">{product.name}</h1>
           </div>

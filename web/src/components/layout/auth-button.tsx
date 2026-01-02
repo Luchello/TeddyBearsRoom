@@ -207,13 +207,13 @@ export function AuthButton({ className }: AuthButtonProps) {
 
         {/* Navigation items */}
         <DropdownMenuItem asChild>
-          <Link href="/mypage" className="flex items-center gap-2 cursor-pointer">
+          <Link href="/account" className="flex items-center gap-2 cursor-pointer">
             <UserIcon />
             <span>마이페이지</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/orders" className="flex items-center gap-2 cursor-pointer">
+          <Link href="/account/orders" className="flex items-center gap-2 cursor-pointer">
             <PackageIcon />
             <span>주문내역</span>
           </Link>

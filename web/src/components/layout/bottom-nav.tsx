@@ -10,7 +10,7 @@ const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Shop", href: "/products", icon: ShoppingBag },
     { name: "Wishlist", href: "/wishlist", icon: Heart },
-    { name: "Profile", href: "/mypage", icon: User },
+    { name: "Profile", href: "/account", icon: User },
 ];
 
 export function BottomNav() {

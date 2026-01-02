@@ -105,7 +105,7 @@ function ErrorContent() {
         {/* Help Text */}
         <p className="text-sm text-muted-foreground">
           문제가 계속되면{" "}
-          <Link href="/support" className="text-primary hover:underline">
+          <Link href="/support/contact" className="text-primary hover:underline">
             고객센터
           </Link>
           로 문의해 주세요.
