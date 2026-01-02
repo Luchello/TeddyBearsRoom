@@ -11,6 +11,7 @@ model Profile {
   email                 String           @unique
   name                  String?
   avatar                String?
+  role                  String           @default("USER") // GUEST, USER, ADMIN, SUPER_ADMIN
   subscriptionTier      SubscriptionTier @default(NONE)
   points                Int              @default(0)
   createdAt             DateTime         @default(now())
@@ -22,6 +23,18 @@ model Profile {
   bottomSize            String?
   shoeSize              Int?
   encryptedMeasurements String?
+
+  // Adult Verification (PASS 본인인증)
+  isAdultVerified       Boolean          @default(false)
+  adultVerifiedAt       DateTime?
+  ci                    String?          // 연계정보 (CI) - pgcrypto 암호화 권장
+  di                    String?          // 중복가입확인정보 (DI)
+
+  // Adult Verification (성인인증) - 추가 필드
+  adultVerifyMethod     String?          // 인증 방식: PHONE
+  adultVerifyProvider   String?          // 제공사: PORTONE_KCP, PORTONE_DANAL
+  adultVerifyTxid       String?          // 본인인증 거래 ID
+  ciHash                String?          // SHA-256 해시된 CI
 
   // Referral System
   referralCode          String?          @unique // My referral code (TBR + 6 chars)
@@ -39,6 +52,9 @@ model Profile {
   // Referral Milestone System
   referralMilestones    ReferralMilestone[] @relation("ReferrerMilestones")
   ambassadorStatus      AmbassadorStatus?
+
+  // Adult Verification Logs
+  adultVerificationLogs AdultVerificationLog[]
 
   @@map("profiles")
 }
@@ -689,4 +705,26 @@ model ReferralMilestone {
   @@index([referrerId])
   @@index([referralId])
   @@map("referral_milestones")
+}
+
+// ============================================================
+// ADULT VERIFICATION LOG
+// 성인인증 이벤트 로그 (감사 추적용)
+// ============================================================
+
+/// 성인인증 이벤트 로그
+model AdultVerificationLog {
+  id            String   @id @default(cuid())
+  profileId     String
+  txid          String   // 본인인증 거래 ID
+  eventType     String   // INITIATED, SUCCESS, FAILED
+  failureCode   String?  // 실패 시 에러 코드
+  createdAt     DateTime @default(now())
+
+  profile       Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([txid])
+  @@index([createdAt])
+  @@map("adult_verification_logs")
 }

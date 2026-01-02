@@ -8,12 +8,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Use vi.hoisted for mock objects to avoid hoisting issues
-const { mockRequireAuth, mockPrismaProfile } = vi.hoisted(() => ({
+const { mockRequireAuth, mockPrismaProfile, mockPrismaOrder, mockPrismaWishlistItem } = vi.hoisted(() => ({
   mockRequireAuth: vi.fn(),
   mockPrismaProfile: {
     findUnique: vi.fn(),
     create: vi.fn(),
     update: vi.fn(),
+  },
+  mockPrismaOrder: {
+    aggregate: vi.fn(),
+    findMany: vi.fn(),
+  },
+  mockPrismaWishlistItem: {
+    count: vi.fn(),
   },
 }));
 
@@ -52,6 +59,8 @@ vi.mock('@/lib/api/rate-limit', () => ({
 vi.mock('@/lib/prisma', () => ({
   default: {
     profile: mockPrismaProfile,
+    order: mockPrismaOrder,
+    wishlistItem: mockPrismaWishlistItem,
   },
 }));
 
@@ -89,9 +98,20 @@ describe('Users/Me API', () => {
   });
 
   describe('GET /api/users/me', () => {
+    // GET 테스트용 기본 mock 설정 헬퍼
+    const setupGetMocks = () => {
+      mockPrismaOrder.aggregate.mockResolvedValue({
+        _count: 5,
+        _sum: { totalPrice: 100000 },
+      });
+      mockPrismaWishlistItem.count.mockResolvedValue(3);
+      mockPrismaOrder.findMany.mockResolvedValue([]);
+    };
+
     it('기존 프로필이 있으면 200 OK와 프로필 데이터를 반환해야 함', async () => {
       mockRequireAuth.mockResolvedValue({ success: true, user: mockUser });
       mockPrismaProfile.findUnique.mockResolvedValue(mockProfile);
+      setupGetMocks();
 
       const response = await GET();
 
@@ -108,6 +128,7 @@ describe('Users/Me API', () => {
       mockRequireAuth.mockResolvedValue({ success: true, user: mockUser });
       mockPrismaProfile.findUnique.mockResolvedValue(null);
       mockPrismaProfile.create.mockResolvedValue(mockProfile);
+      setupGetMocks();
 
       const response = await GET();
 

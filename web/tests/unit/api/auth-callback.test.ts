@@ -26,12 +26,23 @@ vi.mock('next/server', () => ({
 
 // Mock Supabase client
 const mockExchangeCodeForSession = vi.fn();
+const mockGetUser = vi.fn();
 vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn(() => Promise.resolve({
     auth: {
       exchangeCodeForSession: mockExchangeCodeForSession,
+      getUser: mockGetUser,
     },
   })),
+}));
+
+// Mock Prisma client
+vi.mock('@/lib/prisma', () => ({
+  prisma: {
+    profile: {
+      upsert: vi.fn(() => Promise.resolve({})),
+    },
+  },
 }));
 
 // Mock logger
@@ -54,6 +65,16 @@ describe('OAuth Callback API', () => {
   describe('GET /api/auth/callback', () => {
     it('유효한 code로 세션 교환 성공 시 next 경로로 리다이렉트해야 함', async () => {
       mockExchangeCodeForSession.mockResolvedValue({ error: null });
+      mockGetUser.mockResolvedValue({
+        data: {
+          user: {
+            id: 'test-user-id',
+            email: 'test@example.com',
+            user_metadata: { full_name: 'Test User' },
+          },
+        },
+        error: null,
+      });
 
       const request = new Request('http://localhost:3000/api/auth/callback?code=valid_code&next=/dashboard');
 
@@ -68,6 +89,16 @@ describe('OAuth Callback API', () => {
 
     it('next 파라미터가 없으면 루트(/)로 리다이렉트해야 함', async () => {
       mockExchangeCodeForSession.mockResolvedValue({ error: null });
+      mockGetUser.mockResolvedValue({
+        data: {
+          user: {
+            id: 'test-user-id',
+            email: 'test@example.com',
+            user_metadata: {},
+          },
+        },
+        error: null,
+      });
 
       const request = new Request('http://localhost:3000/api/auth/callback?code=valid_code');
 
@@ -101,6 +132,16 @@ describe('OAuth Callback API', () => {
 
     it('Open Redirect 방지: 외부 URL은 루트(/)로 리다이렉트해야 함', async () => {
       mockExchangeCodeForSession.mockResolvedValue({ error: null });
+      mockGetUser.mockResolvedValue({
+        data: {
+          user: {
+            id: 'test-user-id',
+            email: 'test@example.com',
+            user_metadata: {},
+          },
+        },
+        error: null,
+      });
 
       const request = new Request('http://localhost:3000/api/auth/callback?code=valid_code&next=https://evil.com');
 

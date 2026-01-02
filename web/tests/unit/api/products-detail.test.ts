@@ -8,10 +8,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Use vi.hoisted for mock objects to avoid hoisting issues
-const { mockPrismaProduct } = vi.hoisted(() => ({
+const { mockPrismaProduct, mockOptionalAdultVerification, mockIsAdultVerificationEnabled } = vi.hoisted(() => ({
   mockPrismaProduct: {
     findUnique: vi.fn(),
   },
+  mockOptionalAdultVerification: vi.fn(),
+  mockIsAdultVerificationEnabled: vi.fn(),
 }));
 
 // Mock NextResponse
@@ -42,6 +44,25 @@ vi.mock('@/lib/logger', () => ({
   },
 }));
 
+// Mock feature-flags (성인인증 기능 비활성화)
+vi.mock('@/lib/feature-flags', () => ({
+  isAdultVerificationEnabled: mockIsAdultVerificationEnabled,
+}));
+
+// Mock adult-auth
+vi.mock('@/lib/api/adult-auth', () => ({
+  optionalAdultVerification: mockOptionalAdultVerification,
+}));
+
+// Mock api/auth
+vi.mock('@/lib/api/auth', () => ({
+  apiError: vi.fn((message: string, status: number, code?: string) => ({
+    json: () => Promise.resolve({ success: false, error: message, code }),
+    status,
+    _data: { success: false, error: message, code },
+  })),
+}));
+
 import { GET } from '@/app/api/products/[id]/route';
 
 describe('Product Detail API', () => {
@@ -58,6 +79,14 @@ describe('Product Detail API', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    // 기본적으로 성인인증 기능 비활성화 (테스트 단순화)
+    mockIsAdultVerificationEnabled.mockReturnValue(false);
+    // 성인인증 성공으로 mock (성인인증 활성화 테스트용)
+    mockOptionalAdultVerification.mockResolvedValue({
+      isAuthenticated: true,
+      isAdultVerified: true,
+      userId: 'test-user-id',
+    });
   });
 
   describe('GET /api/products/[id]', () => {
