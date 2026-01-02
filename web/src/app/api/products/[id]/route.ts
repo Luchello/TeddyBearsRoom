@@ -25,16 +25,47 @@
 // - Prisma findUnique로 효율적 단일 조회
 // - 존재 여부 확인 + 404 처리
 // - 에러 처리: try-catch로 500 에러 반환
+// - 성인 상품 접근 제어 (성인인증 필요)
 //
 // 📝 의존성:
 // - Prisma: product.findUnique() ORM
 // - NextResponse: API 응답 포맷
 // - NextServer: Request 및 params 타입
+// - Adult Auth: optionalAdultVerification 헬퍼
 // ====================================
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { logger } from "@/lib/logger";
+import { optionalAdultVerification } from "@/lib/api/adult-auth";
+import { apiError } from "@/lib/api/auth";
+import { isAdultVerificationEnabled } from "@/lib/feature-flags";
+import { ADULT_VERIFICATION, ERROR_MESSAGES } from "@/constants/adult-verification";
+
+// 비성인 카테고리 (성인인증 없이 접근 가능)
+const NON_ADULT_CATEGORIES: string[] = [
+  // "general", "health", "beauty" 등 추가 가능
+];
+
+/**
+ * 상품이 성인 전용인지 확인
+ *
+ * @param category - 상품 카테고리
+ * @returns 성인 전용 상품이면 true
+ *
+ * @description
+ * - TeddyBear's Room은 성인용품 쇼핑몰이므로 기본적으로 모든 상품이 성인용
+ * - NON_ADULT_CATEGORIES에 포함된 카테고리만 비성인용으로 취급
+ */
+function isAdultOnlyProduct(category: string): boolean {
+  // 비성인 카테고리에 포함되면 false
+  if (NON_ADULT_CATEGORIES.includes(category)) {
+    return false;
+  }
+
+  // 기본값: 모든 상품은 성인용
+  return true;
+}
 
 /**
  * 특정 상품 상세 정보 조회 API 핸들러
@@ -92,6 +123,31 @@ export async function GET(
         },
         { status: 404 }  // HTTP 404 Not Found
       );
+    }
+
+    // ──────────────────────────────────────
+    // 성인 상품 접근 제어
+    // 성인 전용 상품은 성인인증이 필요합니다.
+    // ──────────────────────────────────────
+    if (isAdultVerificationEnabled() && isAdultOnlyProduct(product.category)) {
+      const adultAuth = await optionalAdultVerification();
+
+      // 로그인하지 않았거나 성인인증이 안 된 경우
+      if (!adultAuth.isAuthenticated) {
+        return apiError(
+          "로그인이 필요합니다.",
+          401,
+          "UNAUTHORIZED"
+        );
+      }
+
+      if (!adultAuth.isAdultVerified) {
+        return apiError(
+          ERROR_MESSAGES[ADULT_VERIFICATION.ERROR_CODES.ADULT_VERIFICATION_REQUIRED],
+          403,
+          ADULT_VERIFICATION.ERROR_CODES.ADULT_VERIFICATION_REQUIRED
+        );
+      }
     }
 
     // ──────────────────────────────────────

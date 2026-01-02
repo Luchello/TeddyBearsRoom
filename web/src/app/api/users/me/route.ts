@@ -142,6 +142,40 @@ export async function GET() {
     }
 
     // ──────────────────────────────────────
+    // 통계 데이터 조회: 주문, 위시리스트 등
+    // ──────────────────────────────────────
+    const [orderStats, wishlistCount, recentOrders] = await Promise.all([
+      // 주문 통계
+      prisma.order.aggregate({
+        where: { profileId: user.id },
+        _count: true,
+        _sum: { totalPrice: true },
+      }),
+      // 위시리스트 개수
+      prisma.wishlistItem.count({
+        where: { profileId: user.id },
+      }),
+      // 최근 주문 3개
+      prisma.order.findMany({
+        where: { profileId: user.id },
+        orderBy: { createdAt: "desc" },
+        take: 3,
+        select: {
+          id: true,
+          status: true,
+          totalPrice: true,
+          createdAt: true,
+          _count: { select: { orderItems: true } },
+        },
+      }),
+    ]);
+
+    // 이너 써클 절약 금액 계산 (10% 할인)
+    const isInnerCircle = profile.subscriptionTier !== "NONE";
+    const totalSpent = orderStats._sum.totalPrice || 0;
+    const savedAmount = isInnerCircle ? Math.floor(totalSpent * 0.1) : 0;
+
+    // ──────────────────────────────────────
     // 성공 응답: apiSuccess 헬퍼로 일관된 응답 형식
     // subscriptionTier와 points는 구독 및 포인트 시스템 포함
     // ──────────────────────────────────────
@@ -153,6 +187,21 @@ export async function GET() {
       subscriptionTier: profile.subscriptionTier.toLowerCase(),  // 구독 tier (none, premium 등)
       points: profile.points,  // 누적 포인트
       createdAt: profile.createdAt.toISOString(),  // ISO 형식 생성 날짜
+      // 통계 데이터
+      stats: {
+        totalOrders: orderStats._count,
+        totalSpent,
+        savedAmount,
+        wishlistCount,
+      },
+      // 최근 주문
+      recentOrders: recentOrders.map((order) => ({
+        id: order.id,
+        status: order.status,
+        total: order.totalPrice,
+        createdAt: order.createdAt.toISOString(),
+        itemCount: order._count.orderItems,
+      })),
     });
   } catch (error) {
     // ──────────────────────────────────────

@@ -49,6 +49,11 @@ export const RATE_LIMIT_CONFIGS: Record<string, RateLimitConfig> = {
     maxRequests: 10,
     windowMs: 60 * 1000,
   },
+  // 장바구니: 중간 (분당 20회)
+  cart: {
+    maxRequests: 20,
+    windowMs: 60 * 1000,
+  },
   // 일반 API: 기본 (분당 30회)
   default: DEFAULT_CONFIG,
 };

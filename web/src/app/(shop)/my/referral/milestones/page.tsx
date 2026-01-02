@@ -152,9 +152,9 @@ function EmptyState() {
         추천 코드를 공유하여 친구를 초대하고, 함께 혜택을 누려보세요!
       </p>
       <Button asChild>
-        <Link href="/my/referral">
+        <Link href="/account">
           <Share2 className="w-4 h-4 mr-2" />
-          추천 코드 공유하기
+          마이페이지로 이동
         </Link>
       </Button>
     </div>
@@ -226,7 +226,7 @@ export default function ReferralMilestonesPage() {
             className="shrink-0"
             aria-label="뒤로 가기"
           >
-            <Link href="/my/referral">
+            <Link href="/account">
               <ArrowLeft className="w-5 h-5" />
             </Link>
           </Button>

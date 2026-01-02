@@ -1,136 +1,44 @@
 /**
  * Orders Page
  * TeddyBear's Room - Order History
+ *
+ * 실제 API에서 주문 데이터를 가져와 표시
  */
 
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/hooks/use-auth";
 
-// Mock orders data - Replace with API call
-const mockOrders = [
-  {
-    id: "TBR-20241209-001",
-    status: "PAID",
-    total: 116100,
-    createdAt: new Date("2024-12-09"),
-    items: [
-      {
-        id: "1",
-        name: "프리미엄 실리콘 토이",
-        variantName: "미디엄",
-        quantity: 1,
-        price: 99000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-      {
-        id: "2",
-        name: "수용성 러브젤 250ml",
-        variantName: null,
-        quantity: 2,
-        price: 15000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-    ],
-  },
-  {
-    id: "TBR-20241205-003",
-    status: "SHIPPED",
-    total: 89000,
-    createdAt: new Date("2024-12-05"),
-    trackingNumber: "123456789012",
-    items: [
-      {
-        id: "3",
-        name: "커플 바이브레이터",
-        variantName: "핑크",
-        quantity: 1,
-        price: 89000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-    ],
-  },
-  {
-    id: "TBR-20241128-002",
-    status: "DELIVERED",
-    total: 156000,
-    createdAt: new Date("2024-11-28"),
-    deliveredAt: new Date("2024-12-01"),
-    items: [
-      {
-        id: "4",
-        name: "마사지 캔들",
-        variantName: "라벤더",
-        quantity: 2,
-        price: 28000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-      {
-        id: "5",
-        name: "실크 아이마스크",
-        variantName: null,
-        quantity: 1,
-        price: 35000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-      {
-        id: "6",
-        name: "바디 페더",
-        variantName: null,
-        quantity: 1,
-        price: 25000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-    ],
-  },
-  {
-    id: "TBR-20241115-001",
-    status: "DELIVERED",
-    total: 67000,
-    createdAt: new Date("2024-11-15"),
-    deliveredAt: new Date("2024-11-18"),
-    items: [
-      {
-        id: "7",
-        name: "클리너 스프레이 200ml",
-        variantName: null,
-        quantity: 1,
-        price: 12000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-      {
-        id: "8",
-        name: "보관 파우치 세트",
-        variantName: "라지",
-        quantity: 1,
-        price: 25000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-    ],
-  },
-  {
-    id: "TBR-20241020-004",
-    status: "CANCELLED",
-    total: 45000,
-    createdAt: new Date("2024-10-20"),
-    cancelledAt: new Date("2024-10-21"),
-    items: [
-      {
-        id: "9",
-        name: "러브 다이스",
-        variantName: null,
-        quantity: 1,
-        price: 15000,
-        imageUrl: "/placeholder-product.jpg",
-      },
-    ],
-  },
-];
+// API 응답 타입
+interface OrderItem {
+  id: string;
+  quantity: number;
+  price: number;
+  product: {
+    id: string;
+    name: string;
+    imageUrl: string;
+  };
+}
+
+interface Order {
+  id: string;
+  status: string;
+  totalPrice: number;
+  shippingAddress: string | null;
+  shippingMemo: string | null;
+  createdAt: string;
+  updatedAt: string;
+  orderItems: OrderItem[];
+}
 
 function getOrderStatusBadge(status: string) {
   switch (status) {
@@ -150,7 +58,6 @@ function getOrderStatusBadge(status: string) {
       return <Badge variant="outline">{status}</Badge>;
   }
 }
-
 
 function OrderSkeleton() {
   return (
@@ -175,21 +82,23 @@ function OrderSkeleton() {
 }
 
 interface OrderCardProps {
-  order: (typeof mockOrders)[0];
+  order: Order;
 }
 
 function OrderCard({ order }: OrderCardProps) {
+  const orderDate = new Date(order.createdAt);
+
   return (
     <div className="rounded-2xl border bg-card overflow-hidden">
       {/* Order Header */}
       <div className="p-4 border-b bg-muted/30">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center gap-3">
-            <span className="font-mono text-sm">{order.id}</span>
+            <span className="font-mono text-sm">{order.id.slice(0, 8)}...</span>
             {getOrderStatusBadge(order.status)}
           </div>
           <span className="text-sm text-muted-foreground">
-            {order.createdAt.toLocaleDateString("ko-KR", {
+            {orderDate.toLocaleDateString("ko-KR", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -201,16 +110,25 @@ function OrderCard({ order }: OrderCardProps) {
       {/* Order Items */}
       <div className="p-4">
         <div className="space-y-4">
-          {order.items.slice(0, 2).map((item) => (
+          {order.orderItems.slice(0, 2).map((item) => (
             <div key={item.id} className="flex gap-4">
-              <div className="w-20 h-20 rounded-lg bg-muted flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">{item.name}</p>
-                {item.variantName && (
-                  <p className="text-sm text-muted-foreground">
-                    {item.variantName}
-                  </p>
+              <div className="w-20 h-20 rounded-lg bg-muted flex-shrink-0 overflow-hidden relative">
+                {item.product.imageUrl && item.product.imageUrl !== "/placeholder.jpg" ? (
+                  <Image
+                    src={item.product.imageUrl}
+                    alt={item.product.name}
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-2xl">
+                    📦
+                  </div>
                 )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium truncate">{item.product.name}</p>
                 <p className="text-sm">
                   {item.price.toLocaleString()}원 × {item.quantity}
                 </p>
@@ -218,9 +136,9 @@ function OrderCard({ order }: OrderCardProps) {
             </div>
           ))}
 
-          {order.items.length > 2 && (
+          {order.orderItems.length > 2 && (
             <p className="text-sm text-muted-foreground">
-              외 {order.items.length - 2}개 상품
+              외 {order.orderItems.length - 2}개 상품
             </p>
           )}
         </div>
@@ -232,7 +150,7 @@ function OrderCard({ order }: OrderCardProps) {
           <div>
             <span className="text-sm text-muted-foreground">결제 금액</span>
             <span className="ml-2 font-bold">
-              {order.total.toLocaleString()}원
+              {order.totalPrice.toLocaleString()}원
             </span>
           </div>
           <div className="flex gap-2">
@@ -262,17 +180,46 @@ function OrderCard({ order }: OrderCardProps) {
 }
 
 export default function OrdersPage() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = React.useState(true);
-  const [orders, setOrders] = React.useState<typeof mockOrders>([]);
+  const [orders, setOrders] = React.useState<Order[]>([]);
+  const [error, setError] = React.useState<string | null>(null);
   const [activeTab, setActiveTab] = React.useState("all");
 
+  // 주문 목록 fetch
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setOrders(mockOrders);
-      setIsLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
+    async function fetchOrders() {
+      try {
+        const res = await fetch("/api/orders");
+        if (!res.ok) {
+          if (res.status === 401) {
+            router.push("/login?redirect=/account/orders");
+            return;
+          }
+          throw new Error("주문 목록을 불러오는데 실패했습니다.");
+        }
+        const data = await res.json();
+        if (data.success) {
+          setOrders(data.data);
+        } else {
+          throw new Error(data.error || "주문 목록을 불러오는데 실패했습니다.");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "오류가 발생했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (!authLoading) {
+      if (!isAuthenticated) {
+        router.push("/login?redirect=/account/orders");
+      } else {
+        fetchOrders();
+      }
+    }
+  }, [authLoading, isAuthenticated, router]);
 
   const filteredOrders = React.useMemo(() => {
     if (activeTab === "all") return orders;
@@ -290,6 +237,42 @@ export default function OrdersPage() {
     return orders;
   }, [orders, activeTab]);
 
+  // 로딩 중
+  if (authLoading || isLoading) {
+    return (
+      <div className="container py-8">
+        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+          <Link href="/account" className="hover:text-foreground transition-colors">
+            마이페이지
+          </Link>
+          <span>/</span>
+          <span className="text-foreground">주문 내역</span>
+        </nav>
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">주문 내역</h1>
+          <p className="text-muted-foreground">주문 및 배송 현황을 확인하세요</p>
+        </div>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <OrderSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // 에러
+  if (error) {
+    return (
+      <div className="container py-8">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <Button onClick={() => window.location.reload()}>다시 시도</Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container py-8">
       {/* Breadcrumb */}
@@ -304,9 +287,7 @@ export default function OrdersPage() {
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">주문 내역</h1>
-        <p className="text-muted-foreground">
-          주문 및 배송 현황을 확인하세요
-        </p>
+        <p className="text-muted-foreground">주문 및 배송 현황을 확인하세요</p>
       </div>
 
       {/* Tabs */}
@@ -327,13 +308,7 @@ export default function OrdersPage() {
         </TabsList>
 
         <TabsContent value={activeTab}>
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <OrderSkeleton key={i} />
-              ))}
-            </div>
-          ) : filteredOrders.length === 0 ? (
+          {filteredOrders.length === 0 ? (
             <div className="rounded-2xl border bg-card p-12 text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

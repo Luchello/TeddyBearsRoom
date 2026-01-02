@@ -4,11 +4,47 @@
  *
  * Supabase OAuth PKCE flow callback handler.
  * Exchanges authorization code for session and redirects user.
+ * Also ensures Profile record exists (fallback for trigger).
  */
 
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { logger } from '@/lib/logger'
+import { prisma } from '@/lib/prisma'
+
+/**
+ * Ensure Profile exists for authenticated user
+ * Fallback for Supabase trigger (handles race conditions)
+ */
+async function ensureProfile(userId: string, email: string, metadata?: Record<string, unknown>) {
+  try {
+    await prisma.profile.upsert({
+      where: { id: userId },
+      update: {
+        email,
+        // Only update name/avatar if currently null
+        name: undefined, // Will use existing value
+        avatar: undefined,
+        updatedAt: new Date(),
+      },
+      create: {
+        id: userId,
+        email,
+        name: (metadata?.full_name as string) || (metadata?.name as string) || null,
+        avatar: (metadata?.avatar_url as string) || (metadata?.picture as string) || null,
+        subscriptionTier: 'NONE',
+        points: 0,
+        isAdultVerified: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    })
+    logger.info('[OAuth Callback]', `Profile ensured for user: ${userId}`)
+  } catch (error) {
+    // Log but don't fail - trigger might have already created it
+    logger.warn('[OAuth Callback]', 'Profile upsert warning:', error)
+  }
+}
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -41,7 +77,18 @@ export async function GET(request: Request) {
     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!exchangeError) {
-      // Successful authentication
+      // Successful authentication - ensure Profile exists
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (user) {
+        // Ensure Profile record exists (fallback for Supabase trigger)
+        await ensureProfile(
+          user.id,
+          user.email ?? '',
+          user.user_metadata as Record<string, unknown>
+        )
+      }
+
       // Handle production vs development environments
       const forwardedHost = request.headers.get('x-forwarded-host')
       const isLocalEnv = process.env.NODE_ENV === 'development'

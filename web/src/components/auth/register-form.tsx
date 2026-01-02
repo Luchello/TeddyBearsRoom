@@ -359,7 +359,7 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
       <p className="text-center text-sm text-muted-foreground">
         이미 계정이 있으신가요?{" "}
         <Link
-          href={`/auth/login${redirectUrl ? `?redirect=${redirectUrl}` : ""}`}
+          href={`/login${redirectUrl ? `?redirect=${redirectUrl}` : ""}`}
           className="text-primary font-medium hover:underline"
         >
           로그인
