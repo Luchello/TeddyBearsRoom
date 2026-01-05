@@ -12,7 +12,12 @@
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
 import { prisma } from "@/lib/prisma";
 import { isVerificationExpired } from "@/lib/services/adult-verification.service";
-import { ADULT_VERIFICATION, ERROR_MESSAGES } from "@/constants/adult-verification";
+import {
+  ADULT_VERIFICATION,
+  ERROR_MESSAGES,
+  getConfiguredProvider,
+  getChannelKey,
+} from "@/constants/adult-verification";
 import { logger } from "@/lib/logger";
 
 export async function POST() {
@@ -55,13 +60,33 @@ export async function POST() {
       },
     });
 
-    logger.info("[Adult Verification]", `Initiated for user: ${userId}, txid: ${identityVerificationId}`);
+    // 5. 본인인증 제공사 및 채널키 가져오기
+    const provider = getConfiguredProvider();
+    const channelKey = getChannelKey(provider);
 
-    // 5. 응답 반환
+    if (!channelKey) {
+      logger.error(
+        "[Adult Verification]",
+        `Channel key not configured for provider: ${provider}`
+      );
+      return apiError(
+        "본인인증 서비스가 설정되지 않았습니다.",
+        500,
+        ADULT_VERIFICATION.ERROR_CODES.PROVIDER_NOT_CONFIGURED
+      );
+    }
+
+    logger.info(
+      "[Adult Verification]",
+      `Initiated for user: ${userId}, txid: ${identityVerificationId}, provider: ${provider}`
+    );
+
+    // 6. 응답 반환 (제공사 정보 포함)
     return apiSuccess({
       identityVerificationId,
       storeId: process.env.NEXT_PUBLIC_PORTONE_STORE_ID,
-      channelKey: process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY,
+      channelKey,
+      provider,
     });
   } catch (error) {
     logger.error("[Adult Verification]", "Initiate error:", error);

@@ -1,12 +1,19 @@
 /**
- * Register Form Component
+ * Register Form Component v2.0
  * TeddyBear's Room - User Registration with Adult Verification
+ *
+ * 3-Step Flow:
+ * 1. form: 이메일/비밀번호/약관 입력
+ * 2. verification: 본인확인 SDK 호출 중 (로딩 UI)
+ * 3. complete: 완료/자동 로그인
  */
 
 "use client";
 
 import * as React from "react";
+import * as PortOne from "@portone/browser-sdk/v2";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input, PasswordInput } from "@/components/ui/input";
@@ -30,8 +37,36 @@ interface RegisterData {
   agreeMarketing: boolean;
 }
 
+interface InitiateResponse {
+  storeId: string;
+  identityVerificationId: string;
+  channelKey: string;
+  registrationToken: string;
+}
+
+type Step = "form" | "verification" | "complete";
+
+/**
+ * PortOne SDK 에러 코드를 사용자 친화적 메시지로 변환
+ */
+function getVerificationErrorMessage(code: string): string {
+  switch (code) {
+    case "USER_CANCEL":
+      return "본인인증이 취소되었습니다.";
+    case "PG_PROVIDER":
+      return "인증 서비스에 일시적인 오류가 발생했습니다.";
+    case "TIMEOUT":
+      return "인증 시간이 초과되었습니다. 다시 시도해주세요.";
+    case "INVALID_REQUEST":
+      return "잘못된 요청입니다. 다시 시도해주세요.";
+    default:
+      return "본인인증에 실패했습니다. 다시 시도해주세요.";
+  }
+}
+
 export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormProps) {
-  const [step, setStep] = React.useState<"form" | "verification">("form");
+  const router = useRouter();
+  const [step, setStep] = React.useState<Step>("form");
   const [formData, setFormData] = React.useState<RegisterData>({
     email: "",
     password: "",
@@ -56,6 +91,88 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
     formData.agreeTerms &&
     formData.agreePrivacy;
 
+  /**
+   * Step 3: 회원가입 완료 처리
+   */
+  const completeRegistration = async (
+    registrationToken: string,
+    identityVerificationId: string
+  ) => {
+    const response = await fetch("/api/auth/register/complete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        registrationToken,
+        identityVerificationId,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || "회원가입 완료에 실패했습니다.");
+    }
+
+    return response.json();
+  };
+
+  /**
+   * Step 2: PortOne 본인인증 SDK 호출
+   */
+  const startVerification = async (initiateData: InitiateResponse) => {
+    setStep("verification");
+
+    // 모바일 리다이렉트 시나리오를 위해 registrationToken 저장
+    // 콜백 페이지에서 회원가입 완료에 필요
+    sessionStorage.setItem("registrationToken", initiateData.registrationToken);
+
+    try {
+      // PortOne SDK 호출
+      const response = await PortOne.requestIdentityVerification({
+        storeId: initiateData.storeId,
+        identityVerificationId: initiateData.identityVerificationId,
+        channelKey: initiateData.channelKey,
+        redirectUrl: `${window.location.origin}/auth/register/callback`,
+      });
+
+      // SDK 에러 처리 (code가 있으면 에러)
+      if (response?.code !== undefined) {
+        setError(getVerificationErrorMessage(response.code));
+        setStep("form");
+        return;
+      }
+
+      // 서버 검증 호출
+      await completeRegistration(
+        initiateData.registrationToken,
+        response?.identityVerificationId || initiateData.identityVerificationId
+      );
+
+      // 성공 시 sessionStorage 정리
+      sessionStorage.removeItem("registrationToken");
+
+      // 완료 단계로 이동
+      setStep("complete");
+
+      // 추가 콜백 실행 (있는 경우)
+      if (onSubmit) {
+        await onSubmit(formData);
+      }
+
+      // 자동 리다이렉트 (3초 후)
+      setTimeout(() => {
+        router.push(redirectUrl || "/");
+      }, 3000);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "본인인증에 실패했습니다. 다시 시도해주세요.";
+      setError(errorMessage);
+      setStep("form");
+    }
+  };
+
+  /**
+   * Step 1: 폼 제출 -> initiate API 호출
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
@@ -64,27 +181,36 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
     setIsLoading(true);
 
     try {
-      // Move to adult verification step
-      setStep("verification");
-    } catch {
-      // SECURITY: 상세 에러 메시지 노출 방지, 일반화된 메시지 사용
-      setError("회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      // initiate API 호출
+      const response = await fetch("/api/auth/register/initiate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          phone: formData.phone,
+          agreeTerms: formData.agreeTerms,
+          agreePrivacy: formData.agreePrivacy,
+          agreeMarketing: formData.agreeMarketing,
+        }),
+      });
 
-  const handleVerification = async () => {
-    setIsLoading(true);
-    setError("");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "회원가입 요청에 실패했습니다.");
+      }
 
-    try {
-      // TODO: Implement PASS adult verification
-      // After verification, call onSubmit
-      await onSubmit?.(formData);
-    } catch {
-      // SECURITY: 상세 에러 메시지 노출 방지, 일반화된 메시지 사용
-      setError("본인인증에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      const initiateData: InitiateResponse = await response.json();
+
+      // 본인인증 SDK 호출
+      await startVerification(initiateData);
+    } catch (err) {
+      // SECURITY: 상세 에러 메시지 노출 방지
+      const errorMessage =
+        err instanceof Error ? err.message : "회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.";
+      setError(errorMessage);
+      setStep("form");
     } finally {
       setIsLoading(false);
     }
@@ -102,52 +228,89 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
   const allAgreed =
     formData.agreeTerms && formData.agreePrivacy && formData.agreeMarketing;
 
-  if (step === "verification") {
+  // Step 3: 완료 화면
+  if (step === "complete") {
     return (
-      <div className={cn("w-full max-w-md mx-auto", className)}>
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold">성인인증</h1>
-          <p className="text-muted-foreground mt-2">
-            TeddyBear&apos;s Room은 성인 전용 서비스입니다.
-            <br />
-            본인인증을 통해 만 19세 이상임을 확인해 주세요.
-          </p>
-        </div>
-
-        {error && (
-          <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm mb-6">
-            {error}
+      <div className={cn("w-full max-w-md mx-auto card-whimsy p-8 bg-white/70 backdrop-blur-md", className)}>
+        <div className="text-center">
+          <div className="inline-block p-4 rounded-full bg-green-100 mb-6">
+            <svg
+              className="w-12 h-12 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
           </div>
-        )}
-
-        <div className="space-y-4">
-          <Button
-            className="w-full"
-            size="lg"
-            onClick={handleVerification}
-            disabled={isLoading}
-          >
-            {isLoading ? "인증 중..." : "PASS 본인인증"}
-          </Button>
-
-          <p className="text-xs text-center text-muted-foreground">
-            본인인증은 SKT PASS를 통해 안전하게 진행됩니다.
+          <h1 className="text-2xl font-bold text-[var(--color-foreground)] mb-2">
+            가입 완료!
+          </h1>
+          <p className="text-[var(--color-muted-foreground)] mb-6">
+            TeddyBear&apos;s Room 가족이 되신 것을 환영합니다!
             <br />
-            인증 정보는 성인 확인 목적으로만 사용됩니다.
+            잠시 후 자동으로 이동합니다...
           </p>
-
           <Button
-            variant="ghost"
+            variant="bubbly"
             className="w-full"
-            onClick={() => setStep("form")}
+            onClick={() => router.push(redirectUrl || "/")}
           >
-            이전 단계로
+            지금 시작하기
           </Button>
         </div>
       </div>
     );
   }
 
+  // Step 2: 본인인증 진행 중 화면
+  if (step === "verification") {
+    return (
+      <div className={cn("w-full max-w-md mx-auto card-whimsy p-8 bg-white/70 backdrop-blur-md", className)}>
+        <div className="text-center">
+          <div className="inline-block p-4 rounded-full bg-[var(--color-love-50)] mb-6 animate-pulse">
+            <span className="text-4xl">🔐</span>
+          </div>
+          <h1 className="text-2xl font-bold text-[var(--color-foreground)] mb-2">
+            본인인증 진행 중
+          </h1>
+          <p className="text-[var(--color-muted-foreground)] mb-6">
+            인증 창에서 본인인증을 완료해주세요.
+            <br />
+            완료되면 자동으로 다음 단계로 진행됩니다.
+          </p>
+
+          {/* 로딩 인디케이터 */}
+          <div className="flex justify-center mb-6">
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-[var(--color-primary)] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+              <div className="w-3 h-3 bg-[var(--color-primary)] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+              <div className="w-3 h-3 bg-[var(--color-primary)] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+            </div>
+          </div>
+
+          <p className="text-xs text-muted-foreground">
+            인증 창이 열리지 않으면{" "}
+            <button
+              type="button"
+              className="text-primary underline"
+              onClick={() => setStep("form")}
+            >
+              여기를 클릭
+            </button>
+            하여 다시 시도해주세요.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 1: 회원가입 폼
   return (
     <div className={cn("w-full max-w-md mx-auto card-whimsy p-8 bg-white/70 backdrop-blur-md", className)}>
       <div className="text-center mb-8">
@@ -156,8 +319,25 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
         </div>
         <h1 className="text-2xl font-bold text-[var(--color-foreground)]">회원가입</h1>
         <p className="text-[var(--color-muted-foreground)] mt-2">
-          TeddyBear&apos;s Room의 가족이 되어주세요 ✨
+          TeddyBear&apos;s Room의 가족이 되어주세요
         </p>
+      </div>
+
+      {/* 성인인증 안내 */}
+      <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 mb-6">
+        <div className="flex items-start gap-3">
+          <span className="text-xl">🔞</span>
+          <div className="text-sm">
+            <p className="font-medium text-amber-900 mb-1">
+              성인인증이 필요한 서비스입니다
+            </p>
+            <ul className="text-amber-800 space-y-1 list-disc list-inside">
+              <li>TeddyBear&apos;s Room은 만 19세 이상만 이용 가능합니다</li>
+              <li>휴대폰 본인확인을 통해 연령을 인증합니다</li>
+              <li>인증 정보는 성인 확인 목적으로만 사용됩니다</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -321,7 +501,7 @@ export function RegisterForm({ className, onSubmit, redirectUrl }: RegisterFormP
           variant="bubbly"
           disabled={!canSubmit || isLoading}
         >
-          {isLoading ? "처리 중..." : "다음 단계 🪄"}
+          {isLoading ? "처리 중..." : "본인인증 후 가입하기"}
         </Button>
       </form>
 

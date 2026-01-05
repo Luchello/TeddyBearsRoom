@@ -12,13 +12,20 @@
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { ADULT_VERIFICATION } from "@/constants/adult-verification";
-import type { VerificationStatus, VerificationEventType } from "@/types/adult-verification";
+import type {
+  VerificationStatus,
+  VerificationEventType,
+  PortOneVerificationResponse,
+  RegistrationData,
+} from "@/types/adult-verification";
 
 // ============================================================
 // CONSTANTS
 // ============================================================
 const ADULT_AGE = ADULT_VERIFICATION.ADULT_AGE; // 19세
 const VERIFICATION_EXPIRY_DAYS = ADULT_VERIFICATION.EXPIRY_DAYS; // 365일
+const REGISTRATION_TOKEN_EXPIRY_MINUTES =
+  ADULT_VERIFICATION.REGISTRATION_TOKEN_EXPIRY_MINUTES; // 15분
 
 // ============================================================
 // TYPE DEFINITIONS
@@ -37,7 +44,7 @@ export interface CompleteVerificationParams {
 }
 
 export interface CreateVerificationLogParams {
-  profileId: string;
+  profileId?: string | null; // v2.0: 가입 실패 시 null 가능
   txid: string;
   eventType: VerificationEventType;
   failureCode?: string;
@@ -248,4 +255,150 @@ export async function isDuplicateCallback(txid: string): Promise<boolean> {
   });
 
   return existingLog !== null;
+}
+
+// ============================================================
+// v2.0 REGISTRATION TOKEN FUNCTIONS
+// ============================================================
+
+/**
+ * 등록 토큰 생성 (AES-256-CBC 암호화)
+ *
+ * @param data - 암호화할 데이터 (email, password)
+ * @returns 암호화된 토큰 문자열 (iv:encrypted 형식)
+ * @throws REGISTRATION_TOKEN_SECRET 환경변수가 없으면 에러
+ *
+ * @description
+ * email + password + createdAt을 암호화
+ * 15분 유효기간 (decryptRegistrationToken에서 검증)
+ */
+export async function createRegistrationToken(data: {
+  email: string;
+  password: string;
+}): Promise<string> {
+  const secret = process.env.REGISTRATION_TOKEN_SECRET;
+
+  if (!secret) {
+    throw new Error(
+      "REGISTRATION_TOKEN_SECRET environment variable is not set"
+    );
+  }
+
+  const payload = JSON.stringify({ ...data, createdAt: Date.now() });
+  const key = crypto.scryptSync(secret, "salt", 32);
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+  let encrypted = cipher.update(payload, "utf8", "hex");
+  encrypted += cipher.final("hex");
+  return `${iv.toString("hex")}:${encrypted}`;
+}
+
+/**
+ * 등록 토큰 복호화
+ *
+ * @param token - 암호화된 토큰 문자열 (iv:encrypted 형식)
+ * @returns 복호화된 데이터 또는 null (만료/복호화 실패)
+ *
+ * @description
+ * - 토큰 형식: iv(hex):encrypted(hex)
+ * - 만료 체크: 15분 경과 시 null 반환
+ * - 복호화 실패 시 null 반환
+ */
+export async function decryptRegistrationToken(
+  token: string
+): Promise<RegistrationData | null> {
+  try {
+    const secret = process.env.REGISTRATION_TOKEN_SECRET;
+
+    if (!secret) {
+      throw new Error(
+        "REGISTRATION_TOKEN_SECRET environment variable is not set"
+      );
+    }
+
+    const [ivHex, encrypted] = token.split(":");
+    const key = crypto.scryptSync(secret, "salt", 32);
+    const iv = Buffer.from(ivHex, "hex");
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+    let decrypted = decipher.update(encrypted, "hex", "utf8");
+    decrypted += decipher.final("utf8");
+
+    const data = JSON.parse(decrypted);
+
+    // 토큰 만료 체크 (15분)
+    const elapsed = Date.now() - data.createdAt;
+    if (elapsed > REGISTRATION_TOKEN_EXPIRY_MINUTES * 60 * 1000) {
+      return null;
+    }
+
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+// ============================================================
+// v2.0 PORTONE API FUNCTIONS
+// ============================================================
+
+/**
+ * PortOne 인증 결과 조회
+ *
+ * @param identityVerificationId - 본인인증 ID
+ * @returns PortOne 인증 응답 또는 null (조회 실패)
+ *
+ * @description
+ * API: GET https://api.portone.io/identity-verifications/{id}
+ * Header: Authorization: PortOne {API_SECRET}
+ */
+export async function fetchPortOneVerification(
+  identityVerificationId: string
+): Promise<PortOneVerificationResponse | null> {
+  try {
+    const response = await fetch(
+      `https://api.portone.io/identity-verifications/${encodeURIComponent(identityVerificationId)}`,
+      {
+        headers: {
+          Authorization: `PortOne ${process.env.PORTONE_API_SECRET}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return response.json();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * 인증 이벤트 로그 생성 (확장 버전)
+ *
+ * @param params - 로그 생성 정보
+ *
+ * @description
+ * v2.0에서 확장된 로그 이벤트 타입:
+ * - INITIATED: 인증 시작
+ * - SUCCESS: 인증 성공
+ * - FAILED: 인증 실패 (failureCode 포함)
+ * - UNDERAGE: 미성년자로 가입 거부 (profileId 없음)
+ *
+ * profileId가 null인 경우도 허용 (미성년자 가입 거부 등)
+ */
+export async function logVerificationEvent(
+  params: CreateVerificationLogParams
+): Promise<void> {
+  const { profileId, txid, eventType, failureCode } = params;
+
+  await prisma.adultVerificationLog.create({
+    data: {
+      profileId: profileId ?? undefined,
+      txid,
+      eventType,
+      failureCode,
+    },
+  });
 }

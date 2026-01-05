@@ -1,15 +1,15 @@
 {
   "name": "adult-verification",
-  "description": "자사몰 성인인증(휴대폰 본인확인) 시스템 - 성인 상품 접근/구매를 위한 본인확인 기반 연령 인증",
+  "description": "자사몰 성인인증(휴대폰 본인확인) 시스템 - 회원가입 시 휴대폰 본인확인 기반 성인인증 통합",
   "language": "ko",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "createdAt": "2026-01-02T00:00:00.000Z",
-  "updatedAt": "2026-01-02T14:00:00.000Z",
+  "updatedAt": "2026-01-03T00:00:00.000Z",
   "status": {
     "requirements": "approved",
     "design": "approved",
-    "tasks": "generated",
-    "implementation": "pending"
+    "tasks": "approved",
+    "implementation": "in_progress"
   },
   "approvals": {
     "requirements": {
@@ -28,21 +28,27 @@
   "phases": [
     { "name": "requirements", "file": "requirements.md", "status": "approved" },
     { "name": "design", "file": "design.md", "status": "approved" },
-    { "name": "tasks", "file": "tasks.md", "status": "generated" }
+    { "name": "tasks", "file": "tasks.md", "status": "approved" },
+    { "name": "implementation", "file": "tasks.md", "status": "in_progress", "progress": "30/38 sub-tasks completed" }
   ],
   "scope": {
     "include": [
       "api/auth/adult-verification/*",
+      "api/auth/register/*",
       "components/auth/adult-verification/*",
+      "components/auth/register-form.tsx",
       "lib/services/adult-verification/*",
+      "lib/portone/*",
       "middleware/adult-gate"
     ],
     "exclude": [
       "PG 결제 심사 전략",
-      "일반 상품 연령 제한"
+      "일반 상품 연령 제한",
+      "소셜 로그인 (OAuth)"
     ]
   },
   "domains": [
+    "registration",
     "authentication",
     "authorization",
     "user-state",
@@ -51,12 +57,14 @@
   ],
   "dependencies": {
     "external": [
-      "휴대폰 본인확인 제공사 (PortOne/KCP/NICE)"
+      "휴대폰 본인확인 제공사 (PortOne + KCP/다날)",
+      "@portone/browser-sdk"
     ],
     "internal": [
       "Supabase Auth",
       "Profile 모델",
-      "Product 모델 (성인 카테고리)"
+      "Product 모델 (성인 카테고리)",
+      "register-form.tsx (회원가입 폼)"
     ]
   }
 }

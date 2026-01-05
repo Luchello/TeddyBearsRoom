@@ -15,8 +15,34 @@ import { NextRequest } from "next/server";
 import { requireAuth, apiError, apiSuccess } from "@/lib/api/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdult, hashCi } from "@/lib/services/adult-verification.service";
-import { ADULT_VERIFICATION, ERROR_MESSAGES } from "@/constants/adult-verification";
+import {
+  ADULT_VERIFICATION,
+  ERROR_MESSAGES,
+  getProviderFullName,
+} from "@/constants/adult-verification";
 import { logger } from "@/lib/logger";
+
+/**
+ * PortOne channel 정보에서 provider 추출
+ */
+function extractProvider(
+  channel?: { pgProvider?: string } | null
+): string {
+  if (!channel?.pgProvider) {
+    return getProviderFullName("KCP"); // 기본값: PORTONE_KCP
+  }
+
+  const pgProvider = channel.pgProvider.toUpperCase();
+
+  if (pgProvider.includes("KCP")) {
+    return getProviderFullName("KCP");
+  }
+  if (pgProvider.includes("DANAL")) {
+    return getProviderFullName("DANAL");
+  }
+
+  return `PORTONE_${pgProvider}`;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -155,7 +181,8 @@ export async function POST(request: NextRequest) {
         isAdultVerified: true,
         adultVerifiedAt: verifiedAt,
         adultVerifyMethod: ADULT_VERIFICATION.METHOD.PHONE,
-        adultVerifyProvider: ADULT_VERIFICATION.PROVIDER.PORTONE_KCP,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        adultVerifyProvider: extractProvider((verification as any).channel),
         adultVerifyTxid: identityVerificationId,
         ciHash: ciHash,
       },

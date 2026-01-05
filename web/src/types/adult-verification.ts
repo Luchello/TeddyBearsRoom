@@ -1,6 +1,6 @@
 // PortOne 본인인증 관련 타입
 export type VerificationStatus = "PENDING" | "VERIFIED" | "EXPIRED" | "FAILED";
-export type VerificationEventType = "INITIATED" | "SUCCESS" | "FAILED";
+export type VerificationEventType = "INITIATED" | "SUCCESS" | "FAILED" | "UNDERAGE";
 export type VerificationTrigger = "A" | "B"; // A: 회원가입 직후, B: 성인구역 진입 시
 
 export interface VerificationResult {
@@ -57,6 +57,66 @@ export interface PortOneVerificationResponse {
   customData?: string;
   requestedAt?: string;
   verifiedAt?: string;
+}
+
+// ============================================================
+// v2.0 Registration Flow Types
+// ============================================================
+
+/**
+ * 등록 토큰에 저장되는 데이터
+ * 회원가입 시작 시 암호화되어 저장됨
+ */
+export interface RegistrationData {
+  email: string;
+  password: string;
+  createdAt: number;
+}
+
+/**
+ * 회원가입 시작 API 요청
+ */
+export interface RegisterInitiateRequest {
+  email: string;
+  password: string;
+}
+
+/**
+ * 회원가입 시작 API 응답
+ */
+export interface RegisterInitiateResponse {
+  success: true;
+  data: {
+    identityVerificationId: string;
+    storeId: string;
+    channelKey: string;
+    registrationToken: string;
+  };
+}
+
+/**
+ * 회원가입 완료 API 요청
+ */
+export interface RegisterCompleteRequest {
+  registrationToken: string;
+  identityVerificationId: string;
+}
+
+/**
+ * 회원가입 완료 API 응답
+ */
+export interface RegisterCompleteResponse {
+  success: true;
+  data: {
+    user: {
+      id: string;
+      email: string;
+    };
+    session: {
+      accessToken: string;
+      refreshToken: string;
+    };
+  };
 }
 
 // ============================================================
