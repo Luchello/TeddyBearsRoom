@@ -3,7 +3,6 @@
  * TeddyBear's Room - /my/referral/milestones
  *
  * Displays user's referral milestones dashboard with:
- * - Ambassador badge status
  * - Referral statistics and code sharing
  * - Individual referee milestone cards
  * - Reward claiming functionality
@@ -12,8 +11,6 @@
  * +-------------------------------------------------------------+
  * |  Referral Milestones                                        |
  * |  -----------------------------------------------------------+
- * |                                                              |
- * |  [AmbassadorBadge - Ambassador Status]                       |
  * |                                                              |
  * |  +------------------------------------------------------+   |
  * |  |  ReferralStatsCard - Overall Stats + Referral Code    |   |
@@ -41,13 +38,11 @@ import { ArrowLeft, Users, Share2 } from "lucide-react";
 // Components
 import { ReferralStatsCard } from "@/components/referral/referral-stats-card";
 import { ReferralMilestoneCard } from "@/components/referral/referral-milestone-card";
-import { AmbassadorBadge } from "@/components/referral/ambassador-badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton, CardSkeleton } from "@/components/ui/skeleton";
 
 // Hooks
 import { useReferralMilestones } from "@/hooks/use-referral-milestones";
-import { useAmbassador } from "@/hooks/use-ambassador";
 import { useToast } from "@/stores/ui-store";
 
 // Types
@@ -67,7 +62,6 @@ function MilestonesSkeleton() {
           <Skeleton className="h-8 w-48 mb-2" />
           <Skeleton className="h-4 w-64" />
         </div>
-        <Skeleton className="h-10 w-32 rounded-xl" />
       </div>
 
       {/* Stats Card Skeleton */}
@@ -167,7 +161,6 @@ function EmptyState() {
 
 export default function ReferralMilestonesPage() {
   const { referrals, stats, isLoading, error, claimReward, refresh } = useReferralMilestones();
-  const { ambassador, isLoading: isAmbassadorLoading } = useAmbassador();
   const { toast } = useToast();
 
   /**
@@ -200,7 +193,7 @@ export default function ReferralMilestonesPage() {
   }, [toast]);
 
   // Loading state
-  if (isLoading || isAmbassadorLoading) {
+  if (isLoading) {
     return <MilestonesSkeleton />;
   }
 
@@ -208,11 +201,6 @@ export default function ReferralMilestonesPage() {
   if (error) {
     return <ErrorState error={error} onRetry={refresh} />;
   }
-
-  // Calculate ambassador status
-  const isAmbassador = ambassador?.isAmbassador ?? false;
-  const totalReferrals = stats?.totalReferrals ?? 0;
-  const requiredForAmbassador = 10;
 
   return (
     <div className="container py-8 max-w-6xl mx-auto">
@@ -237,16 +225,6 @@ export default function ReferralMilestonesPage() {
             </p>
           </div>
         </div>
-
-        {/* Ambassador Badge */}
-        <AmbassadorBadge
-          isAmbassador={isAmbassador}
-          totalReferrals={totalReferrals}
-          requiredReferrals={requiredForAmbassador}
-          showProgress={!isAmbassador}
-          size="md"
-          className="shrink-0"
-        />
       </div>
 
       {/* Stats Card */}
@@ -313,9 +291,6 @@ export default function ReferralMilestonesPage() {
             </li>
             <li>
               - 보상은 마일스톤 달성 시 자동으로 적립되며, 수령 버튼을 눌러 확정할 수 있습니다.
-            </li>
-            <li>
-              - 10명 이상 추천 시 TBR 앰버서더로 승급되어 추가 혜택을 받을 수 있습니다.
             </li>
           </ul>
         </div>

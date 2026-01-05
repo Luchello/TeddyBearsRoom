@@ -5,11 +5,8 @@
 
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import {
-  getReferralStats,
-  checkAmbassadorStatus,
-} from "@/lib/services/referral.service";
-import { REFERRAL_MILESTONES, AMBASSADOR_CONFIG } from "@/constants/referral";
+import { getReferralStats } from "@/lib/services/referral.service";
+import { REFERRAL_MILESTONES } from "@/constants/referral";
 import { logger } from "@/lib/logger";
 
 export async function GET() {
@@ -23,19 +20,11 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const [stats, ambassadorStatus] = await Promise.all([
-      getReferralStats(user.id),
-      checkAmbassadorStatus(user.id),
-    ]);
+    const stats = await getReferralStats(user.id);
 
     return NextResponse.json({
       ...stats,
-      ambassador: ambassadorStatus,
       milestoneConfig: REFERRAL_MILESTONES,
-      ambassadorConfig: {
-        requiredReferrals: AMBASSADOR_CONFIG.requiredReferrals,
-        benefits: AMBASSADOR_CONFIG.benefits,
-      },
     });
   } catch (error) {
     logger.error("[API/referrals/stats]", "Error getting referral stats:", error);

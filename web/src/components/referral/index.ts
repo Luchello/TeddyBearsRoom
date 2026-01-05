@@ -3,12 +3,6 @@
  * TeddyBear's Room Referral System
  */
 
-export { AmbassadorBadge } from "./ambassador-badge";
-export type { AmbassadorBadgeProps } from "./ambassador-badge";
-
-export { AmbassadorBenefitsCard } from "./ambassador-benefits-card";
-export type { AmbassadorBenefitsCardProps } from "./ambassador-benefits-card";
-
 export { MilestoneProgressBar } from "./milestone-progress-bar";
 export { default as MilestoneProgressBarDefault } from "./milestone-progress-bar";
 

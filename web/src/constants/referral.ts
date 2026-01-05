@@ -39,29 +39,6 @@ export const MAX_POINTS_PER_REFERRAL = REFERRAL_MILESTONES.reduce(
 );
 
 // ============================================================
-// AMBASSADOR SYSTEM
-// 10명 이상 추천 성공 시 앰버서더 자격
-// ============================================================
-
-export const AMBASSADOR_CONFIG = {
-  // 앰버서더 자격 조건: 10명 이상 추천 성공
-  requiredReferrals: 10,
-
-  // 앰버서더 혜택
-  benefits: {
-    newProductEarlyAccess: true, // 신제품 먼저 체험
-    monthlyFreeShipping: 1, // 월 1회 무료 배송
-  },
-
-  // 앰버서더 뱃지
-  badge: {
-    name: "TBR 앰버서더",
-    icon: "ambassador",
-    color: "#FFD700", // Gold
-  },
-} as const;
-
-// ============================================================
 // REFERRAL CODE CONFIG
 // ============================================================
 

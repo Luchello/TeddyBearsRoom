@@ -15,10 +15,6 @@ export type {
   UseReferralMilestonesReturn,
 } from './use-referral-milestones'
 
-// Ambassador Hooks
-export { useAmbassador, useIsAmbassador, useCanUseFreeShipping } from './use-ambassador'
-export type { AmbassadorState, UseAmbassadorReturn } from './use-ambassador'
-
 // Adult Verification Hooks
 export { useAdultVerification } from './use-adult-verification'
 export type { UseAdultVerificationReturn } from './use-adult-verification'

@@ -51,7 +51,6 @@ model Profile {
 
   // Referral Milestone System
   referralMilestones    ReferralMilestone[] @relation("ReferrerMilestones")
-  ambassadorStatus      AmbassadorStatus?
 
   // Adult Verification Logs
   adultVerificationLogs AdultVerificationLog[]
@@ -639,41 +638,6 @@ enum ReferralMilestoneType {
   REF_12M_RETENTION  // 12개월 유지: 10,000P (최종)
 }
 
-// 앰버서더 상태 유형
-enum AmbassadorStatusType {
-  CANDIDATE  // 후보 (추천 10명 미만)
-  ACTIVE     // 활성 앰버서더 (10명 이상 추천 성공)
-  INACTIVE   // 비활성 (자격 상실)
-}
-
-// ============================================================
-// AMBASSADOR STATUS
-// 10명 이상 추천 성공 시 앰버서더 자격 획득
-// ============================================================
-
-model AmbassadorStatus {
-  id                  String               @id @default(uuid())
-  profileId           String               @unique
-
-  status              AmbassadorStatusType @default(CANDIDATE)
-  qualifiedAt         DateTime?            // 앰버서더 자격 획득 일시
-  totalReferrals      Int                  @default(0) // 총 추천 성공 수
-
-  // 앰버서더 혜택 (JSON)
-  // { "newProductPreview": true, "monthlyFreeShipping": 1 }
-  benefits            Json                 @default("{}")
-
-  // 다음 무료 배송 가능일 (월 1회)
-  nextFreeShippingAt  DateTime?
-
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-
-  profile             Profile              @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  @@map("ambassador_statuses")
-}
-
 // ============================================================
 // REFERRAL MILESTONE (Enum-based)
 // 피추천인(B)의 구독 유지 기간에 따른 추천인(A) 보상 추적
@@ -713,15 +677,16 @@ model ReferralMilestone {
 // ============================================================
 
 /// 성인인증 이벤트 로그
+/// v2.0: profileId가 null일 수 있음 (회원가입 실패, 미성년자 가입 거부 등)
 model AdultVerificationLog {
   id            String   @id @default(cuid())
-  profileId     String
+  profileId     String?  // v2.0: 회원가입 전 이벤트는 null
   txid          String   // 본인인증 거래 ID
-  eventType     String   // INITIATED, SUCCESS, FAILED
+  eventType     String   // INITIATED, SUCCESS, FAILED, UNDERAGE
   failureCode   String?  // 실패 시 에러 코드
   createdAt     DateTime @default(now())
 
-  profile       Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile       Profile?  @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   @@index([profileId])
   @@index([txid])

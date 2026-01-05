@@ -102,68 +102,6 @@ export interface ReferralStats {
 }
 
 // =============================================================================
-// Ambassador Types
-// =============================================================================
-
-/**
- * 앰버서더 상태 (Prisma enum과 일치)
- * - CANDIDATE: 자격 미달 (10명 미만 추천)
- * - ACTIVE: 활성 앰버서더 (10명 이상 추천 완료)
- * - INACTIVE: 비활성 (자격 취소 또는 휴면)
- *
- * Note: Prisma의 AmbassadorStatus enum을 사용할 경우
- *       `import type { AmbassadorStatus } from "@prisma/client"` 권장
- */
-export type AmbassadorStatusType = "CANDIDATE" | "ACTIVE" | "INACTIVE";
-
-/**
- * 앰버서더 혜택 정보 (DB 저장용)
- * Prisma JSON 필드에 저장되는 기본 혜택 구조
- */
-export interface AmbassadorBenefitsData {
-  /** 신상품 우선 접근권 */
-  newProductEarlyAccess: boolean;
-  /** 월간 무료배송 횟수 */
-  monthlyFreeShipping: number;
-  /** Index signature for Prisma JSON compatibility */
-  [key: string]: boolean | number | string | undefined;
-}
-
-/**
- * 앰버서더 혜택 정보 (프론트엔드 표시용)
- * 계산된 필드가 포함된 확장 타입
- */
-export interface AmbassadorBenefits {
-  /** 신상품 우선 접근권 */
-  newProductEarlyAccess: boolean;
-  /** 월간 무료배송 횟수 */
-  monthlyFreeShipping: number;
-  /** 현재 무료배송 사용 가능 여부 (계산된 필드) */
-  freeShippingAvailable: boolean;
-  /** 다음 무료배송 갱신일 (사용 완료 시) */
-  nextFreeShippingAt?: Date;
-}
-
-/**
- * 앰버서더 정보
- * 앰버서더 자격 및 혜택 표시용
- */
-export interface AmbassadorInfo {
-  /** 앰버서더 자격 여부 */
-  isAmbassador: boolean;
-  /** 앰버서더 상태 */
-  status: AmbassadorStatusType;
-  /** 총 추천 수 */
-  totalReferrals: number;
-  /** 자격 달성까지 남은 추천 수 (CANDIDATE 상태일 때) */
-  remainingForQualification: number;
-  /** 자격 달성 일시 (ACTIVE 상태일 때) */
-  qualifiedAt?: Date;
-  /** 앰버서더 혜택 정보 */
-  benefits: AmbassadorBenefits;
-}
-
-// =============================================================================
 // API Response Types
 // =============================================================================
 
@@ -175,16 +113,6 @@ export interface ClaimMilestoneResponse {
   success: boolean;
   /** 수령한 포인트 (성공 시) */
   points?: number;
-  /** 에러 메시지 (실패 시) */
-  error?: string;
-}
-
-/**
- * 앰버서더 무료배송 사용 API 응답
- */
-export interface UseFreeShippingResponse {
-  /** 성공 여부 */
-  success: boolean;
   /** 에러 메시지 (실패 시) */
   error?: string;
 }
@@ -275,13 +203,3 @@ export const MILESTONE_CONFIG: Record<
     description: "12개월 구독 유지 달성",
   },
 } as const;
-
-/**
- * 앰버서더 자격 요건
- */
-export const AMBASSADOR_QUALIFICATION_THRESHOLD = 10;
-
-/**
- * 앰버서더 월간 무료배송 횟수
- */
-export const AMBASSADOR_MONTHLY_FREE_SHIPPING = 3;

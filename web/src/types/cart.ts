@@ -76,8 +76,6 @@ export interface CartTotals {
   freeShippingThreshold: number;
   isFreeShipping: boolean;
   freeShippingReason?: FreeShippingReason;
-  ambassadorFreeShippingAvailable: boolean;
-  ambassadorFreeShippingApplied: boolean;
   amountToFreeShipping: number;
   tax: number;
   total: number;
@@ -103,9 +101,6 @@ export interface CartState {
   isLoading: boolean;
   appliedCoupon: AppliedCoupon | null;
 
-  // Ambassador Free Shipping State
-  ambassadorShipping: AmbassadorShippingState;
-
   // Actions
   addItem: (input: AddToCartInput, product: Product, variant?: ProductVariant) => void;
   addSimpleItem: (input: SimpleAddToCartInput) => void;
@@ -115,11 +110,6 @@ export interface CartState {
   applyCoupon: (code: string) => Promise<boolean>;
   removeCoupon: () => void;
   setIsOpen: (isOpen: boolean) => void;
-
-  // Ambassador Free Shipping Actions
-  checkAmbassadorFreeShipping: (profileId: string) => Promise<void>;
-  applyAmbassadorFreeShipping: (apply: boolean) => void;
-  resetAmbassadorShipping: () => void;
 
   // Computed
   getItemCount: () => number;
@@ -136,20 +126,8 @@ export interface PersistedCartState {
 // Free Shipping Config is now in @/config/cart
 // Moving these there helps separate types from values
 
-// Ambassador Free Shipping Types
+// Free Shipping Types
 export type FreeShippingReason =
   | "threshold"        // 금액 기준 달성
   | "inner_circle"     // 이너서클 금액 기준 달성
-  | "ambassador"       // 앰버서더 무료 배송 사용
   | "coupon";          // 쿠폰 적용
-
-export interface AmbassadorShippingState {
-  /** 앰버서더 무료 배송 사용 가능 여부 */
-  available: boolean;
-  /** 앰버서더 무료 배송 적용 여부 (사용자 선택) */
-  applied: boolean;
-  /** 다음 사용 가능 일시 */
-  nextAvailableAt: Date | null;
-  /** 로딩 상태 */
-  isLoading: boolean;
-}

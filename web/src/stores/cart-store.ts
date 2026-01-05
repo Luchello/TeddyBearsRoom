@@ -12,7 +12,6 @@ import type {
   AddToCartInput,
   SimpleAddToCartInput,
   AppliedCoupon,
-  AmbassadorShippingState,
   FreeShippingReason,
 } from "@/types/cart";
 import {
@@ -26,15 +25,7 @@ import { generateId } from "@/lib/utils";
 
 // Constants
 const CART_STORAGE_KEY = "tbr-cart";
-const CART_VERSION = 2; // Bumped for ambassador shipping state
-
-// Default ambassador shipping state
-const DEFAULT_AMBASSADOR_SHIPPING: AmbassadorShippingState = {
-  available: false,
-  applied: false,
-  nextAvailableAt: null,
-  isLoading: false,
-};
+const CART_VERSION = 3; // Bumped for ambassador removal
 
 interface CartStore extends CartState {
   _hasHydrated: boolean;
@@ -49,7 +40,6 @@ export const useCartStore = create<CartStore>()(
       isOpen: false,
       isLoading: false,
       appliedCoupon: null,
-      ambassadorShipping: DEFAULT_AMBASSADOR_SHIPPING,
       _hasHydrated: false,
 
       // Hydration
@@ -168,68 +158,7 @@ export const useCartStore = create<CartStore>()(
         set({
           items: [],
           appliedCoupon: null,
-          ambassadorShipping: DEFAULT_AMBASSADOR_SHIPPING,
         });
-      },
-
-      // Ambassador Free Shipping Actions
-      checkAmbassadorFreeShipping: async (profileId: string) => {
-        set((state) => ({
-          ambassadorShipping: { ...state.ambassadorShipping, isLoading: true },
-        }));
-
-        try {
-          const response = await fetch(`/api/ambassador/free-shipping?profileId=${profileId}`);
-
-          if (!response.ok) {
-            set((state) => ({
-              ambassadorShipping: {
-                ...state.ambassadorShipping,
-                available: false,
-                isLoading: false,
-              },
-            }));
-            return;
-          }
-
-          const data = await response.json();
-          set((state) => ({
-            ambassadorShipping: {
-              ...state.ambassadorShipping,
-              available: data.available,
-              nextAvailableAt: data.nextAvailableAt ? new Date(data.nextAvailableAt) : null,
-              isLoading: false,
-            },
-          }));
-        } catch {
-          set((state) => ({
-            ambassadorShipping: {
-              ...state.ambassadorShipping,
-              available: false,
-              isLoading: false,
-            },
-          }));
-        }
-      },
-
-      applyAmbassadorFreeShipping: (apply: boolean) => {
-        const { ambassadorShipping } = get();
-
-        // Only allow applying if available
-        if (apply && !ambassadorShipping.available) {
-          return;
-        }
-
-        set((state) => ({
-          ambassadorShipping: {
-            ...state.ambassadorShipping,
-            applied: apply,
-          },
-        }));
-      },
-
-      resetAmbassadorShipping: () => {
-        set({ ambassadorShipping: DEFAULT_AMBASSADOR_SHIPPING });
       },
 
       applyCoupon: async (code: string): Promise<boolean> => {
@@ -278,7 +207,7 @@ export const useCartStore = create<CartStore>()(
       },
 
       getTotals: (isInnerCircle: boolean): CartTotals => {
-        const { items, appliedCoupon, ambassadorShipping } = get();
+        const { items, appliedCoupon } = get();
         const subtotal = items.reduce(
           (sum, item) => sum + item.price * item.quantity,
           0
@@ -313,8 +242,7 @@ export const useCartStore = create<CartStore>()(
         // │  배송비 계산 우선순위:                                      │
         // │  1. 금액 기준 무료 배송 (50K/30K) -> 자동 적용              │
         // │  2. 쿠폰 무료 배송 -> 자동 적용                             │
-        // │  3. 앰버서더 무료 배송 -> 사용자 선택 적용                   │
-        // │  4. 기본 배송비 3,000원                                     │
+        // │  3. 기본 배송비 3,000원                                     │
         // └─────────────────────────────────────────────────────────────┘
         const freeShippingThreshold = isInnerCircle
           ? INNER_CIRCLE_FREE_SHIPPING_THRESHOLD
@@ -335,11 +263,6 @@ export const useCartStore = create<CartStore>()(
         else if (appliedCoupon?.discountType === "FREE_SHIPPING") {
           isFreeShipping = true;
           freeShippingReason = "coupon";
-        }
-        // Priority 3: Ambassador free shipping (user-selected)
-        else if (ambassadorShipping.applied && ambassadorShipping.available) {
-          isFreeShipping = true;
-          freeShippingReason = "ambassador";
         }
 
         const shipping = isFreeShipping ? 0 : SHIPPING_FEE;
@@ -363,8 +286,6 @@ export const useCartStore = create<CartStore>()(
           freeShippingThreshold,
           isFreeShipping,
           freeShippingReason,
-          ambassadorFreeShippingAvailable: ambassadorShipping.available,
-          ambassadorFreeShippingApplied: ambassadorShipping.applied,
           amountToFreeShipping,
           tax,
           total,
@@ -379,19 +300,16 @@ export const useCartStore = create<CartStore>()(
       partialize: (state) => ({
         items: state.items,
         appliedCoupon: state.appliedCoupon,
-        // Note: ambassadorShipping is NOT persisted
-        // It should be re-fetched on each session
       }),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },
       migrate: (persistedState: unknown, version: number) => {
         if (version < CART_VERSION) {
-          // Reset cart on version mismatch (v1 -> v2 migration)
+          // Reset cart on version mismatch
           return {
             items: [],
             appliedCoupon: null,
-            ambassadorShipping: DEFAULT_AMBASSADOR_SHIPPING,
           };
         }
         return persistedState as CartStore;
@@ -413,6 +331,3 @@ export const useCartActions = () =>
     clearCart: state.clearCart,
     setIsOpen: state.setIsOpen,
   }));
-
-// Note: Ambassador shipping selectors removed as unused.
-// Access via useCartStore((state) => state.ambassadorShipping) if needed.

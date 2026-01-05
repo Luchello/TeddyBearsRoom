@@ -5,14 +5,12 @@
  * - 추천 코드 생성
  * - 추천 관계 등록
  * - 마일스톤 체크 및 보상 지급
- * - 앰버서더 자격 확인
  */
 
 import { prisma } from "@/lib/prisma";
 import {
   REFERRAL_CODE_CONFIG,
   REFERRAL_MILESTONES,
-  AMBASSADOR_CONFIG,
   POINTS_CONFIG,
 } from "@/constants/referral";
 import type { Referral, ReferralMilestoneReward } from "@prisma/client";
@@ -362,109 +360,6 @@ export async function claimMilestoneReward(
   });
 
   return { success: true, points: reward.rewardPoints };
-}
-
-// ============================================================
-// AMBASSADOR CHECK
-// ============================================================
-
-/**
- * 앰버서더 자격 확인
- */
-export async function checkAmbassadorStatus(
-  profileId: string
-): Promise<{ isAmbassador: boolean; referralCount: number; remaining: number }> {
-  const profile = await prisma.profile.findUnique({
-    where: { id: profileId },
-    select: { totalReferrals: true },
-  });
-
-  if (!profile) {
-    return { isAmbassador: false, referralCount: 0, remaining: AMBASSADOR_CONFIG.requiredReferrals };
-  }
-
-  const isAmbassador = profile.totalReferrals >= AMBASSADOR_CONFIG.requiredReferrals;
-  const remaining = Math.max(0, AMBASSADOR_CONFIG.requiredReferrals - profile.totalReferrals);
-
-  return {
-    isAmbassador,
-    referralCount: profile.totalReferrals,
-    remaining,
-  };
-}
-
-/**
- * 모든 사용자의 앰버서더 자격 일괄 업데이트 (Cron Job용)
- * - totalReferrals >= requiredReferrals 조건으로 isAmbassador 필드 업데이트
- */
-export async function updateAllAmbassadorStatuses(): Promise<{
-  updated: number;
-  newAmbassadors: number;
-}> {
-  const threshold = AMBASSADOR_CONFIG.requiredReferrals;
-  let newAmbassadorCount = 0;
-  let demotedCount = 0;
-
-  // 1. 자격 충족했지만 AmbassadorStatus 없거나 CANDIDATE인 프로필 조회
-  const eligibleProfiles = await prisma.profile.findMany({
-    where: {
-      totalReferrals: { gte: threshold },
-    },
-    include: {
-      ambassadorStatus: true,
-    },
-  });
-
-  for (const profile of eligibleProfiles) {
-    if (!profile.ambassadorStatus) {
-      // AmbassadorStatus 레코드 생성
-      await prisma.ambassadorStatus.create({
-        data: {
-          profileId: profile.id,
-          status: "ACTIVE",
-          qualifiedAt: new Date(),
-          totalReferrals: profile.totalReferrals,
-          benefits: {
-            newProductPreview: true,
-            monthlyFreeShipping: 1,
-          },
-        },
-      });
-      newAmbassadorCount++;
-    } else if (profile.ambassadorStatus.status !== "ACTIVE") {
-      // CANDIDATE나 INACTIVE에서 ACTIVE로 업그레이드
-      await prisma.ambassadorStatus.update({
-        where: { id: profile.ambassadorStatus.id },
-        data: {
-          status: "ACTIVE",
-          qualifiedAt: profile.ambassadorStatus.qualifiedAt || new Date(),
-          totalReferrals: profile.totalReferrals,
-        },
-      });
-      newAmbassadorCount++;
-    }
-  }
-
-  // 2. 자격 미달인 ACTIVE 앰버서더를 INACTIVE로 변경
-  const demotedAmbassadors = await prisma.ambassadorStatus.updateMany({
-    where: {
-      status: "ACTIVE",
-      profile: {
-        totalReferrals: { lt: threshold },
-      },
-    },
-    data: {
-      status: "INACTIVE",
-    },
-  });
-  demotedCount = demotedAmbassadors.count;
-
-  logger.info("[ReferralService]", `Ambassador status update: ${newAmbassadorCount} new, ${demotedCount} demoted`);
-
-  return {
-    updated: newAmbassadorCount + demotedCount,
-    newAmbassadors: newAmbassadorCount,
-  };
 }
 
 // ============================================================

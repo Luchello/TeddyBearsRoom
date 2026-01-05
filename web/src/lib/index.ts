@@ -20,6 +20,5 @@ export { makeQueryClient, getQueryClient, queryKeys, invalidateQueries } from ".
 export * from "./supabase/client";
 
 // Services
-export * from "./services/ambassador.service";
 export * from "./services/referral.service";
 export * from "./services/shipping.service";
