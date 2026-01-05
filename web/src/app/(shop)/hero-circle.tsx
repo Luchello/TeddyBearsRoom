@@ -27,6 +27,7 @@ export function HeroCircle() {
               sizes="160px"
               className="object-contain drop-shadow-xl saturate-[0.8]"
               priority
+              quality={90}
             />
           </div>
         </div>

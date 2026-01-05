@@ -50,9 +50,11 @@ function HeroSection() {
             </div>
 
             <p className="text-xl sm:text-2xl text-foreground/70 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
-              당신의 가장 사적인 공간을 위한 프리미엄 큐레이션.
+              <span className="text-foreground/90 font-semibold">직접 사용하고 추천하는 제품만</span> 엄선하여 소개합니다.
               <br />
-              <span className="text-foreground/90 font-bold">TeddyBear&apos;s Room</span>에서 감각의 혁명을 경험하세요.
+              당신의 가장 사적인 공간을 위한 프리미엄 큐레이션,
+              <br />
+              <span className="text-foreground/90 font-bold">TeddyBear&apos;s Room</span>.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6 animate-reveal" style={{ animationDelay: '0.4s' }}>
@@ -176,6 +178,39 @@ function RoommateSection() {
 }
 
 // ============================================================
+// TRUST BADGES SECTION - E-commerce 신뢰 요소
+// ============================================================
+function TrustSection() {
+  const trustItems = [
+    { icon: "🔒", title: "안전 결제", desc: "SSL 암호화 보안" },
+    { icon: "📦", title: "비밀 포장", desc: "무표기 프라이빗 배송" },
+    { icon: "✓", title: "100% 정품", desc: "공식 수입 정품만" },
+    { icon: "⚡", title: "빠른 배송", desc: "오후 3시 이전 주문 당일 발송" },
+  ];
+
+  return (
+    <section className="py-16 bg-muted/30 border-y border-border/50">
+      <div className="container px-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          {trustItems.map((item, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center text-center gap-3 p-6 rounded-2xl hover:bg-background/50 transition-colors"
+            >
+              <span className="text-3xl md:text-4xl" role="img" aria-hidden="true">{item.icon}</span>
+              <div>
+                <h3 className="font-bold text-foreground text-sm md:text-base">{item.title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
 // REVIEWS SECTION
 // ============================================================
 function ReviewsSection() {
@@ -257,11 +292,12 @@ function ReviewsSection() {
 // ============================================================
 export default function HomePage() {
   return (
-    <div className="flex flex-col">
+    <main className="flex flex-col" role="main">
       <HeroSection />
       <ProductsSection />
+      <TrustSection />
       <ReviewsSection />
       <RoommateSection />
-    </div>
+    </main>
   );
 }

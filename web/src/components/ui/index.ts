@@ -74,3 +74,13 @@ export {
 } from "./skeleton";
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
 export { Toast, Toaster } from "./toast";
+
+// Error Handling
+export {
+  ErrorBoundary,
+  ProductErrorBoundary,
+  CartErrorBoundary,
+  DefaultErrorFallback,
+  CompactErrorFallback,
+  InlineErrorFallback,
+} from "./error-boundary";

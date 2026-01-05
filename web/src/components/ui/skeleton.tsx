@@ -7,13 +7,23 @@ import { cn } from "@/lib/utils";
 
 interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "circular" | "rounded" | "text";
+  /** Use shimmer animation instead of pulse (better for product cards) */
+  shimmer?: boolean;
 }
 
-function Skeleton({ className, variant = "default", ...props }: SkeletonProps) {
+function Skeleton({
+  className,
+  variant = "default",
+  shimmer = false,
+  ...props
+}: SkeletonProps) {
   return (
     <div
+      role="status"
+      aria-label="로딩 중..."
       className={cn(
-        "animate-pulse bg-muted",
+        // Use shimmer animation for smoother loading experience
+        shimmer ? "skeleton" : "animate-pulse bg-muted",
         variant === "default" && "rounded-md",
         variant === "circular" && "rounded-full",
         variant === "rounded" && "rounded-2xl",
@@ -25,17 +35,18 @@ function Skeleton({ className, variant = "default", ...props }: SkeletonProps) {
   );
 }
 
-// Product Card Skeleton
+// Product Card Skeleton - uses shimmer for better visual
 function ProductCardSkeleton() {
   return (
-    <div className="space-y-3">
-      <Skeleton variant="rounded" className="aspect-[3/4] w-full" />
+    <div className="space-y-3" role="status" aria-label="상품 로딩 중...">
+      <Skeleton shimmer variant="rounded" className="aspect-[3/4] w-full" />
       <div className="space-y-2 px-1">
-        <Skeleton variant="text" className="h-3 w-1/3" />
-        <Skeleton variant="text" className="h-4 w-full" />
-        <Skeleton variant="text" className="h-4 w-2/3" />
-        <Skeleton variant="text" className="h-5 w-1/2" />
+        <Skeleton shimmer variant="text" className="h-3 w-1/3" />
+        <Skeleton shimmer variant="text" className="h-4 w-full" />
+        <Skeleton shimmer variant="text" className="h-4 w-2/3" />
+        <Skeleton shimmer variant="text" className="h-5 w-1/2" />
       </div>
+      <span className="sr-only">상품 정보를 불러오는 중입니다</span>
     </div>
   );
 }

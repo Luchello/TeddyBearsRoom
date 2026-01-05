@@ -138,6 +138,7 @@ export function Header({ className }: HeaderProps) {
           : "bg-transparent py-4",
         className
       )}
+      role="banner"
     >
       {/* Main Header */}
       <div className="container px-4">
@@ -204,15 +205,15 @@ export function Header({ className }: HeaderProps) {
           </div>
 
           {/* Center: Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-10">
+          <nav className="hidden lg:flex items-center gap-10" role="navigation" aria-label="메인 네비게이션">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-semibold text-foreground/70 hover:text-primary transition-all relative group"
+                className="text-sm font-semibold text-foreground/70 hover:text-primary transition-all relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" aria-hidden="true" />
               </Link>
             ))}
           </nav>

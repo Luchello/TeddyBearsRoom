@@ -132,6 +132,7 @@ function ProductCardComponent({
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            quality={75}
             className={cn(
               "object-cover transition-transform duration-500",
               isHovered && "scale-105"
@@ -146,8 +147,8 @@ function ProductCardComponent({
                 alt="TeddyBear's Room"
                 fill
                 sizes="144px"
+                quality={75}
                 className="object-contain drop-shadow-md transition-all duration-300"
-                priority={false}
               />
             </div>
           </div>

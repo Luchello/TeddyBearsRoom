@@ -4,9 +4,22 @@
  */
 
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { ProductGrid, ProductFilters, ProductFiltersSidebar } from "@/components/products";
 import { ProductCardSkeleton } from "@/components/ui/skeleton";
 import type { ProductCardData } from "@/types";
+
+// ============================================================
+// PAGE METADATA
+// ============================================================
+export const metadata: Metadata = {
+  title: "전체 상품",
+  description: "TeddyBear's Room의 프리미엄 성인용품을 만나보세요. 바이브레이터, 러브젤, 커플용품 등 엄선된 제품만 소개합니다.",
+  openGraph: {
+    title: "전체 상품 | TeddyBear's Room",
+    description: "TeddyBear's Room의 프리미엄 성인용품을 만나보세요.",
+  },
+};
 
 // Mock products - will be replaced with API call
 const mockProducts: ProductCardData[] = [

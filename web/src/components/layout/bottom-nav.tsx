@@ -17,7 +17,11 @@ export function BottomNav() {
     const pathname = usePathname();
 
     return (
-        <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 h-16 w-[90%] max-w-md bg-white/60 backdrop-blur-xl border border-white/40 rounded-full flex items-center justify-around px-6 shadow-2xl md:hidden animate-reveal">
+        <nav
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 h-16 w-[90%] max-w-md bg-white/60 backdrop-blur-xl border border-white/40 rounded-full flex items-center justify-around px-6 shadow-2xl md:hidden animate-reveal"
+            role="navigation"
+            aria-label="모바일 메인 네비게이션"
+        >
             {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
@@ -26,11 +30,14 @@ export function BottomNav() {
                     <Link
                         key={item.href}
                         href={item.href}
+                        aria-current={isActive ? "page" : undefined}
+                        aria-label={item.name}
                         className={cn(
                             "flex flex-col items-center justify-center gap-1 transition-all duration-500",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl",
                             isActive
                                 ? "text-primary scale-110"
-                                : "text-muted-foreground hover:text-foreground"
+                                : "text-muted-foreground hover:text-foreground active:scale-95"
                         )}
                     >
                         <div className={cn(
@@ -40,6 +47,7 @@ export function BottomNav() {
                             <Icon
                                 size={22}
                                 strokeWidth={isActive ? 2.5 : 2}
+                                aria-hidden="true"
                                 className={cn(isActive && "animate-pulse-glow")}
                             />
                         </div>

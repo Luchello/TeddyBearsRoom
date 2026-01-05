@@ -54,6 +54,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // React Compiler 활성화 (Next.js 16 + React 19)
+  // 자동 메모이제이션으로 성능 최적화
+  reactCompiler: true,
+
   images: {
     remotePatterns: [
       {

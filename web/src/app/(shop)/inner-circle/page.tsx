@@ -3,9 +3,24 @@
  * TeddyBear's Room - Subscription Program Landing
  */
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
+// ============================================================
+// PAGE METADATA
+// ============================================================
+export const metadata: Metadata = {
+  title: "이너 써클 - 프리미엄 멤버십",
+  description: "TeddyBear's Room 이너 써클 멤버십. 10% 상시 할인, 3만원 이상 무료 배송, 1% 기부 참여 등 특별한 혜택을 누리세요. 월 9,900원으로 시작하는 프리미엄 경험.",
+  keywords: ["이너 써클", "멤버십", "구독", "할인", "프리미엄", "TeddyBear's Room"],
+  openGraph: {
+    title: "이너 써클 - 프리미엄 멤버십 | TeddyBear's Room",
+    description: "10% 상시 할인, 3만원 이상 무료 배송, 1% 기부 참여. 월 9,900원으로 특별해지세요.",
+    type: "website",
+  },
+};
 
 const benefits = [
   {
