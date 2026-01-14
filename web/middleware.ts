@@ -3,11 +3,14 @@
 // Handles Supabase session refresh
 // ====================================
 
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
+import { type NextRequest, NextResponse } from "next/server";
+// import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  // Coming Soon 모드: Supabase 세션 처리 비활성화
+  // TODO: 사이트 정식 오픈 시 아래 코드로 복원
+  // return await updateSession(request);
+  return NextResponse.next();
 }
 
 export const config = {
