@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+import { Noto_Sans_KR, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,6 +18,13 @@ const notoSansKR = Noto_Sans_KR({
   display: "swap",
   variable: "--font-noto-sans-kr",
   preload: true,
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  display: "swap",
+  variable: "--font-playfair",
 });
 
 export const metadata: Metadata = {
@@ -44,7 +51,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning className={notoSansKR.variable}>
+    <html lang="ko" className={`${notoSansKR.variable} ${playfair.variable}`} style={{ colorScheme: 'dark' }}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('dark')` }} />
+      </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider>
           <ToastProvider>

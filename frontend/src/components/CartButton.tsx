@@ -30,8 +30,25 @@
 // - cartStore: 장바구니 상태 및 액션
 // ====================================
 
+import { useSyncExternalStore } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
+
+// ──────────────────────────────────────
+// Hydration-safe client-only check
+// ──────────────────────────────────────
+
+/**
+ * useSyncExternalStore를 사용한 hydration-safe 클라이언트 감지
+ * @returns SSR에서는 false, CSR에서는 true
+ */
+function useHydrated() {
+  return useSyncExternalStore(
+    () => () => {},      // subscribe (no-op)
+    () => true,          // getSnapshot (client)
+    () => false          // getServerSnapshot (server)
+  );
+}
 
 // ──────────────────────────────────────
 // CartButton 컴포넌트
@@ -55,12 +72,19 @@ import { useCartStore } from "@/store/cartStore";
  */
 export function CartButton() {
   // ──────────────────────────────────────
+  // Hydration mismatch 방지
+  // - useSyncExternalStore로 SSR/CSR 상태 동기화
+  // - SSR에서는 0, CSR에서만 localStorage 복원
+  // ──────────────────────────────────────
+  const hydrated = useHydrated();
+
+  // ──────────────────────────────────────
   // Store에서 필요한 액션/상태 가져오기
   // - toggleCart: 장바구니 드로어 열기/닫기
   // - getTotalItems: 장바구니 아이템 총 수량
   // ──────────────────────────────────────
   const { toggleCart, getTotalItems } = useCartStore();
-  const totalItems = getTotalItems();
+  const totalItems = hydrated ? getTotalItems() : 0;
 
   return (
     <button

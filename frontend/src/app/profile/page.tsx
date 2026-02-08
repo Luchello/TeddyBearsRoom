@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,8 +9,7 @@ import { User, Package, Heart, Settings, LogOut, Crown } from "lucide-react";
 import Link from "next/link";
 
 export default function ProfilePage() {
-  // Note: activeTab은 Tabs 컴포넌트의 value로 사용 예정
-  const [_activeTab, setActiveTab] = useState("overview");
+  const [, setActiveTab] = useState("overview");
 
   // Mock User Data
   const user = {
@@ -38,14 +38,18 @@ export default function ProfilePage() {
                 <div className="relative group">
                   <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 p-1 dark:from-primary dark:to-purple-600">
                     <div className="w-full h-full rounded-full bg-white dark:bg-black overflow-hidden relative">
-                      <img
+                      <Image
                         src={user.avatar}
                         alt="Profile"
+                        width={128}
+                        height={128}
                         className="w-full h-full object-contain p-2 dark:hidden"
                       />
-                      <img
+                      <Image
                         src={user.avatarDark}
                         alt="Profile"
+                        width={128}
+                        height={128}
                         className="w-full h-full object-contain p-2 hidden dark:block"
                       />
                     </div>

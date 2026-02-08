@@ -6,6 +6,7 @@
 // ====================================
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { FAQAccordion } from "@/components/FAQAccordion";
@@ -26,14 +27,18 @@ export default function SubscribePage() {
           <div className="inline-flex items-center justify-center gap-3 mb-4">
             <span className="text-2xl opacity-60 animate-float">✧</span>
             <div className="relative w-24 h-24 sm:w-32 sm:h-32 animate-float">
-              <img
+              <Image
                 src="/tbr_logo.png"
                 alt="TeddyBear's Room Logo"
+                width={128}
+                height={128}
                 className="w-full h-full object-contain drop-shadow-xl dark:hidden"
               />
-              <img
+              <Image
                 src="/tbr_logo_dark.png"
                 alt="TeddyBear's Room Logo"
+                width={128}
+                height={128}
                 className="w-full h-full object-contain drop-shadow-xl hidden dark:block"
               />
             </div>

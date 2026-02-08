@@ -161,50 +161,68 @@
    ==================================== */
 :root {
   --radius: 1.5rem;
-  /* Extra rounded for cuteness */
 
+  /* 기본값 = 다크 모드 (성인용품 사이트) */
+  --background: #0a0a0a;
+  --foreground: #e4e4e7;
+  --card: #1a1a2e;
+  --card-foreground: #e4e4e7;
+  --popover: #1a1a2e;
+  --popover-foreground: #e4e4e7;
+  --primary: #39ff14;
+  --primary-foreground: #000000;
+  --secondary: #16a34a;
+  --secondary-foreground: #e4e4e7;
+  --muted: #141425;
+  --muted-foreground: #9ca3af;
+  --accent: #39ff14;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #2a2a45;
+  --input: #141425;
+  --ring: #39ff14;
+  --chart-1: #39ff14;
+  --chart-2: #16a34a;
+  --chart-3: #22d3ee;
+  --chart-4: #a855f7;
+  --chart-5: #f43f5e;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #e4e4e7;
+  --sidebar-primary: #39ff14;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1a1a2e;
+  --sidebar-accent-foreground: #e4e4e7;
+  --sidebar-border: #2a2a45;
+  --sidebar-ring: #39ff14;
+}
+
+/* 라이트 모드 비활성화 — 다크 전용 사이트 */
+.light-disabled-do-not-use {
   --background: #FFF0F5;
-  /* Lavender Blush - Soft Creamy Pink */
   --foreground: #4A4A4A;
-  /* Soft Charcoal */
-
   --card: #FFFFFF;
   --card-foreground: #4A4A4A;
-
   --popover: #FFFFFF;
   --popover-foreground: #4A4A4A;
-
   --primary: #E08B7D;
-  /* Melon Coral - Improved contrast (4.5:1 on background) */
   --primary-foreground: #FFFFFF;
-
   --secondary: #B5EAD7;
-  /* Magic Mint */
   --secondary-foreground: #4A4A4A;
-
   --muted: #E2F0CB;
-  /* Dirty White/Greenish */
   --muted-foreground: #888888;
-
   --accent: #C7CEEA;
-  /* Periwinkle */
   --accent-foreground: #4A4A4A;
-
   --destructive: #FF9AA2;
-  /* Salmon Pink */
   --destructive-foreground: #FFFFFF;
-
   --border: #FFDAC1;
-  /* Peach */
   --input: #FFFFFF;
   --ring: #FFB7B2;
-
   --chart-1: #FF9AA2;
   --chart-2: #FFB7B2;
   --chart-3: #FFDAC1;
   --chart-4: #E2F0CB;
   --chart-5: #B5EAD7;
-
   --sidebar: #FFF0F5;
   --sidebar-foreground: #4A4A4A;
   --sidebar-primary: #FFB7B2;
@@ -216,48 +234,42 @@
 }
 
 /* ====================================
-   DARK MODE: 네온 매트릭스 (Neon Matrix)
-   Deep Black & Neon Green 💚
+   DARK MODE: Premium Dark + Neon Accent
+   Background #0a0a0a, Card #1a1a2e, Neon Green #39ff14
    ==================================== */
 .dark {
-  --background: #050505;
-  /* 딥 블랙 */
-  --foreground: #F0FFF4;
-  /* 소프트 그린 화이트 */
-  --card: #0A0A0A;
-  /* 다크 카드 */
-  --card-foreground: #F0FFF4;
-  --popover: #0A0A0A;
-  --popover-foreground: #F0FFF4;
-  --primary: #00FF41;
-  /* 네온 그린 💚 */
+  --background: #0a0a0a;
+  --foreground: #e4e4e7;
+  --card: #1a1a2e;
+  --card-foreground: #e4e4e7;
+  --popover: #1a1a2e;
+  --popover-foreground: #e4e4e7;
+  --primary: #39ff14;
+  /* 네온 그린 액센트 */
   --primary-foreground: #000000;
-  --secondary: #008F11;
-  /* 매트릭스 그린 */
-  --secondary-foreground: #F0FFF4;
-  --muted: #111111;
-  --muted-foreground: #7A9A7A; /* 대비율 개선: #4A6A4A → #7A9A7A (4.5:1+ on #050505) */
-  --accent: #39FF14;
-  /* 브라이트 네온 */
+  --secondary: #16a34a;
+  --secondary-foreground: #e4e4e7;
+  --muted: #141425;
+  --muted-foreground: #9ca3af;
+  --accent: #39ff14;
   --accent-foreground: #000000;
-  --destructive: #FF3333;
-  --border: #1A2A1A;
-  /* 그린 틴트 보더 */
-  --input: #111111;
-  --ring: #00FF41;
-  --chart-1: #00FF41;
-  --chart-2: #008F11;
-  --chart-3: #39FF14;
-  --chart-4: #003B00;
-  --chart-5: #CCFFCC;
-  --sidebar: #050505;
-  --sidebar-foreground: #F0FFF4;
-  --sidebar-primary: #00FF41;
+  --destructive: #ef4444;
+  --border: #2a2a45;
+  --input: #141425;
+  --ring: #39ff14;
+  --chart-1: #39ff14;
+  --chart-2: #16a34a;
+  --chart-3: #00FF41;
+  --chart-4: #0d3320;
+  --chart-5: #bbf7d0;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #e4e4e7;
+  --sidebar-primary: #39ff14;
   --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #111111;
-  --sidebar-accent-foreground: #F0FFF4;
-  --sidebar-border: #1A2A1A;
-  --sidebar-ring: #00FF41;
+  --sidebar-accent: #141425;
+  --sidebar-accent-foreground: #e4e4e7;
+  --sidebar-border: #2a2a45;
+  --sidebar-ring: #39ff14;
 }
 
 @layer base {
@@ -463,4 +475,85 @@ main { animation: fadeIn 0.3s ease-out; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Premium Typography */
+.font-display { font-family: var(--font-playfair), 'Playfair Display', serif; }
+h1, h2, h3 { letter-spacing: -0.03em; }
+
+/* Glow Button */
+.glow-btn {
+  box-shadow: 0 0 20px rgba(255,45,85,0.4), 0 0 60px rgba(255,45,85,0.1);
+  transition: box-shadow 0.3s;
+}
+.glow-btn:hover {
+  box-shadow: 0 0 30px rgba(255,45,85,0.6), 0 0 80px rgba(255,45,85,0.2);
+}
+
+/* Grid Pattern Background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,45,85,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,45,85,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #ff2d55, #ff6b8a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Shine card - cursor follow effect */
+.shine-card {
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255,45,85,0.06), transparent 40%
+  );
+}
+
+/* ====================================
+   PREMIUM DARK SECTIONS
+   ==================================== */
+
+/* Section heading with neon accent underline */
+.dark .section-heading {
+  position: relative;
+  display: inline-block;
+}
+.dark .section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #39ff14;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+}
+
+/* Dark section background with subtle gradient */
+.dark-section {
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f0f1a 50%, #0a0a0a 100%);
+}
+
+/* Product card premium dark styling */
+.dark .product-card-dark {
+  background: #1a1a2e;
+  border: 1px solid #2a2a45;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dark .product-card-dark:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(57, 255, 20, 0.15), 0 0 0 1px rgba(57, 255, 20, 0.2);
 }

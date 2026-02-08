@@ -7,6 +7,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, CreditCard, Building2, Receipt, Loader2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -175,14 +176,18 @@ export default function CheckoutPage() {
                     className="flex gap-3 p-3 rounded-xl bg-muted/50 dark:bg-white/5"
                   >
                     <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden relative dark:bg-black/50">
-                      <img
+                      <Image
                         src="/tbr_logo.png"
                         alt={item.product.name}
+                        width={64}
+                        height={64}
                         className="w-full h-full object-contain p-2 dark:hidden"
                       />
-                      <img
+                      <Image
                         src="/tbr_logo_dark.png"
                         alt={item.product.name}
+                        width={64}
+                        height={64}
                         className="w-full h-full object-contain p-2 hidden dark:block"
                       />
                     </div>

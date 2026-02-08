@@ -56,7 +56,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/ThemeToggle";
+// ThemeToggle removed — dark mode only
 import { CartButton } from "@/components/CartButton";
 import { WishlistButton } from "@/components/WishlistButton";
 import { useAuthStore } from "@/store/authStore";
@@ -165,7 +165,7 @@ export function Header() {
           <div className="sm:hidden flex items-center gap-1">
             <CartButton />
           </div>
-          <ThemeToggle />
+          {/* ThemeToggle removed — dark only */}
 
           {/* ─────────────────────────────────────
               햄버거 메뉴 (Sheet)
@@ -213,9 +213,11 @@ export function Header() {
                       {/* 아바타 */}
                       <div className="w-14 h-14 rounded-full bg-white dark:bg-black/20 p-1 border-2 border-primary/20 shadow-sm">
                         {user.avatar ? (
-                          <img
+                          <Image
                             src={user.avatar}
                             alt={user.name}
+                            width={56}
+                            height={56}
                             className="w-full h-full rounded-full object-cover"
                           />
                         ) : (

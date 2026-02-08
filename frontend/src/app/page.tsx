@@ -10,9 +10,9 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16 grid-bg">
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 to-white/50 dark:from-neutral-950 dark:to-neutral-900 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 to-white/50 dark:from-[#0a0a0a] dark:to-[#0f0f1a] z-0" />
 
         {/* Animated Blobs (Light Mode) */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl animate-float-slow dark:hidden" />
@@ -30,7 +30,7 @@ export default function HomePage() {
               </span>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-foreground">
+            <h1 className="font-display text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-foreground">
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary dark:from-[#FF00FF] dark:via-[#00FF41] dark:to-[#9D00FF] animate-gradient-x">
                 Soft Outside,
               </span>
@@ -110,14 +110,14 @@ export default function HomePage() {
     </section>
 
       {/* Featured Products - "The Collection" */}
-      <section className="py-24 relative z-10">
+      <section className="py-24 relative z-10 dark:bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <h2 className="text-4xl font-bold text-foreground mb-4 dark:text-white">
+            <h2 className="text-4xl font-bold text-foreground mb-4 dark:text-white section-heading">
               Curated Pleasure
             </h2>
-            <p className="text-lg text-muted-foreground max-w-md">
+            <p className="text-lg text-muted-foreground max-w-md dark:text-gray-400">
               엄선된 아이템으로 당신의 취향을 발견하세요.
               <br />귀여움 속에 숨겨진 기능을 탐험해보세요.
             </p>
@@ -125,7 +125,7 @@ export default function HomePage() {
           <Button
             asChild
             variant="ghost"
-            className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0"
+            className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0 dark:text-[#39ff14] dark:hover:text-[#39ff14]/80"
           >
             <Link href="/products" className="flex items-center gap-2">
               View All Products
@@ -143,12 +143,12 @@ export default function HomePage() {
       </section>
 
       {/* Subscription CTA - "The Inner Circle" */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 -skew-y-3 transform origin-top-left scale-110" />
+      <section className="py-24 relative overflow-hidden dark:bg-gradient-to-b dark:from-[#0a0a0a] dark:via-[#0f0f1a] dark:to-[#0a0a0a]">
+        <div className="absolute inset-0 bg-primary/5 dark:bg-transparent -skew-y-3 transform origin-top-left scale-110" />
 
         <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
           {/* P1: rounded-[2.5rem] = --radius-2xl (40px) - Design Token 표준화 */}
-          <div className="bg-white dark:bg-neutral-900 rounded-[2.5rem] p-8 md:p-16 shadow-2xl border border-primary/10 dark:border-primary/30 overflow-hidden relative">
+          <div className="bg-white dark:bg-[#1a1a2e] rounded-[2.5rem] p-8 md:p-16 shadow-2xl border border-primary/10 dark:border-[#2a2a45] dark:rounded-2xl overflow-hidden relative">
             {/* Decorative Blobs */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none" />
@@ -158,9 +158,9 @@ export default function HomePage() {
                 <div className="inline-block p-3 rounded-2xl bg-primary/10 text-primary">
                   <Sparkles className="w-8 h-8" />
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white leading-tight section-heading">
                   Become a <br />
-                  <span className="text-primary">Roommate</span>
+                  <span className="text-primary dark:text-[#39ff14] dark:drop-shadow-[0_0_8px_rgba(57,255,20,0.5)]">Roommate</span>
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   매달 도착하는 시크릿 박스. <br />
@@ -180,7 +180,7 @@ export default function HomePage() {
               </div>
 
               <div className="relative">
-                <div className="aspect-[4/5] rounded-[2.5rem] bg-neutral-100 dark:bg-neutral-800 overflow-hidden relative group">
+                <div className="aspect-[4/5] rounded-[2.5rem] bg-neutral-100 dark:bg-[#141425] dark:rounded-2xl dark:border dark:border-[#2a2a45] overflow-hidden relative group">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
@@ -190,7 +190,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 {/* Floating Elements */}
-                <div className="absolute -bottom-6 -right-6 bg-white dark:bg-neutral-800 p-6 rounded-3xl shadow-xl border border-primary/10 animate-float">
+                <div className="absolute -bottom-6 -right-6 bg-white dark:bg-[#1a1a2e] dark:border-[#2a2a45] p-6 rounded-3xl shadow-xl border border-primary/10 animate-float">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                       <Heart className="w-5 h-5 fill-current" />

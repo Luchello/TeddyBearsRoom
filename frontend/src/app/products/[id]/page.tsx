@@ -7,6 +7,7 @@
 
 import { use } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, ShoppingCart, Heart, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -75,14 +76,18 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="relative">
             <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center overflow-hidden dark:bg-black/40 dark:backdrop-blur-md dark:border dark:border-primary/50 dark:shadow-[0_0_30px_rgba(0,255,65,0.2)] relative">
               <div className="relative w-3/4 h-3/4 animate-float">
-                <img
+                <Image
                   src="/tbr_logo.png"
                   alt={product.name}
+                  width={400}
+                  height={400}
                   className="w-full h-full object-contain drop-shadow-xl dark:hidden"
                 />
-                <img
+                <Image
                   src="/tbr_logo_dark.png"
                   alt={product.name}
+                  width={400}
+                  height={400}
                   className="w-full h-full object-contain drop-shadow-xl hidden dark:block"
                 />
               </div>

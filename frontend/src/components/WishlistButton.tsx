@@ -30,8 +30,25 @@
 // - wishlistStore: 위시리스트 상태 및 액션
 // ====================================
 
+import { useSyncExternalStore } from "react";
 import { Heart } from "lucide-react";
 import { useWishlistStore } from "@/store/wishlistStore";
+
+// ──────────────────────────────────────
+// Hydration-safe client-only check
+// ──────────────────────────────────────
+
+/**
+ * useSyncExternalStore를 사용한 hydration-safe 클라이언트 감지
+ * @returns SSR에서는 false, CSR에서는 true
+ */
+function useHydrated() {
+  return useSyncExternalStore(
+    () => () => {},      // subscribe (no-op)
+    () => true,          // getSnapshot (client)
+    () => false          // getServerSnapshot (server)
+  );
+}
 
 // ──────────────────────────────────────
 // WishlistButton 컴포넌트
@@ -55,12 +72,19 @@ import { useWishlistStore } from "@/store/wishlistStore";
  */
 export function WishlistButton() {
   // ──────────────────────────────────────
+  // Hydration mismatch 방지
+  // - useSyncExternalStore로 SSR/CSR 상태 동기화
+  // - SSR에서는 0, CSR에서만 localStorage 복원
+  // ──────────────────────────────────────
+  const hydrated = useHydrated();
+
+  // ──────────────────────────────────────
   // Store에서 필요한 상태/액션 가져오기
   // - items: 찜한 상품 배열
   // - toggleWishlist: 드로어 열기/닫기
   // ──────────────────────────────────────
   const { items, toggleWishlist } = useWishlistStore();
-  const itemCount = items.length;
+  const itemCount = hydrated ? items.length : 0;
 
   return (
     <button

@@ -33,6 +33,7 @@
 // - ToastContext: 알림 표시
 // ====================================
 
+import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -60,6 +61,51 @@ interface ProductCardProps {
   category: string;      // 카테고리명
   isNew?: boolean;       // NEW 배지 표시
   isBest?: boolean;      // BEST 배지 표시
+}
+
+// ──────────────────────────────────────
+// Hydration-safe client-only check
+// ──────────────────────────────────────
+
+/**
+ * useSyncExternalStore를 사용한 hydration-safe 클라이언트 감지
+ * @returns SSR에서는 false, CSR에서는 true
+ */
+function useHydrated() {
+  return useSyncExternalStore(
+    () => () => {},      // subscribe (no-op)
+    () => true,          // getSnapshot (client)
+    () => false          // getServerSnapshot (server)
+  );
+}
+
+// ──────────────────────────────────────
+// 유틸리티 함수
+// ──────────────────────────────────────
+
+/**
+ * 카테고리별 그라디언트 배경 클래스 반환
+ * @param category - 상품 카테고리
+ * @returns Tailwind 그라디언트 클래스 문자열
+ */
+function getCategoryGradient(category: string): string {
+  const cat = category.toLowerCase();
+
+  if (cat.includes('무드') || cat.includes('mood')) {
+    return 'bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-950 dark:to-purple-950';
+  }
+  if (cat.includes('케어') || cat.includes('care')) {
+    return 'bg-gradient-to-br from-rose-100 to-red-100 dark:from-rose-950 dark:to-red-950';
+  }
+  if (cat.includes('라이프') || cat.includes('life')) {
+    return 'bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-950 dark:to-indigo-950';
+  }
+  if (cat.includes('패션') || cat.includes('fashion')) {
+    return 'bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-950 dark:to-orange-950';
+  }
+
+  // 기본값
+  return 'bg-gradient-to-br from-primary/5 to-accent/5 dark:from-[#141425] dark:to-[#1a1a2e]';
 }
 
 // ──────────────────────────────────────
@@ -100,14 +146,24 @@ export function ProductCard({
   isBest,
 }: ProductCardProps) {
   // ──────────────────────────────────────
+  // Hydration mismatch 방지
+  // - useSyncExternalStore로 SSR/CSR 상태 동기화
+  // - SSR에서는 false, CSR에서만 localStorage 복원
+  // ──────────────────────────────────────
+  const hydrated = useHydrated();
+
+  // ──────────────────────────────────────
   // Store 및 Context Hooks
   // ──────────────────────────────────────
   const { addItem, openCart } = useCartStore();
   const { toggleItem, isWishlisted } = useWishlistStore();
   const { addToast } = useToast();
 
-  // 현재 상품의 위시리스트 상태
-  const wishlisted = isWishlisted(id);
+  // 현재 상품의 위시리스트 상태 (hydrated 전에는 항상 false)
+  const wishlisted = hydrated ? isWishlisted(id) : false;
+
+  // 장바구니 추가 피드백
+  const [added, setAdded] = useState(false);
 
   // ──────────────────────────────────────
   // 할인율 계산
@@ -129,6 +185,8 @@ export function ProductCard({
     e.stopPropagation();
     const product: Product = { id, name, price, originalPrice, imageUrl, category, isNew, isBest };
     addItem(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
     addToast(`${name}을(를) 장바구니에 담았어요!`, "success");
     openCart();
   };
@@ -150,27 +208,28 @@ export function ProductCard({
   };
 
   return (
-    <Card className="group relative overflow-visible rounded-[2rem] border-0 bg-transparent transition-all duration-500 hover:-translate-y-2">
+    <Card className="group relative overflow-visible rounded-xl border-0 bg-transparent transition-all duration-300 hover:-translate-y-1">
       {/* ─────────────────────────────────────
           Furry Ears (지뢰계 귀 장식)
-          - hover 시 나타나는 곰 귀 장식
+          - hover 시 나타나는 곰 귀 장식 (light mode only)
           ───────────────────────────────────── */}
-      <div className="absolute -top-2 left-6 w-4 h-6 bg-pink-300 rounded-full rotate-[-15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:bg-primary/50 z-10" />
-      <div className="absolute -top-2 right-6 w-4 h-6 bg-pink-300 rounded-full rotate-[15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:bg-primary/50 z-10" />
+      <div className="absolute -top-2 left-6 w-4 h-6 bg-pink-300 rounded-full rotate-[-15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:hidden z-10" />
+      <div className="absolute -top-2 right-6 w-4 h-6 bg-pink-300 rounded-full rotate-[15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:hidden z-10" />
 
       {/* ─────────────────────────────────────
           Main Card Content
-          - 이미지 영역 + 배지 + 버튼
-          - hover 시 shadow 강화
+          - Light: rounded-[2rem], pastel shadow
+          - Dark: rounded-xl (12px), #1a1a2e bg, neon glow hover
           ───────────────────────────────────── */}
-      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-500 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)] dark:bg-card/80 dark:border-primary/30 dark:group-hover:shadow-[0_0_30px_rgba(255,105,180,0.2)]">
+      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)] dark:rounded-xl dark:bg-[#1a1a2e] dark:border-[#2a2a45] dark:shadow-lg dark:group-hover:shadow-[0_12px_40px_rgba(57,255,20,0.15)] dark:group-hover:border-[#39ff14]/30 dark:backdrop-blur-none">
         <Link href={`/products/${id}`}>
           {/* ─────────────────────────────────────
               Image Area
               - 1:1 비율 (aspect-square)
               - Light/Dark 로고 분기
+              - 카테고리별 그라디언트 배경
               ───────────────────────────────────── */}
-          <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-white via-primary/5 to-accent/5 dark:from-neutral-900 dark:via-primary/10 dark:to-neutral-800">
+          <div className={`relative aspect-square overflow-hidden ${getCategoryGradient(category)}`}>
             {/* 상품 이미지 (현재는 로고로 대체) */}
             <div className="absolute inset-0 flex items-center justify-center p-8">
               <div className="relative w-full h-full">
@@ -252,22 +311,22 @@ export function ProductCard({
             Card Content (상품 정보)
             - 카테고리, 별점, 상품명, 가격, 장바구니 버튼
             ───────────────────────────────────── */}
-        <CardContent className="p-5">
+        <CardContent className="p-5 dark:p-6">
           {/* 카테고리 + 별점 */}
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase dark:text-[#39ff14]/70">
               {category}
             </p>
             <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((star) => (
-                <span key={star} className="text-[10px] text-yellow-400">★</span>
+                <span key={star} className="text-[10px] text-yellow-400 dark:text-[#39ff14]/60">★</span>
               ))}
             </div>
           </div>
 
           {/* 상품명 */}
           <Link href={`/products/${id}`}>
-            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1">
+            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1 dark:text-white dark:group-hover:text-[#39ff14]">
               {name}
             </h3>
           </Link>
@@ -276,13 +335,13 @@ export function ProductCard({
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col">
               {/* 판매가 */}
-              <span className="text-xl font-black text-foreground dark:text-primary">
-                {price.toLocaleString()}
+              <span className="text-xl font-black text-foreground dark:text-[#39ff14]">
+                {price.toLocaleString()}<span className="text-sm font-medium ml-0.5">원</span>
               </span>
               {/* 정가 (할인 시) */}
               {originalPrice && (
-                <span className="text-xs text-muted-foreground line-through">
-                  {originalPrice.toLocaleString()}
+                <span className="text-xs text-muted-foreground line-through dark:text-gray-500">
+                  {originalPrice.toLocaleString()}원
                 </span>
               )}
             </div>
@@ -290,10 +349,10 @@ export function ProductCard({
             {/* 장바구니 추가 버튼 */}
             <Button
               size="icon"
-              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors dark:bg-white dark:text-black dark:hover:bg-primary"
+              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors dark:bg-[#39ff14] dark:text-black dark:hover:bg-[#39ff14]/80 dark:shadow-[0_0_12px_rgba(57,255,20,0.3)]"
               onClick={handleAddToCart}
             >
-              <span className="text-lg">+</span>
+              <span className="text-lg transition-transform duration-200">{added ? "✓" : "+"}</span>
             </Button>
           </div>
         </CardContent>

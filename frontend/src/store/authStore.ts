@@ -175,7 +175,7 @@ export const useAuthStore = create<AuthStore>()(
           });
 
           return { success: true };
-        } catch (_err) {
+        } catch {
           // Note: 에러 로깅은 프로덕션에서 Sentry 등으로 대체 예정
           set({ isLoading: false });
           return { success: false, error: "로그인 중 오류가 발생했습니다." };
@@ -224,7 +224,7 @@ export const useAuthStore = create<AuthStore>()(
           });
 
           return { success: true };
-        } catch (_err) {
+        } catch {
           // Note: 에러 로깅은 프로덕션에서 Sentry 등으로 대체 예정
           set({ isLoading: false });
           return { success: false, error: "회원가입 중 오류가 발생했습니다." };
