@@ -162,7 +162,7 @@ export function CartDrawer() {
                - 장바구니가 비어있을 때 표시
                ───────────────────────────────────── */
             <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground">
-              <span className="text-6xl mb-4">🧸</span>
+              <span className="text-6xl block mb-4">🛒</span>
               <p>장바구니가 비어있어요</p>
               <Button asChild variant="outline" className="mt-4 rounded-xl">
                 <Link href="/products" onClick={closeCart}>

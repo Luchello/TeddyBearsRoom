@@ -153,9 +153,10 @@ export function ProductCard({
     <Card className="group relative overflow-visible rounded-[2rem] border-0 bg-transparent transition-all duration-500 hover:-translate-y-2">
       {/* ─────────────────────────────────────
           Furry Ears (지뢰계 귀 장식)
-          - P1 최적화: hover 효과 단순화로 제거
-          - 과도한 동시 애니메이션 방지
+          - hover 시 나타나는 곰 귀 장식
           ───────────────────────────────────── */}
+      <div className="absolute -top-2 left-6 w-4 h-6 bg-pink-300 rounded-full rotate-[-15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:bg-primary/50 z-10" />
+      <div className="absolute -top-2 right-6 w-4 h-6 bg-pink-300 rounded-full rotate-[15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:bg-primary/50 z-10" />
 
       {/* ─────────────────────────────────────
           Main Card Content

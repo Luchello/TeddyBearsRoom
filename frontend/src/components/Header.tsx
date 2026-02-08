@@ -269,7 +269,7 @@ export function Header() {
                       key={item.name}
                       href={item.href}
                       onClick={() => setSheetOpen(false)}
-                      className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-300 group"
+                      className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-300 group dark:hover:drop-shadow-[0_0_8px_rgba(0,255,65,0.5)]"
                     >
                       {/* 이모지 아이콘 박스 */}
                       <div className="w-10 h-10 rounded-xl bg-background shadow-sm flex items-center justify-center text-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border border-border/50">

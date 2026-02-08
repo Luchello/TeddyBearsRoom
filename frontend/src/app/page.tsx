@@ -15,8 +15,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 to-white/50 dark:from-neutral-950 dark:to-neutral-900 z-0" />
 
         {/* Animated Blobs (Light Mode) */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl animate-pulse dark:hidden" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl animate-pulse delay-1000 dark:hidden" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl animate-float-slow dark:hidden" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl animate-float-slow delay-1000 dark:hidden" />
 
         {/* Content Container - max-w-7xl로 큰 화면에서도 적절한 너비 유지 */}
         <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
@@ -71,7 +71,7 @@ export default function HomePage() {
           {/* Right: Visual "The Portal" */}
           <div className="relative h-[500px] lg:h-[700px] flex items-center justify-center perspective-1000">
             {/* Abstract Shape representing "Soft vs Hard" */}
-            <div className="relative w-[300px] h-[400px] sm:w-[400px] sm:h-[500px]">
+            <div className="relative w-[260px] h-[350px] sm:w-[400px] sm:h-[500px]">
               {/* Back Card (Dark Mode / Latex) */}
               {/* P1: rounded-[2.5rem] = --radius-2xl (40px) - Design Token 표준화 */}
               <div className="absolute inset-0 rounded-[2.5rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
