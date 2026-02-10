@@ -24,7 +24,7 @@
 //
 // 🎨 디자인:
 // - Dark Mode Only: opacity-0 light, opacity-100 dark
-// - 색상: 검정(#0a0a0a) + 네온 그린(#00FF41)
+// - 색상: 검정(#0a0a0a) + 네온 그린(#FF69B4)
 // - 광택감: 라텍스의 반사광 표현 (radial-gradient)
 // - 질감: 물방울 + 그리드로 페티시 감성 강화
 // - 고정 배경: fixed inset-0 (스크롤 시 동적 고정)
@@ -138,15 +138,15 @@ export const LatexBackground = () => {
       {/* ─────────────────────────────────────
           Matrix Neon 그리드 오버레이 (지뢰계 감성)
           - linear-gradient 2개 조합: 수평선 + 수직선
-            1. 수평선: rgba(0,255,65,0.03) 1px 간격
-            2. 수직선: 90deg (90도 회전) rgba(0,255,65,0.03) 1px 간격
+            1. 수평선: rgba(255,105,180,0.03) 1px 간격
+            2. 수직선: 90deg (90도 회전) rgba(255,105,180,0.03) 1px 간격
           - bg-[size:50px_50px]: 50px × 50px 그리드
           - mask-image: ellipse로 중앙에서 주변으로 페이드아웃
             → ellipse_at_center: 중앙 기준
             → black_40%: 중앙 40% 범위는 검정(완전 표시)
             → transparent_100%: 100% 거리에서 투명(완전 숨김)
             → 부드러운 원형 페이드아웃 효과 */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,105,180,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,105,180,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]" />
     </div>
   );
 };

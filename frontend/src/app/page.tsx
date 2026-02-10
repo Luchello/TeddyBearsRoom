@@ -31,7 +31,7 @@ export default function HomePage() {
             </div>
 
             <h1 className="font-display text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-foreground">
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary dark:from-[#FF00FF] dark:via-[#00FF41] dark:to-[#9D00FF] animate-gradient-x">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary dark:from-[#FF00FF] dark:via-[#FF69B4] dark:to-[#9D00FF] animate-gradient-x">
                 Soft Outside,
               </span>
               <span className="block relative">
@@ -44,7 +44,7 @@ export default function HomePage() {
 
             <p className="text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
               일상의 귀여움 뒤에 숨겨진 당신만의 본능.<br />
-              <span className="font-bold text-foreground dark:text-white">지뢰계 감성 프라이빗 셀프케어</span>를 경험하세요.
+              <span className="font-bold text-primary">당신만의 비밀 셀프케어</span>를 시작해보세요.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -74,13 +74,13 @@ export default function HomePage() {
             <div className="relative w-[260px] h-[350px] sm:w-[400px] sm:h-[500px]">
               {/* Back Card (Dark Mode / Latex) */}
               {/* P1: rounded-[2.5rem] = --radius-2xl (40px) - Design Token 표준화 */}
-              <div className="absolute inset-0 rounded-[2.5rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(0,255,65,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
-                <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(0,255,65,0.5)] filter group-hover:brightness-125 transition-all duration-300">
+              <div className="absolute inset-0 rounded-[2.5rem] bg-black/90 border border-primary/50 shadow-[0_0_50px_rgba(255,105,180,0.3)] rotate-6 hover:rotate-0 transition-all duration-700 ease-out opacity-0 translate-x-full pointer-events-none dark:opacity-100 dark:translate-x-0 dark:pointer-events-auto flex flex-col items-center justify-center overflow-hidden group">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,105,180,0.1)_0%,transparent_70%)]" />
+                <div className="relative w-48 h-48 animate-pulse drop-shadow-[0_0_15px_rgba(255,105,180,0.5)] filter group-hover:brightness-125 transition-all duration-300">
                   <Image src="/tbr_logo_dark.png" alt="TBR Logo Dark" fill className="object-contain" />
                 </div>
-                <div className="absolute bottom-10 px-6 py-2 bg-black/80 border border-primary/50 rounded-full shadow-[0_0_20px_rgba(0,255,65,0.3)] text-sm font-bold tracking-wider uppercase text-primary animate-pulse">
-                  Enter The Void
+                <div className="absolute bottom-10 px-6 py-2 bg-black/80 border border-primary/50 rounded-full shadow-[0_0_20px_rgba(255,105,180,0.3)] text-sm font-bold tracking-wider uppercase text-primary animate-pulse">
+                  Unwrap Your Secret 🎀
                 </div>
               </div>
 
@@ -125,7 +125,7 @@ export default function HomePage() {
           <Button
             asChild
             variant="ghost"
-            className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0 dark:text-[#39ff14] dark:hover:text-[#39ff14]/80"
+            className="group text-lg font-medium hover:bg-transparent hover:text-primary p-0 dark:text-[#FF69B4] dark:hover:text-[#FF69B4]/80"
           >
             <Link href="/products" className="flex items-center gap-2">
               View All Products
@@ -160,7 +160,7 @@ export default function HomePage() {
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white leading-tight section-heading">
                   Become a <br />
-                  <span className="text-primary dark:text-[#39ff14] dark:drop-shadow-[0_0_8px_rgba(57,255,20,0.5)]">Roommate</span>
+                  <span className="text-primary dark:text-[#FF69B4] dark:drop-shadow-[0_0_8px_rgba(255,105,180,0.5)]">Roommate</span>
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   매달 도착하는 시크릿 박스. <br />

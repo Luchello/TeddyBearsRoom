@@ -81,7 +81,7 @@
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
   --shadow-cute: 0 4px 20px rgba(255, 183, 178, 0.3);
-  --shadow-neon: 0 0 20px rgba(0, 255, 65, 0.4);
+  --shadow-neon: 0 0 20px rgba(255, 105, 180, 0.4);
 
   /* ========== TRANSITION ========== */
   --transition-fast: 150ms ease;
@@ -150,7 +150,7 @@
   /* 🖤 Custom Palette: Latex Matrix (Dark) */
   --color-latex-black: #050505;
   --color-latex-shine: #333333;
-  --color-matrix-green: #00FF41;
+  --color-matrix-green: #FF69B4;
   --color-matrix-pink: #FF00FF;
   --color-matrix-purple: #9D00FF;
 }
@@ -162,39 +162,39 @@
 :root {
   --radius: 1.5rem;
 
-  /* 기본값 = 다크 모드 (성인용품 사이트) */
-  --background: #0a0a0a;
+  /* 기본값 = 다크 모드 (지뢰계 감성) */
+  --background: #0D0B14;
   --foreground: #e4e4e7;
-  --card: #1a1a2e;
+  --card: #1A1525;
   --card-foreground: #e4e4e7;
-  --popover: #1a1a2e;
+  --popover: #1A1525;
   --popover-foreground: #e4e4e7;
-  --primary: #39ff14;
-  --primary-foreground: #000000;
-  --secondary: #16a34a;
-  --secondary-foreground: #e4e4e7;
+  --primary: #FF69B4;
+  --primary-foreground: #FFFFFF;
+  --secondary: #CDB4DB;
+  --secondary-foreground: #1a1a2e;
   --muted: #141425;
   --muted-foreground: #9ca3af;
-  --accent: #39ff14;
-  --accent-foreground: #000000;
-  --destructive: #ef4444;
+  --accent: #CDB4DB;
+  --accent-foreground: #1a1a2e;
+  --destructive: #FF4F7B;
   --destructive-foreground: #FFFFFF;
-  --border: #2a2a45;
+  --border: #2A2040;
   --input: #141425;
-  --ring: #39ff14;
-  --chart-1: #39ff14;
-  --chart-2: #16a34a;
+  --ring: #FF69B4;
+  --chart-1: #FF69B4;
+  --chart-2: #CDB4DB;
   --chart-3: #22d3ee;
   --chart-4: #a855f7;
   --chart-5: #f43f5e;
-  --sidebar: #0a0a0a;
+  --sidebar: #0D0B14;
   --sidebar-foreground: #e4e4e7;
-  --sidebar-primary: #39ff14;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1a1a2e;
+  --sidebar-primary: #FF69B4;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1A1525;
   --sidebar-accent-foreground: #e4e4e7;
-  --sidebar-border: #2a2a45;
-  --sidebar-ring: #39ff14;
+  --sidebar-border: #2A2040;
+  --sidebar-ring: #FF69B4;
 }
 
 /* 라이트 모드 비활성화 — 다크 전용 사이트 */
@@ -234,42 +234,41 @@
 }
 
 /* ====================================
-   DARK MODE: Premium Dark + Neon Accent
-   Background #0a0a0a, Card #1a1a2e, Neon Green #39ff14
+   DARK MODE: 지뢰계 감성 — 핫핑크 + 딥퍼플
+   Background #0D0B14, Card #1A1525, Primary #FF69B4
    ==================================== */
 .dark {
-  --background: #0a0a0a;
+  --background: #0D0B14;
   --foreground: #e4e4e7;
-  --card: #1a1a2e;
+  --card: #1A1525;
   --card-foreground: #e4e4e7;
-  --popover: #1a1a2e;
+  --popover: #1A1525;
   --popover-foreground: #e4e4e7;
-  --primary: #39ff14;
-  /* 네온 그린 액센트 */
-  --primary-foreground: #000000;
-  --secondary: #16a34a;
-  --secondary-foreground: #e4e4e7;
+  --primary: #FF69B4;
+  --primary-foreground: #FFFFFF;
+  --secondary: #CDB4DB;
+  --secondary-foreground: #1a1a2e;
   --muted: #141425;
   --muted-foreground: #9ca3af;
-  --accent: #39ff14;
-  --accent-foreground: #000000;
-  --destructive: #ef4444;
-  --border: #2a2a45;
+  --accent: #CDB4DB;
+  --accent-foreground: #1a1a2e;
+  --destructive: #FF4F7B;
+  --border: #2A2040;
   --input: #141425;
-  --ring: #39ff14;
-  --chart-1: #39ff14;
+  --ring: #FF69B4;
+  --chart-1: #FF69B4;
   --chart-2: #16a34a;
-  --chart-3: #00FF41;
+  --chart-3: #FF69B4;
   --chart-4: #0d3320;
   --chart-5: #bbf7d0;
   --sidebar: #0a0a0a;
   --sidebar-foreground: #e4e4e7;
-  --sidebar-primary: #39ff14;
+  --sidebar-primary: #FF69B4;
   --sidebar-primary-foreground: #000000;
   --sidebar-accent: #141425;
   --sidebar-accent-foreground: #e4e4e7;
   --sidebar-border: #2a2a45;
-  --sidebar-ring: #39ff14;
+  --sidebar-ring: #FF69B4;
 }
 
 @layer base {
@@ -387,12 +386,12 @@
   }
 
   .neon-text {
-    text-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, 0 0 20px #00FF41;
+    text-shadow: 0 0 5px #FF69B4, 0 0 10px #FF69B4, 0 0 20px #FF69B4;
   }
 
   .neon-border {
-    box-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, inset 0 0 5px #00FF41;
-    border-color: #00FF41;
+    box-shadow: 0 0 5px #FF69B4, 0 0 10px #FF69B4, inset 0 0 5px #FF69B4;
+    border-color: #FF69B4;
   }
 }
 
@@ -455,18 +454,18 @@
 .animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
 
 .dark .neon-glow {
-  text-shadow: 0 0 10px rgba(0,255,65,0.5), 0 0 20px rgba(0,255,65,0.3), 0 0 40px rgba(0,255,65,0.1);
+  text-shadow: 0 0 10px rgba(255,105,180,0.5), 0 0 20px rgba(255,105,180,0.3), 0 0 40px rgba(255,105,180,0.1);
 }
 
 .dark .neon-border {
-  box-shadow: 0 0 15px rgba(0,255,65,0.15), inset 0 0 15px rgba(0,255,65,0.05);
+  box-shadow: 0 0 15px rgba(255,105,180,0.15), inset 0 0 15px rgba(255,105,180,0.05);
 }
 
 .dark .crt-lines::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.03) 2px, rgba(0,255,65,0.03) 4px);
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,105,180,0.03) 2px, rgba(255,105,180,0.03) 4px);
   pointer-events: none;
 }
 
@@ -536,7 +535,7 @@ h1, h2, h3 { letter-spacing: -0.03em; }
   left: 0;
   width: 60px;
   height: 3px;
-  background: #39ff14;
+  background: #FF69B4;
   border-radius: 2px;
   box-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
 }

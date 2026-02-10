@@ -67,7 +67,7 @@ export default function ProfilePage() {
                   </h1>
                   <p className="text-muted-foreground dark:text-gray-400">{user.email}</p>
                   <div className="flex items-center justify-center md:justify-start gap-4 mt-4">
-                    <div className="px-4 py-2 rounded-xl bg-primary/10 text-primary font-bold dark:bg-primary/20 dark:text-primary dark:shadow-[0_0_10px_rgba(0,255,65,0.2)]">
+                    <div className="px-4 py-2 rounded-xl bg-primary/10 text-primary font-bold dark:bg-primary/20 dark:text-primary dark:shadow-[0_0_10px_rgba(255,105,180,0.2)]">
                       {user.points.toLocaleString()} P
                     </div>
                     <Button variant="outline" size="sm" className="rounded-xl dark:border-white/20 dark:text-white dark:hover:bg-white/10">
@@ -97,7 +97,7 @@ export default function ProfilePage() {
               <TabsTrigger
                 key={tab.id}
                 value={tab.id}
-                className="rounded-full px-6 py-3 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg dark:data-[state=active]:bg-primary dark:data-[state=active]:text-black dark:data-[state=active]:shadow-[0_0_15px_rgba(0,255,65,0.4)] transition-all"
+                className="rounded-full px-6 py-3 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg dark:data-[state=active]:bg-primary dark:data-[state=active]:text-black dark:data-[state=active]:shadow-[0_0_15px_rgba(255,105,180,0.4)] transition-all"
               >
                 <tab.icon className="w-4 h-4 mr-2" />
                 {tab.label}

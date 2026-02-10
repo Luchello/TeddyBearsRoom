@@ -336,7 +336,7 @@ export default function CheckoutPage() {
                 <Button
                   onClick={handlePayment}
                   disabled={isProcessing}
-                  className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:bg-primary dark:text-black dark:hover:bg-primary/80 dark:shadow-[0_0_20px_rgba(0,255,65,0.4)]"
+                  className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:bg-primary dark:text-black dark:hover:bg-primary/80 dark:shadow-[0_0_20px_rgba(255,105,180,0.4)]"
                 >
                   {isProcessing ? (
                     <>

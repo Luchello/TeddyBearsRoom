@@ -221,7 +221,7 @@ export function ProductCard({
           - Light: rounded-[2rem], pastel shadow
           - Dark: rounded-xl (12px), #1a1a2e bg, neon glow hover
           ───────────────────────────────────── */}
-      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)] dark:rounded-xl dark:bg-[#1a1a2e] dark:border-[#2a2a45] dark:shadow-lg dark:group-hover:shadow-[0_12px_40px_rgba(57,255,20,0.15)] dark:group-hover:border-[#39ff14]/30 dark:backdrop-blur-none">
+      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)] dark:rounded-xl dark:bg-[#1a1a2e] dark:border-[#2a2a45] dark:shadow-lg dark:group-hover:shadow-[0_12px_40px_rgba(255,105,180,0.15)] dark:group-hover:border-[#FF69B4]/30 dark:backdrop-blur-none">
         <Link href={`/products/${id}`}>
           {/* ─────────────────────────────────────
               Image Area
@@ -314,19 +314,19 @@ export function ProductCard({
         <CardContent className="p-5 dark:p-6">
           {/* 카테고리 + 별점 */}
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase dark:text-[#39ff14]/70">
+            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase dark:text-[#FF69B4]/70">
               {category}
             </p>
             <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((star) => (
-                <span key={star} className="text-[10px] text-yellow-400 dark:text-[#39ff14]/60">★</span>
+                <span key={star} className="text-[10px] text-yellow-400 dark:text-[#FF69B4]/60">★</span>
               ))}
             </div>
           </div>
 
           {/* 상품명 */}
           <Link href={`/products/${id}`}>
-            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1 dark:text-white dark:group-hover:text-[#39ff14]">
+            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1 dark:text-white dark:group-hover:text-[#FF69B4]">
               {name}
             </h3>
           </Link>
@@ -335,7 +335,7 @@ export function ProductCard({
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col">
               {/* 판매가 */}
-              <span className="text-xl font-black text-foreground dark:text-[#39ff14]">
+              <span className="text-xl font-black text-foreground dark:text-[#FF69B4]">
                 {price.toLocaleString()}<span className="text-sm font-medium ml-0.5">원</span>
               </span>
               {/* 정가 (할인 시) */}
@@ -349,7 +349,7 @@ export function ProductCard({
             {/* 장바구니 추가 버튼 */}
             <Button
               size="icon"
-              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors dark:bg-[#39ff14] dark:text-black dark:hover:bg-[#39ff14]/80 dark:shadow-[0_0_12px_rgba(57,255,20,0.3)]"
+              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors dark:bg-[#FF69B4] dark:text-black dark:hover:bg-[#FF69B4]/80 dark:shadow-[0_0_12px_rgba(255,105,180,0.3)]"
               onClick={handleAddToCart}
             >
               <span className="text-lg transition-transform duration-200">{added ? "✓" : "+"}</span>

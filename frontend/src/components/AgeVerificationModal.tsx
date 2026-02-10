@@ -27,7 +27,7 @@
 // - Entrance: opacity-0 → opacity-100 (500ms 전환)
 // - Exit: opacity-100 → opacity-0 (500ms 전환)
 // - Light Mode: 클라우드 배경 (파스텔 색상)
-// - Dark Mode: Matrix 그리드 (네온 그린 #00FF41)
+// - Dark Mode: Matrix 그리드 (네온 그린 #FF69B4)
 // - 🔞 Emoji: bounce-slow 애니메이션
 //
 // 🔧 주요 기능:
@@ -153,7 +153,7 @@ export function AgeVerificationModal() {
                   {/* 어두운 그라디언트 배경 */}
                   <div className="hidden dark:block absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
                   {/* 네온 그린 그리드 패턴 (30px × 30px) */}
-                  <div className="hidden dark:block absolute inset-0 bg-[linear-gradient(rgba(0,255,65,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.05)_1px,transparent_1px)] bg-[size:30px_30px]" />
+                  <div className="hidden dark:block absolute inset-0 bg-[linear-gradient(rgba(255,105,180,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,105,180,0.05)_1px,transparent_1px)] bg-[size:30px_30px]" />
               </div>
 
               {/* ─────────────────────────────────────
@@ -166,9 +166,15 @@ export function AgeVerificationModal() {
                     - animate-bounce-slow: 부드러운 상하 바운싱 (1.5s)
                     - text-6xl: 큰 이모지 크기
                     - animate-pulse dark:bg-primary/40: 다크모드 펄싱 */}
-                <div className="mb-8 relative inline-block">
+                {/* TBR 브랜드 로고 */}
+                <span className="text-2xl font-black text-primary mb-4 block tracking-tight">TeddyBear&apos;s Room</span>
+
+                {/* 19 뱃지 */}
+                <div className="mb-6 relative inline-block">
                     <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse dark:bg-primary/40" />
-                    <span className="relative text-6xl animate-bounce-slow block">🔞</span>
+                    <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 border-2 border-primary/40">
+                      <span className="text-2xl font-black text-primary">19</span>
+                    </div>
                 </div>
 
                 {/* 제목 섹션

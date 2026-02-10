@@ -74,7 +74,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Image */}
           <div className="relative">
-            <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center overflow-hidden dark:bg-black/40 dark:backdrop-blur-md dark:border dark:border-primary/50 dark:shadow-[0_0_30px_rgba(0,255,65,0.2)] relative">
+            <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center overflow-hidden dark:bg-black/40 dark:backdrop-blur-md dark:border dark:border-primary/50 dark:shadow-[0_0_30px_rgba(255,105,180,0.2)] relative">
               <div className="relative w-3/4 h-3/4 animate-float">
                 <Image
                   src="/tbr_logo.png"
@@ -137,13 +137,13 @@ export default function ProductPage({ params }: ProductPageProps) {
             </span>
 
             {/* Title */}
-            <h1 className="text-3xl font-bold text-foreground lg:text-4xl dark:text-white dark:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)]">
+            <h1 className="text-3xl font-bold text-foreground lg:text-4xl dark:text-white dark:drop-shadow-[0_0_10px_rgba(255,105,180,0.5)]">
               {product.name}
             </h1>
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-primary dark:text-primary dark:drop-shadow-[0_0_5px_rgba(0,255,65,0.8)]">
+              <span className="text-3xl font-bold text-primary dark:text-primary dark:drop-shadow-[0_0_5px_rgba(255,105,180,0.8)]">
                 {product.price.toLocaleString()}원
               </span>
               {product.originalPrice && (
@@ -184,7 +184,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             <div className="flex gap-3">
               <Button
                 size="lg"
-                className="flex-1 rounded-xl text-lg h-14 dark:bg-primary dark:text-black dark:hover:bg-primary/90 dark:shadow-[0_0_20px_rgba(0,255,65,0.4)]"
+                className="flex-1 rounded-xl text-lg h-14 dark:bg-primary dark:text-black dark:hover:bg-primary/90 dark:shadow-[0_0_20px_rgba(255,105,180,0.4)]"
                 onClick={handleAddToCart}
               >
                 <ShoppingCart className="h-5 w-5 mr-2" />
@@ -203,7 +203,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             {/* Subscription Notice */}
             <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 dark:bg-black/60 dark:backdrop-blur-md dark:border-primary/40">
               <p className="text-sm dark:text-gray-300">
-                <span className="font-bold text-primary dark:text-primary dark:drop-shadow-[0_0_5px_rgba(0,255,65,0.8)]">🐻 구독자 혜택</span>
+                <span className="font-bold text-primary dark:text-primary dark:drop-shadow-[0_0_5px_rgba(255,105,180,0.8)]">🐻 구독자 혜택</span>
                 <br />
                 스탠다드 구독 시 5% 포인트 적립, 프리미엄 구독 시 10% 적립!
               </p>
