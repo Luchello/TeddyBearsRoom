@@ -209,7 +209,7 @@ export function Testimonials() {
             <span className="text-4xl animate-heart-beat">💌</span>
             <span className="text-3xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
-          <h2 className="text-3xl font-bold text-foreground dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text mb-3">
+          <h2 className="text-3xl font-bold text-foreground dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF85B3] dark:to-[#9D4EDD] dark:bg-clip-text mb-3">
             고객님들의 솔직한 후기 ♡
           </h2>
           <p className="text-muted-foreground">

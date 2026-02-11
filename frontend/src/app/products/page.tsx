@@ -79,7 +79,7 @@ export default function ProductsPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
             <span className="text-3xl animate-soft-float">🎀</span>
-            <h1 className="text-3xl font-bold text-foreground lg:text-4xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">
+            <h1 className="text-3xl font-bold text-foreground lg:text-4xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF85B3] dark:to-[#9D4EDD] dark:bg-clip-text">
               전체 상품
             </h1>
             <span className="text-2xl animate-sparkle-twinkle">✧</span>

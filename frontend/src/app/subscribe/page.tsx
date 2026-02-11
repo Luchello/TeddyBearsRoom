@@ -44,7 +44,7 @@ export default function SubscribePage() {
             </div>
             <span className="text-2xl opacity-60 animate-float" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
-          <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF69B4] dark:to-[#9D4EDD] dark:bg-clip-text">
+          <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF85B3] dark:to-[#9D4EDD] dark:bg-clip-text">
             TeddyBear&apos;s Room
             <br />
             <span className="text-primary">Roommate</span>

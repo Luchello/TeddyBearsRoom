@@ -24,7 +24,7 @@
 //
 // 🎨 디자인:
 // - Dark Mode Only: opacity-0 light, opacity-100 dark
-// - 색상: 검정(#0a0a0a) + 네온 그린(#FF69B4)
+// - 색상: 검정(#1A1025) + 네온 그린(#FF85B3)
 // - 광택감: 라텍스의 반사광 표현 (radial-gradient)
 // - 질감: 물방울 + 그리드로 페티시 감성 강화
 // - 고정 배경: fixed inset-0 (스크롤 시 동적 고정)

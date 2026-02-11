@@ -27,7 +27,7 @@
 // - Entrance: opacity-0 → opacity-100 (500ms 전환)
 // - Exit: opacity-100 → opacity-0 (500ms 전환)
 // - Light Mode: 클라우드 배경 (파스텔 색상)
-// - Dark Mode: Matrix 그리드 (네온 그린 #FF69B4)
+// - Dark Mode: Matrix 그리드 (네온 그린 #FF85B3)
 // - 🔞 Emoji: bounce-slow 애니메이션
 //
 // 🔧 주요 기능:
