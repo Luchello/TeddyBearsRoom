@@ -70,7 +70,7 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero - 지뢰계 스타일 ♡ */}
-      <section className="bg-gradient-to-b from-primary/10 via-secondary/5 to-background py-12 dark:from-primary/15 dark:via-secondary/5 relative overflow-hidden">
+      <section className="bg-gradient-to-b from-primary/10 via-secondary/5 to-background py-12 relative overflow-hidden">
         {/* 지뢰계 floating decorations ♡✧🎀 */}
         <div className="absolute top-8 left-8 text-3xl opacity-20 animate-sparkle-twinkle pointer-events-none">✧</div>
         <div className="absolute top-12 right-12 text-2xl opacity-15 animate-heart-beat pointer-events-none">♡</div>
@@ -79,7 +79,7 @@ export default function ProductsPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex items-center gap-3 mb-2">
             <span className="text-3xl animate-soft-float">🎀</span>
-            <h1 className="text-3xl font-bold text-foreground lg:text-4xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF85B3] dark:to-[#9D4EDD] dark:bg-clip-text">
+            <h1 className="text-3xl font-bold text-foreground lg:text-4xl">
               전체 상품
             </h1>
             <span className="text-2xl animate-sparkle-twinkle">✧</span>

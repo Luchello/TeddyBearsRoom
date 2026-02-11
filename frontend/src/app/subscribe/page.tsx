@@ -17,7 +17,7 @@ export default function SubscribePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero - 지뢰계 스타일 ♡ */}
-      <section className="bg-gradient-to-b from-primary/15 via-accent/10 to-background py-16 lg:py-24 dark:from-primary/20 dark:via-secondary/10 relative overflow-hidden">
+      <section className="bg-gradient-to-b from-primary/15 via-accent/10 to-background py-16 lg:py-24 relative overflow-hidden">
         {/* 지뢰계 floating decorations - P1 표준화: opacity-15, text-2xl, animate-float */}
         <div className="absolute top-12 left-10 text-2xl opacity-15 animate-float pointer-events-none">♡</div>
         <div className="absolute top-20 right-16 text-2xl opacity-15 animate-float pointer-events-none" style={{ animationDelay: '1s' }}>✧</div>
@@ -32,19 +32,12 @@ export default function SubscribePage() {
                 alt="TeddyBear's Room Logo"
                 width={128}
                 height={128}
-                className="w-full h-full object-contain drop-shadow-xl dark:hidden"
-              />
-              <Image
-                src="/tbr_logo_dark.png"
-                alt="TeddyBear's Room Logo"
-                width={128}
-                height={128}
-                className="w-full h-full object-contain drop-shadow-xl hidden dark:block"
+                className="w-full h-full object-contain drop-shadow-xl"
               />
             </div>
             <span className="text-2xl opacity-60 animate-float" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
-          <h1 className="text-3xl font-bold text-foreground lg:text-5xl dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF85B3] dark:to-[#9D4EDD] dark:bg-clip-text">
+          <h1 className="text-3xl font-bold text-foreground lg:text-5xl">
             TeddyBear&apos;s Room
             <br />
             <span className="text-primary">Roommate</span>
@@ -67,13 +60,13 @@ export default function SubscribePage() {
               <Card
                 key={plan.name}
                 className={`relative rounded-3xl transition-all duration-300 hover:-translate-y-1 max-w-md w-full ${plan.popular
-                    ? "border-2 border-primary shadow-lg shadow-primary/20 dark:neon-card dark:neon-glow"
-                    : "border-border hover:shadow-lg dark:neon-card"
+                    ? "border-2 border-primary shadow-lg shadow-primary/20"
+                    : "border-border hover:shadow-lg"
                   }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="rounded-full bg-primary px-4 py-1 text-sm font-medium text-primary-foreground dark:neon-glow-subtle">
+                    <span className="rounded-full bg-primary px-4 py-1 text-sm font-medium text-primary-foreground">
                       🏠 추천
                     </span>
                   </div>
@@ -83,7 +76,7 @@ export default function SubscribePage() {
                   <h2 className="text-2xl font-bold text-foreground">{plan.name}</h2>
                   <p className="text-sm text-muted-foreground">{plan.description}</p>
                   <div className="mt-4">
-                    <span className="text-4xl font-bold text-primary dark:neon-text">
+                    <span className="text-4xl font-bold text-primary">
                       {plan.price.toLocaleString()}
                     </span>
                     <span className="text-muted-foreground">원/{plan.period}</span>
@@ -94,7 +87,7 @@ export default function SubscribePage() {
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-3">
                         {feature.included ? (
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-primary dark:bg-primary/30">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-primary">
                             ✓
                           </span>
                         ) : (
@@ -116,7 +109,7 @@ export default function SubscribePage() {
                 <CardFooter className="p-8 pt-0">
                   <Button
                     className={`w-full rounded-xl py-6 text-lg transition-all ${plan.popular
-                        ? "bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
+                        ? "bg-primary hover:bg-primary/90 text-primary-foreground"
                         : "bg-muted hover:bg-muted/80 text-foreground"
                       }`}
                   >
@@ -137,19 +130,19 @@ export default function SubscribePage() {
       </section>
 
       {/* Comparison Table */}
-      <section className="py-12 lg:py-16 bg-muted/30 dark:bg-card/30">
+      <section className="py-12 lg:py-16 bg-muted/30">
         <div className="mx-auto max-w-5xl px-4 lg:px-8">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">
             🔍 플랜 비교
           </h2>
-          <div className="rounded-2xl bg-card border border-border overflow-hidden dark:neon-card">
+          <div className="rounded-2xl bg-card border border-border overflow-hidden">
             <PlanComparisonTable />
           </div>
         </div>
       </section>
 
       {/* Donation Section */}
-      <section className="bg-gradient-to-r from-secondary/10 to-primary/10 py-16 dark:from-secondary/20 dark:to-primary/20">
+      <section className="bg-gradient-to-r from-secondary/10 to-primary/10 py-16">
         <div className="mx-auto max-w-4xl px-4 lg:px-8 text-center">
           <span className="text-5xl mb-4 block animate-float">💝</span>
           <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
@@ -161,17 +154,17 @@ export default function SubscribePage() {
             구독자 여러분이 기부처를 직접 선택할 수 있어요.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
+            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1">
               <span className="text-3xl">🌱</span>
               <p className="mt-2 font-medium text-foreground">환경 단체</p>
               <p className="text-xs text-muted-foreground mt-1">지구 환경 보호</p>
             </div>
-            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
+            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1">
               <span className="text-3xl">🐾</span>
               <p className="mt-2 font-medium text-foreground">동물 복지</p>
               <p className="text-xs text-muted-foreground mt-1">유기동물 보호</p>
             </div>
-            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1 dark:neon-card dark:hover:border-primary/50">
+            <div className="rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:-translate-y-1">
               <span className="text-3xl">👶</span>
               <p className="mt-2 font-medium text-foreground">아동 보호</p>
               <p className="text-xs text-muted-foreground mt-1">취약 아동 지원</p>
@@ -194,7 +187,7 @@ export default function SubscribePage() {
       </section>
 
       {/* Final CTA - 지뢰계 스타일 ♡ */}
-      <section className="py-16 bg-gradient-to-b from-background to-primary/10 dark:to-primary/15 relative overflow-hidden">
+      <section className="py-16 bg-gradient-to-b from-background to-primary/10 relative overflow-hidden">
         {/* 지뢰계 decorations - P1 표준화 */}
         <div className="absolute top-8 left-16 text-2xl opacity-15 animate-float pointer-events-none">✧</div>
         <div className="absolute bottom-12 right-16 text-2xl opacity-15 animate-float pointer-events-none" style={{ animationDelay: '1s' }}>♡</div>
@@ -213,7 +206,7 @@ export default function SubscribePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle dark:hover:neon-glow"
+              className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               Roommate 되기 🏠
             </Button>

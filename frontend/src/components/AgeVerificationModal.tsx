@@ -143,17 +143,15 @@ export function AgeVerificationModal() {
                   ───────────────────────────────────── */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                   {/* Light Mode: 클라우드 배경 (파스텔 색상) */}
-                  <div className="absolute top-0 left-0 w-full h-full bg-[url('/patterns/noise.png')] opacity-10 mix-blend-overlay dark:opacity-0" />
+                  <div className="absolute top-0 left-0 w-full h-full bg-[url('/patterns/noise.png')] opacity-10 mix-blend-overlay" />
                   {/* 왼쪽 상단 파스텔 블롭 (animate-float) */}
-                  <div className="absolute -top-20 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float dark:hidden" />
+                  <div className="absolute -top-20 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
                   {/* 오른쪽 하단 파스텔 블롭 (animate-float 2s 딜레이) */}
-                  <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float dark:hidden" style={{ animationDelay: "2s" }} />
+                  <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
 
                   {/* Dark Mode: Matrix 그리드 + 라텍스 효과 */}
                   {/* 어두운 그라디언트 배경 */}
-                  <div className="hidden dark:block absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
                   {/* 네온 그린 그리드 패턴 (30px × 30px) */}
-                  <div className="hidden dark:block absolute inset-0 bg-[linear-gradient(rgba(255,105,180,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,105,180,0.05)_1px,transparent_1px)] bg-[size:30px_30px]" />
               </div>
 
               {/* ─────────────────────────────────────
@@ -165,13 +163,13 @@ export function AgeVerificationModal() {
                     - absolute glow: 배경 빛 효과 (blur-xl)
                     - animate-bounce-slow: 부드러운 상하 바운싱 (1.5s)
                     - text-6xl: 큰 이모지 크기
-                    - animate-pulse dark:bg-primary/40: 다크모드 펄싱 */}
+                    - animate-pulse 다크모드 펄싱 */}
                 {/* TBR 브랜드 로고 */}
                 <span className="text-2xl font-black text-primary mb-4 block tracking-tight">TeddyBear&apos;s Room</span>
 
                 {/* 19 뱃지 */}
                 <div className="mb-6 relative inline-block">
-                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse dark:bg-primary/40" />
+                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse" />
                     <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 border-2 border-primary/40">
                       <span className="text-2xl font-black text-primary">19</span>
                     </div>
@@ -180,8 +178,8 @@ export function AgeVerificationModal() {
                 {/* 제목 섹션
                     - text-3xl font-black: 큰 굵은 제목
                     - Gatekeeper Protocol: 서브타이틀 (text-lg, uppercase, tracking-widest)
-                    - 19세 이상이신가요?: 메인 질문 (text-foreground/dark:text-white) */}
-                <h2 className="text-3xl font-black mb-4 text-foreground dark:text-white tracking-tight">
+                    - 19세 이상이신가요?: 메인 질문 (text-foreground/ */}
+                <h2 className="text-3xl font-black mb-4 text-foreground tracking-tight">
                     <span className="block text-lg font-medium text-muted-foreground mb-2 uppercase tracking-widest">
                         Gatekeeper Protocol
                     </span>

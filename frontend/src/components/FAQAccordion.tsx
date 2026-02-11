@@ -20,7 +20,7 @@
 // - ChevronDown 아이콘 회전 애니메이션 (rotate-180)
 // - max-h-96/max-h-0: height 애니메이션으로 부드러운 오픈/클로즈
 // - hover:bg-muted/50: 호버 시 배경 변화
-// - dark:neon-card: 다크모드 네온 효과
+// - 다크모드 네온 효과
 //
 // 🔧 주요 기능:
 // - toggleItem: 클릭한 항목 열기/닫기
@@ -85,11 +85,11 @@ export function FAQAccordion({ faqs }: FAQAccordionProps) {
         // ─────────────────────────────────────
         // FAQ 항목 카드
         // - border-border: 테마 기반 테두리
-        // - dark:neon-card: 다크모드에서 네온 효과
+        // - 다크모드에서 네온 효과
         // ───────────────────────────────────────
         <div
           key={idx}
-          className="rounded-2xl border border-border bg-card overflow-hidden transition-all dark:neon-card"
+          className="rounded-2xl border border-border bg-card overflow-hidden transition-all"
         >
           {/* ─────────────────────────────────────
               질문 헤더 (클릭 영역)

@@ -127,20 +127,12 @@ export function Header() {
               src="/tbr_logo.png"
               alt="TeddyBear's Room Logo"
               fill
-              className="object-contain drop-shadow-md dark:hidden"
-              priority
-            />
-            {/* Dark Mode 로고 (Matrix Neon 스타일) */}
-            <Image
-              src="/tbr_logo_dark.png"
-              alt="TeddyBear's Room Logo"
-              fill
-              className="object-contain drop-shadow-md hidden dark:block"
+              className="object-contain drop-shadow-md"
               priority
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-bold text-primary leading-tight dark:text-neon-glow transition-all duration-300 group-hover:text-accent">
+            <span className="text-xl font-bold text-primary leading-tight transition-all duration-300 group-hover:text-accent">
               TeddyBear&apos;s Room
             </span>
             <span className="text-[10px] text-muted-foreground hidden sm:block font-medium tracking-widest">
@@ -211,7 +203,7 @@ export function Header() {
 
                     <div className="flex items-center gap-4 relative z-10">
                       {/* 아바타 */}
-                      <div className="w-14 h-14 rounded-full bg-white dark:bg-black/20 p-1 border-2 border-primary/20 shadow-sm">
+                      <div className="w-14 h-14 rounded-full bg-white p-1 border-2 border-primary/20 shadow-sm">
                         {user.avatar ? (
                           <Image
                             src={user.avatar}
@@ -271,7 +263,7 @@ export function Header() {
                       key={item.name}
                       href={item.href}
                       onClick={() => setSheetOpen(false)}
-                      className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-300 group dark:hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.5)]"
+                      className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-300 group"
                     >
                       {/* 이모지 아이콘 박스 */}
                       <div className="w-10 h-10 rounded-xl bg-background shadow-sm flex items-center justify-center text-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border border-border/50">
@@ -349,7 +341,7 @@ export function Header() {
           - SVG path로 구현
           ───────────────────────────────────── */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none translate-y-[99%] z-40">
-        <svg className="relative block w-[calc(100%+1.3px)] h-[24px] text-background/80 dark:text-background/80 fill-current" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <svg className="relative block w-[calc(100%+1.3px)] h-[24px] text-background/80 fill-current" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
         </svg>
       </div>

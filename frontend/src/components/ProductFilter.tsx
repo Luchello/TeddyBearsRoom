@@ -110,7 +110,7 @@ export function ProductFilter({ totalCount }: ProductFilterProps) {
             onClick={() => setCategory(cat)}
             className={`rounded-xl ${
               category === cat
-                ? "bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle"
+                ? "bg-primary hover:bg-primary/90 text-primary-foreground"
                 : "border-border hover:bg-muted"
             }`}
           >
@@ -161,7 +161,7 @@ export function ProductFilter({ totalCount }: ProductFilterProps) {
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as SortOption)}
-          className="rounded-xl border border-border bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-card"
+          className="rounded-xl border border-border bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
         >
           {sortOptions.map((option) => (
             <option key={option.value} value={option.value}>

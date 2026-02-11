@@ -26,19 +26,13 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 dark:bg-none flex items-center justify-center p-12">
+              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center p-12">
                 <div className="w-full h-full relative">
                   <Image
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
-                    className="object-contain drop-shadow-xl animate-float dark:hidden"
-                  />
-                  <Image
-                    src="/tbr_logo_dark.png"
-                    alt="TeddyBear's Room Logo"
-                    fill
-                    className="object-contain drop-shadow-xl animate-float hidden dark:block"
+                    className="object-contain drop-shadow-xl animate-float"
                   />
                 </div>
               </div>

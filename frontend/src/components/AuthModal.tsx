@@ -22,7 +22,7 @@
 // 🎨 디자인:
 // - animate-in zoom-in-95: 모달 진입 애니메이션
 // - max-w-md: 최대 너비 md (448px)
-// - dark:neon-card: 다크모드 네온 효과
+// - 다크모드 네온 효과
 // - 가로 3단 레이아웃 (헤더/폼/푸터)
 //
 // 🔧 주요 기능:
@@ -182,7 +182,7 @@ export function AuthModal() {
         aria-modal="true"
         aria-label={modalMode === "login" ? "로그인" : "회원가입"}
       >
-        <div className="w-full max-w-md bg-background rounded-3xl shadow-2xl animate-in zoom-in-95 duration-200 dark:neon-card">
+        <div className="w-full max-w-md bg-background rounded-3xl shadow-2xl animate-in zoom-in-95 duration-200">
           {/* ─────────────────────────────────────
               헤더 (제목 + 닫기 버튼)
               ───────────────────────────────────── */}
@@ -266,7 +266,7 @@ export function AuthModal() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:neon-glow-subtle"
+              className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               {isLoading ? (
                 <>

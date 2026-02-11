@@ -168,7 +168,7 @@ export function Testimonials() {
   };
 
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-br from-secondary/10 via-background to-accent/10 dark:from-secondary/5 dark:via-background dark:to-accent/5 relative overflow-hidden">
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-secondary/10 via-background to-accent/10 relative overflow-hidden">
       {/* ─────────────────────────────────────
           지뢰계 장식 요소 (♡✧🎀☆)
           - pointer-events-none: 클릭 불가
@@ -209,7 +209,7 @@ export function Testimonials() {
             <span className="text-4xl animate-heart-beat">💌</span>
             <span className="text-3xl animate-sparkle-twinkle" style={{ animationDelay: '0.5s' }}>✧</span>
           </div>
-          <h2 className="text-3xl font-bold text-foreground dark:text-transparent dark:bg-gradient-to-r dark:from-[#FF85B3] dark:to-[#9D4EDD] dark:bg-clip-text mb-3">
+          <h2 className="text-3xl font-bold text-foreground mb-3">
             고객님들의 솔직한 후기 ♡
           </h2>
           <p className="text-muted-foreground">
@@ -262,7 +262,7 @@ export function Testimonials() {
                   key={testimonial.id}
                   className="w-full flex-shrink-0 px-2 md:px-4"
                 >
-                  <Card className="mx-auto max-w-2xl rounded-3xl border-2 border-primary/20 bg-card/70 backdrop-blur transition-all duration-300 hover:shadow-[0_12px_40px_rgba(255,182,193,0.25)] dark:neon-card">
+                  <Card className="mx-auto max-w-2xl rounded-3xl border-2 border-primary/20 bg-card/70 backdrop-blur transition-all duration-300 hover:shadow-[0_12px_40px_rgba(255,182,193,0.25)]">
                     <CardContent className="p-6 md:p-8">
                       {/* ─────────────────────────────────────
                           인용 아이콘 (Quote)
@@ -374,7 +374,7 @@ export function Testimonials() {
               className="text-center p-4 rounded-2xl bg-card/50 border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1"
             >
               <span className="text-2xl mb-1 block">{stat.emoji}</span>
-              <span className="text-2xl font-bold text-primary dark:neon-text block">
+              <span className="text-2xl font-bold text-primary block">
                 {stat.value}
               </span>
               <span className="text-xs text-muted-foreground">{stat.label}</span>

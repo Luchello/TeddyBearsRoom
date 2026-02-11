@@ -78,7 +78,7 @@ import React from 'react';
  */
 export const LatexBackground = () => {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden opacity-0 dark:opacity-100 transition-opacity duration-1000">
+    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden opacity-0 transition-opacity duration-1000">
       {/* ─────────────────────────────────────
           라텍스 광택 기본 배경
           - bg-neutral-950: 검정색(#0f0f0f) 베이스

@@ -140,7 +140,7 @@ export function Footer() {
           - 이메일 구독 폼
           - 구독 완료 시 애니메이션 피드백
           ───────────────────────────────────── */}
-      <section className="relative bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 dark:from-primary/10 dark:via-accent/10 dark:to-secondary/10 py-16 border-b border-primary/10">
+      <section className="relative bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 py-16 border-b border-primary/10">
         {/* 노이즈 텍스처 오버레이 */}
         <div className="absolute inset-0 bg-[url('/patterns/noise.png')] opacity-5 mix-blend-overlay"></div>
         <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
@@ -211,7 +211,7 @@ export function Footer() {
           Main Footer Content
           - 4컬럼 그리드: 브랜드, Shop, Support, Company
           ───────────────────────────────────── */}
-      <div className="bg-muted/20 dark:bg-black/40 backdrop-blur-sm pt-16 pb-8">
+      <div className="bg-muted/20 backdrop-blur-sm pt-16 pb-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           {/* ──────────────────────────────────────
               P1 개선: 4컬럼 → 3컬럼 구조 간소화
@@ -229,17 +229,11 @@ export function Footer() {
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
-                    className="object-contain drop-shadow-md dark:hidden"
-                  />
-                  <Image
-                    src="/tbr_logo_dark.png"
-                    alt="TeddyBear's Room Logo"
-                    fill
-                    className="object-contain drop-shadow-md hidden dark:block"
+                    className="object-contain drop-shadow-md"
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-lg font-bold text-primary dark:text-neon-glow transition-colors duration-300 group-hover:text-accent">
+                  <span className="text-lg font-bold text-primary transition-colors duration-300 group-hover:text-accent">
                     TeddyBear&apos;s Room
                   </span>
                   <span className="text-[10px] text-muted-foreground font-medium tracking-widest uppercase">
@@ -368,7 +362,7 @@ export function Footer() {
           Bottom Copyright
           - 법적 고지 및 사업자 정보
           ───────────────────────────────────── */}
-      <div className="bg-muted/30 dark:bg-black/60 border-t border-primary/5 py-8">
+      <div className="bg-muted/30 border-t border-primary/5 py-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/60">
             <div className="flex items-center gap-2">

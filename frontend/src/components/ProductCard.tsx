@@ -92,20 +92,20 @@ function getCategoryGradient(category: string): string {
   const cat = category.toLowerCase();
 
   if (cat.includes('무드') || cat.includes('mood')) {
-    return 'bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-950 dark:to-purple-950';
+    return 'bg-gradient-to-br from-pink-100 to-purple-100';
   }
   if (cat.includes('케어') || cat.includes('care')) {
-    return 'bg-gradient-to-br from-rose-100 to-red-100 dark:from-rose-950 dark:to-red-950';
+    return 'bg-gradient-to-br from-rose-100 to-red-100';
   }
   if (cat.includes('라이프') || cat.includes('life')) {
-    return 'bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-950 dark:to-indigo-950';
+    return 'bg-gradient-to-br from-purple-100 to-indigo-100';
   }
   if (cat.includes('패션') || cat.includes('fashion')) {
-    return 'bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-950 dark:to-orange-950';
+    return 'bg-gradient-to-br from-amber-100 to-orange-100';
   }
 
   // 기본값
-  return 'bg-gradient-to-br from-primary/5 to-accent/5 dark:from-[#2A1F3A] dark:to-[#251A35]';
+  return 'bg-gradient-to-br from-primary/5 to-accent/5';
 }
 
 // ──────────────────────────────────────
@@ -213,15 +213,15 @@ export function ProductCard({
           Furry Ears (지뢰계 귀 장식)
           - hover 시 나타나는 곰 귀 장식 (light mode only)
           ───────────────────────────────────── */}
-      <div className="absolute -top-2 left-6 w-4 h-6 bg-pink-300 rounded-full rotate-[-15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:hidden z-10" />
-      <div className="absolute -top-2 right-6 w-4 h-6 bg-pink-300 rounded-full rotate-[15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 dark:hidden z-10" />
+      <div className="absolute -top-2 left-6 w-4 h-6 bg-pink-300 rounded-full rotate-[-15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 z-10" />
+      <div className="absolute -top-2 right-6 w-4 h-6 bg-pink-300 rounded-full rotate-[15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 z-10" />
 
       {/* ─────────────────────────────────────
           Main Card Content
           - Light: rounded-[2rem], pastel shadow
           - Dark: rounded-xl (12px), #251A35 bg, neon glow hover
           ───────────────────────────────────── */}
-      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)] dark:rounded-xl dark:bg-[#251A35] dark:border-[#3D2E55] dark:shadow-lg dark:group-hover:shadow-[0_12px_40px_rgba(255,105,180,0.15)] dark:group-hover:border-[#FF85B3]/30 dark:backdrop-blur-none">
+      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)]">
         <Link href={`/products/${id}`}>
           {/* ─────────────────────────────────────
               Image Area
@@ -237,13 +237,7 @@ export function ProductCard({
                   src="/tbr_logo.png"
                   alt={name}
                   fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl dark:hidden"
-                />
-                <Image
-                  src="/tbr_logo_dark.png"
-                  alt={name}
-                  fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl hidden dark:block"
+                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl"
                 />
               </div>
             </div>
@@ -259,12 +253,12 @@ export function ProductCard({
                 ───────────────────────────────────── */}
             <div className="absolute left-4 top-4 flex flex-col gap-2">
               {isNew && (
-                <span className="rounded-full bg-black/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-white shadow-lg dark:bg-primary dark:text-black">
+                <span className="rounded-full bg-black/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-white shadow-lg">
                   NEW
                 </span>
               )}
               {isBest && (
-                <span className="rounded-full bg-white/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-foreground shadow-lg border border-primary/20 dark:bg-black/80 dark:text-primary dark:border-primary">
+                <span className="rounded-full bg-white/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-foreground shadow-lg border border-primary/20">
                   BEST
                 </span>
               )}
@@ -284,7 +278,7 @@ export function ProductCard({
               onClick={handleToggleWishlist}
               className={`absolute top-4 right-4 p-3 rounded-full transition-all duration-300 z-10 hover:scale-110 ${wishlisted
                 ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
-                : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 shadow-sm backdrop-blur-sm dark:bg-black/50 dark:text-white/70"
+                : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 shadow-sm backdrop-blur-sm"
                 }`}
               aria-label={wishlisted ? "찜 해제" : "찜하기"}
             >
@@ -311,22 +305,22 @@ export function ProductCard({
             Card Content (상품 정보)
             - 카테고리, 별점, 상품명, 가격, 장바구니 버튼
             ───────────────────────────────────── */}
-        <CardContent className="p-5 dark:p-6">
+        <CardContent className="p-5">
           {/* 카테고리 + 별점 */}
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase dark:text-[#FF85B3]/70">
+            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
               {category}
             </p>
             <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((star) => (
-                <span key={star} className="text-[10px] text-yellow-400 dark:text-[#FF85B3]/60">★</span>
+                <span key={star} className="text-[10px] text-yellow-400">★</span>
               ))}
             </div>
           </div>
 
           {/* 상품명 */}
           <Link href={`/products/${id}`}>
-            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1 dark:text-white dark:group-hover:text-[#FF85B3]">
+            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1">
               {name}
             </h3>
           </Link>
@@ -335,12 +329,12 @@ export function ProductCard({
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col">
               {/* 판매가 */}
-              <span className="text-xl font-black text-foreground dark:text-[#FF85B3]">
+              <span className="text-xl font-black text-foreground">
                 {price.toLocaleString()}<span className="text-sm font-medium ml-0.5">원</span>
               </span>
               {/* 정가 (할인 시) */}
               {originalPrice && (
-                <span className="text-xs text-muted-foreground line-through dark:text-gray-500">
+                <span className="text-xs text-muted-foreground line-through">
                   {originalPrice.toLocaleString()}원
                 </span>
               )}
@@ -349,7 +343,7 @@ export function ProductCard({
             {/* 장바구니 추가 버튼 */}
             <Button
               size="icon"
-              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors dark:bg-[#FF85B3] dark:text-black dark:hover:bg-[#FF85B3]/80 dark:shadow-[0_0_12px_rgba(255,105,180,0.3)]"
+              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors"
               onClick={handleAddToCart}
             >
               <span className="text-lg transition-transform duration-200">{added ? "✓" : "+"}</span>

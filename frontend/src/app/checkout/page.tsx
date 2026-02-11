@@ -115,7 +115,7 @@ export default function CheckoutPage() {
   if (orderComplete) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center py-16">
-        <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-6">
+        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6">
           <Check className="h-10 w-10 text-green-600" />
         </div>
         <h1 className="text-2xl font-bold mb-2">주문이 완료되었어요! 🎉</h1>
@@ -165,40 +165,33 @@ export default function CheckoutPage() {
           {/* Left: Forms */}
           <div className="lg:col-span-2 space-y-6">
             {/* Order Items */}
-            <Card className="rounded-2xl dark:bg-black/40 dark:backdrop-blur-md dark:border-primary/30">
+            <Card className="rounded-2xl">
               <CardHeader className="pb-3">
-                <h2 className="font-semibold dark:text-white">주문 상품 ({items.length})</h2>
+                <h2 className="font-semibold">주문 상품 ({items.length})</h2>
               </CardHeader>
               <CardContent className="space-y-3">
                 {items.map((item) => (
                   <div
                     key={item.product.id}
-                    className="flex gap-3 p-3 rounded-xl bg-muted/50 dark:bg-white/5"
+                    className="flex gap-3 p-3 rounded-xl bg-muted/50"
                   >
-                    <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden relative dark:bg-black/50">
+                    <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden relative">
                       <Image
                         src="/tbr_logo.png"
                         alt={item.product.name}
                         width={64}
                         height={64}
-                        className="w-full h-full object-contain p-2 dark:hidden"
-                      />
-                      <Image
-                        src="/tbr_logo_dark.png"
-                        alt={item.product.name}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-contain p-2 hidden dark:block"
+                        className="w-full h-full object-contain p-2"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm line-clamp-1 dark:text-gray-200">
+                      <p className="font-medium text-sm line-clamp-1">
                         {item.product.name}
                       </p>
-                      <p className="text-xs text-muted-foreground dark:text-gray-400">
+                      <p className="text-xs text-muted-foreground">
                         수량: {item.quantity}개
                       </p>
-                      <p className="text-primary font-bold mt-1 dark:text-primary">
+                      <p className="text-primary font-bold mt-1">
                         {(item.product.price * item.quantity).toLocaleString()}원
                       </p>
                     </div>
@@ -208,13 +201,13 @@ export default function CheckoutPage() {
             </Card>
 
             {/* Shipping Address */}
-            <Card className="rounded-2xl dark:bg-black/40 dark:backdrop-blur-md dark:border-primary/30">
+            <Card className="rounded-2xl">
               <CardHeader className="pb-3">
-                <h2 className="font-semibold dark:text-white">배송지 정보</h2>
+                <h2 className="font-semibold">배송지 정보</h2>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block dark:text-gray-300">
+                  <label className="text-sm font-medium mb-2 block">
                     배송지 주소
                   </label>
                   <input
@@ -222,15 +215,15 @@ export default function CheckoutPage() {
                     value={shippingAddress}
                     onChange={(e) => setShippingAddress(e.target.value)}
                     placeholder="주소를 입력해주세요"
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black/50 dark:border-primary/30 dark:text-white dark:placeholder-gray-500"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  <p className="text-xs text-muted-foreground mt-1 dark:text-gray-400">
+                  <p className="text-xs text-muted-foreground mt-1">
                     🔒 프라이버시 포장으로 안전하게 배송됩니다
                   </p>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium mb-2 block dark:text-gray-300">
+                  <label className="text-sm font-medium mb-2 block">
                     배송 메모
                   </label>
                   <div className="flex flex-wrap gap-2 mb-2">
@@ -241,7 +234,7 @@ export default function CheckoutPage() {
                         onClick={() => handleMemoChange(memo)}
                         className={`px-3 py-1 rounded-full text-sm transition-colors ${selectedMemoOption === memo
                           ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground hover:bg-muted/80 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
                           }`}
                       >
                         {memo}
@@ -254,7 +247,7 @@ export default function CheckoutPage() {
                       value={customMemo}
                       onChange={(e) => handleCustomMemoChange(e.target.value)}
                       placeholder="배송 메모를 입력해주세요"
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black/50 dark:border-primary/30 dark:text-white"
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   )}
                 </div>
@@ -262,9 +255,9 @@ export default function CheckoutPage() {
             </Card>
 
             {/* Payment Method */}
-            <Card className="rounded-2xl dark:bg-black/40 dark:backdrop-blur-md dark:border-primary/30">
+            <Card className="rounded-2xl">
               <CardHeader className="pb-3">
-                <h2 className="font-semibold dark:text-white">결제 수단</h2>
+                <h2 className="font-semibold">결제 수단</h2>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-3">
@@ -274,14 +267,14 @@ export default function CheckoutPage() {
                       type="button"
                       onClick={() => setPaymentMethod(method.id)}
                       className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${paymentMethod === method.id
-                        ? "border-primary bg-primary/5 dark:bg-primary/20 dark:border-primary"
-                        : "border-border hover:border-primary/50 dark:border-white/10 dark:hover:border-primary/50 dark:bg-black/30"
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50"
                         }`}
                     >
-                      <method.icon className="h-5 w-5 text-muted-foreground dark:text-gray-400" />
+                      <method.icon className="h-5 w-5 text-muted-foreground" />
                       <div className="text-left">
-                        <p className="font-medium dark:text-gray-200">{method.label}</p>
-                        <p className="text-xs text-muted-foreground dark:text-gray-500">
+                        <p className="font-medium">{method.label}</p>
+                        <p className="text-xs text-muted-foreground">
                           {method.description}
                         </p>
                       </div>
@@ -291,7 +284,7 @@ export default function CheckoutPage() {
                     </button>
                   ))}
                 </div>
-                <p className="text-xs text-muted-foreground mt-3 dark:text-gray-500">
+                <p className="text-xs text-muted-foreground mt-3">
                   🔜 TossPayments 연동 준비 중
                 </p>
               </CardContent>
@@ -300,32 +293,32 @@ export default function CheckoutPage() {
 
           {/* Right: Summary */}
           <div>
-            <Card className="rounded-2xl sticky top-24 dark:bg-black/40 dark:backdrop-blur-md dark:border-primary/30">
+            <Card className="rounded-2xl sticky top-24">
               <CardHeader className="pb-3">
-                <h2 className="font-semibold dark:text-white">결제 금액</h2>
+                <h2 className="font-semibold">결제 금액</h2>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex justify-between text-sm dark:text-gray-300">
-                  <span className="text-muted-foreground dark:text-gray-400">상품 금액</span>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">상품 금액</span>
                   <span>{totalPrice.toLocaleString()}원</span>
                 </div>
-                <div className="flex justify-between text-sm dark:text-gray-300">
-                  <span className="text-muted-foreground dark:text-gray-400">배송비</span>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">배송비</span>
                   <span>
                     {shippingFee === 0 ? (
-                      <span className="text-green-600 dark:text-green-400">무료</span>
+                      <span className="text-green-600">무료</span>
                     ) : (
                       `${shippingFee.toLocaleString()}원`
                     )}
                   </span>
                 </div>
                 {shippingFee > 0 && (
-                  <p className="text-xs text-muted-foreground dark:text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     💡 {(50000 - totalPrice).toLocaleString()}원 더 담으면 무료배송!
                   </p>
                 )}
-                <div className="border-t border-border pt-3 dark:border-white/10">
-                  <div className="flex justify-between font-bold dark:text-white">
+                <div className="border-t border-border pt-3">
+                  <div className="flex justify-between font-bold">
                     <span>총 결제 금액</span>
                     <span className="text-primary text-lg">
                       {finalPrice.toLocaleString()}원
@@ -336,7 +329,7 @@ export default function CheckoutPage() {
                 <Button
                   onClick={handlePayment}
                   disabled={isProcessing}
-                  className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground dark:bg-primary dark:text-black dark:hover:bg-primary/80 dark:shadow-[0_0_20px_rgba(255,105,180,0.4)]"
+                  className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
                   {isProcessing ? (
                     <>
@@ -348,7 +341,7 @@ export default function CheckoutPage() {
                   )}
                 </Button>
 
-                <p className="text-xs text-center text-muted-foreground dark:text-gray-500">
+                <p className="text-xs text-center text-muted-foreground">
                   주문 내용을 확인했으며, 결제에 동의합니다.
                 </p>
               </CardContent>
