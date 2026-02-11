@@ -113,7 +113,7 @@ export function Header() {
   const { isAuthenticated, user, openLoginModal, logout } = useAuthStore();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-md border-b-[3px] border-transparent transition-colors duration-500" style={{ borderImage: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD, #FF6B9D) 1' }}>
+    <header className="sticky top-0 z-50 w-full glass border-b-[3px] border-transparent transition-all duration-500" style={{ borderImage: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD, #FF6B9D) 1' }}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 relative z-10">
         {/* ─────────────────────────────────────
             Logo Section

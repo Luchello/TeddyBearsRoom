@@ -152,7 +152,7 @@ export function AgeVerificationModal() {
                   모달 콘텐츠 (중앙 정렬)
                   max-w-lg: 최대 너비 제한
                   ───────────────────────────────────── */}
-              <div className="relative w-full max-w-lg p-8 mx-4 text-center bg-white rounded-3xl shadow-[0_16px_48px_rgba(255,107,157,0.15)] rainbow-border overflow-hidden">
+              <div className="relative w-full max-w-lg p-8 mx-4 text-center glass rounded-3xl shadow-[0_16px_48px_rgba(255,107,157,0.15)] rainbow-border overflow-hidden">
                 {/* 🔞 Emoji 애니메이션 섹션
                     - absolute glow: 배경 빛 효과 (blur-xl)
                     - animate-bounce-slow: 부드러운 상하 바운싱 (1.5s)
@@ -202,7 +202,7 @@ export function AgeVerificationModal() {
                     <Button
                         onClick={handleVerify}
                         size="lg"
-                        className="rounded-full text-lg px-10 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/25 hover:scale-105 transition-all duration-300 group"
+                        className="pill text-lg px-10 py-6 bg-[#FF6B9D] hover:bg-[#FF5189] text-white shadow-lg shadow-[#FF6B9D]/25 hover:scale-105 transition-all duration-300 group"
                     >
                         <ShieldCheck className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                         네, 성인입니다
@@ -217,7 +217,7 @@ export function AgeVerificationModal() {
                         onClick={handleReject}
                         variant="outline"
                         size="lg"
-                        className="rounded-full text-lg px-10 py-6 border-2 hover:bg-muted transition-all duration-300"
+                        className="pill text-lg px-10 py-6 border-2 border-[#C8E6FF] hover:bg-white/80 transition-all duration-300"
                     >
                         <Ban className="mr-2 h-5 w-5" />
                         아니요

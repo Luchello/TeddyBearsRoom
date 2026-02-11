@@ -208,7 +208,7 @@ export function ProductCard({
   };
 
   return (
-    <Card className="group relative overflow-visible rounded-xl border-0 bg-transparent transition-all duration-300 hover:-translate-y-1">
+    <Card className="group relative overflow-visible rounded-xl border-0 bg-transparent card-3d">
       {/* ─────────────────────────────────────
           Furry Ears (지뢰계 귀 장식)
           - hover 시 나타나는 곰 귀 장식 (light mode only)
@@ -221,7 +221,7 @@ export function ProductCard({
           - Light: rounded-[2rem], pastel shadow
           - Dark: rounded-xl (12px), #251A35 bg, neon glow hover
           ───────────────────────────────────── */}
-      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-[#C8E6FF] bg-white/90 backdrop-blur-sm shadow-[0_8px_32px_rgba(255,107,157,0.12),0_4px_16px_rgba(78,205,196,0.08)] transition-all duration-300 group-hover:shadow-[0_16px_48px_rgba(255,107,157,0.2),0_8px_24px_rgba(78,205,196,0.12)] group-hover:scale-[1.03]">
+      <div className="relative z-10 overflow-hidden rounded-[2rem] glass rainbow-glow transition-all duration-300">
         <Link href={`/products/${id}`}>
           {/* ─────────────────────────────────────
               Image Area
@@ -343,7 +343,7 @@ export function ProductCard({
             {/* 장바구니 추가 버튼 */}
             <Button
               size="icon"
-              className="rounded-full w-10 h-10 shadow-md bg-[#4ECDC4] text-white hover:bg-[#FF6B9D] transition-all duration-300 hover:scale-110"
+              className="pill w-10 h-10 shadow-md bg-[#4ECDC4] text-white hover:bg-[#FF6B9D] transition-all duration-300 justify-center p-0"
               onClick={handleAddToCart}
             >
               <span className="text-lg transition-transform duration-200">{added ? "✓" : "+"}</span>
