@@ -113,7 +113,7 @@ export function Header() {
   const { isAuthenticated, user, openLoginModal, logout } = useAuthStore();
 
   return (
-    <header className="sticky top-0 z-50 w-full glass border-b-[3px] border-transparent transition-all duration-500" style={{ borderImage: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD, #FF6B9D) 1' }}>
+    <header className="sticky top-0 z-50 w-full glass border-b-[3px] border-transparent transition-all duration-500" style={{ borderImage: 'linear-gradient(90deg, #FF5252, #FF8A4C, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF4D88) 1' }}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 relative z-10">
         {/* ─────────────────────────────────────
             Logo Section
@@ -135,8 +135,8 @@ export function Header() {
             <span className="text-xl font-bold text-primary leading-tight transition-all duration-300 group-hover:text-accent">
               TeddyBear&apos;s Room
             </span>
-            <span className="text-[10px] text-muted-foreground hidden sm:block font-medium tracking-widest">
-              PASTEL FURRY UNIVERSE
+            <span className="text-[10px] text-muted-foreground hidden sm:block font-medium tracking-[0.2em]">
+              WHIMSYSHIRE EDITION
             </span>
           </div>
         </Link>

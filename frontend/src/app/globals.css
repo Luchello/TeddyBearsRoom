@@ -2,9 +2,9 @@
 @import "tw-animate-css";
 
 /* ====================================
-   TeddyBear's Room: Whimsyshire Edition
-   Theme: 디아블로3 무지개방 — 밝은 하늘 + 초원 + 비비드 무지개
-   Updated: 2026-02-11
+   TeddyBear's Room: Whimsyshire Edition v2
+   "겉은 천국, 속은 19금" — 디아블로3 무지개방
+   Complete Overhaul: 2026-02-11
    ==================================== */
 
 @theme inline {
@@ -57,7 +57,7 @@
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-  --shadow-rainbow: 0 8px 32px rgba(255,107,157,0.15), 0 4px 16px rgba(78,205,196,0.1);
+  --shadow-rainbow: 0 8px 32px rgba(255,107,157,0.2), 0 4px 16px rgba(78,205,196,0.15);
 
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
@@ -111,55 +111,59 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* 🌈 Whimsyshire Palette */
-  --color-whimsy-sky: #87CEEB;
-  --color-whimsy-meadow: #90EE90;
-  --color-whimsy-pink: #FF6B9D;
-  --color-whimsy-mint: #4ECDC4;
-  --color-whimsy-sun: #FFD93D;
-  --color-whimsy-coral: #FF6B6B;
-  --color-whimsy-lavender: #DDA0DD;
+  /* 🌈 Whimsyshire Palette v2 — More Saturated */
+  --color-whimsy-sky: #5CB8E6;
+  --color-whimsy-sky-deep: #3A9BD5;
+  --color-whimsy-meadow: #5BCD5B;
+  --color-whimsy-meadow-dark: #3BA63B;
+  --color-whimsy-pink: #FF4D88;
+  --color-whimsy-mint: #2EC4B6;
+  --color-whimsy-sun: #FFD000;
+  --color-whimsy-coral: #FF5252;
+  --color-whimsy-lavender: #C77DFF;
+  --color-whimsy-orange: #FF8A4C;
+  --color-whimsy-cream: #FFF8E7;
 }
 
 /* ====================================
-   🌈 WHIMSYSHIRE COLOR PALETTE
-   비비드 무지개방 — 밝은 하늘 + 초원 + 무지개
+   🌈 WHIMSYSHIRE v2 COLOR PALETTE
+   더 선명하고, 더 게임같고, 더 몽환적인
    ==================================== */
 :root {
   --radius: 1.5rem;
 
-  --background: #E8F8FF;
-  --foreground: #2D1B69;
-  --card: #FFFFFF;
-  --card-foreground: #2D1B69;
+  --background: #E0F4FF;
+  --foreground: #1A0F3C;
+  --card: rgba(255, 255, 255, 0.85);
+  --card-foreground: #1A0F3C;
   --popover: #FFFFFF;
-  --popover-foreground: #2D1B69;
-  --primary: #FF6B9D;
+  --popover-foreground: #1A0F3C;
+  --primary: #FF4D88;
   --primary-foreground: #FFFFFF;
-  --secondary: #4ECDC4;
+  --secondary: #2EC4B6;
   --secondary-foreground: #FFFFFF;
-  --muted: #F0F4FF;
-  --muted-foreground: #7C6BA8;
-  --accent: #FFD93D;
-  --accent-foreground: #2D1B69;
-  --destructive: #FF6B6B;
+  --muted: #EEF2FF;
+  --muted-foreground: #6B5BA7;
+  --accent: #FFD000;
+  --accent-foreground: #1A0F3C;
+  --destructive: #FF5252;
   --destructive-foreground: #FFFFFF;
-  --border: #C8E6FF;
+  --border: #B8DBFF;
   --input: #F0F4FF;
-  --ring: #FF6B9D;
-  --chart-1: #FF6B9D;
-  --chart-2: #4ECDC4;
-  --chart-3: #FFD93D;
-  --chart-4: #45B7D1;
-  --chart-5: #96CEB4;
-  --sidebar: #F0FAFF;
-  --sidebar-foreground: #2D1B69;
-  --sidebar-primary: #FF6B9D;
+  --ring: #FF4D88;
+  --chart-1: #FF4D88;
+  --chart-2: #2EC4B6;
+  --chart-3: #FFD000;
+  --chart-4: #5CB8E6;
+  --chart-5: #C77DFF;
+  --sidebar: #EDF8FF;
+  --sidebar-foreground: #1A0F3C;
+  --sidebar-primary: #FF4D88;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F0F4FF;
-  --sidebar-accent-foreground: #2D1B69;
-  --sidebar-border: #C8E6FF;
-  --sidebar-ring: #FF6B9D;
+  --sidebar-accent: #EEF2FF;
+  --sidebar-accent-foreground: #1A0F3C;
+  --sidebar-border: #B8DBFF;
+  --sidebar-ring: #FF4D88;
 }
 
 /* ====================================
@@ -172,8 +176,7 @@
   }
 
   body {
-    background: linear-gradient(180deg, #87CEEB 0%, #E8F8FF 30%, #F0FFF0 100%);
-    background-attachment: fixed;
+    background: #5CB8E6;
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -182,6 +185,50 @@
     overflow-wrap: break-word;
     line-height: 1.7;
     letter-spacing: -0.01em;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* 🌈 Whimsyshire Sky Background — CSS Only */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      /* Sun */
+      radial-gradient(circle at 85% 15%, #FFD000 0%, #FFD00040 4%, transparent 8%),
+      /* Sun glow */
+      radial-gradient(circle at 85% 15%, #FFD00030 0%, transparent 20%),
+      /* Sky gradient — deeper blue top to light bottom */
+      linear-gradient(180deg,
+        #3A9BD5 0%,
+        #5CB8E6 25%,
+        #8DD4F0 50%,
+        #B8E8FF 70%,
+        #E0F4FF 85%,
+        #E8FFF0 100%
+      );
+  }
+
+  /* Rolling Hills — CSS art */
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35vh;
+    z-index: -1;
+    background:
+      /* Front hill */
+      ellipse(120% 100% at 50% 100%) #4CAF50,
+      /* Left hill */
+      ellipse(80% 90% at 20% 100%) #5BCD5B,
+      /* Right hill */
+      ellipse(70% 85% at 80% 100%) #66D066;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -215,24 +262,56 @@
 }
 
 /* ====================================
-   🌈 WHIMSYSHIRE UTILITIES
+   🌈 WHIMSYSHIRE v2 UTILITIES
    ==================================== */
 @layer utilities {
 
-  /* 무지개 그라디언트 */
-  .rainbow-gradient {
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #96CEB4, #DDA0DD, #FF6B9D);
+  /* ── 무지개 아치 (CSS Art) ── */
+  .rainbow-arch {
+    position: absolute;
+    width: 600px;
+    height: 300px;
+    border-radius: 300px 300px 0 0;
+    background: conic-gradient(from 180deg at 50% 100%,
+      #FF5252 0deg, #FF8A4C 30deg, #FFD000 60deg,
+      #5BCD5B 90deg, #5CB8E6 120deg, #3A9BD5 150deg,
+      #C77DFF 180deg, transparent 180deg
+    );
+    mask: radial-gradient(ellipse 85% 85% at 50% 100%, transparent 95%, black 96%);
+    -webkit-mask: radial-gradient(ellipse 85% 85% at 50% 100%, transparent 95%, black 96%);
+    opacity: 0.6;
+    pointer-events: none;
   }
 
-  /* 무지개 텍스트 */
+  /* ── 무지개 그라디언트 ── */
+  .rainbow-gradient {
+    background: linear-gradient(90deg, #FF5252, #FF8A4C, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF4D88);
+  }
+
+  .rainbow-gradient-animated {
+    background: linear-gradient(90deg, #FF5252, #FF8A4C, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF4D88, #FF5252);
+    background-size: 200% 100%;
+    animation: rainbow-slide 4s linear infinite;
+  }
+
+  /* ── 무지개 텍스트 ── */
   .rainbow-text {
-    background: linear-gradient(90deg, #FF6B6B, #FF6B9D, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD);
+    background: linear-gradient(90deg, #FF5252, #FF4D88, #FFD000, #5BCD5B, #5CB8E6, #C77DFF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* 무지개 보더 (pseudo element) */
+  .rainbow-text-animated {
+    background: linear-gradient(90deg, #FF5252, #FF4D88, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF5252);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbow-slide 3s linear infinite;
+  }
+
+  /* ── 무지개 보더 ── */
   .rainbow-border {
     position: relative;
     border: none;
@@ -243,27 +322,36 @@
     inset: 0;
     padding: 3px;
     border-radius: inherit;
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD, #FF6B9D);
+    background: linear-gradient(90deg, #FF5252, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF4D88);
+    background-size: 200% 100%;
+    animation: rainbow-slide 4s linear infinite;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     -webkit-mask-composite: xor;
     pointer-events: none;
   }
 
-  /* 무지개 글로우 카드 그림자 */
+  /* ── 무지개 글로우 ── */
   .rainbow-glow {
-    box-shadow: 0 8px 32px rgba(255,107,157,0.15), 0 4px 16px rgba(78,205,196,0.1);
+    box-shadow:
+      0 8px 32px rgba(255,77,136,0.12),
+      0 4px 16px rgba(46,196,182,0.08),
+      0 0 0 1px rgba(255,255,255,0.5);
   }
   .rainbow-glow:hover {
-    box-shadow: 0 12px 48px rgba(255,107,157,0.25), 0 8px 24px rgba(78,205,196,0.15);
+    box-shadow:
+      0 16px 48px rgba(255,77,136,0.2),
+      0 8px 24px rgba(46,196,182,0.12),
+      0 0 0 1px rgba(255,255,255,0.7);
   }
 
-  /* 구름 장식 */
+  /* ── 구름 (순수 CSS) ── */
   .cloud {
     position: absolute;
     background: white;
     border-radius: 9999px;
-    opacity: 0.7;
+    opacity: 0.85;
+    box-shadow: 0 4px 20px rgba(255,255,255,0.5);
   }
   .cloud::before, .cloud::after {
     content: '';
@@ -272,72 +360,182 @@
     border-radius: 9999px;
   }
   .cloud::before {
-    width: 60%;
-    height: 120%;
-    top: -40%;
-    left: 15%;
+    width: 65%;
+    height: 130%;
+    top: -50%;
+    left: 12%;
   }
   .cloud::after {
-    width: 50%;
-    height: 100%;
-    top: -30%;
-    right: 15%;
+    width: 55%;
+    height: 110%;
+    top: -35%;
+    right: 12%;
   }
 
-  /* 반짝이 애니메이션 */
-  .animate-sparkle {
-    animation: sparkle 2s ease-in-out infinite;
+  /* ── 꽃 장식 (CSS 데이지) ── */
+  .whimsy-flower {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
+  }
+  .whimsy-flower::before {
+    content: '🌼';
+    font-size: 24px;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* 바운스 hover */
-  .hover-bounce {
-    transition: transform 0.2s ease;
+  /* ── 글래스모피즘 v2 ── */
+  .glass {
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   }
-  .hover-bounce:hover {
-    transform: scale(1.05);
-  }
-
-  /* 떠다니기 */
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  .animate-float-slow {
-    animation: float-slow 20s ease-in-out infinite;
+  .glass:hover {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   }
 
-  /* 🐾 Furry Interactions */
-  .hover-ear-twitch:hover {
-    animation: ear-twitch 0.5s ease-in-out;
-  }
-  .hover-tail-wag:hover {
-    animation: tail-wag 0.8s ease-in-out infinite;
-  }
-  .hover-paw-print {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23FF6B9D"><path d="M12 2C10.9 2 10 2.9 10 4s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-4 3C6.9 5 6 5.9 6 7s.9 2 2 2 2-.9 2-2-.9-2-2-2zm8 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-4 4c-2.2 0-4 1.8-4 4 0 1.5.8 2.8 2 3.5V20c0 1.1.9 2 2 2s2-.9 2-2v-3.5c1.2-.7 2-2 2-3.5 0-2.2-1.8-4-4-4z"/></svg>'), auto;
+  /* ── 글래스 다크 (어두운 글래스) ── */
+  .glass-dark {
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    background: rgba(26, 15, 60, 0.6);
+    border: 1px solid rgba(255, 77, 136, 0.15);
+    color: white;
   }
 
-  /* 무지개 기존 호환 */
-  .neon-text { color: #FF6B9D; }
-  .neon-border {
-    box-shadow: 0 4px 20px rgba(255,107,157,0.2);
-    border-color: #FF6B9D;
+  /* ── Bento Grid v2 ── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 1.25rem;
   }
-  .neon-card { box-shadow: 0 8px 32px rgba(255,107,157,0.15); }
-  .neon-glow-subtle { box-shadow: 0 4px 16px rgba(255,107,157,0.1); }
-  .text-neon-glow { color: #FF6B9D; }
+  @media (max-width: 768px) {
+    .bento-grid { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .bento-large { grid-column: span 2; grid-row: span 2; }
+  .bento-wide { grid-column: span 2; }
+
+  /* ── 3D Card v2 ── */
+  .card-3d {
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+  }
+  .card-3d:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+      0 24px 48px rgba(255,77,136,0.12),
+      0 12px 24px rgba(46,196,182,0.08),
+      0 0 0 1px rgba(255,255,255,0.6);
+  }
+
+  /* ── Pill Button v2 ── */
+  .pill {
+    border-radius: 9999px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pill:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(255,77,136,0.3);
+  }
+  .pill:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* ── 뮤지컬 노트 떠다니기 ── */
+  .float-note {
+    animation: float-musical 6s ease-in-out infinite;
+  }
+
+  /* ── Neon compat ── */
+  .neon-text { color: #FF4D88; }
+  .neon-border { box-shadow: 0 4px 20px rgba(255,77,136,0.2); border-color: #FF4D88; }
+  .neon-card { box-shadow: 0 8px 32px rgba(255,77,136,0.15); }
+  .neon-glow-subtle { box-shadow: 0 4px 16px rgba(255,77,136,0.1); }
+  .text-neon-glow { color: #FF4D88; }
+
+  /* ── Section with meadow bg ── */
+  .meadow-section {
+    background: linear-gradient(180deg, transparent 0%, #E8FFF0 20%, #D0F5D0 100%);
+    position: relative;
+  }
+
+  /* ── Whimsy Card (게임 아이템 느낌) ── */
+  .whimsy-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(20px);
+    border: 2px solid transparent;
+    border-image: linear-gradient(135deg, #FF4D88, #FFD000, #5BCD5B, #5CB8E6) 1;
+    border-image-slice: 1;
+    border-radius: 1.5rem;
+    /* border-image doesn't work with border-radius, use outline trick */
+  }
+
+  /* ── Game-style rarity borders ── */
+  .rarity-common { box-shadow: inset 0 0 0 2px #B8DBFF; }
+  .rarity-rare { box-shadow: inset 0 0 0 2px #5CB8E6, 0 0 12px rgba(92,184,230,0.2); }
+  .rarity-epic { box-shadow: inset 0 0 0 2px #C77DFF, 0 0 16px rgba(199,125,255,0.25); }
+  .rarity-legendary { box-shadow: inset 0 0 0 2px #FFD000, 0 0 20px rgba(255,208,0,0.3); }
+
+  /* ── Section Heading ── */
+  .section-heading {
+    position: relative;
+    display: inline-block;
+  }
+  .section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #FF4D88, #FFD000, #5BCD5B);
+    border-radius: 2px;
+  }
+
+  /* ── Bounce animations ── */
+  .animate-sparkle { animation: sparkle 2s ease-in-out infinite; }
+  .animate-float { animation: float 3s ease-in-out infinite; }
+  .animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
+  .animate-sway { animation: sway 4s ease-in-out infinite; }
+  .animate-bounce-cute { animation: bounce-cute 2s ease-in-out infinite; }
+  .hover-bounce { transition: transform 0.2s ease; }
+  .hover-bounce:hover { transform: scale(1.08) translateY(-4px); }
 }
 
 /* ====================================
-   KEYFRAMES
+   🎮 KEYFRAMES — Game World Animations
    ==================================== */
+
+@keyframes rainbow-slide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
 @keyframes sparkle {
   0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+  50% { opacity: 1; transform: scale(1.3) rotate(180deg); }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
 }
 
 @keyframes float-slow {
@@ -346,21 +544,64 @@
   66% { transform: translate(-20px, 15px) scale(0.95); }
 }
 
-@keyframes ear-twitch {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
+@keyframes float-musical {
+  0%, 100% { transform: translateY(0) rotate(-5deg); opacity: 0.7; }
+  25% { transform: translateY(-15px) rotate(3deg); opacity: 1; }
+  50% { transform: translateY(-8px) rotate(-3deg); opacity: 0.8; }
+  75% { transform: translateY(-20px) rotate(5deg); opacity: 0.9; }
 }
 
-@keyframes tail-wag {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  75% { transform: rotate(-5deg); }
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes bounce-cute {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+  50% { transform: translateY(-4px); }
+  70% { transform: translateY(-6px); }
 }
 
 @keyframes drift {
   0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(20px); }
+  50% { transform: translateX(40px); }
+}
+
+@keyframes drift-reverse {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-30px); }
+}
+
+@keyframes cloud-float {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(calc(100vw + 100%)); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes gate-pulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(255,77,136,0.3), 0 0 60px rgba(199,125,255,0.1); }
+  50% { box-shadow: 0 0 50px rgba(255,77,136,0.5), 0 0 100px rgba(199,125,255,0.2); }
+}
+
+@keyframes portal-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hill-wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes fadeIn {
@@ -368,145 +609,28 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-main { animation: fadeIn 0.3s ease-out; }
-
-/* Premium Typography */
-.font-display { font-family: var(--font-playfair), 'Playfair Display', serif; }
-h1, h2, h3 { letter-spacing: -0.03em; }
-
-/* Glass Card (Whimsyshire version) */
-.glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(200, 230, 255, 0.5);
-}
-
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(135deg, #FF6B9D, #FFD93D);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Section heading accent underline */
-.section-heading {
-  position: relative;
-  display: inline-block;
-}
-.section-heading::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #FF6B9D, #FFD93D, #4ECDC4);
-  border-radius: 2px;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #F0F4FF; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #FF6B9D, #4ECDC4);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover { background: #FF6B9D; }
+main { animation: fadeIn 0.4s ease-out; }
 
 /* ====================================
-   2026 MODERN UI/UX UTILITIES
+   TYPOGRAPHY
    ==================================== */
+.font-display { font-family: var(--font-playfair), 'Playfair Display', Georgia, serif; }
+h1, h2, h3 { letter-spacing: -0.03em; }
 
-/* Glassmorphism */
-.glass {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+/* ====================================
+   SCROLLBAR — Rainbow
+   ==================================== */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #E0F4FF; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF4D88, #FFD000, #5BCD5B, #5CB8E6, #C77DFF);
+  border-radius: 5px;
 }
-.glass:hover {
-  background: rgba(255, 255, 255, 0.75);
-}
+::-webkit-scrollbar-thumb:hover { background: #FF4D88; }
 
-/* Bento Grid */
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
-  gap: 1rem;
-}
-@media (max-width: 768px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
-  }
-}
-@media (min-width: 769px) and (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-.bento-large { grid-column: span 2; grid-row: span 2; }
-.bento-wide { grid-column: span 2; }
-
-/* 3D Card Hover */
-.card-3d {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform-style: preserve-3d;
-}
-.card-3d:hover {
-  transform: rotateY(2deg) rotateX(-2deg) scale(1.02);
-  box-shadow: 0 20px 40px rgba(255,107,157,0.15), 0 8px 16px rgba(78,205,196,0.1);
-}
-
-/* Pill Button */
-.pill {
-  border-radius: 9999px;
-  padding: 0.5rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.pill:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(255,107,157,0.3);
-}
-.pill:active {
-  transform: scale(0.95);
-}
-
-/* Rainbow Progress Bar */
-.rainbow-progress {
-  background: linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #FF6B9D);
-  height: 3px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  transition: width 0.3s ease;
-}
-
-/* Fade In Up Animation */
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-/* Bounce In */
-@keyframes bounce-in {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
-}
-.animate-bounce-in {
-  animation: bounce-in 0.5s ease-out forwards;
-}
-
-/* Staggered children fade-in */
+/* ====================================
+   STAGGERED ANIMATIONS
+   ==================================== */
 .stagger-children > * {
   opacity: 0;
   animation: fade-in-up 0.5s ease-out forwards;
@@ -515,8 +639,13 @@ h1, h2, h3 { letter-spacing: -0.03em; }
 .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
 .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
 .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
 
-/* Horizontal scroll snap */
+.animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+.animate-bounce-in { animation: bounce-in 0.5s ease-out forwards; }
+
+/* Scroll snap */
 .scroll-snap-x {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -525,3 +654,57 @@ h1, h2, h3 { letter-spacing: -0.03em; }
 }
 .scroll-snap-x::-webkit-scrollbar { display: none; }
 .scroll-snap-x > * { scroll-snap-align: start; }
+
+/* ====================================
+   🌈 RAINBOW PROGRESS BAR
+   ==================================== */
+.rainbow-progress {
+  background: linear-gradient(90deg, #FF5252, #FF8A4C, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF4D88);
+  background-size: 200% 100%;
+  animation: rainbow-slide 2s linear infinite;
+  height: 3px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  transition: width 0.3s ease;
+}
+
+/* ====================================
+   🌸 WHIMSYSHIRE HILLS (Footer area)
+   ==================================== */
+.hills-bg {
+  position: relative;
+  overflow: hidden;
+}
+.hills-bg::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  right: -5%;
+  height: 200px;
+  background:
+    ellipse(60% 100% at 20% 100%) #4CAF50,
+    ellipse(50% 90% at 50% 100%) #5BCD5B,
+    ellipse(55% 95% at 80% 100%) #45A045;
+  z-index: 0;
+}
+
+/* ====================================
+   GRADIENT TEXT UTILITY
+   ==================================== */
+.gradient-text {
+  background: linear-gradient(135deg, #FF4D88, #FFD000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ====================================
+   GLASS CARD (Backward compat)
+   ==================================== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 230, 255, 0.5);
+}

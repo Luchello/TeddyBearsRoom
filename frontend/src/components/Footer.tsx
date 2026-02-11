@@ -140,7 +140,7 @@ export function Footer() {
           - 이메일 구독 폼
           - 구독 완료 시 애니메이션 피드백
           ───────────────────────────────────── */}
-      <section className="relative bg-gradient-to-r from-[#F0FFF0] via-[#E8FFE8] to-[#F0FFF0] py-16 border-b border-[#C8E6FF]">
+      <section className="relative bg-gradient-to-r from-[#E8FFF0] via-[#E0FFE8] to-[#E8FFF0] py-16 border-b border-[#B8DBFF]">
         {/* 노이즈 텍스처 오버레이 */}
         <div className="absolute inset-0 bg-[url('/patterns/noise.png')] opacity-5 mix-blend-overlay"></div>
         <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
@@ -211,7 +211,7 @@ export function Footer() {
           Main Footer Content
           - 4컬럼 그리드: 브랜드, Shop, Support, Company
           ───────────────────────────────────── */}
-      <div className="bg-[#F0FFF0]/80 backdrop-blur-sm pt-16 pb-8 border-t-[3px]" style={{ borderImage: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD, #FF6B9D) 1' }}>
+      <div className="bg-[#E8FFF0]/80 backdrop-blur-sm pt-16 pb-8 border-t-[3px]" style={{ borderImage: 'linear-gradient(90deg, #FF5252, #FF8A4C, #FFD000, #5BCD5B, #5CB8E6, #C77DFF, #FF4D88) 1' }}>
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           {/* ──────────────────────────────────────
               P1 개선: 4컬럼 → 3컬럼 구조 간소화
@@ -236,8 +236,8 @@ export function Footer() {
                   <span className="text-lg font-bold text-primary transition-colors duration-300 group-hover:text-accent">
                     TeddyBear&apos;s Room
                   </span>
-                  <span className="text-[10px] text-muted-foreground font-medium tracking-widest uppercase">
-                    Pastel Furry Universe
+                  <span className="text-[10px] text-muted-foreground font-medium tracking-[0.2em] uppercase">
+                    Whimsyshire Edition
                   </span>
                 </div>
               </Link>
@@ -362,7 +362,7 @@ export function Footer() {
           Bottom Copyright
           - 법적 고지 및 사업자 정보
           ───────────────────────────────────── */}
-      <div className="bg-[#E8FFE8]/60 border-t border-[#C8E6FF] py-8">
+      <div className="bg-[#E0FFE0]/60 border-t border-[#B8DBFF] py-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground/60">
             <div className="flex items-center gap-2">
