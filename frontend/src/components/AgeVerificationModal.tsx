@@ -135,30 +135,24 @@ export function AgeVerificationModal() {
               - exit animation: opacity-0 (500ms)
               ───────────────────────────────────── */}
           <div
-              className={`fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-xl transition-opacity duration-500 ${isExiting ? "opacity-0 pointer-events-none" : "opacity-100"
+              className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#87CEEB]/80 backdrop-blur-xl transition-opacity duration-500 ${isExiting ? "opacity-0 pointer-events-none" : "opacity-100"
                   }`}
           >
               {/* ─────────────────────────────────────
                   배경 이펙트 (Light/Dark 모드별 분기)
                   ───────────────────────────────────── */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  {/* Light Mode: 클라우드 배경 (파스텔 색상) */}
-                  <div className="absolute top-0 left-0 w-full h-full bg-[url('/patterns/noise.png')] opacity-10 mix-blend-overlay" />
-                  {/* 왼쪽 상단 파스텔 블롭 (animate-float) */}
-                  <div className="absolute -top-20 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
-                  {/* 오른쪽 하단 파스텔 블롭 (animate-float 2s 딜레이) */}
-                  <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-
-                  {/* Dark Mode: Matrix 그리드 + 라텍스 효과 */}
-                  {/* 어두운 그라디언트 배경 */}
-                  {/* 네온 그린 그리드 패턴 (30px × 30px) */}
+                  <span className="absolute top-10 left-10 text-3xl animate-sparkle">✨</span>
+                  <span className="absolute top-16 right-16 text-2xl animate-sparkle" style={{ animationDelay: "0.5s" }}>🌸</span>
+                  <span className="absolute bottom-20 left-20 text-3xl animate-sparkle" style={{ animationDelay: "1s" }}>🌈</span>
+                  <span className="absolute bottom-10 right-10 text-2xl animate-sparkle" style={{ animationDelay: "1.5s" }}>⭐</span>
               </div>
 
               {/* ─────────────────────────────────────
                   모달 콘텐츠 (중앙 정렬)
                   max-w-lg: 최대 너비 제한
                   ───────────────────────────────────── */}
-              <div className="relative w-full max-w-lg p-8 mx-4 text-center">
+              <div className="relative w-full max-w-lg p-8 mx-4 text-center bg-white rounded-3xl shadow-[0_16px_48px_rgba(255,107,157,0.15)] rainbow-border overflow-hidden">
                 {/* 🔞 Emoji 애니메이션 섹션
                     - absolute glow: 배경 빛 효과 (blur-xl)
                     - animate-bounce-slow: 부드러운 상하 바운싱 (1.5s)
@@ -169,9 +163,9 @@ export function AgeVerificationModal() {
 
                 {/* 19 뱃지 */}
                 <div className="mb-6 relative inline-block">
-                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse" />
-                    <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 border-2 border-primary/40">
-                      <span className="text-2xl font-black text-primary">19</span>
+                    <div className="absolute inset-0 bg-[#FF6B9D]/20 blur-xl rounded-full animate-pulse" />
+                    <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#FF6B9D] border-2 border-[#FF6B9D]">
+                      <span className="text-2xl font-black text-white">19</span>
                     </div>
                 </div>
 

@@ -113,7 +113,7 @@ export function Header() {
   const { isAuthenticated, user, openLoginModal, logout } = useAuthStore();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-primary/10 transition-colors duration-500">
+    <header className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-md border-b-[3px] border-transparent transition-colors duration-500" style={{ borderImage: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #4ECDC4, #45B7D1, #DDA0DD, #FF6B9D) 1' }}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 relative z-10">
         {/* ─────────────────────────────────────
             Logo Section
@@ -341,7 +341,7 @@ export function Header() {
           - SVG path로 구현
           ───────────────────────────────────── */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none translate-y-[99%] z-40">
-        <svg className="relative block w-[calc(100%+1.3px)] h-[24px] text-background/80 fill-current" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <svg className="relative block w-[calc(100%+1.3px)] h-[24px] text-white/70 fill-current" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
         </svg>
       </div>

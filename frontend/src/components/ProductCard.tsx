@@ -92,20 +92,20 @@ function getCategoryGradient(category: string): string {
   const cat = category.toLowerCase();
 
   if (cat.includes('무드') || cat.includes('mood')) {
-    return 'bg-gradient-to-br from-pink-100 to-purple-100';
+    return 'bg-gradient-to-br from-[#FFE0EC] to-[#E8D5FF]';
   }
   if (cat.includes('케어') || cat.includes('care')) {
-    return 'bg-gradient-to-br from-rose-100 to-red-100';
+    return 'bg-gradient-to-br from-[#FFD5D5] to-[#FFE0EC]';
   }
   if (cat.includes('라이프') || cat.includes('life')) {
-    return 'bg-gradient-to-br from-purple-100 to-indigo-100';
+    return 'bg-gradient-to-br from-[#D5F0FF] to-[#E0FFE8]';
   }
   if (cat.includes('패션') || cat.includes('fashion')) {
-    return 'bg-gradient-to-br from-amber-100 to-orange-100';
+    return 'bg-gradient-to-br from-[#FFF3D0] to-[#FFE0D5]';
   }
 
-  // 기본값
-  return 'bg-gradient-to-br from-primary/5 to-accent/5';
+  // 기본값 — 하늘+민트
+  return 'bg-gradient-to-br from-[#E0F4FF] to-[#E0FFE8]';
 }
 
 // ──────────────────────────────────────
@@ -221,7 +221,7 @@ export function ProductCard({
           - Light: rounded-[2rem], pastel shadow
           - Dark: rounded-xl (12px), #251A35 bg, neon glow hover
           ───────────────────────────────────── */}
-      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-primary/10 bg-card/50 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(255,182,193,0.3)]">
+      <div className="relative z-10 overflow-hidden rounded-[2rem] border border-[#C8E6FF] bg-white/90 backdrop-blur-sm shadow-[0_8px_32px_rgba(255,107,157,0.12),0_4px_16px_rgba(78,205,196,0.08)] transition-all duration-300 group-hover:shadow-[0_16px_48px_rgba(255,107,157,0.2),0_8px_24px_rgba(78,205,196,0.12)] group-hover:scale-[1.03]">
         <Link href={`/products/${id}`}>
           {/* ─────────────────────────────────────
               Image Area
@@ -329,7 +329,7 @@ export function ProductCard({
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col">
               {/* 판매가 */}
-              <span className="text-xl font-black text-foreground">
+              <span className="text-xl font-black text-[#FF6B9D]">
                 {price.toLocaleString()}<span className="text-sm font-medium ml-0.5">원</span>
               </span>
               {/* 정가 (할인 시) */}
@@ -343,7 +343,7 @@ export function ProductCard({
             {/* 장바구니 추가 버튼 */}
             <Button
               size="icon"
-              className="rounded-full w-10 h-10 shadow-md bg-foreground text-background hover:bg-primary hover:text-foreground transition-colors"
+              className="rounded-full w-10 h-10 shadow-md bg-[#4ECDC4] text-white hover:bg-[#FF6B9D] transition-all duration-300 hover:scale-110"
               onClick={handleAddToCart}
             >
               <span className="text-lg transition-transform duration-200">{added ? "✓" : "+"}</span>
