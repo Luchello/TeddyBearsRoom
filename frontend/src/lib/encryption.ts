@@ -62,8 +62,8 @@ export async function encryptMeasurements(
   data: SensitiveMeasurements,
   userId: string
 ): Promise<string> {
-  // Get the salt from environment or use a default for development
-  const salt = process.env.NEXT_PUBLIC_ENCRYPTION_SALT || 'tbr-dev-salt-2025';
+  // Get the salt from environment - MUST be set in production
+  const salt = process.env.NEXT_PUBLIC_ENCRYPTION_SALT ?? 'CHANGE-THIS-IN-PRODUCTION';
 
   // Derive the encryption key
   const key = await deriveKey(userId, salt);
@@ -101,8 +101,8 @@ export async function decryptMeasurements(
   userId: string
 ): Promise<SensitiveMeasurements | null> {
   try {
-    // Get the salt from environment
-    const salt = process.env.NEXT_PUBLIC_ENCRYPTION_SALT || 'tbr-dev-salt-2025';
+    // Get the salt from environment - MUST be set in production
+    const salt = process.env.NEXT_PUBLIC_ENCRYPTION_SALT ?? 'CHANGE-THIS-IN-PRODUCTION';
 
     // Derive the encryption key
     const key = await deriveKey(userId, salt);
