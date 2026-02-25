@@ -1,140 +1,39 @@
 "use client";
 
-// ====================================
-// TeddyBear's Room - ProductCard 컴포넌트
-// 상품 카드 UI (그리드 표시용)
-// ====================================
-//
-// 🎯 용도:
-// - 상품 목록에서 개별 상품 표시
-// - 장바구니 추가, 위시리스트 토글
-// - Quick View 오버레이
-//
-// 📦 구조:
-// - Furry Ears: hover 시 나타나는 귀 장식
-// - Main Card: 이미지 + 배지 + 위시리스트 버튼
-// - CardContent: 카테고리, 이름, 가격, 장바구니 버튼
-//
-// 🎨 디자인:
-// - 지뢰계(Jirai-kei) 감성 귀 장식
-// - hover 시 scale + shadow 효과
-// - Light/Dark 모드 분기 이미지
-// - 꼬리 흔들기 애니메이션
-//
-// 🔧 주요 기능:
-// - handleAddToCart: 장바구니 추가 + Toast 알림
-// - handleToggleWishlist: 위시리스트 토글 + Toast 알림
-// - discountPercent: 할인율 자동 계산
-//
-// 📝 의존성:
-// - shadcn/ui: Card, Button
-// - lucide-react: Heart 아이콘
-// - cartStore, wishlistStore: 상태 관리
-// - ToastContext: 알림 표시
-// ====================================
-
 import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useWishlistStore } from "@/store/wishlistStore";
 import { useToast } from "@/contexts/ToastContext";
 import type { Product } from "@/lib/types";
 
-// ──────────────────────────────────────
-// Props 타입 정의
-// ──────────────────────────────────────
-
-/**
- * ProductCard Props
- * @description 상품 카드에 필요한 데이터
- */
 interface ProductCardProps {
-  id: string;            // 상품 고유 ID
-  name: string;          // 상품명
-  price: number;         // 판매가
-  originalPrice?: number; // 정가 (할인 표시용)
-  imageUrl: string;      // 상품 이미지 URL
-  category: string;      // 카테고리명
-  isNew?: boolean;       // NEW 배지 표시
-  isBest?: boolean;      // BEST 배지 표시
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  imageUrl: string;
+  category: string;
+  isNew?: boolean;
+  isBest?: boolean;
 }
 
-// ──────────────────────────────────────
-// Hydration-safe client-only check
-// ──────────────────────────────────────
-
-/**
- * useSyncExternalStore를 사용한 hydration-safe 클라이언트 감지
- * @returns SSR에서는 false, CSR에서는 true
- */
 function useHydrated() {
   return useSyncExternalStore(
-    () => () => {},      // subscribe (no-op)
-    () => true,          // getSnapshot (client)
-    () => false          // getServerSnapshot (server)
+    () => () => {},
+    () => true,
+    () => false
   );
 }
 
-// ──────────────────────────────────────
-// 유틸리티 함수
-// ──────────────────────────────────────
-
-/**
- * 카테고리별 그라디언트 배경 클래스 반환
- * @param category - 상품 카테고리
- * @returns Tailwind 그라디언트 클래스 문자열
- */
-function getCategoryGradient(category: string): string {
-  const cat = category.toLowerCase();
-
-  if (cat.includes('무드') || cat.includes('mood')) {
-    return 'bg-gradient-to-br from-[#FFE0EC] to-[#E8D5FF]';
-  }
-  if (cat.includes('케어') || cat.includes('care')) {
-    return 'bg-gradient-to-br from-[#FFD5D5] to-[#FFE0EC]';
-  }
-  if (cat.includes('라이프') || cat.includes('life')) {
-    return 'bg-gradient-to-br from-[#D5F0FF] to-[#E0FFE8]';
-  }
-  if (cat.includes('패션') || cat.includes('fashion')) {
-    return 'bg-gradient-to-br from-[#FFF3D0] to-[#FFE0D5]';
-  }
-
-  // 기본값 — 하늘+민트
-  return 'bg-gradient-to-br from-[#E0F4FF] to-[#E0FFE8]';
+function formatKRW(value: number) {
+  return value.toLocaleString();
 }
 
-// ──────────────────────────────────────
-// ProductCard 컴포넌트
-// ──────────────────────────────────────
-
-/**
- * 상품 카드 컴포넌트
- *
- * @description
- * 상품 목록 그리드에서 사용되는 카드 컴포넌트입니다.
- * - 상품 이미지, 이름, 가격 표시
- * - 장바구니/위시리스트 버튼
- * - hover 시 지뢰계 스타일 귀 장식
- *
- * @param props - ProductCardProps
- *
- * @example
- * <ProductCard
- *   id="prod-001"
- *   name="허니 바이브레이터"
- *   price={59000}
- *   originalPrice={79000}
- *   imageUrl="/products/honey.jpg"
- *   category="바이브레이터"
- *   isNew
- *   isBest
- * />
- */
 export function ProductCard({
   id,
   name,
@@ -145,61 +44,52 @@ export function ProductCard({
   isNew,
   isBest,
 }: ProductCardProps) {
-  // ──────────────────────────────────────
-  // Hydration mismatch 방지
-  // - useSyncExternalStore로 SSR/CSR 상태 동기화
-  // - SSR에서는 false, CSR에서만 localStorage 복원
-  // ──────────────────────────────────────
   const hydrated = useHydrated();
 
-  // ──────────────────────────────────────
-  // Store 및 Context Hooks
-  // ──────────────────────────────────────
   const { addItem, openCart } = useCartStore();
   const { toggleItem, isWishlisted } = useWishlistStore();
   const { addToast } = useToast();
 
-  // 현재 상품의 위시리스트 상태 (hydrated 전에는 항상 false)
   const wishlisted = hydrated ? isWishlisted(id) : false;
-
-  // 장바구니 추가 피드백
   const [added, setAdded] = useState(false);
 
-  // ──────────────────────────────────────
-  // 할인율 계산
-  // - originalPrice가 있으면 할인율 계산
-  // - 없으면 0%
-  // ──────────────────────────────────────
   const discountPercent = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
 
-  // ──────────────────────────────────────
-  // 장바구니 추가 핸들러
-  // - 이벤트 전파 방지 (Link 내부 클릭)
-  // - Product 객체 생성 후 addItem 호출
-  // - Toast 알림 + 장바구니 드로어 열기
-  // ──────────────────────────────────────
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const product: Product = { id, name, price, originalPrice, imageUrl, category, isNew, isBest };
+    const product: Product = {
+      id,
+      name,
+      price,
+      originalPrice,
+      imageUrl,
+      category,
+      isNew,
+      isBest,
+    };
     addItem(product);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    setTimeout(() => setAdded(false), 1200);
     addToast(`${name}을(를) 장바구니에 담았어요!`, "success");
     openCart();
   };
 
-  // ──────────────────────────────────────
-  // 위시리스트 토글 핸들러
-  // - 이벤트 전파 방지
-  // - 현재 상태에 따라 추가/제거 메시지 분기
-  // ──────────────────────────────────────
   const handleToggleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const product: Product = { id, name, price, originalPrice, imageUrl, category, isNew, isBest };
+    const product: Product = {
+      id,
+      name,
+      price,
+      originalPrice,
+      imageUrl,
+      category,
+      isNew,
+      isBest,
+    };
     toggleItem(product);
     addToast(
       wishlisted ? `${name}을(를) 찜 목록에서 제거했어요` : `${name}을(를) 찜했어요!`,
@@ -208,149 +98,106 @@ export function ProductCard({
   };
 
   return (
-    <Card className="group relative overflow-visible rounded-xl border-0 bg-transparent card-3d">
-      {/* ─────────────────────────────────────
-          Furry Ears (지뢰계 귀 장식)
-          - hover 시 나타나는 곰 귀 장식 (light mode only)
-          ───────────────────────────────────── */}
-      <div className="absolute -top-2 left-6 w-4 h-6 bg-pink-300 rounded-full rotate-[-15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 z-10" />
-      <div className="absolute -top-2 right-6 w-4 h-6 bg-pink-300 rounded-full rotate-[15deg] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-1 z-10" />
+    <Card className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-premium">
+      <Link href={`/products/${id}`} className="block">
+        {/* Image */}
+        <div className="relative aspect-square overflow-hidden bg-muted/40">
+          {/* Placeholder gradient under image */}
+          <div className="absolute inset-0 media-gradient opacity-60" />
 
-      {/* ─────────────────────────────────────
-          Main Card Content
-          - Light: rounded-[2rem], pastel shadow
-          - Dark: rounded-xl (12px), #251A35 bg, neon glow hover
-          ───────────────────────────────────── */}
-      <div className="relative z-10 overflow-hidden rounded-[2rem] glass rainbow-glow transition-all duration-300">
-        <Link href={`/products/${id}`}>
-          {/* ─────────────────────────────────────
-              Image Area
-              - 1:1 비율 (aspect-square)
-              - Light/Dark 로고 분기
-              - 카테고리별 그라디언트 배경
-              ───────────────────────────────────── */}
-          <div className={`relative aspect-square overflow-hidden ${getCategoryGradient(category)}`}>
-            {/* 상품 이미지 (현재는 로고로 대체) */}
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-              <div className="relative w-full h-full">
-                <Image
-                  src="/tbr_logo.png"
-                  alt={name}
-                  fill
-                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-xl"
-                />
-              </div>
-            </div>
+          <Image
+            src={imageUrl || "/tbr_logo.png"}
+            alt={name}
+            fill
+            className="object-contain p-8 sm:p-10 transition-transform duration-500 group-hover:scale-[1.03]"
+            sizes="(max-width: 640px) 80vw, 320px"
+          />
 
-            {/* Tail (꼬리 - hover 시 흔들림)
-                - P1 최적화: hover 효과 단순화로 제거
-                - 과도한 동시 애니메이션 방지
-            */}
-
-            {/* ─────────────────────────────────────
-                Badges (NEW, BEST, 할인율)
-                - 좌측 상단 세로 배치
-                ───────────────────────────────────── */}
-            <div className="absolute left-4 top-4 flex flex-col gap-2">
-              {isNew && (
-                <span className="rounded-full bg-black/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-white shadow-lg">
-                  NEW
-                </span>
-              )}
-              {isBest && (
-                <span className="rounded-full bg-white/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-foreground shadow-lg border border-primary/20">
-                  BEST
-                </span>
-              )}
-              {discountPercent > 0 && (
-                <span className="rounded-full bg-destructive/90 backdrop-blur-md px-3 py-1 text-[10px] font-bold text-white shadow-lg">
-                  -{discountPercent}%
-                </span>
-              )}
-            </div>
-
-            {/* ─────────────────────────────────────
-                Wishlist Button (하트)
-                - 우측 상단
-                - wishlisted 상태에 따라 스타일 변경
-                ───────────────────────────────────── */}
-            <button
-              onClick={handleToggleWishlist}
-              className={`absolute top-4 right-4 p-3 rounded-full transition-all duration-300 z-10 hover:scale-110 ${wishlisted
-                ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
-                : "bg-white/80 text-muted-foreground hover:bg-white hover:text-red-500 shadow-sm backdrop-blur-sm"
-                }`}
-              aria-label={wishlisted ? "찜 해제" : "찜하기"}
-            >
-              <Heart className={`h-4 w-4 transition-transform ${wishlisted ? "fill-current" : ""}`} />
-            </button>
-
-            {/* ─────────────────────────────────────
-                Quick View Overlay
-                - hover 시 표시
-                - 클릭 시 상품 상세로 이동 (Link)
-                ───────────────────────────────────── */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px] opacity-0 transition-all duration-300 group-hover:opacity-100">
-              <Button
-                variant="secondary"
-                className="rounded-full bg-white text-black hover:bg-white/90 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-              >
-                Quick View
-              </Button>
-            </div>
-          </div>
-        </Link>
-
-        {/* ─────────────────────────────────────
-            Card Content (상품 정보)
-            - 카테고리, 별점, 상품명, 가격, 장바구니 버튼
-            ───────────────────────────────────── */}
-        <CardContent className="p-5">
-          {/* 카테고리 + 별점 */}
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
-              {category}
-            </p>
-            <div className="flex gap-0.5">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span key={star} className="text-[10px] text-yellow-400">★</span>
-              ))}
-            </div>
-          </div>
-
-          {/* 상품명 */}
-          <Link href={`/products/${id}`}>
-            <h3 className="font-bold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1">
-              {name}
-            </h3>
-          </Link>
-
-          {/* 가격 + 장바구니 버튼 */}
-          <div className="mt-4 flex items-center justify-between">
-            <div className="flex flex-col">
-              {/* 판매가 */}
-              <span className="text-xl font-black text-[#FF6B9D]">
-                {price.toLocaleString()}<span className="text-sm font-medium ml-0.5">원</span>
+          {/* Badges */}
+          <div className="absolute left-4 top-4 flex flex-col gap-2">
+            {isNew ? (
+              <span className="inline-flex h-6 items-center rounded-full bg-foreground px-3 text-[10px] font-semibold tracking-[0.16em] text-background">
+                NEW
               </span>
-              {/* 정가 (할인 시) */}
-              {originalPrice && (
-                <span className="text-xs text-muted-foreground line-through">
-                  {originalPrice.toLocaleString()}원
-                </span>
-              )}
-            </div>
+            ) : null}
+            {isBest ? (
+              <span className="inline-flex h-6 items-center rounded-full bg-background/80 px-3 text-[10px] font-semibold tracking-[0.16em] text-foreground border border-border backdrop-blur">
+                BEST
+              </span>
+            ) : null}
+            {discountPercent > 0 ? (
+              <span className="inline-flex h-6 items-center rounded-full bg-destructive px-3 text-[10px] font-semibold tracking-[0.1em] text-destructive-foreground">
+                -{discountPercent}%
+              </span>
+            ) : null}
+          </div>
 
-            {/* 장바구니 추가 버튼 */}
+          {/* Wishlist */}
+          <button
+            type="button"
+            onClick={handleToggleWishlist}
+            className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-all hover:bg-background"
+            aria-label={wishlisted ? "찜 해제" : "찜하기"}
+          >
+            <Heart
+              className={
+                wishlisted
+                  ? "h-4 w-4 text-[#E05252] fill-[#E05252]"
+                  : "h-4 w-4 text-muted-foreground"
+              }
+            />
+          </button>
+
+          {/* Quick add (hover) */}
+          <div className="absolute inset-x-4 bottom-4 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
             <Button
-              size="icon"
-              className="pill w-10 h-10 shadow-md bg-[#4ECDC4] text-white hover:bg-[#FF6B9D] transition-all duration-300 justify-center p-0"
+              type="button"
               onClick={handleAddToCart}
+              className="h-11 w-full rounded-full bg-accent text-accent-foreground hover:opacity-90"
             >
-              <span className="text-lg transition-transform duration-200">{added ? "✓" : "+"}</span>
+              {added ? "Added" : "Quick Add"}
             </Button>
           </div>
+        </div>
+
+        {/* Content */}
+        <CardContent className="p-5 sm:p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-[11px] tracking-[0.18em] uppercase text-muted-foreground">
+                {category}
+              </p>
+              <h3 className="mt-2 text-lg font-semibold text-foreground leading-snug line-clamp-2">
+                {name}
+              </h3>
+            </div>
+
+            <div className="shrink-0 text-right">
+              <p className="text-lg font-semibold text-foreground">
+                ₩{formatKRW(price)}
+              </p>
+              {originalPrice ? (
+                <p className="text-xs text-muted-foreground line-through">
+                  ₩{formatKRW(originalPrice)}
+                </p>
+              ) : (
+                <div className="h-[1rem]" />
+              )}
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex items-center gap-1 text-[#E8B4B8]">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-current" />
+              ))}
+              <span className="ml-2 text-xs text-muted-foreground">4.9</span>
+            </div>
+
+            <span className="text-xs text-muted-foreground">View details</span>
+          </div>
         </CardContent>
-      </div>
+      </Link>
     </Card>
   );
 }

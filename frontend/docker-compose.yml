@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: tbr-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-teddybears}
+      POSTGRES_USER: ${POSTGRES_USER:-tbr}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tbr_password_change_me}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tbr} -d ${POSTGRES_DB:-teddybears}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - tbr-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tbr-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env.docker
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: ${DATABASE_URL:-postgresql://tbr:tbr_password_change_me@db:5432/teddybears?schema=public}
+      DIRECT_URL: ${DIRECT_URL:-postgresql://tbr:tbr_password_change_me@db:5432/teddybears?schema=public}
+      RUN_MIGRATIONS: ${RUN_MIGRATIONS:-true}
+      SEED_ON_START: ${SEED_ON_START:-false}
+    ports:
+      - "3001:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000 >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  tbr-postgres-data:

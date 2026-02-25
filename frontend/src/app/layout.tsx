@@ -49,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${notoSansKR.variable} ${playfair.variable}`} style={{ colorScheme: 'light' }}>
+    <html lang="ko" className={`${notoSansKR.variable} ${playfair.variable}`} style={{ colorScheme: "light" }}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ToastProvider>
             <div className="relative flex min-h-screen flex-col">

@@ -29,6 +29,45 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Docker (Local Production Stack)
+
+This project includes a complete Docker setup with:
+- `app` (Next.js 16 + Prisma)
+- `db` (PostgreSQL 16)
+
+### 1) First-time setup
+
+```bash
+cp .env.docker.example .env.docker
+# then edit .env.docker if needed
+```
+
+### 2) Start containers
+
+```bash
+docker compose up -d --build
+```
+
+App: `http://localhost:3001`
+DB: `localhost:5433`
+
+### 3) Logs / status
+
+```bash
+docker compose ps
+docker compose logs -f app
+```
+
+### 4) Stop containers
+
+```bash
+docker compose down
+```
+
+### Notes
+- On app start, Prisma migrations run automatically (`RUN_MIGRATIONS=true`).
+- If you want seed data on boot, set `SEED_ON_START=true` in `.env.docker`.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

@@ -2,158 +2,150 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
-import { Testimonials } from "@/components/Testimonials";
 import { featuredProducts, subscriptionBenefits } from "@/lib/data";
-import { ArrowRight, Heart, ShieldCheck, Truck, Sparkles, Gift, Star, Package } from "lucide-react";
+import {
+  ArrowRight,
+  Package,
+  ShieldCheck,
+  Truck,
+  RefreshCcw,
+  Star,
+  Quote,
+} from "lucide-react";
+
+const categories = [
+  { name: "Toys", href: "/products?category=toys", img: "/images/cat-toys.webp" },
+  { name: "Mood", href: "/products?category=mood", img: "/images/cat-mood.webp" },
+  { name: "Care", href: "/products?category=care", img: "/images/cat-care.webp" },
+  { name: "Body", href: "/products?category=body", img: "/images/cat-body.webp" },
+  { name: "Lifestyle", href: "/products?category=lifestyle", img: "/images/cat-lifestyle.webp" },
+  { name: "Gifts", href: "/products?category=gifts", img: "/images/cat-gifts.webp" },
+];
+
+const reviews = [
+  {
+    name: "H",
+    title: "포장부터 안심이 됐어요",
+    body: "무표기 포장이라 정말 편했습니다. 제품도 촉감이 매끈하고, 사용 설명이 깔끔하게 정리되어 있어요.",
+    rating: 5,
+  },
+  {
+    name: "J",
+    title: "과하지 않고 세련된 셀렉션",
+    body: "딱 필요한 것들만 모아둔 느낌. 디자인도 과장되지 않아서 선물로도 부담이 없었습니다.",
+    rating: 5,
+  },
+  {
+    name: "S",
+    title: "배송이 정말 빠릅니다",
+    body: "오후에 주문했는데 다음날 도착했어요. 상담도 친절했고, 교환 안내가 명확했습니다.",
+    rating: 5,
+  },
+];
 
 export default function HomePage() {
   return (
     <div className="flex flex-col">
-      {/* ════════ HERO — 2-Column with Whimsyshire sky ════════ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Sky gradient */}
+      {/* HERO */}
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+        {/* Background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#9ECFE8] via-[#C8E4F5] to-[#E8F2FB]" />
-          {/* Sun glow */}
-          <div className="absolute top-[8%] right-[10%] w-32 h-32 rounded-full bg-[#FFD97D]/30 blur-[60px]" />
-          {/* CSS Clouds — subtle, no emoji */}
-          <div className="absolute top-[12%] left-[5%] w-36 h-10 bg-white/50 rounded-full blur-sm" />
-          <div className="absolute top-[12%] left-[7%] w-20 h-14 bg-white/50 rounded-full blur-sm -translate-y-2" />
-          <div className="absolute top-[18%] right-[15%] w-28 h-8 bg-white/40 rounded-full blur-sm" />
-          <div className="absolute top-[18%] right-[17%] w-16 h-11 bg-white/40 rounded-full blur-sm -translate-y-1.5" />
-          <div className="absolute top-[8%] left-[42%] w-24 h-7 bg-white/30 rounded-full blur-sm" />
-          {/* Soft teal/pink accents */}
-          <div className="absolute bottom-[20%] left-0 w-[500px] h-[300px] bg-[#E8658A]/[0.04] rounded-full blur-[80px]" />
-          <div className="absolute top-[30%] right-0 w-[400px] h-[300px] bg-[#56B4A9]/[0.04] rounded-full blur-[80px]" />
+          <Image src="/images/hero-mood.webp" alt="" fill className="object-cover" priority />
+          {/* Deep navy overlay → transparent */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F1A]/80 via-[#0F0F1A]/50 to-[#0F0F1A]/30" />
         </div>
 
-        {/* Soft meadow hint at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#E8F5E8]/40 to-transparent" />
-
-        {/* Rainbow divider */}
-        <div className="absolute bottom-0 left-0 right-0 rainbow-line" />
-
-        {/* Content — 2 columns */}
-        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 w-full pt-28 pb-32">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left — Copy */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 border border-white/50 backdrop-blur-sm text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E8658A]" />
-                Premium Self-Care Boutique
-              </div>
-
-              <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] font-black leading-[0.92] tracking-[-0.04em] mb-8">
-                <span className="block text-foreground">Soft Outside,</span>
-                <span className="block rainbow-text mt-1">Wild Inside.</span>
+        <div className="relative z-10 w-full">
+          <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 sm:pb-20">
+            <div className="max-w-2xl">
+              <p className="text-[11px] tracking-[0.22em] uppercase text-white/70">
+                Premium Intimacy Wellness Boutique
+              </p>
+              <h1 className="font-display text-white mt-4 text-4xl sm:text-6xl lg:text-7xl leading-[0.95]">
+                Soft Outside,
+                <br />
+                Wild Inside.
               </h1>
-
-              <p className="text-lg md:text-xl text-muted-foreground max-w-lg mb-10 leading-relaxed">
-                겉은 포근한 테디베어, 속은 대담한 자기 발견.<br />
-                당신만의 프라이빗 유니버스에 오신 걸 환영합니다.
+              <p className="mt-6 text-base sm:text-lg text-white/70 leading-relaxed max-w-xl">
+                당신만의 프라이빗 유니버스.
+                <br />
+                은은하고 안전한 셀프케어를 위한 큐레이션을 제공합니다.
               </p>
 
-              <div className="flex flex-wrap gap-4 mb-12">
-                <Button asChild size="lg" className="rounded-full text-base px-10 py-6 bg-[#E8658A] text-white hover:bg-[#D4506F] shadow-[0_8px_24px_rgba(232,101,138,0.3)] hover:shadow-[0_12px_32px_rgba(232,101,138,0.4)] transition-all duration-300 hover:-translate-y-0.5">
+              <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="rounded-full bg-white text-[#0F0F1A] hover:bg-white/90"
+                >
                   <Link href="/products">
-                    컬렉션 보기 <ArrowRight className="ml-2 w-4 h-4" />
+                    컬렉션 보기 <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="ghost" className="rounded-full text-base px-10 py-6 text-foreground/70 hover:text-foreground hover:bg-white/50 transition-all">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white"
+                >
                   <Link href="/about">브랜드 스토리</Link>
                 </Button>
-              </div>
 
-              {/* Social proof */}
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    {[0,1,2,3].map(i => (
-                      <div key={i} className="w-7 h-7 rounded-full border-2 border-white bg-gradient-to-br from-[#E8658A]/20 to-[#56B4A9]/20" />
-                    ))}
+                <div className="mt-5 sm:mt-0 sm:ml-4 inline-flex items-center gap-3 text-xs text-white/65">
+                  <div className="inline-flex items-center gap-1.5">
+                    <ShieldCheck className="h-4 w-4" />
+                    <span>Discreet</span>
                   </div>
-                  <span className="font-medium">2,400+ 회원</span>
-                </div>
-                <div className="w-px h-4 bg-border" />
-                <div className="flex items-center gap-1">
-                  {[0,1,2,3,4].map(i => (
-                    <Star key={i} className="w-3.5 h-3.5 text-[#D4A853] fill-[#D4A853]" />
-                  ))}
-                  <span className="ml-1 font-medium">4.9</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right — Featured Cards */}
-            <div className="space-y-4 hidden lg:block">
-              {/* Best Seller Card */}
-              <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl p-6 flex items-center gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] transition-all duration-500 group cursor-pointer">
-                <div className="relative w-20 h-20 shrink-0 rounded-xl bg-gradient-to-br from-[#F5EEF8] to-[#E4F0FB] p-3">
-                  <Image src="/tbr_logo.png" alt="Best Seller" fill className="object-contain group-hover:scale-110 transition-transform duration-500 p-2" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-bold tracking-wider uppercase bg-[#E8658A] text-white px-2 py-0.5 rounded-full">Best Seller</span>
-                    <span className="text-[10px] font-bold tracking-wider uppercase text-[#56B4A9]">-20%</span>
+                  <div className="h-4 w-px bg-white/20" />
+                  <div className="inline-flex items-center gap-1.5">
+                    <Star className="h-4 w-4 fill-current" />
+                    <span>4.9 avg</span>
                   </div>
-                  <p className="font-bold text-foreground">파스텔 드림 컬렉션</p>
-                  <p className="text-sm text-muted-foreground">가장 사랑받는 아이템</p>
-                </div>
-                <div className="text-right shrink-0">
-                  <p className="font-bold text-[#E8658A]">₩39,000</p>
-                  <p className="text-xs text-muted-foreground line-through">₩49,000</p>
                 </div>
               </div>
 
-              {/* Category Grid */}
-              <div className="grid grid-cols-2 gap-4">
+              {/* Trust badges */}
+              <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { name: '토이', color: 'from-[#F5EEF8] to-[#FFE8F0]', count: '24' },
-                  { name: '무드', color: 'from-[#E4F0FB] to-[#EEF0FF]', count: '18' },
-                  { name: '케어', color: 'from-[#FFE8F0] to-[#FFF0E8]', count: '32' },
-                  { name: '라이프', color: 'from-[#E8F5E8] to-[#E4F0FB]', count: '15' },
-                ].map((cat, i) => (
-                  <div key={i} className={`bg-gradient-to-br ${cat.color} rounded-2xl p-5 hover:shadow-lg transition-all duration-300 cursor-pointer group`}>
-                    <p className="text-2xl font-black text-foreground/80 group-hover:text-foreground transition-colors">{cat.name}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{cat.count}개 상품</p>
+                  { label: "비밀배송", sub: "무표기 포장", icon: Package },
+                  { label: "안전소재", sub: "검증된 소재", icon: ShieldCheck },
+                  { label: "당일출고", sub: "빠른 발송", icon: Truck },
+                  { label: "무료교환", sub: "간편 절차", icon: RefreshCcw },
+                ].map((b) => (
+                  <div
+                    key={b.label}
+                    className="glass rounded-2xl px-4 py-3 border-white/15"
+                  >
+                    <div className="flex items-center gap-2">
+                      <b.icon className="h-4 w-4 text-white/85" />
+                      <p className="text-sm text-white font-medium">{b.label}</p>
+                    </div>
+                    <p className="text-xs text-white/65 mt-1">{b.sub}</p>
                   </div>
                 ))}
-              </div>
-
-              {/* Promo */}
-              <div className="bg-gradient-to-r from-[#E8658A]/10 via-[#D4A853]/10 to-[#56B4A9]/10 rounded-2xl p-5 flex items-center justify-between border border-[#E8658A]/10">
-                <div className="flex items-center gap-3">
-                  <Gift className="w-5 h-5 text-[#E8658A]" />
-                  <div>
-                    <p className="font-bold text-sm text-foreground">첫 구매 15% 할인</p>
-                    <p className="text-xs text-muted-foreground">코드: <span className="font-mono font-bold text-[#E8658A]">WHIMSY15</span></p>
-                  </div>
-                </div>
-                <Button asChild size="sm" className="rounded-full bg-[#E8658A] text-white hover:bg-[#D4506F] text-xs px-4">
-                  <Link href="/products">적용하기</Link>
-                </Button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════ TRUST BAR ════════ */}
-      <section className="py-14 bg-white border-b border-border/50">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* TRUST BAR */}
+      <section className="py-10 border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <ShieldCheck className="w-5 h-5" />, title: '비밀 보장 배송', desc: '무표기 포장, 개인정보 100% 보호', accent: '#E8658A' },
-              { icon: <Truck className="w-5 h-5" />, title: '무료 배송', desc: '₩30,000 이상 주문 시 전국 무료', accent: '#56B4A9' },
-              { icon: <Heart className="w-5 h-5" />, title: '품질 보증', desc: '인체공학 설계, 안전 인증 소재', accent: '#D4A853' },
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-4 group">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300" style={{ background: `${item.accent}12`, color: item.accent }}>
-                  {item.icon}
+              { icon: Package, title: "비밀배송", desc: "무표기 포장" },
+              { icon: ShieldCheck, title: "안전소재", desc: "검증된 소재" },
+              { icon: Truck, title: "당일출고", desc: "주문 후 빠른 발송" },
+              { icon: RefreshCcw, title: "무료교환", desc: "간편한 교환" },
+            ].map((t) => (
+              <div key={t.title} className="flex items-start gap-3">
+                <div className="h-11 w-11 rounded-2xl bg-muted flex items-center justify-center">
+                  <t.icon className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm text-foreground mb-0.5">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <p className="text-sm font-semibold text-foreground">{t.title}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{t.desc}</p>
                 </div>
               </div>
             ))}
@@ -161,127 +153,296 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════ FEATURED PRODUCTS ════════ */}
-      <section className="py-24 bg-[#FAFBFF]">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+      {/* CATEGORIES — bento */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-[#E8658A] mb-3">Curated Selection</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">이달의 컬렉션</h2>
+              <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                Categories
+              </p>
+              <h2 className="mt-3 text-3xl sm:text-4xl font-display text-foreground">
+                Curated, not crowded.
+              </h2>
             </div>
-            <Button asChild variant="ghost" className="group text-sm font-medium text-muted-foreground hover:text-foreground p-0 h-auto">
-              <Link href="/products" className="flex items-center gap-2">
-                전체 보기 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <Button asChild variant="ghost" className="hidden sm:inline-flex">
+              <Link href="/products" className="text-muted-foreground hover:text-foreground">
+                전체 보기 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-6 gap-4">
+            {categories.map((cat, idx) => {
+              const span =
+                idx === 0
+                  ? "md:col-span-3 md:row-span-2"
+                  : idx === 1
+                    ? "md:col-span-3"
+                    : idx === 2
+                      ? "md:col-span-2"
+                      : idx === 3
+                        ? "md:col-span-2"
+                        : idx === 4
+                          ? "md:col-span-2 md:row-span-2"
+                          : "md:col-span-4";
+
+              return (
+                <Link
+                  key={cat.name}
+                  href={cat.href}
+                  className={`group relative overflow-hidden rounded-3xl border border-border ${span}`}
+                >
+                  <Image src={cat.img} alt={cat.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
+
+                  <div className="relative p-8 min-h-[180px] flex flex-col justify-end">
+                    <p className="text-white/70 text-xs tracking-[0.2em] uppercase">
+                      Category
+                    </p>
+                    <p className="mt-2 text-white text-2xl sm:text-3xl font-display">
+                      {cat.name}
+                    </p>
+                    <div className="mt-4 inline-flex items-center gap-2 text-white/80 text-sm">
+                      <span className="underline underline-offset-4 decoration-white/30 group-hover:decoration-white/70 transition-colors">
+                        Explore
+                      </span>
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* BESTSELLERS — horizontal snap */}
+      <section className="py-16 sm:py-20 bg-muted/40">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                Bestsellers
+              </p>
+              <h2 className="mt-3 text-3xl sm:text-4xl font-display text-foreground">
+                Loved by members.
+              </h2>
+            </div>
+            <Button asChild variant="outline" className="rounded-full">
+              <Link href="/products">Shop all</Link>
+            </Button>
+          </div>
+
+          <div className="mt-10 -mx-4 md:-mx-6 px-4 md:px-6 overflow-x-auto snap-x snap-mandatory scroll-px-4 md:scroll-px-6 [-webkit-overflow-scrolling:touch] overscroll-x-contain">
+            <div className="flex gap-4 min-w-max pb-2">
+              {featuredProducts.map((p) => (
+                <div key={p.id} className="w-[280px] sm:w-[320px] snap-center">
+                  <ProductCard {...p} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BRAND STORY */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            <div className="lg:col-span-7">
+              <div className="relative overflow-hidden rounded-[32px] border border-border">
+                <div className="aspect-[16/10] relative">
+                  <Image src="/images/brand-story.webp" alt="Brand story" fill className="object-cover" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F1A]/55 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="text-white/70 text-xs tracking-[0.2em] uppercase">
+                    TeddyBear&apos;s Room
+                  </p>
+                  <p className="text-white text-2xl sm:text-3xl font-display mt-2">
+                    Private wellness, designed to feel calm.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5">
+              <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                Brand story
+              </p>
+              <h3 className="mt-3 text-3xl font-display text-foreground leading-tight">
+                Minimal, discreet,
+                <br />
+                and thoughtfully selected.
+              </h3>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                TeddyBear&apos;s Room은 과장된 자극 대신, 일상의 리듬을 지키는
+                섬세한 셀프케어를 제안합니다. 제품의 소재, 포장, 사용 경험까지
+                처음부터 끝까지 조용히, 그러나 확실하게.
+              </p>
+
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Button asChild className="rounded-full bg-accent text-accent-foreground hover:opacity-90">
+                  <Link href="/about">
+                    더 알아보기 <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="rounded-full">
+                  <Link href="/products">쇼핑하기</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS — dark */}
+      <section className="relative py-24 text-[#F0EDE8] overflow-hidden">
+        <Image src="/images/review-bg.webp" alt="" fill className="object-cover" />
+        <div className="absolute inset-0 bg-[#0F0F1A]/85" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div>
+              <p className="text-[11px] tracking-[0.2em] uppercase text-[#F0EDE8]/60">
+                Reviews
+              </p>
+              <h2 className="mt-3 text-3xl sm:text-4xl font-display">
+                Trust is built quietly.
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 w-full sm:w-auto">
+              {[{ v: "4.9", k: "평점" }, { v: "24h", k: "평균 배송" }, { v: "10k+", k: "누적 주문" }].map((s) => (
+                <div key={s.k} className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4">
+                  <p className="text-2xl font-semibold">{s.v}</p>
+                  <p className="text-xs text-[#F0EDE8]/60 mt-1">{s.k}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
+            {reviews.map((r) => (
+              <div
+                key={r.title}
+                className="rounded-3xl border border-white/10 bg-white/5 p-7"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold">{r.title}</p>
+                    <div className="mt-2 flex items-center gap-1 text-[#E8B4B8]">
+                      {Array.from({ length: r.rating }).map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                  <Quote className="h-5 w-5 text-white/35" />
+                </div>
+                <p className="mt-5 text-sm text-[#F0EDE8]/75 leading-relaxed">
+                  {r.body}
+                </p>
+                <p className="mt-6 text-xs text-[#F0EDE8]/55">— {r.name}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Rainbow divider */}
-      <div className="mx-auto max-w-6xl px-6"><div className="rainbow-line" /></div>
+      {/* SUBSCRIPTION CTA — lavender */}
+      <section className="py-16 sm:py-24 bg-[#C8A2C8]/15">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            <div className="lg:col-span-5">
+              <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                Subscription
+              </p>
+              <h2 className="mt-3 text-3xl sm:text-4xl font-display text-foreground">
+                매달 도착하는
+                <br />
+                시크릿 큐레이션.
+              </h2>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                구독자 전용 혜택으로 더 조용하고, 더 안전하게. 취향 기반 추천부터
+                전용 할인까지.
+              </p>
 
-      {/* ════════ SUBSCRIPTION ════════ */}
-      <section className="py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left — Visual (Gift box concept) */}
-            <div className="relative">
-              <div className="aspect-square max-w-md mx-auto rounded-3xl bg-gradient-to-br from-[#E8658A]/8 via-[#F5EEF8] to-[#E4F0FB] overflow-hidden relative border border-[#E8658A]/10">
-                {/* Decorative circles */}
-                <div className="absolute top-8 right-8 w-24 h-24 rounded-full bg-[#56B4A9]/8" />
-                <div className="absolute bottom-12 left-8 w-16 h-16 rounded-full bg-[#D4A853]/8" />
-                <div className="absolute top-1/3 left-1/4 w-20 h-20 rounded-full bg-[#E8658A]/5" />
-
-                {/* Center content */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="relative w-32 h-32 mb-6">
-                    <Image src="/tbr_logo.png" alt="Mystery Box" fill className="object-contain" />
-                  </div>
-                  <div className="bg-white/80 backdrop-blur-sm rounded-full px-6 py-2 shadow-sm">
-                    <p className="text-sm font-bold text-foreground">Monthly Mystery Box</p>
-                  </div>
-                </div>
-
-                {/* Price tag */}
-                <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3 shadow-sm">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">From</p>
-                  <p className="text-xl font-black text-[#E8658A]">₩9,900<span className="text-xs font-medium text-muted-foreground">/월</span></p>
-                </div>
-
-                {/* Satisfaction badge */}
-                <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-[#E8658A] fill-[#E8658A]" />
-                    <div>
-                      <p className="text-xs font-bold text-foreground">100%</p>
-                      <p className="text-[10px] text-muted-foreground">만족 보장</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Button asChild className="mt-10 rounded-full bg-accent text-accent-foreground hover:opacity-90">
+                <Link href="/subscribe">
+                  구독 시작하기 <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
             </div>
 
-            {/* Right — Copy */}
-            <div className="space-y-8">
-              <div>
-                <p className="text-xs font-semibold tracking-widest uppercase text-[#56B4A9] mb-3">Roommate Membership</p>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-snug mb-4">
-                  매달 도착하는<br />시크릿 셀프케어 박스
-                </h2>
-                <p className="text-muted-foreground leading-relaxed max-w-lg">
-                  당신의 취향을 분석해 가장 완벽한 아이템을 큐레이션합니다.
-                  구독자 전용 할인, 선출시 체험, 무료 배송까지.
-                </p>
-              </div>
-
-              <ul className="space-y-3">
-                {subscriptionBenefits.slice(0, 4).map((benefit, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#56B4A9]/15 text-[#56B4A9] flex items-center justify-center">
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+            <div className="lg:col-span-7">
+              <div className="surface p-8 sm:p-10">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {subscriptionBenefits.map((b, idx) => (
+                    <div
+                      key={`${b.title}-${idx}`}
+                      className="rounded-2xl border border-border bg-background/60 p-5"
+                    >
+                      <p className="text-sm font-semibold text-foreground">{b.title}</p>
+                      {b.desc ? (
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                          {b.desc}
+                        </p>
+                      ) : null}
                     </div>
-                    <span className="text-sm text-foreground">{benefit.title}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex flex-col sm:flex-row items-start gap-4">
-                <Button asChild size="lg" className="rounded-full px-10 py-6 text-base bg-[#E8658A] text-white hover:bg-[#D4506F] shadow-[0_8px_24px_rgba(232,101,138,0.3)] hover:shadow-[0_12px_32px_rgba(232,101,138,0.4)] transition-all duration-300 hover:-translate-y-0.5">
-                  <Link href="/subscribe">
-                    <Sparkles className="mr-2 w-4 h-4" />
-                    구독 시작하기
-                  </Link>
-                </Button>
-                <p className="text-xs text-muted-foreground pt-3">언제든 해지 가능 · 첫 달 10% 할인</p>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════ TESTIMONIALS ════════ */}
-      <Testimonials />
+      {/* NEWSLETTER */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <div className="rounded-[32px] border border-border overflow-hidden">
+            <div className="grid lg:grid-cols-12">
+              <div className="lg:col-span-7 p-10 sm:p-12">
+                <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                  Newsletter
+                </p>
+                <h2 className="mt-3 text-3xl sm:text-4xl font-display text-foreground">
+                  신규 가입 10% 할인
+                </h2>
+                <p className="mt-5 text-muted-foreground leading-relaxed max-w-xl">
+                  신상품 소식과 멤버 전용 혜택을 가장 먼저 받아보세요.
+                  과장 없는 정보만, 필요한 만큼만 전달합니다.
+                </p>
 
-      {/* ════════ CLOSING CTA — compact ════════ */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F6FAFF] to-[#E4F0FB]" />
-        <div className="absolute top-0 left-0 right-0 rainbow-line" />
-        <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-            새로운 자신을 만나보세요.
-          </h2>
-          <p className="text-muted-foreground mb-8">TeddyBear&apos;s Room에서 시작하는 프라이빗 셀프케어.</p>
-          <Button asChild size="lg" className="rounded-full text-base px-10 py-6 bg-[#E8658A] text-white hover:bg-[#D4506F] shadow-[0_8px_24px_rgba(232,101,138,0.3)] transition-all duration-300 hover:-translate-y-0.5">
-            <Link href="/products">
-              쇼핑 시작하기 <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-          </Button>
+                <form className="mt-8 flex flex-col sm:flex-row gap-3 max-w-xl">
+                  <input
+                    type="email"
+                    required
+                    placeholder="이메일 주소"
+                    className="h-12 flex-1 rounded-full border border-border bg-background px-5 text-sm outline-none focus:ring-2 focus:ring-ring"
+                  />
+                  <Button type="submit" className="h-12 rounded-full bg-accent text-accent-foreground hover:opacity-90">
+                    구독하기
+                  </Button>
+                </form>
+                <p className="mt-4 text-xs text-muted-foreground">
+                  구독은 언제든 해지할 수 있습니다.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 relative">
+                <Image src="/images/newsletter-bg.webp" alt="" fill className="object-cover" />
+                <div className="absolute inset-0 bg-[#1A1A2E]/60" />
+                <div className="relative p-10 sm:p-12 h-full flex flex-col justify-end">
+                  <p className="text-white/70 text-xs tracking-[0.2em] uppercase">Members only</p>
+                  <p className="mt-2 text-white text-2xl font-display">Quiet perks, delivered.</p>
+                  <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-sm">
+                    비밀배송 · 빠른 교환 · 구독자 전용 오퍼
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
