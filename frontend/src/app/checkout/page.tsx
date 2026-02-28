@@ -8,7 +8,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, CreditCard, Building2, Receipt, Loader2, Check } from "lucide-react";
+import { ChevronLeft, CreditCard, Building2, Receipt, Loader2, Check, ShoppingCart, ShieldCheck, Info, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useCartStore } from "@/store/cartStore";
@@ -89,7 +89,7 @@ export default function CheckoutPage() {
     if (success) {
       setOrderComplete(true);
       clearCart();
-      addToast("주문이 완료되었어요! 🎉", "success");
+      addToast("주문이 완료되었어요!", "success");
     } else {
       addToast("결제에 실패했어요. 다시 시도해주세요.", "error");
     }
@@ -99,12 +99,12 @@ export default function CheckoutPage() {
   if (items.length === 0 && !orderComplete) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center py-16">
-        <span className="text-6xl mb-4">🛒</span>
+        <ShoppingCart className="h-12 w-12 mb-4 text-muted-foreground/50" />
         <h1 className="text-2xl font-bold mb-2">장바구니가 비어있어요</h1>
         <p className="text-muted-foreground mb-6">
           주문할 상품을 먼저 담아주세요
         </p>
-        <Button asChild className="rounded-xl">
+        <Button asChild className="rounded-full">
           <Link href="/products">상품 둘러보기</Link>
         </Button>
       </div>
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
         <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6">
           <Check className="h-10 w-10 text-green-600" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">주문이 완료되었어요! 🎉</h1>
+        <h1 className="text-2xl font-bold mb-2">주문이 완료되었어요!</h1>
         <p className="text-muted-foreground mb-2">
           주문해주셔서 감사합니다.
         </p>
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
         <div className="flex gap-4">
           <Button
             variant="outline"
-            className="rounded-xl"
+            className="rounded-full"
             onClick={() => {
               setOrderComplete(false);
               clearCheckout();
@@ -137,7 +137,7 @@ export default function CheckoutPage() {
           >
             <Link href="/products">쇼핑 계속하기</Link>
           </Button>
-          <Button className="rounded-xl" asChild>
+          <Button className="rounded-full" asChild>
             <Link href="/">홈으로</Link>
           </Button>
         </div>
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-background py-8">
-      <div className="mx-auto max-w-4xl px-4 lg:px-8">
+      <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-8">
         {/* Header */}
         <nav className="mb-6">
           <Link
@@ -165,7 +165,7 @@ export default function CheckoutPage() {
           {/* Left: Forms */}
           <div className="lg:col-span-2 space-y-6">
             {/* Order Items */}
-            <Card className="rounded-2xl">
+            <Card className="rounded-3xl">
               <CardHeader className="pb-3">
                 <h2 className="font-semibold">주문 상품 ({items.length})</h2>
               </CardHeader>
@@ -201,7 +201,7 @@ export default function CheckoutPage() {
             </Card>
 
             {/* Shipping Address */}
-            <Card className="rounded-2xl">
+            <Card className="rounded-3xl">
               <CardHeader className="pb-3">
                 <h2 className="font-semibold">배송지 정보</h2>
               </CardHeader>
@@ -218,7 +218,8 @@ export default function CheckoutPage() {
                     className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    🔒 프라이버시 포장으로 안전하게 배송됩니다
+                    <ShieldCheck className="inline h-3.5 w-3.5 mr-1" />
+                    프라이버시 포장으로 안전하게 배송됩니다
                   </p>
                 </div>
 
@@ -255,7 +256,7 @@ export default function CheckoutPage() {
             </Card>
 
             {/* Payment Method */}
-            <Card className="rounded-2xl">
+            <Card className="rounded-3xl">
               <CardHeader className="pb-3">
                 <h2 className="font-semibold">결제 수단</h2>
               </CardHeader>
@@ -285,7 +286,8 @@ export default function CheckoutPage() {
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  🔜 TossPayments 연동 준비 중
+                  <Clock className="inline h-3.5 w-3.5 mr-1" />
+                  TossPayments 연동 준비 중
                 </p>
               </CardContent>
             </Card>
@@ -293,7 +295,7 @@ export default function CheckoutPage() {
 
           {/* Right: Summary */}
           <div>
-            <Card className="rounded-2xl sticky top-24">
+            <Card className="rounded-3xl sticky top-24">
               <CardHeader className="pb-3">
                 <h2 className="font-semibold">결제 금액</h2>
               </CardHeader>
@@ -314,7 +316,8 @@ export default function CheckoutPage() {
                 </div>
                 {shippingFee > 0 && (
                   <p className="text-xs text-muted-foreground">
-                    💡 {(50000 - totalPrice).toLocaleString()}원 더 담으면 무료배송!
+                    <Info className="inline h-3.5 w-3.5 mr-1" />
+                    {(50000 - totalPrice).toLocaleString()}원 더 담으면 무료배송!
                   </p>
                 )}
                 <div className="border-t border-border pt-3">
@@ -329,7 +332,7 @@ export default function CheckoutPage() {
                 <Button
                   onClick={handlePayment}
                   disabled={isProcessing}
-                  className="w-full py-6 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground"
+                  className="w-full py-6 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
                   {isProcessing ? (
                     <>

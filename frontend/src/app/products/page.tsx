@@ -6,6 +6,7 @@
 // ====================================
 
 import { Suspense } from "react";
+import { Search } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductFilter } from "@/components/ProductFilter";
 import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
@@ -19,7 +20,7 @@ function ProductGrid() {
   if (filteredProducts.length === 0) {
     return (
       <div className="col-span-full flex flex-col items-center justify-center py-16 text-muted-foreground">
-        <span className="text-6xl mb-4">🧸</span>
+        <Search className="h-12 w-12 mb-4 text-muted-foreground/50" />
         <p className="text-lg font-medium">조건에 맞는 상품이 없어요</p>
         <p className="text-sm mt-1">다른 필터를 선택해보세요</p>
       </div>
@@ -69,30 +70,24 @@ function FilteredProductsContent() {
 export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero - 지뢰계 스타일 ♡ */}
-      <section className="bg-gradient-to-b from-primary/10 via-secondary/5 to-background py-12 relative overflow-hidden">
-        {/* 지뢰계 floating decorations ♡✧🎀 */}
-        <div className="absolute top-8 left-8 text-3xl opacity-20 animate-sparkle-twinkle pointer-events-none">✧</div>
-        <div className="absolute top-12 right-12 text-2xl opacity-15 animate-heart-beat pointer-events-none">♡</div>
-        <div className="absolute bottom-8 right-1/4 text-xl opacity-15 animate-ribbon-flutter pointer-events-none">🎀</div>
-
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl animate-soft-float">🎀</span>
-            <h1 className="text-3xl font-bold text-foreground lg:text-4xl">
-              전체 상품
-            </h1>
-            <span className="text-2xl animate-sparkle-twinkle">✧</span>
-          </div>
-          <p className="mt-2 text-muted-foreground">
-            TeddyBear&apos;s Room의 지뢰계 감성 아이템들을 만나보세요 ♡
+      {/* Hero */}
+      <section className="bg-muted/40 py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+            Collection
+          </p>
+          <h1 className="mt-3 text-3xl sm:text-4xl font-display text-foreground">
+            전체 상품
+          </h1>
+          <p className="mt-4 text-muted-foreground">
+            TeddyBear&apos;s Room의 프리미엄 셀프케어 컬렉션을 만나보세요
           </p>
         </div>
       </section>
 
       {/* Main Content */}
       <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
           <Suspense fallback={<ProductGridSkeleton />}>
             <FilteredProductsContent />
           </Suspense>

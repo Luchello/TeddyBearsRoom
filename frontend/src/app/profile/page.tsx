@@ -21,22 +21,20 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 lg:px-8">
+    <div className="min-h-screen pt-24 pb-12 px-4 md:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header / Profile Card */}
         <div className="relative">
           {/* Background Decoration */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-3xl -z-10" />
 
-          <Card className="rounded-[2.5rem] border-none shadow-2xl overflow-hidden bg-white/80 backdrop-blur-xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent pointer-events-none" />
-
+          <Card className="rounded-3xl border border-border shadow-lg overflow-hidden bg-card/80 backdrop-blur-xl">
             <CardContent className="p-8 md:p-12 relative z-10">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 {/* Avatar */}
                 <div className="relative group">
                   <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 p-1">
-                    <div className="w-full h-full rounded-full bg-white overflow-hidden relative">
+                    <div className="w-full h-full rounded-full bg-card overflow-hidden relative">
                       <Image
                         src={user.avatar}
                         alt="Profile"
@@ -59,10 +57,10 @@ export default function ProfilePage() {
                   </h1>
                   <p className="text-muted-foreground">{user.email}</p>
                   <div className="flex items-center justify-center md:justify-start gap-4 mt-4">
-                    <div className="px-4 py-2 rounded-xl bg-primary/10 text-primary font-bold">
+                    <div className="px-4 py-2 rounded-full bg-primary/10 text-primary font-bold">
                       {user.points.toLocaleString()} P
                     </div>
-                    <Button variant="outline" size="sm" className="rounded-xl">
+                    <Button variant="outline" size="sm" className="rounded-full">
                       Edit Profile
                     </Button>
                   </div>
@@ -89,7 +87,7 @@ export default function ProfilePage() {
               <TabsTrigger
                 key={tab.id}
                 value={tab.id}
-                className="rounded-full px-6 py-3 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg=active]:bg-primary=active]:text-black=active]:shadow-[0_0_15px_rgba(255,105,180,0.4)] transition-all"
+                className="rounded-full px-6 py-3 text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all"
               >
                 <tab.icon className="w-4 h-4 mr-2" />
                 {tab.label}
@@ -101,7 +99,7 @@ export default function ProfilePage() {
           <div className="min-h-[400px]">
             <TabsContent value="overview" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="grid md:grid-cols-2 gap-6">
-                <Card className="rounded-3xl border-none bg-white/50 backdrop-blur shadow-lg">
+                <Card className="rounded-3xl border border-border bg-card/50 backdrop-blur shadow-lg">
                   <CardHeader>
                     <CardTitle className="">Recent Activity</CardTitle>
                   </CardHeader>
@@ -109,7 +107,7 @@ export default function ProfilePage() {
                     <p className="text-muted-foreground">No recent activity.</p>
                   </CardContent>
                 </Card>
-                <Card className="rounded-3xl border-none bg-white/50 backdrop-blur shadow-lg">
+                <Card className="rounded-3xl border border-border bg-card/50 backdrop-blur shadow-lg">
                   <CardHeader>
                     <CardTitle className="">Recommended for You</CardTitle>
                   </CardHeader>
@@ -123,7 +121,7 @@ export default function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="orders">
-              <Card className="rounded-3xl border-none bg-white/50 backdrop-blur shadow-lg">
+              <Card className="rounded-3xl border border-border bg-card/50 backdrop-blur shadow-lg">
                 <CardContent className="p-12 text-center">
                   <Package className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
                   <h3 className="text-xl font-bold mb-2">No orders yet</h3>
@@ -136,7 +134,7 @@ export default function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="wishlist">
-              <Card className="rounded-3xl border-none bg-white/50 backdrop-blur shadow-lg">
+              <Card className="rounded-3xl border border-border bg-card/50 backdrop-blur shadow-lg">
                 <CardContent className="p-12 text-center">
                   <Heart className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
                   <h3 className="text-xl font-bold mb-2">Your wishlist is empty</h3>
@@ -149,16 +147,16 @@ export default function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="settings">
-              <Card className="rounded-3xl border-none bg-white/50 backdrop-blur shadow-lg">
+              <Card className="rounded-3xl border border-border bg-card/50 backdrop-blur shadow-lg">
                 <CardContent className="p-8 space-y-6">
-                  <div className="flex items-center justify-between p-4 rounded-2xl bg-white/50">
+                  <div className="flex items-center justify-between p-4 rounded-2xl bg-card/50">
                     <div>
                       <h4 className="font-bold">Email Notifications</h4>
                       <p className="text-sm text-muted-foreground">Receive updates about your orders and promotions.</p>
                     </div>
                     <Button variant="outline" className="rounded-full">Configure</Button>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-2xl bg-white/50">
+                  <div className="flex items-center justify-between p-4 rounded-2xl bg-card/50">
                     <div>
                       <h4 className="font-bold">Privacy Settings</h4>
                       <p className="text-sm text-muted-foreground">Manage your data and visibility.</p>

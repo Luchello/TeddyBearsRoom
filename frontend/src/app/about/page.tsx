@@ -2,18 +2,21 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { brandValues, brandTimeline } from "@/lib/data";
-import { Heart, ArrowRight } from "lucide-react";
+import { Heart, ArrowRight, Mail, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="bg-gradient-to-b from-primary/10 to-background py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      <section className="bg-muted/40 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <div>
-              <h1 className="text-3xl font-bold text-foreground lg:text-5xl">
+              <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                About
+              </p>
+              <h1 className="mt-3 text-3xl sm:text-4xl font-display text-foreground">
                 <span className="text-primary">TeddyBear&apos;s Room</span>을
                 <br />
                 소개합니다
@@ -26,13 +29,13 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 flex items-center justify-center p-12">
+              <div className="aspect-square rounded-3xl bg-[#C8A2C8]/15 flex items-center justify-center p-12">
                 <div className="w-full h-full relative">
                   <Image
                     src="/tbr_logo.png"
                     alt="TeddyBear's Room Logo"
                     fill
-                    className="object-contain drop-shadow-xl animate-float"
+                    className="object-contain drop-shadow-xl"
                   />
                 </div>
               </div>
@@ -42,10 +45,13 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+              Values
+            </p>
+            <h2 className="mt-3 text-2xl font-display text-foreground lg:text-3xl">
               우리의 가치
             </h2>
             <p className="mt-2 text-muted-foreground">
@@ -54,7 +60,7 @@ export default function AboutPage() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {brandValues.map((value, idx) => (
-              <Card key={idx} className="rounded-2xl border-border">
+              <Card key={idx} className="rounded-3xl border-border">
                 <CardContent className="p-6">
                   <span className="text-4xl mb-4 block">{value.icon}</span>
                   <h3 className="font-semibold text-foreground text-lg">
@@ -71,10 +77,13 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section className="bg-muted/30 py-16 lg:py-24">
-        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+      <section className="bg-muted/30 py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+              Story
+            </p>
+            <h2 className="mt-3 text-2xl font-display text-foreground lg:text-3xl">
               우리의 이야기
             </h2>
           </div>
@@ -95,10 +104,13 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-16 lg:py-24">
-        <div className="mx-auto max-w-3xl px-4 lg:px-8">
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+              Journey
+            </p>
+            <h2 className="mt-3 text-2xl font-display text-foreground lg:text-3xl">
               브랜드 여정
             </h2>
           </div>
@@ -110,7 +122,7 @@ export default function AboutPage() {
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary font-bold z-10">
                     {item.year}
                   </div>
-                  <div className="flex-1 rounded-2xl bg-card p-4 border border-border">
+                  <div className="flex-1 rounded-3xl bg-card p-4 border border-border">
                     <p className="text-foreground">{item.event}</p>
                   </div>
                 </div>
@@ -121,13 +133,16 @@ export default function AboutPage() {
       </section>
 
       {/* Donation Summary */}
-      <section className="bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 py-16 lg:py-20">
-        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+      <section className="bg-[#C8A2C8]/15 py-16 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-8">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-6">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+              Donation
+            </p>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-6 mt-3">
               <Heart className="w-8 h-8 text-primary" />
             </div>
-            <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+            <h2 className="text-2xl font-display text-foreground lg:text-3xl">
               함께하는 나눔
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
@@ -139,7 +154,7 @@ export default function AboutPage() {
 
           {/* MVP: 단일 멤버십 기부 카드 */}
           <div className="mt-10 max-w-xs mx-auto">
-            <Card className="rounded-2xl bg-primary/10 border-2 border-primary/30">
+            <Card className="rounded-3xl bg-primary/10 border-2 border-primary/30">
               <CardContent className="p-8 text-center">
                 <span className="text-4xl">🐻</span>
                 <p className="font-semibold text-foreground mt-3 text-lg">TBR 멤버십</p>
@@ -150,7 +165,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Button variant="outline" asChild>
+            <Button variant="outline" className="rounded-full" asChild>
               <Link href="/donation">
                 기부 현황 자세히 보기
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -162,31 +177,34 @@ export default function AboutPage() {
 
       {/* Contact */}
       <section className="bg-muted/30 py-16">
-        <div className="mx-auto max-w-4xl px-4 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+        <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-8 text-center">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+            Contact
+          </p>
+          <h2 className="mt-3 text-2xl font-display text-foreground lg:text-3xl">
             궁금한 점이 있으신가요?
           </h2>
           <p className="mt-4 text-muted-foreground">
             언제든지 편하게 연락해 주세요
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Card className="rounded-2xl border-border">
+            <Card className="rounded-3xl border-border">
               <CardContent className="p-6 text-center">
-                <span className="text-3xl mb-2 block">📧</span>
+                <Mail className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">이메일</p>
                 <p className="font-medium text-foreground">hello@teddybearsroom.shop</p>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl border-border">
+            <Card className="rounded-3xl border-border">
               <CardContent className="p-6 text-center">
-                <span className="text-3xl mb-2 block">💬</span>
+                <MessageCircle className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">카카오톡</p>
                 <p className="font-medium text-foreground">@teddybearsroom</p>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl border-border">
+            <Card className="rounded-3xl border-border">
               <CardContent className="p-6 text-center">
-                <span className="text-3xl mb-2 block">📱</span>
+                <Phone className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">인스타그램</p>
                 <p className="font-medium text-foreground">@teddybearsroom</p>
               </CardContent>
