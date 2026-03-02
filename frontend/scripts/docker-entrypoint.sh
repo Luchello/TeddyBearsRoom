@@ -5,11 +5,13 @@ echo "[entrypoint] Starting TeddyBearsRoom container..."
 
 if [ -n "$DATABASE_URL" ]; then
   echo "[entrypoint] Waiting for PostgreSQL..."
+  # Remove query parameters (?schema=public, etc) from DATABASE_URL for pg_isready
+  DB_URL_CLEAN=$(echo "$DATABASE_URL" | sed 's/?.*$//')
   ATTEMPTS=0
-  until pg_isready -d "$DATABASE_URL" >/dev/null 2>&1; do
+  until pg_isready -d "$DB_URL_CLEAN" >/dev/null 2>&1; do
     ATTEMPTS=$((ATTEMPTS + 1))
     if [ "$ATTEMPTS" -gt 60 ]; then
-      echo "[entrypoint] PostgreSQL not ready after 60 attempts"
+      echo "[entrypoint] PostgreSQL not ready after 60 attempts (URL: $DB_URL_CLEAN)"
       exit 1
     fi
     sleep 2
