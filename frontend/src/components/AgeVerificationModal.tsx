@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function AgeVerificationModal() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !localStorage.getItem("age-verified");
+  });
   const [isExiting, setIsExiting] = useState(false);
-
-  useEffect(() => {
-    const verified = localStorage.getItem("age-verified");
-    if (!verified) setIsVisible(true);
-  }, []);
 
   const handleConfirm = () => {
     setIsExiting(true);
